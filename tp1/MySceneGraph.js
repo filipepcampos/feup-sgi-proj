@@ -1,5 +1,7 @@
 import { CGFXMLreader } from '../lib/CGF.js';
 import { MyRectangle } from './MyRectangle.js';
+import { ComponentNode } from './ComponentNode.js';
+import { MyTriangle } from './MyTriangle.js';
 
 var DEGREE_TO_RAD = Math.PI / 180;
 
@@ -562,6 +564,41 @@ export class MySceneGraph {
 
                 this.primitives[primitiveId] = rect;
             }
+            else if (primitiveType == 'triangle') { // TODO: Check conditions
+                // x1
+                var x1 = this.reader.getFloat(grandChildren[0], 'x1');
+                if (!(x1 != null && !isNaN(x1)))
+                    return "unable to parse x1 of the primitive coordinates for ID = " + primitiveId;
+
+                // y1
+                var y1 = this.reader.getFloat(grandChildren[0], 'y1');
+                if (!(y1 != null && !isNaN(y1)))
+                    return "unable to parse y1 of the primitive coordinates for ID = " + primitiveId;
+
+                // x2
+                var x2 = this.reader.getFloat(grandChildren[0], 'x2');
+                if (!(x2 != null && !isNaN(x2)))
+                    return "unable to parse x2 of the primitive coordinates for ID = " + primitiveId;
+
+                // y2
+                var y2 = this.reader.getFloat(grandChildren[0], 'y2');
+                if (!(y2 != null && !isNaN(y2)))
+                    return "unable to parse y2 of the primitive coordinates for ID = " + primitiveId;
+
+                // x3
+                var x3 = this.reader.getFloat(grandChildren[0], 'x3');
+                if (!(x3 != null && !isNaN(x3)))
+                    return "unable to parse x3 of the primitive coordinates for ID = " + primitiveId;
+
+                // y3
+                var y3 = this.reader.getFloat(grandChildren[0], 'y3');
+                if (!(y3 != null && !isNaN(y3)))
+                    return "unable to parse y3 of the primitive coordinates for ID = " + primitiveId;
+
+                var triangle = new MyTriangle(this.scene, primitiveId, x1, x2, x3, y1, y2, y3);
+
+                this.primitives[primitiveId] = triangle;
+            }
             else {
                 console.warn("To do: Parse other primitives.");
             }
@@ -577,8 +614,9 @@ export class MySceneGraph {
    */
     parseComponents(componentsNode) {
         var children = componentsNode.children;
+        // TODO: GUARDAR ROOT NODE
 
-        this.components = [];
+        this.components = {};
 
         var grandChildren = [];
         var grandgrandChildren = [];
@@ -613,7 +651,7 @@ export class MySceneGraph {
             var textureIndex = nodeNames.indexOf("texture");
             var childrenIndex = nodeNames.indexOf("children");
 
-            this.onXMLMinorError("To do: Parse components.");
+            this.onXMLMinorError("To do: Parse components."); // TODO: DELETE
             // Transformations
 
             // Materials
@@ -621,7 +659,74 @@ export class MySceneGraph {
             // Texture
 
             // Children
+            var parsedChildren = this.parseChildren(grandChildren[childrenIndex]);
+            
+            var node = new ComponentNode(
+                componentID, 
+                "todo", 
+                "todo", 
+                "todo", 
+                parsedChildren['components'], 
+                parsedChildren['primitives']
+            );
+
+            this.components[componentID] = node;
         }
+
+        for(const [componentId, componentNode] of Object.entries(this.components)){
+            var componentChildren = [];
+            for(const childId of componentNode.childComponentsId){
+                if(this.components[childId] != null){
+                    componentChildren.push(this.components[childId]);
+                } else {
+                    this.onXMLMinorError("no component with ID " + childId + " defined");  // TODO: MAJOR ERROR?
+                }
+            }
+            for(const childId of componentNode.childPrimitivesId){
+                if(this.primitives[childId] != null){
+                    componentChildren.push(this.primitives[childId]);
+                } else {
+                    this.onXMLMinorError("no primitive with ID " + childId + " defined");  // TODO: MAJOR ERROR?
+                }
+            }
+
+            componentNode.setChildren(componentChildren);
+        }
+    }
+
+    /**
+     * Parse the childrens of a component node
+     * @param {children node} node
+     */
+    parseChildren(node) {
+        var children = node.children;
+
+        var components = [];
+        var primitives = [];
+
+        for(var i = 0; i < children.length; ++i) {
+            var nodeName = children[i].nodeName;
+            
+            if(nodeName === "componentref"){
+                var componentId = this.reader.getString(children[i], 'id');
+                if(componentId != null){
+                    components.push(componentId);
+                } else {
+                    this.onXMLMinorError("no ID defined for componentref"); // TODO: Confirm
+                }
+            } else if (nodeName === "primitiveref") {
+                var primitiveId = this.reader.getString(children[i], 'id');
+                if(primitiveId != null){
+                    primitives.push(primitiveId);
+                } else {
+                    this.onXMLMinorError("no ID defined for primitiveref");
+                }
+                
+            } else {
+                this.onXMLMinorError("unknown tag <" + nodeName + ">");
+            }
+        }
+        return {'components': components, 'primitives': primitives};
     }
 
 
@@ -741,8 +846,7 @@ export class MySceneGraph {
      */
     displayScene() {
         //To do: Create display loop for transversing the scene graph
-
-        //To test the parsing/creation of the primitives, call the display function directly
-        this.primitives['demoRectangle'].display();
+        var root = this.components[this.idRoot]; // TODO: Check if exists???s
+        root.display();
     }
 }
