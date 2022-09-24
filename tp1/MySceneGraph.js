@@ -280,7 +280,7 @@ export class MySceneGraph {
     parseLights(lightsNode) {
         var children = lightsNode.children;
 
-        this.lights = [];
+        this.lights = {};
         var numLights = 0;
 
         var grandChildren = [];
@@ -446,7 +446,7 @@ export class MySceneGraph {
     parseTransformations(transformationsNode) {
         var children = transformationsNode.children;
 
-        this.transformations = [];
+        this.transformations = {};
 
         var grandChildren = [];
 
@@ -504,7 +504,7 @@ export class MySceneGraph {
     parsePrimitives(primitivesNode) {
         var children = primitivesNode.children;
 
-        this.primitives = [];
+        this.primitives = {};
 
         var grandChildren = [];
 
