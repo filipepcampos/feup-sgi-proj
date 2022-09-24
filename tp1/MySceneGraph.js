@@ -2,6 +2,7 @@ import { CGFXMLreader } from '../lib/CGF.js';
 import { MyRectangle } from './MyRectangle.js';
 import { ComponentNode } from './ComponentNode.js';
 import { MyTriangle } from './MyTriangle.js';
+import { SceneData } from './SceneData.js';
 
 var DEGREE_TO_RAD = Math.PI / 180;
 
@@ -33,6 +34,7 @@ export class MySceneGraph {
         this.nodes = [];
 
         this.idRoot = null;                    // The id of the root element.
+        this.embeddedTransformationCount = 0;
 
         this.axisCoords = [];
         this.axisCoords['x'] = [1, 0, 0];
@@ -66,6 +68,8 @@ export class MySceneGraph {
         }
 
         this.loadedOk = true;
+        
+        this.sceneData = new SceneData(this.scene, this.textures, this.materials, this.transformations, this.primitives);
 
         // As the graph loaded ok, signal the scene so that any additional initialization depending on the graph can take place
         this.scene.onGraphLoaded();
@@ -439,6 +443,99 @@ export class MySceneGraph {
         return null;
     }
 
+    /** 
+     * TODO
+     */
+    parseTransformationSequence(transformationList, transformationID=""){
+        // Specifications for the current transformation.
+        var transfMatrix = mat4.create();
+        for (var j = 0; j < transformationList.length; j++) {
+            switch (transformationList[j].nodeName) {
+                case 'translate':
+                    var coordinates = this.parseCoordinates3D(transformationList[j], "translate transformation for ID " + transformationID); // TODO: Remove for id in component transformations
+                    if (!Array.isArray(coordinates))
+                        return coordinates;
+
+                    transfMatrix = mat4.translate(transfMatrix, transfMatrix, coordinates);
+                    break;
+                case 'scale':                        
+                    var coordinates = this.parseCoordinates3D(transformationList[j], "scale transformation for ID " + transformationID);
+                    if (!Array.isArray(coordinates))
+                        return coordinates;
+
+                    transfMatrix = mat4.scale(transfMatrix, transfMatrix, coordinates);
+                    break;
+                case 'rotate':
+                    var rotation = this.parseRotation(transformationList[j], "rotation transformation for ID " + transformationID);
+                    if (typeof rotation === 'string' || rotation instanceof String){
+                        return rotation;
+                    }
+
+                    // Axis
+                    var axis = [0,0,0];
+                    switch(rotation['axis']){
+                        case 'x': axis = [1,0,0]; break;
+                        case 'y': axis = [0,1,0]; break;
+                        case 'z': axis = [0,0,1]; break;
+                    }
+
+                    // Angle
+                    var rad = rotation['angle'] * DEGREE_TO_RAD;
+                    
+                    transfMatrix = mat4.rotate(transfMatrix, transfMatrix, rad, axis);
+                    break;
+                default: 
+                    break;  // TODO: Error if not translate, scale or rotate
+            }
+        }
+        return transfMatrix;
+    }
+
+    /**
+     * TODO
+     */
+    parseTransformation(transformationNode){
+        if (transformationNode.nodeName != "transformation") {
+            this.onXMLMinorError("unknown tag <" + transformationNode.nodeName + ">");
+            return;
+        }
+
+        // Get id of the current transformation.
+        var transformationID = this.reader.getString(transformationNode, 'id');
+        if (transformationID == null)
+            return "no ID defined for transformation";
+
+        // Checks for repeated IDs.
+        if (this.transformations[transformationID] != null)
+            return "ID must be unique for each transformation (conflict: ID = " + transformationID + ")";
+
+        var children = transformationNode.children;
+
+        var transfMatrix = this.parseTransformationSequence(children, transformationID);
+        this.transformations[transformationID] = transfMatrix;
+    }
+
+    /**
+     * TODO
+     */
+    parseComponentTransformation(transformationNode){
+        if (transformationNode.nodeName != "transformation") {
+            this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
+            return;
+        }
+        var children = transformationNode.children;
+        if(children.length == 1 && children[0].nodeName === "transformationref") {
+            var id = this.reader.getString(children[0], 'id');
+        } else {
+            var transfMatrix = this.parseTransformationSequence(children);
+            do {
+                var id = '_embeddedtransf' + (this.embeddedTransformationCount++);
+            } while(this.transformations[id] != null);
+            this.transformations[id] = transfMatrix;
+        }
+        return id;
+    }
+
     /**
      * Parses the <transformations> block.
      * @param {transformations block element} transformationsNode
@@ -452,45 +549,7 @@ export class MySceneGraph {
 
         // Any number of transformations.
         for (var i = 0; i < children.length; i++) {
-
-            if (children[i].nodeName != "transformation") {
-                this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
-                continue;
-            }
-
-            // Get id of the current transformation.
-            var transformationID = this.reader.getString(children[i], 'id');
-            if (transformationID == null)
-                return "no ID defined for transformation";
-
-            // Checks for repeated IDs.
-            if (this.transformations[transformationID] != null)
-                return "ID must be unique for each transformation (conflict: ID = " + transformationID + ")";
-
-            grandChildren = children[i].children;
-            // Specifications for the current transformation.
-
-            var transfMatrix = mat4.create();
-
-            for (var j = 0; j < grandChildren.length; j++) {
-                switch (grandChildren[j].nodeName) {
-                    case 'translate':
-                        var coordinates = this.parseCoordinates3D(grandChildren[j], "translate transformation for ID " + transformationID);
-                        if (!Array.isArray(coordinates))
-                            return coordinates;
-
-                        transfMatrix = mat4.translate(transfMatrix, transfMatrix, coordinates);
-                        break;
-                    case 'scale':                        
-                        this.onXMLMinorError("To do: Parse scale transformations.");
-                        break;
-                    case 'rotate':
-                        // angle
-                        this.onXMLMinorError("To do: Parse rotate transformations.");
-                        break;
-                }
-            }
-            this.transformations[transformationID] = transfMatrix;
+            this.parseTransformation(children[i]);
         }
 
         this.log("Parsed transformations");
@@ -652,7 +711,10 @@ export class MySceneGraph {
             var childrenIndex = nodeNames.indexOf("children");
 
             this.onXMLMinorError("To do: Parse components."); // TODO: DELETE
+
             // Transformations
+            var parsedTransformation = this.parseComponentTransformation(grandChildren[transformationIndex]);
+            console.log(parsedTransformation);
 
             // Materials
 
@@ -663,7 +725,7 @@ export class MySceneGraph {
             
             var node = new ComponentNode(
                 componentID, 
-                "todo", 
+                parsedTransformation, 
                 "todo", 
                 "todo", 
                 parsedChildren['components'], 
@@ -784,6 +846,28 @@ export class MySceneGraph {
     }
 
     /**
+     * Parse rotation information from a node
+     * @param {block element} node 
+     * @param {message to be displayed in case of error} messageError 
+     */
+    parseRotation(node, messageError) {
+        // Get axis
+        var axis = this.reader.getString(node, 'axis');
+        if (!(axis != null && axis.length === 1 && ['x', 'y', 'z'].includes(axis)))
+            return "unable to parse axis of the " + messageError;
+
+        // Get angle
+        var angle = this.reader.getFloat(node, 'angle');
+        if (!(angle != null && !isNaN(angle)))
+            return "unable to parse angle of the " + messageError;
+
+        return { 
+            'axis': axis,
+            'angle': angle
+        }
+    }
+
+    /**
      * Parse the color components from a node
      * @param {block element} node
      * @param {message to be displayed in case of error} messageError
@@ -847,6 +931,6 @@ export class MySceneGraph {
     displayScene() {
         //To do: Create display loop for transversing the scene graph
         var root = this.components[this.idRoot]; // TODO: Check if exists???s
-        root.display();
+        root.display(this.sceneData);
     }
 }
