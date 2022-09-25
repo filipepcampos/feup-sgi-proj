@@ -37,13 +37,8 @@ export class MySphere extends CGFobject {
 		
 		// build an all-around stack at a time
 		for (let stack = 0; stack <= this.stacks; stack++) {
-			if(this.stacks == this.slices){
-				var [sinPhi, cosPhi] = thetaCache[stack];
-				sinPhi = -sinPhi;
-			} else {
-				var sinPhi = Math.sin(phi);
-				var cosPhi = Math.cos(phi);
-			}
+			var sinPhi = Math.sin(phi);
+			var cosPhi = Math.cos(phi);
 
 			sinPhi = sinPhi*this.radius
 			
@@ -73,13 +68,10 @@ export class MySphere extends CGFobject {
 				// the vector from the center of the sphere to the vertex.
 				// in a sphere of radius equal to one, the vector length is one.
 				// therefore, the value of the normal is equal to the position vector
-
 				this.normals.push(x, y, z);
 			}
 			phi += phiInc;
 		}
-
-		console.log(this);
 
 		this.primitiveType = this.scene.gl.TRIANGLES;
 		this.initGLBuffers();
