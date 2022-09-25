@@ -675,7 +675,7 @@ export class MySceneGraph {
                 if (!(slices != null && !isNaN(slices) && slices > 0))
                     return "unable to parse slices of the primitive coordinates for ID = " + primitiveId;
 
-                var sphere = new MySphere(this.scene, primitiveId, radius, slices, stacks);
+                var sphere = new MySphere(this.scene, radius, slices, stacks);
 
                 this.primitives[primitiveId] = sphere;
             }

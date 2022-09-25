@@ -8,7 +8,7 @@ import { CGFobject } from '../lib/CGF.js';
  * @param stacks - Number of stacks
  */
 export class MySphere extends CGFobject {
-	constructor(scene, id, radius, slices, stacks) {
+	constructor(scene, radius, slices, stacks) {
 		super(scene);
 		this.radius = radius;
         this.slices = slices;
