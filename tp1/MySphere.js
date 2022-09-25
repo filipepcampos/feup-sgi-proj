@@ -44,6 +44,8 @@ export class MySphere extends CGFobject {
 				var sinPhi = Math.sin(phi);
 				var cosPhi = Math.cos(phi);
 			}
+
+			sinPhi = sinPhi*this.radius
 			
 			// in each stack, build all the slices around
 			for (let slice = 0; slice <= this.slices; slice++) {
@@ -51,7 +53,7 @@ export class MySphere extends CGFobject {
 				var [x,y] = thetaCache[slice];
 				var x =  x*sinPhi;
 				var y =  y*sinPhi
-				var z = cosPhi;
+				var z = cosPhi*this.radius;
 				this.vertices.push(x, y, z);
 
 				//--- Indices
