@@ -16,6 +16,7 @@ export class MySphere extends CGFobject {
 
 		this.initBuffers();
 	}
+
 	
 	initBuffers() {
 		this.vertices = [];
@@ -24,23 +25,32 @@ export class MySphere extends CGFobject {
 		this.texCoords = [];
 
 		var phi = 0;
-		var theta = 0;
 		var phiInc = Math.PI / this.stacks;
 		var thetaInc = (2 * Math.PI) / this.slices;
 		var stackVertices = this.stacks + 1;
 
+		var thetaCache = [];
+		for(let slice = 0; slice <= this.slices; slice++){
+			let theta = thetaInc*slice;
+			thetaCache.push([Math.sin(-theta), Math.cos(theta)]);
+		}
+		
 		// build an all-around stack at a time
 		for (let stack = 0; stack <= this.stacks; stack++) {
-			var sinPhi = Math.sin(phi);
-			var cosPhi = Math.cos(phi);
-
+			if(this.stacks == this.slices){
+				var [sinPhi, cosPhi] = thetaCache[stack];
+				sinPhi = -sinPhi;
+			} else {
+				var sinPhi = Math.sin(phi);
+				var cosPhi = Math.cos(phi);
+			}
+			
 			// in each stack, build all the slices around
-			theta = 0;
-
 			for (let slice = 0; slice <= this.slices; slice++) {
 				//--- Vertices coordinates
-				var x = Math.sin(-theta) * sinPhi;
-				var y = Math.cos(theta) * sinPhi
+				var [x,y] = thetaCache[slice];
+				var x =  x*sinPhi;
+				var y =  y*sinPhi
 				var z = cosPhi;
 				this.vertices.push(x, y, z);
 
@@ -63,7 +73,6 @@ export class MySphere extends CGFobject {
 				// therefore, the value of the normal is equal to the position vector
 
 				this.normals.push(x, y, z);
-				theta += thetaInc;
 			}
 			phi += phiInc;
 		}
