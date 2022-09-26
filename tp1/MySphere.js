@@ -27,7 +27,7 @@ export class MySphere extends CGFobject {
 		var phi = 0;
 		var phiInc = Math.PI / this.stacks;
 		var thetaInc = (2 * Math.PI) / this.slices;
-		var stackVertices = this.stacks + 1;
+		var stackVertices = this.slices + 1;
 
 		var thetaCache = [];
 		for(let slice = 0; slice <= this.slices; slice++){
@@ -72,6 +72,7 @@ export class MySphere extends CGFobject {
 			}
 			phi += phiInc;
 		}
+		console.log(this);
 
 		this.primitiveType = this.scene.gl.TRIANGLES;
 		this.initGLBuffers();
