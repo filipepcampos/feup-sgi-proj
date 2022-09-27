@@ -32,8 +32,6 @@ export class MySceneGraph {
         this.scene = scene;
         scene.graph = this;
 
-        this.nodes = [];
-
         this.idRoot = null;                    // The id of the root element.
         this.embeddedTransformationCount = 0;
 
