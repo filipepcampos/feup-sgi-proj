@@ -72,7 +72,6 @@ export class MySphere extends CGFobject {
 			}
 			phi += phiInc;
 		}
-		console.log(this);
 
 		this.primitiveType = this.scene.gl.TRIANGLES;
 		this.initGLBuffers();
