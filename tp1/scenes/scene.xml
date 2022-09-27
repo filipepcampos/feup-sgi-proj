@@ -58,7 +58,133 @@
             </materials>
             <texture id="defaultTexture"/>
             <children>
+                <componentref id="street" />
+            </children>
+        </component>
+
+        <component id="street">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="street_building" />
+                <componentref id="street_ground" />
                 <componentref id="car" />
+            </children>
+        </component>
+
+        <component id="street_building">
+            <transformation>
+                <translate x="-10" y="15" z="5"/>
+                <scale x="10" y="30" z="10"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="p_cube_without_base"/>
+            </children>
+        </component>
+
+        <component id="street_ground">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="street_ground_floor"/>
+                <componentref id="street_road"/>
+                <componentref id="street_ground_walkway_left"/>
+                <componentref id="street_ground_walkway_right"/>
+            </children>
+        </component>
+
+        <component id="street_ground_floor">
+            <transformation>
+                <scale x="30" y="0.5" z="30" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="p_cube" />
+            </children>
+        </component>
+
+        <component id="street_road">
+            <transformation>
+                <translate x="0" y="0.3" z="0"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="street_road_floor"/>
+                <componentref id="street_road_line"/>
+            </children>
+        </component>
+
+        <component id="street_road_floor">
+            <transformation>
+                <scale x="6" y="0.1" z="30"/> 
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="p_cube_without_base"/>
+            </children>
+        </component>
+
+        <component id="street_road_line">
+            <transformation>
+                <translate x="0" y="0.01" z="0"/>
+                <scale x=".15" y="0.1" z="30"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="p_cube_without_base"/>
+            </children>
+        </component>
+
+
+        <component id="street_ground_walkway_left">
+            <transformation>
+                <translate x="-3.8" y="0.4" z="0"/>
+                <scale x="1.6" y="0.3" z="30"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="p_cube_without_base"/>
+            </children>
+        </component>
+
+        <component id="street_ground_walkway_right">
+            <transformation>
+                <translate x="3.9" y="0.4" z="0"/>
+                <scale x="1.8" y="0.3" z="30"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="p_cube_without_base"/>
             </children>
         </component>
 
@@ -78,7 +204,7 @@
         <!-- Car components -->
         <component id="car">
             <transformation>
-                <translate z="6" x="2" y="4"/>
+                <translate x="-1.5" y="1" z="0"/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -107,14 +233,13 @@
             <transformation>
                 <translate x="0" y="1.2" z="-0.4"/>
                 <scale x="1.8" y="0.1" z="1.9"/>
-                <rotate axis="z" angle="180"/>
             </transformation>
             <materials>
                 <material id="inherit" />
             </materials>
             <texture id="inherit"/>
             <children>
-                <componentref id="p_cube_without_top" />
+                <componentref id="p_cube_without_base" />
             </children>
         </component>
 
@@ -279,6 +404,19 @@
             <children>
                 <componentref id="p_cube_without_bases"/>
                 <componentref id="p_face_y-"/>
+            </children>
+        </component>
+
+        <component id="p_cube_without_base">
+            <transformation>
+                <rotate axis="z" angle="180"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="p_cube_without_top"/>
             </children>
         </component>
 
