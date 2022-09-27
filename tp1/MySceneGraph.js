@@ -449,24 +449,24 @@ export class MySceneGraph {
     parseTransformationSequence(transformationList, transformationID=""){
         // Specifications for the current transformation.
         var transfMatrix = mat4.create();
-        for (var j = 0; j < transformationList.length; j++) {
-            switch (transformationList[j].nodeName) {
+        for (var i = 0; i < transformationList.length; i++) {
+            switch (transformationList[i].nodeName) {
                 case 'translate':
-                    var coordinates = this.parseCoordinates3D(transformationList[j], "translate transformation for ID " + transformationID); // TODO: Remove for id in component transformations
+                    var coordinates = this.parseCoordinates3D(transformationList[i], "translate transformation for ID " + transformationID); // TODO: Remove for id in component transformations
                     if (!Array.isArray(coordinates))
                         return coordinates;
 
                     transfMatrix = mat4.translate(transfMatrix, transfMatrix, coordinates);
                     break;
                 case 'scale':                        
-                    var coordinates = this.parseCoordinates3D(transformationList[j], "scale transformation for ID " + transformationID);
+                    var coordinates = this.parseCoordinates3D(transformationList[i], "scale transformation for ID " + transformationID);
                     if (!Array.isArray(coordinates))
                         return coordinates;
 
                     transfMatrix = mat4.scale(transfMatrix, transfMatrix, coordinates);
                     break;
                 case 'rotate':
-                    var rotation = this.parseRotation(transformationList[j], "rotation transformation for ID " + transformationID);
+                    var rotation = this.parseRotation(transformationList[i], "rotation transformation for ID " + transformationID);
                     if (typeof rotation === 'string' || rotation instanceof String){
                         return rotation;
                     }
@@ -485,7 +485,8 @@ export class MySceneGraph {
                     transfMatrix = mat4.rotate(transfMatrix, transfMatrix, rad, axis);
                     break;
                 default: 
-                    break;  // TODO: Error if not translate, scale or rotate
+                    this.onXMLMinorError("unknown tag <" + transformationList[i].nodeName + ">");
+                    break;
             }
         }
         return transfMatrix;
