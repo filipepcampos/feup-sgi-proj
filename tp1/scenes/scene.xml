@@ -1,5 +1,5 @@
 <sxs>
-    <scene root="root" axis_length="5"/>
+    <scene root="root" axis_length="0.01"/>
 
     <views default="defaultCamera">
         <perspective id="defaultCamera" near="0.1" far="500" angle="45">
@@ -10,7 +10,7 @@
 
     <ambient>
         <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
-        <background r="0.0" g="0.0" b="0.0" a="1.0" />
+        <background r="0.733" g="0.980" b="0.921" a="1.0" />
     </ambient>
 
     <lights>
@@ -45,6 +45,12 @@
             <diffuse r="0.588" g="0.858" b="0.490" a="1.0" />
             <specular r="0.588" g="0.858" b="0.490" a="1.0" />
         </material>
+        <material id="pastel_yellow" shininess="10">
+            <emission r="0" g="0" b="0" a="1.0" />
+            <ambient r="0.949" g="0.878" b="0.600" a="1.0" />
+            <diffuse r="0.949" g="0.878" b="0.600" a="0.2" />
+            <specular r="0" g="0" b="0" a="1.0" />
+        </material>
         <material id="red" shininess="10">
             <emission r="0.0" g="0.0" b="0.0" a="1.0" />
             <ambient r="0.2" g="0.0" b="0.0" a="1.0" />
@@ -61,7 +67,7 @@
             <emission r="0.0" g="0.0" b="0.0" a="1.0" />
             <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
             <diffuse r="0.2" g="0.2" b="0.2" a="1.0" />
-            <specular r="0.2" g="0.2" b="0.2" a="1.0" />
+            <specular r="0" g="0" b="0" a="1.0" />
         </material>
         <material id="medium_gray" shininess="10">
             <emission r="0.0" g="0.0" b="0.0" a="1.0" />
@@ -192,7 +198,7 @@
             <transformation>
             </transformation>
             <materials>
-                <material id="inherit" />
+                <material id="default_material" />
             </materials>
             <texture id="inherit"/>
             <children>
@@ -208,7 +214,7 @@
                 <transformationref id="tr_street_building0" />
             </transformation>
             <materials>
-                <material id="inherit" />
+                <material id="pastel_yellow" />
             </materials>
             <texture id="inherit"/>
             <children>
@@ -221,7 +227,7 @@
                 <transformationref id="tr_street_building1" />
             </transformation>
             <materials>
-                <material id="inherit" />
+                <material id="pastel_yellow" />
             </materials>
             <texture id="inherit"/>
             <children>
