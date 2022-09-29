@@ -7,7 +7,7 @@ import { CGFobject } from '../lib/CGF.js';
  * TODO:
  */
 export class MyTriangle extends CGFobject {
-	constructor(scene, id, x1, x2, x3, y1, y2, y3) {
+	constructor(scene, x1, x2, x3, y1, y2, y3) {
 		super(scene);
 		this.x1 = x1;
 		this.x2 = x2;
