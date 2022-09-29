@@ -27,7 +27,7 @@
     </textures>
 
     <materials>
-        <material id="defaultMaterial" shininess="10">
+        <material id="default_material" shininess="10">
             <emission r="0.0" g="0.0" b="0.0" a="1.0" />
             <ambient r="0.8" g="0.8" b="0.8" a="1.0" />
             <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
@@ -37,7 +37,13 @@
             <emission r="0.0" g="0.0" b="0.0" a="1.0" />
             <ambient r="0.258" g="0.388" b="0.211" a="1.0" />
             <diffuse r="0.258" g="0.388" b="0.211" a="1.0" />
-            <specular r="0.258" g="0.388" b="0.211" a="1.0" />
+            <specular r="0.2" g="0.3" b="0.2" a="1.0" />
+        </material>
+        <material id="light_green" shininess="10">
+            <emission r="0.1" g="0.1" b="0.1" a="1.0" />
+            <ambient r="0.588" g="0.858" b="0.490" a="1.0" />
+            <diffuse r="0.588" g="0.858" b="0.490" a="1.0" />
+            <specular r="0.588" g="0.858" b="0.490" a="1.0" />
         </material>
         <material id="red" shininess="10">
             <emission r="0.0" g="0.0" b="0.0" a="1.0" />
@@ -174,7 +180,7 @@
             <transformation>
             </transformation>
             <materials>
-                <material id="defaultMaterial" />
+                <material id="default_material" />
             </materials>
             <texture id="defaultTexture"/>
             <children>
@@ -421,7 +427,7 @@
                 <transformationref id="tr_car_front_window"/>
             </transformation>
             <materials>
-                <material id="inherit" />
+                <material id="light_green" />
             </materials>
             <texture id="inherit"/>
             <children>
@@ -446,7 +452,7 @@
                 <transformationref id="tr_car_back_window"/>
             </transformation>
             <materials>
-                <material id="inherit" />
+                <material id="light_green" />
             </materials>
             <texture id="inherit"/>
             <children>
@@ -511,7 +517,7 @@
             <transformation>
             </transformation>
             <materials>
-                <material id="inherit" />
+                <material id="light_green" />
             </materials>
             <texture id="inherit"/>
             <children>

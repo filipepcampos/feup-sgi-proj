@@ -49,7 +49,8 @@ export class ComponentNode {
         scene.popMatrix();
 
         var topMat = sceneData.matStack.pop();
-        if(topMat != 'inherit'){
+        topMat = sceneData.matStack[sceneData.matStack.length - 1]
+        if(topMat != 'inherit' && topMat != null){
             sceneData.materials[topMat].appearance.apply();
         }
     }
