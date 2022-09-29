@@ -36,10 +36,49 @@
     </materials>
 
     <transformations>
-        <transformation id="demoTransform">
-            <scale x="5" y="1" z="5" />
-            <rotate axis="x" angle="-45" />
-            <rotate axis="z" angle="-45" />
+        <transformation id="tr_street_building0">
+            <translate x="-10" y="15" z="5"/>
+            <scale x="10" y="30" z="10"/>
+        </transformation>
+        <transformation id="tr_street_building1">
+            <translate x="-10" y="7.6" z="-7"/>
+            <scale x="10" y="15" z="8"/>
+        </transformation>
+        <transformation id="tr_street_ground_floor">
+            <scale x="30" y="0.5" z="30" />
+        </transformation>
+        <transformation id="tr_street_road">
+            <translate x="0" y="0.3" z="0"/>
+        </transformation>
+        <transformation id="tr_street_road_floor">
+            <scale x="6" y="0.1" z="30"/> 
+        </transformation>
+        <transformation id="tr_street_road_line">
+            <translate x="0" y="0.01" z="0"/>
+            <scale x=".15" y="0.1" z="30"/>
+        </transformation>
+        <transformation id="tr_street_ground_walkway_left">
+            <translate x="-3.8" y="0.4" z="0"/>
+            <scale x="1.6" y="0.3" z="30"/>
+        </transformation>
+        <transformation id="tr_street_ground_walkway_right">
+            <translate x="3.9" y="0.4" z="0"/>
+            <scale x="1.8" y="0.3" z="30"/>
+        </transformation>
+        <transformation id="tr_street_ground_sign">
+            <translate x="3.5" y="3" z="-14"/>
+        </transformation>
+        <transformation id="tr_rotateY180">
+            <rotate axis="y" angle="180"/>
+        </transformation>
+        <transformation id="tr_street_ground_sign_top_inner">
+            <translate x="0" y="0.025" z="0.001"/>
+            <scale x="0.8" y="0.8" z="1"/>
+        </transformation>
+        <transformation id="tr_street_ground_sign_cylinder">
+            <translate x="0" y="-3" z="-0.05"/>
+            <rotate axis="x" angle="-90"/>
+            <scale x="0.05" y="0.05" z="3.5"/>
         </transformation>
     </transformations>
 
@@ -94,8 +133,7 @@
 
         <component id="street_building0">
             <transformation>
-                <translate x="-10" y="15" z="5"/>
-                <scale x="10" y="30" z="10"/>
+                <transformationref id="tr_street_building0" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -108,8 +146,7 @@
 
         <component id="street_building1">
             <transformation>
-                <translate x="-10" y="7.6" z="-7"/>
-                <scale x="10" y="15" z="8"/>
+                <transformationref id="tr_street_building1" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -138,7 +175,7 @@
 
         <component id="street_ground_floor">
             <transformation>
-                <scale x="30" y="0.5" z="30" />
+                <transformationref id="tr_street_ground_floor" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -151,7 +188,7 @@
 
         <component id="street_road">
             <transformation>
-                <translate x="0" y="0.3" z="0"/>
+                <transformationref id="tr_street_road" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -165,7 +202,7 @@
 
         <component id="street_road_floor">
             <transformation>
-                <scale x="6" y="0.1" z="30"/> 
+                <transformationref id="tr_street_road_floor" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -178,8 +215,7 @@
 
         <component id="street_road_line">
             <transformation>
-                <translate x="0" y="0.01" z="0"/>
-                <scale x=".15" y="0.1" z="30"/>
+                <transformationref id="tr_street_road_line" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -193,8 +229,7 @@
 
         <component id="street_ground_walkway_left">
             <transformation>
-                <translate x="-3.8" y="0.4" z="0"/>
-                <scale x="1.6" y="0.3" z="30"/>
+                <transformationref id="tr_street_ground_walkway_left" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -207,8 +242,7 @@
 
         <component id="street_ground_walkway_right">
             <transformation>
-                <translate x="3.9" y="0.4" z="0"/>
-                <scale x="1.8" y="0.3" z="30"/>
+                <transformationref id="tr_street_ground_walkway_right" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -221,7 +255,7 @@
 
         <component id="street_ground_sign">
             <transformation>
-                <translate x="3.5" y="3" z="-14"/>
+                <transformationref id="tr_street_ground_sign" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -237,7 +271,7 @@
 
         <component id="street_ground_sign_top_outer_flipped">
             <transformation>
-                <rotate axis="y" angle="180"/>
+                <transformationref id="tr_rotateY180" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -262,8 +296,7 @@
 
         <component id="street_ground_sign_top_inner">
             <transformation>
-                <translate x="0" y="0.025" z="0.001"/>
-                <scale x="0.8" y="0.8" z="1"/>
+                <transformationref id="tr_street_ground_sign_top_inner" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -276,9 +309,7 @@
 
         <component id="street_ground_sign_cylinder">
             <transformation>
-                <translate x="0" y="-3" z="-0.05"/>
-                <rotate axis="x" angle="-90"/>
-                <scale x="0.05" y="0.05" z="3.5"/>
+                <transformationref id="tr_street_ground_sign_cylinder" />
             </transformation>
             <materials>
                 <material id="inherit" />
