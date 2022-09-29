@@ -458,7 +458,8 @@ export class MySceneGraph {
     parseTransformationSequence(transformationList, transformationID=""){
         // Specifications for the current transformation.
         var transfMatrix = mat4.create();
-        for (var i = 0; i < transformationList.length; i++) {
+        for (var i = transformationList.length - 1; i >= 0; i--) {
+            console.error(i);
             switch (transformationList[i].nodeName) {
                 case 'translate':
                     var coordinates = this.parseCoordinates3D(transformationList[i], "translate transformation for ID " + transformationID); // TODO: Remove for id in component transformations
