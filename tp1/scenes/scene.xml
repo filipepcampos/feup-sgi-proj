@@ -1,5 +1,5 @@
 <sxs>
-    <scene root="car" axis_length="5"/>
+    <scene root="root" axis_length="5"/>
 
     <views default="defaultCamera">
         <perspective id="defaultCamera" near="0.1" far="500" angle="45">
@@ -44,8 +44,14 @@
     </transformations>
 
     <primitives>
-        <primitive id="demoRectangle">
+        <primitive id="rectangle">
             <rectangle x1="0" y1="0" x2="1" y2="1" />
+        </primitive>
+        <primitive id="cylinder">
+            <cylinder base="1.0" top="1.0" height="1.0" slices="16" stacks="16" />
+        </primitive>
+        <primitive id="cone">
+            <cylinder base="1.0" top="0.0" height="1.0" slices="16" stacks="16" />
         </primitive>
         <primitive id="car_lateral_window_primitive1">
             <triangle x1="-0.1" y1="0" x2="2.225" y2="0" x3="0.25537" y3="1.09371"/>
@@ -210,7 +216,7 @@
         <!-- Car components -->
         <component id="car">
             <transformation>
-                <translate x="-1.5" y="1" z="0"/>
+                <translate x="-1.5" y="1.18" z="0"/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -248,7 +254,7 @@
             </materials>
             <texture id="inherit"/>
             <children>
-                <primitiveref id="demoRectangle"/>
+                <primitiveref id="rectangle"/>
             </children>
         </component>
 
@@ -277,7 +283,7 @@
             </materials>
             <texture id="inherit"/>
             <children>
-                <primitiveref id="demoRectangle"/>
+                <primitiveref id="rectangle"/>
             </children>
         </component>
 
@@ -423,6 +429,19 @@
 
         <component id="car_bottom">
             <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="car_bottom_body"/>
+                <componentref id="car_bottom_wheels"/>
+            </children>
+        </component>
+
+        <component id="car_bottom_body">
+            <transformation>
                 <scale x="1.8" y="0.9" z="3.8"/>
             </transformation>
             <materials>
@@ -431,6 +450,102 @@
             <texture id="inherit"/>
             <children>
                 <componentref id="p_cube"/>
+            </children>
+        </component>
+
+        <component id="car_bottom_wheels">
+            <transformation>
+                <translate x="0" y="-0.4" z="-1.2"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="wheel_set"/>
+                <componentref id="forward_wheel_set"/>
+            </children>
+        </component>
+
+        <component id="forward_wheel_set">
+            <transformation>
+                <translate x="0" y="0" z="2.1"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="wheel_set"/>
+            </children>
+        </component>
+
+        <component id="wheel_set">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="wheel"/>
+                <componentref id="wheel_flipped"/>
+            </children>
+        </component>
+
+        <component id="wheel_flipped">
+            <transformation>
+                <rotate axis="y" angle="180"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="wheel"/>
+            </children>
+        </component>
+
+        <component id="wheel">
+            <transformation>
+                <translate x="0.6" y="0" z="0"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="wheel_tire"/>
+                <componentref id="wheel_rims"/>
+            </children>
+        </component>
+
+        <component id="wheel_tire">
+            <transformation>
+                <scale x="0.35" y="0.45" z="0.45"/>
+                <rotate axis="y" angle="90"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id="cylinder"/>
+            </children>
+        </component>
+
+        <component id="wheel_rims">
+            <transformation>
+                <translate x="0.35" y="0" z="0"/>
+                <scale x="0.05" y="0.45" z="0.45"/>
+                <rotate axis="y" angle="90"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id="cone"/>
             </children>
         </component>
 
@@ -560,7 +675,7 @@
             </materials>
             <texture id="inherit"/>
             <children>
-                <primitiveref id="demoRectangle"/>
+                <primitiveref id="rectangle"/>
             </children>
         </component>
 
