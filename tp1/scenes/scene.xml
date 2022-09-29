@@ -47,6 +47,9 @@
         <primitive id="rectangle">
             <rectangle x1="0" y1="0" x2="1" y2="1" />
         </primitive>
+        <primitive id="triangle">
+            <triangle x1="0" y1="0" x2="1" y2="0" x3="0.5" y3="0.866"/>
+        </primitive>
         <primitive id="cylinder">
             <cylinder base="1.0" top="1.0" height="1.0" slices="16" stacks="16" />
         </primitive>
@@ -82,16 +85,31 @@
             </materials>
             <texture id="inherit"/>
             <children>
-                <componentref id="street_building" />
+                <componentref id="street_building0" />
+                <componentref id="street_building1" />
                 <componentref id="street_ground" />
                 <componentref id="car" />
             </children>
         </component>
 
-        <component id="street_building">
+        <component id="street_building0">
             <transformation>
                 <translate x="-10" y="15" z="5"/>
                 <scale x="10" y="30" z="10"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="p_cube_without_base"/>
+            </children>
+        </component>
+
+        <component id="street_building1">
+            <transformation>
+                <translate x="-10" y="7.6" z="-7"/>
+                <scale x="10" y="15" z="8"/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -111,6 +129,7 @@
             <texture id="inherit"/>
             <children>
                 <componentref id="street_ground_floor"/>
+                <componentref id="street_ground_sign"/>
                 <componentref id="street_road"/>
                 <componentref id="street_ground_walkway_left"/>
                 <componentref id="street_ground_walkway_right"/>
@@ -197,6 +216,76 @@
             <texture id="inherit"/>
             <children>
                 <componentref id="p_cube_without_base"/>
+            </children>
+        </component>
+
+        <component id="street_ground_sign">
+            <transformation>
+                <translate x="3.5" y="3" z="-14"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="street_ground_sign_top_outer"/>
+                <componentref id="street_ground_sign_top_outer_flipped"/>
+                <componentref id="street_ground_sign_top_inner"/>
+                <componentref id="street_ground_sign_cylinder"/>
+            </children>
+        </component>
+
+        <component id="street_ground_sign_top_outer_flipped">
+            <transformation>
+                <rotate axis="y" angle="180"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="street_ground_sign_top_outer"/>
+            </children>
+        </component>
+
+        <component id="street_ground_sign_top_outer">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="p_upside_down_triangle"/>
+            </children>
+        </component>
+
+        <component id="street_ground_sign_top_inner">
+            <transformation>
+                <translate x="0" y="0.025" z="0.001"/>
+                <scale x="0.8" y="0.8" z="1"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="p_upside_down_triangle"/>
+            </children>
+        </component>
+
+        <component id="street_ground_sign_cylinder">
+            <transformation>
+                <translate x="0" y="-3" z="-0.05"/>
+                <rotate axis="x" angle="-90"/>
+                <scale x="0.05" y="0.05" z="3.5"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id="cylinder"/>
             </children>
         </component>
 
@@ -517,6 +606,7 @@
             <children>
                 <componentref id="wheel_tire"/>
                 <componentref id="wheel_rims"/>
+                <componentref id="wheel_inner_base"/>
             </children>
         </component>
 
@@ -539,6 +629,21 @@
                 <translate x="0.35" y="0" z="0"/>
                 <scale x="0.05" y="0.45" z="0.45"/>
                 <rotate axis="y" angle="90"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id="cone"/>
+            </children>
+        </component>
+
+        <component id="wheel_inner_base">
+            <transformation>
+                <translate x="0" y="0" z="0"/>
+                <scale x="0.01" y="0.45" z="0.45"/>
+                <rotate axis="y" angle="-90"/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -689,6 +794,20 @@
             <texture id="inherit"/>
             <children>
                 <componentref id="p_face_z+"/>
+            </children>
+        </component>
+
+        <component id="p_upside_down_triangle">
+            <transformation>
+                <rotate axis="z" angle="180"/>
+                <translate x="-0.5" y="-0.433" z="0"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id="triangle"/>
             </children>
         </component>
     </components>
