@@ -29,122 +29,28 @@
     <materials>
         <material id="defaultMaterial" shininess="10">
             <emission r="0.0" g="0.0" b="0.0" a="1.0" />
-            <ambient r="0.8" g="0.8" b="0.8" a="1.0" />
-            <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
-            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
-        </material>
-        <material id="green" shininess="10">
-            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
-            <ambient r="0.258" g="0.388" b="0.211" a="1.0" />
-            <diffuse r="0.258" g="0.388" b="0.211" a="1.0" />
-            <specular r="0.258" g="0.388" b="0.211" a="1.0" />
-        </material>
-        <material id="red" shininess="10">
-            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
-            <ambient r="0.2" g="0.0" b="0.0" a="1.0" />
+            <ambient r="1.0" g="0.0" b="0.0" a="1.0" />
             <diffuse r="0.6" g="0.0" b="0.0" a="1.0" />
             <specular r="0.6" g="0.0" b="0.0" a="1.0" />
-        </material>
-        <material id="white" shininess="10">
-            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
-            <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
-            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
-            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
-        </material>
-        <material id="dark_gray" shininess="10">
-            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
-            <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
-            <diffuse r="0.2" g="0.2" b="0.2" a="1.0" />
-            <specular r="0.2" g="0.2" b="0.2" a="1.0" />
-        </material>
-        <material id="medium_gray" shininess="10">
-            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
-            <ambient r="0.4" g="0.4" b="0.4" a="1.0" />
-            <diffuse r="0.4" g="0.4" b="0.4" a="1.0" />
-            <specular r="0.4" g="0.4" b="0.4" a="1.0" />
         </material>
     </materials>
 
     <transformations>
-        <!-- Reusable transformations -->
-        <transformation id="tr_rotateX90">
-            <rotate axis="x" angle="90"/>
+        <!--  <transformationref id=""/>-->
+        
+        <transformation id="">
         </transformation>
-        <transformation id="tr_rotateY180">
-            <rotate axis="y" angle="180"/>
+        <transformation id="">
         </transformation>
-
-        <!-- Unique transformations -->
-        <transformation id="tr_street_building0">
-            <translate x="-10" y="15" z="5"/>
-            <scale x="10" y="30" z="10"/>
+        <transformation id="">
         </transformation>
-        <transformation id="tr_street_building1">
-            <translate x="-10" y="7.6" z="-7"/>
-            <scale x="10" y="15" z="8"/>
+        <transformation id="">
         </transformation>
-        <transformation id="tr_street_ground_floor">
-            <scale x="30" y="0.5" z="30" />
+        <transformation id="">
         </transformation>
-        <transformation id="tr_street_road">
-            <translate x="0" y="0.3" z="0"/>
+        <transformation id="">
         </transformation>
-        <transformation id="tr_street_road_floor">
-            <scale x="6" y="0.1" z="30"/> 
-        </transformation>
-        <transformation id="tr_street_road_line">
-            <translate x="0" y="0.01" z="0"/>
-            <scale x=".15" y="0.1" z="30"/>
-        </transformation>
-        <transformation id="tr_street_ground_walkway_left">
-            <translate x="-3.8" y="0.4" z="0"/>
-            <scale x="1.6" y="0.3" z="30"/>
-        </transformation>
-        <transformation id="tr_street_ground_walkway_right">
-            <translate x="3.9" y="0.4" z="0"/>
-            <scale x="1.8" y="0.3" z="30"/>
-        </transformation>
-        <transformation id="tr_street_ground_sign">
-            <translate x="3.5" y="3" z="-14"/>
-        </transformation>
-        <transformation id="tr_street_ground_sign_top_inner">
-            <translate x="0" y="0.025" z="0.001"/>
-            <scale x="0.8" y="0.8" z="1"/>
-        </transformation>
-        <transformation id="tr_street_ground_sign_cylinder">
-            <translate x="0" y="-3" z="-0.05"/>
-            <rotate axis="x" angle="-90"/>
-            <scale x="0.05" y="0.05" z="3.5"/>
-        </transformation>
-        <transformation id="tr_car">
-            <translate x="-1.5" y="1.18" z="0"/>
-        </transformation>
-        <transformation id="tr_car_front_window">
-            <translate x="-0.8" y="0.3" z="0.9" />
-            <scale x="1.6" y="1.0" z="1"/>
-            <rotate axis="x" angle="-21.5"/>
-        </transformation>
-        <transformation id="tr_car_back_window">
-            <translate x="0" y="0.8" z="-1.45" />
-            <scale x="1.6" y="0.8" z="1"/>
-            <rotate axis="x" angle="12.5"/>
-            <rotate axis="y" angle="180"/>
-            <translate x="-0.5" y="-0.5" z="0"/>
-        </transformation>
-        <transformation id="tr_car_top">
-            <translate x="0" y="1.2" z="-0.4"/>
-            <scale x="1.8" y="0.1" z="1.9"/>
-        </transformation>
-        <transformation id="tr_flipX">
-            <scale x="-1" y="1" z="1"/>
-        </transformation>
-        <transformation id="tr_car_lateral_left">
-            <scale x="1" y="0.8" z="1"/>
-            <translate x="0.9" y="0.9" z="0"/>
-        </transformation>
-        <transformation id="tr_car_lateral_window">
-            <translate x="-0.05" y="-0.45" z="0.7"/>
-            <rotate axis="y" angle="90" />
+        <transformation id="">
         </transformation>
     </transformations>
 
@@ -199,7 +105,8 @@
 
         <component id="street_building0">
             <transformation>
-                <transformationref id="tr_street_building0" />
+                <translate x="-10" y="15" z="5"/>
+                <scale x="10" y="30" z="10"/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -212,7 +119,8 @@
 
         <component id="street_building1">
             <transformation>
-                <transformationref id="tr_street_building1" />
+                <translate x="-10" y="7.6" z="-7"/>
+                <scale x="10" y="15" z="8"/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -241,7 +149,7 @@
 
         <component id="street_ground_floor">
             <transformation>
-                <transformationref id="tr_street_ground_floor" />
+                <scale x="30" y="0.5" z="30" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -254,7 +162,7 @@
 
         <component id="street_road">
             <transformation>
-                <transformationref id="tr_street_road" />
+                <translate x="0" y="0.3" z="0"/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -268,10 +176,10 @@
 
         <component id="street_road_floor">
             <transformation>
-                <transformationref id="tr_street_road_floor" />
+                <scale x="6" y="0.1" z="30"/> 
             </transformation>
             <materials>
-                <material id="dark_gray" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit"/>
             <children>
@@ -281,10 +189,11 @@
 
         <component id="street_road_line">
             <transformation>
-                <transformationref id="tr_street_road_line" />
+                <translate x="0" y="0.01" z="0"/>
+                <scale x=".15" y="0.1" z="30"/>
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit"/>
             <children>
@@ -295,10 +204,11 @@
 
         <component id="street_ground_walkway_left">
             <transformation>
-                <transformationref id="tr_street_ground_walkway_left" />
+                <translate x="-3.8" y="0.4" z="0"/>
+                <scale x="1.6" y="0.3" z="30"/>
             </transformation>
             <materials>
-                <material id="medium_gray" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit"/>
             <children>
@@ -308,10 +218,11 @@
 
         <component id="street_ground_walkway_right">
             <transformation>
-                <transformationref id="tr_street_ground_walkway_right" />
+                <translate x="3.9" y="0.4" z="0"/>
+                <scale x="1.8" y="0.3" z="30"/>
             </transformation>
             <materials>
-                <material id="medium_gray" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit"/>
             <children>
@@ -321,10 +232,10 @@
 
         <component id="street_ground_sign">
             <transformation>
-                <transformationref id="tr_street_ground_sign" />
+                <translate x="3.5" y="3" z="-14"/>
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit"/>
             <children>
@@ -337,10 +248,10 @@
 
         <component id="street_ground_sign_top_outer_flipped">
             <transformation>
-                <transformationref id="tr_rotateY180" />
+                <rotate axis="y" angle="180"/>
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit"/>
             <children>
@@ -352,7 +263,7 @@
             <transformation>
             </transformation>
             <materials>
-                <material id="red" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit"/>
             <children>
@@ -362,10 +273,11 @@
 
         <component id="street_ground_sign_top_inner">
             <transformation>
-                <transformationref id="tr_street_ground_sign_top_inner" />
+                <translate x="0" y="0.025" z="0.001"/>
+                <scale x="0.8" y="0.8" z="1"/>
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit"/>
             <children>
@@ -375,7 +287,9 @@
 
         <component id="street_ground_sign_cylinder">
             <transformation>
-                <transformationref id="tr_street_ground_sign_cylinder" />
+                <translate x="0" y="-3" z="-0.05"/>
+                <rotate axis="x" angle="-90"/>
+                <scale x="0.05" y="0.05" z="3.5"/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -386,13 +300,26 @@
             </children>
         </component>
 
+        <!-- Component template for copy paste
+        <component id="something">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+            </children>
+        </component>
+        -->
+
         <!-- Car components -->
         <component id="car">
             <transformation>
-                <transformationref id="tr_car"/>
+                <translate x="-1.5" y="1.18" z="0"/>
             </transformation>
             <materials>
-                <material id="green" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit"/>
             <children>
@@ -418,7 +345,9 @@
 
         <component id="car_front_window">
             <transformation>
-                <transformationref id="tr_car_front_window"/>
+                <translate x="-0.8" y="0.3" z="0.9" />
+                <scale x="1.6" y="1.0" z="1"/>
+                <rotate axis="x" angle="-21.5"/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -443,7 +372,11 @@
 
         <component id="car_back_window">
             <transformation>
-                <transformationref id="tr_car_back_window"/>
+                <translate x="0" y="0.8" z="-1.45" />
+                <scale x="1.6" y="0.8" z="1"/>
+                <rotate axis="x" angle="12.5"/>
+                <rotate axis="y" angle="180"/>
+                <translate x="-0.5" y="-0.5" z="0"/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -456,7 +389,8 @@
 
         <component id="car_top">
             <transformation>
-                <transformationref id="tr_car_top"/>
+                <translate x="0" y="1.2" z="-0.4"/>
+                <scale x="1.8" y="0.1" z="1.9"/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -482,7 +416,7 @@
         
         <component id="car_lateral_right">
             <transformation>
-                <transformationref id="tr_flipX"/>
+                <scale x="-1" y="1" z="1"/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -495,7 +429,8 @@
 
         <component id="car_lateral_left">
             <transformation>
-                <transformationref id="tr_car_lateral_left"/>
+                <scale x="1" y="0.8" z="1"/>
+                <translate x="0.9" y="0.9" z="0"/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -521,7 +456,8 @@
 
         <component id="car_lateral_window">
             <transformation>
-                <transformationref id="tr_car_lateral_window"/>
+                <translate x="-0.05" y="-0.45" z="0.7"/>
+                <rotate axis="y" angle="90" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -622,7 +558,7 @@
                 <translate x="0" y="-0.4" z="-1.2"/>
             </transformation>
             <materials>
-                <material id="medium_gray" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit"/>
             <children>
@@ -659,7 +595,7 @@
 
         <component id="wheel_flipped">
             <transformation>
-                <transformationref id="tr_rotateY180"/>
+                <rotate axis="y" angle="180"/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -796,7 +732,7 @@
 
         <component id="p_two_faces_along_y">
             <transformation>
-                <transformationref id="tr_rotateX90"/>
+                <rotate axis="x" angle="90"/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -835,7 +771,7 @@
 
         <component id="p_face_y-">
             <transformation>
-                <transformationref id="tr_rotateX90"/>
+                <rotate axis="x" angle="90"/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -861,7 +797,7 @@
 
         <component id="p_face_z-">
             <transformation>
-                <transformationref id="tr_rotateY180"/>
+                <rotate axis="y" angle="180"/>
             </transformation>
             <materials>
                 <material id="inherit" />

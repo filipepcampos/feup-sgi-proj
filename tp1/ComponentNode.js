@@ -26,6 +26,15 @@ export class ComponentNode {
         var matrix = sceneData.getTransformation(this.transformationId);
         var scene = sceneData.getScene();
 
+        if(this.materialId != 'inherit'){
+            sceneData.matStack.push(this.materialId);
+            console.log("1. ", sceneData.materials[this.materialId]);
+            console.log("2. ", sceneData.materials[this.materialId].appearence);
+            sceneData.materials[this.materialId].appearance.apply();
+        } else {
+            sceneData.matStack.push('inherit');
+        }
+
         // Save matrix
         scene.pushMatrix();
         
@@ -38,5 +47,10 @@ export class ComponentNode {
         }
         // Restore matrix
         scene.popMatrix();
+
+        var topMat = sceneData.matStack.pop();
+        if(topMat != 'inherit'){
+            sceneData.materials[topMat].appearance.apply();
+        }
     }
 }
