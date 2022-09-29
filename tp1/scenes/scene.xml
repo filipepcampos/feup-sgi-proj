@@ -1,5 +1,5 @@
 <sxs>
-    <scene root="root" axis_length="5"/>
+    <scene root="car" axis_length="5"/>
 
     <views default="defaultCamera">
         <perspective id="defaultCamera" near="0.1" far="500" angle="45">
@@ -46,6 +46,12 @@
     <primitives>
         <primitive id="demoRectangle">
             <rectangle x1="0" y1="0" x2="1" y2="1" />
+        </primitive>
+        <primitive id="car_lateral_window_primitive1">
+            <triangle x1="-0.1" y1="0" x2="2.225" y2="0" x3="0.25537" y3="1.09371"/>
+        </primitive>
+        <primitive id="car_lateral_window_primitive2">  
+            <triangle x1="2.225" y1="0" x2="1.95631" y2="1.10053" x3="0.25537" y3="1.09371"/>
         </primitive>
     </primitives>
 
@@ -213,6 +219,7 @@
             <children>
                 <componentref id="car_front"/>
                 <componentref id="car_top" />
+                <componentref id="car_back" />
                 <componentref id="car_laterals"/>
                 <componentref id="car_bottom"/>
             </children>
@@ -226,6 +233,51 @@
             </materials>
             <texture id="inherit"/>
             <children>
+                <componentref id="car_front_window"/>
+            </children>
+        </component>
+
+        <component id="car_front_window">
+            <transformation>
+                <translate x="-0.8" y="0.3" z="0.9" />
+                <scale x="1.6" y="1.0" z="1"/>
+                <rotate axis="x" angle="-21.5"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id="demoRectangle"/>
+            </children>
+        </component>
+
+        <component id="car_back">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="car_back_window"/>
+            </children>
+        </component>
+
+        <component id="car_back_window">
+            <transformation>
+                <translate x="0" y="0.8" z="-1.45" />
+                <scale x="1.6" y="0.8" z="1"/>
+                <rotate axis="x" angle="12.5"/>
+                <rotate axis="y" angle="180"/>
+                <translate x="-0.5" y="-0.5" z="0"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id="demoRectangle"/>
             </children>
         </component>
 
@@ -292,8 +344,22 @@
             </materials>
             <texture id="inherit"/>
             <children>
-                <componentref id="car_lateral_window_front" />
-                <componentref id="car_lateral_window_back" />
+                <componentref id="car_lateral_window" />
+            </children>
+        </component>
+
+        <component id="car_lateral_window">
+            <transformation>
+                <translate x="-0.05" y="-0.45" z="0.7"/>
+                <rotate axis="y" angle="90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id="car_lateral_window_primitive1"/>
+                <primitiveref id="car_lateral_window_primitive2"/>
             </children>
         </component>
 
