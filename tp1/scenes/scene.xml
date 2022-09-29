@@ -36,6 +36,15 @@
     </materials>
 
     <transformations>
+        <!-- Reusable transformations -->
+        <transformation id="tr_rotateX90">
+            <rotate axis="x" angle="90"/>
+        </transformation>
+        <transformation id="tr_rotateY180">
+            <rotate axis="y" angle="180"/>
+        </transformation>
+
+        <!-- Unique transformations -->
         <transformation id="tr_street_building0">
             <translate x="-10" y="15" z="5"/>
             <scale x="10" y="30" z="10"/>
@@ -68,9 +77,6 @@
         <transformation id="tr_street_ground_sign">
             <translate x="3.5" y="3" z="-14"/>
         </transformation>
-        <transformation id="tr_rotateY180">
-            <rotate axis="y" angle="180"/>
-        </transformation>
         <transformation id="tr_street_ground_sign_top_inner">
             <translate x="0" y="0.025" z="0.001"/>
             <scale x="0.8" y="0.8" z="1"/>
@@ -79,6 +85,36 @@
             <translate x="0" y="-3" z="-0.05"/>
             <rotate axis="x" angle="-90"/>
             <scale x="0.05" y="0.05" z="3.5"/>
+        </transformation>
+        <transformation id="tr_car">
+            <translate x="-1.5" y="1.18" z="0"/>
+        </transformation>
+        <transformation id="tr_car_front_window">
+            <translate x="-0.8" y="0.3" z="0.9" />
+            <scale x="1.6" y="1.0" z="1"/>
+            <rotate axis="x" angle="-21.5"/>
+        </transformation>
+        <transformation id="tr_car_back_window">
+            <translate x="0" y="0.8" z="-1.45" />
+            <scale x="1.6" y="0.8" z="1"/>
+            <rotate axis="x" angle="12.5"/>
+            <rotate axis="y" angle="180"/>
+            <translate x="-0.5" y="-0.5" z="0"/>
+        </transformation>
+        <transformation id="tr_car_top">
+            <translate x="0" y="1.2" z="-0.4"/>
+            <scale x="1.8" y="0.1" z="1.9"/>
+        </transformation>
+        <transformation id="tr_flipX">
+            <scale x="-1" y="1" z="1"/>
+        </transformation>
+        <transformation id="tr_car_lateral_left">
+            <scale x="1" y="0.8" z="1"/>
+            <translate x="0.9" y="0.9" z="0"/>
+        </transformation>
+        <transformation id="tr_car_lateral_window">
+            <translate x="-0.05" y="-0.45" z="0.7"/>
+            <rotate axis="y" angle="90" />
         </transformation>
     </transformations>
 
@@ -320,23 +356,10 @@
             </children>
         </component>
 
-        <!-- Component template for copy paste
-        <component id="something">
-            <transformation>
-            </transformation>
-            <materials>
-                <material id="inherit" />
-            </materials>
-            <texture id="inherit"/>
-            <children>
-            </children>
-        </component>
-        -->
-
         <!-- Car components -->
         <component id="car">
             <transformation>
-                <translate x="-1.5" y="1.18" z="0"/>
+                <transformationref id="tr_car"/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -365,9 +388,7 @@
 
         <component id="car_front_window">
             <transformation>
-                <translate x="-0.8" y="0.3" z="0.9" />
-                <scale x="1.6" y="1.0" z="1"/>
-                <rotate axis="x" angle="-21.5"/>
+                <transformationref id="tr_car_front_window"/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -392,11 +413,7 @@
 
         <component id="car_back_window">
             <transformation>
-                <translate x="0" y="0.8" z="-1.45" />
-                <scale x="1.6" y="0.8" z="1"/>
-                <rotate axis="x" angle="12.5"/>
-                <rotate axis="y" angle="180"/>
-                <translate x="-0.5" y="-0.5" z="0"/>
+                <transformationref id="tr_car_back_window"/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -409,8 +426,7 @@
 
         <component id="car_top">
             <transformation>
-                <translate x="0" y="1.2" z="-0.4"/>
-                <scale x="1.8" y="0.1" z="1.9"/>
+                <transformationref id="tr_car_top"/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -436,7 +452,7 @@
         
         <component id="car_lateral_right">
             <transformation>
-                <scale x="-1" y="1" z="1"/>
+                <transformationref id="tr_flipX"/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -449,8 +465,7 @@
 
         <component id="car_lateral_left">
             <transformation>
-                <scale x="1" y="0.8" z="1"/>
-                <translate x="0.9" y="0.9" z="0"/>
+                <transformationref id="tr_car_lateral_left"/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -476,8 +491,7 @@
 
         <component id="car_lateral_window">
             <transformation>
-                <translate x="-0.05" y="-0.45" z="0.7"/>
-                <rotate axis="y" angle="90" />
+                <transformationref id="tr_car_lateral_window"/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -615,7 +629,7 @@
 
         <component id="wheel_flipped">
             <transformation>
-                <rotate axis="y" angle="180"/>
+                <transformationref id="tr_rotateY180"/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -752,7 +766,7 @@
 
         <component id="p_two_faces_along_y">
             <transformation>
-                <rotate axis="x" angle="90"/>
+                <transformationref id="tr_rotateX90"/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -791,7 +805,7 @@
 
         <component id="p_face_y-">
             <transformation>
-                <rotate axis="x" angle="90"/>
+                <transformationref id="tr_rotateX90"/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -817,7 +831,7 @@
 
         <component id="p_face_z-">
             <transformation>
-                <rotate axis="y" angle="180"/>
+                <transformationref id="tr_rotateY180"/>
             </transformation>
             <materials>
                 <material id="inherit" />

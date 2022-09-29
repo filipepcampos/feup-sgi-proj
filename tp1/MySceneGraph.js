@@ -527,6 +527,9 @@ export class MySceneGraph {
         var children = transformationNode.children;
         if(children.length == 1 && children[0].nodeName === "transformationref") {
             var id = this.reader.getString(children[0], 'id');
+            if(this.transformations[id] == null){ // TODO: Proper error handling
+                this.onXMLMinorError('transformation with id=' + id + ' is not defined.');
+            }
         } else {
             var transfMatrix = this.parseTransformationSequence(children);
             do {
