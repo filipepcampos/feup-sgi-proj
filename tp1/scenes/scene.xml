@@ -1,5 +1,5 @@
 <sxs>
-    <scene root="root" axis_length="0.01"/>
+    <scene root="root" axis_length="5"/>
 
     <views default="defaultCamera">
         <perspective id="defaultCamera" near="0.1" far="500" angle="45">
@@ -172,6 +172,9 @@
         </primitive>
         <primitive id="cone">
             <cylinder base="1.0" top="0.0" height="1.0" slices="16" stacks="16" />
+        </primitive>
+        <primitive id="sphere">
+            <sphere radius="1.0" slices="16" stacks="16" />
         </primitive>
         <primitive id="car_lateral_window_primitive1">
             <triangle x1="-0.1" y1="0" x2="2.225" y2="0" x3="0.25537" y3="1.09371"/>
@@ -425,6 +428,48 @@
             <texture id="inherit"/>
             <children>
                 <componentref id="car_front_window"/>
+                <componentref id="car_front_headlights"/>
+            </children>
+        </component>
+
+        <component id="car_front_headlights">
+            <transformation>
+                <translate x="0" y="0.15" z="1.9"/>
+            </transformation>
+            <materials>
+                <material id="pastel_yellow" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="car_front_headlight_left"/>
+                <componentref id="car_front_headlight_right"/>
+            </children>
+        </component>
+
+        <component id="car_front_headlight_right">
+            <transformation>
+                <transformationref id="tr_rotateY180"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="car_front_headlight_left"/>
+            </children>
+        </component>
+
+        <component id="car_front_headlight_left">
+            <transformation>
+                <translate x="3.0" y="0" z="0"/>
+                <scale x="0.2" y="0.2" z="0.1"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id="sphere"/>
             </children>
         </component>
 
