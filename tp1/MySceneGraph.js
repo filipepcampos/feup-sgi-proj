@@ -459,7 +459,6 @@ export class MySceneGraph {
         // Specifications for the current transformation.
         var transfMatrix = mat4.create();
         for (var i = transformationList.length - 1; i >= 0; i--) {
-            console.error(i);
             switch (transformationList[i].nodeName) {
                 case 'translate':
                     var coordinates = this.parseCoordinates3D(transformationList[i], "translate transformation for ID " + transformationID); // TODO: Remove for id in component transformations
@@ -771,7 +770,6 @@ export class MySceneGraph {
             var materialsIndex = nodeNames.indexOf("materials");
             
             var wtfMaterialId = this.reader.getString(grandChildren[materialsIndex].children[0], 'id');
-            console.log(wtfMaterialId);
             var textureIndex = nodeNames.indexOf("texture");
             var childrenIndex = nodeNames.indexOf("children");
 
@@ -779,7 +777,6 @@ export class MySceneGraph {
 
             // Transformations
             var parsedTransformation = this.parseComponentTransformation(grandChildren[transformationIndex]);
-            console.log(parsedTransformation);  // TODO: DELETE
 
             // Materials
 

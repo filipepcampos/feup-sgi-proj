@@ -28,8 +28,6 @@ export class ComponentNode {
 
         if(this.materialId != 'inherit'){
             sceneData.matStack.push(this.materialId);
-            console.log("1. ", sceneData.materials[this.materialId]);
-            console.log("2. ", sceneData.materials[this.materialId].appearence);
             sceneData.materials[this.materialId].appearance.apply();
         } else {
             sceneData.matStack.push('inherit');
