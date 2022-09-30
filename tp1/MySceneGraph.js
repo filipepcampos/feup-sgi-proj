@@ -5,6 +5,7 @@ import { MyTriangle } from './MyTriangle.js';
 import { SceneData } from './SceneData.js';
 import { MyCylinder } from './MyCylinder.js';
 import { MySphere } from './MySphere.js';
+import { Material } from './Material.js';
 
 var DEGREE_TO_RAD = Math.PI / 180;
 
@@ -426,27 +427,35 @@ export class MySceneGraph {
 
         // Any number of materials.
         for (var i = 0; i < children.length; i++) {
-
-            if (children[i].nodeName != "material") {
-                this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
-                continue;
-            }
-
-            // Get id of the current material.
-            var materialID = this.reader.getString(children[i], 'id');
-            if (materialID == null)
-                return "no ID defined for material";
-
-            // Checks for repeated IDs.
-            if (this.materials[materialID] != null)
-                return "ID must be unique for each light (conflict: ID = " + materialID + ")";
-
-            //Continue here
-            this.onXMLMinorError("To do: Parse materials.");
+            this.parseMaterial(children[i]);
         }
 
         //this.log("Parsed materials");
         return null;
+    }
+
+    // TODO: Document
+    parseMaterial(node){
+        if (node.nodeName != "material") {
+            this.onXMLMinorError("unknown tag <" + node.nodeName + ">");
+            return;
+        }
+
+        // Get id of the current material.
+        var materialID = this.reader.getString(node, 'id');
+        if (materialID == null)
+            return "no ID defined for material";
+
+        // Checks for repeated IDs.
+        if (this.materials[materialID] != null)
+            return "ID must be unique for each light (conflict: ID = " + materialID + ")";
+
+        var children = node.children;
+        var params = [];
+        for(var i = 0; i < children.length; i++){
+            params.push(this.parseMat(children[i], "scale transformation for ID " + materialID));
+        }
+        this.materials[materialID] = new Material(...params, this.scene);
     }
 
     /** 
@@ -457,7 +466,7 @@ export class MySceneGraph {
     parseTransformationSequence(transformationList, transformationID=""){
         // Specifications for the current transformation.
         var transfMatrix = mat4.create();
-        for (var i = 0; i < transformationList.length; i++) {
+        for (var i = transformationList.length - 1; i >= 0; i--) {
             switch (transformationList[i].nodeName) {
                 case 'translate':
                     var coordinates = this.parseCoordinates3D(transformationList[i], "translate transformation for ID " + transformationID); // TODO: Remove for id in component transformations
@@ -537,6 +546,9 @@ export class MySceneGraph {
         var children = transformationNode.children;
         if(children.length == 1 && children[0].nodeName === "transformationref") {
             var id = this.reader.getString(children[0], 'id');
+            if(this.transformations[id] == null){ // TODO: Proper error handling
+                this.onXMLMinorError('transformation with id=' + id + ' is not defined.');
+            }
         } else {
             var transfMatrix = this.parseTransformationSequence(children);
             do {
@@ -766,6 +778,8 @@ export class MySceneGraph {
 
             var transformationIndex = nodeNames.indexOf("transformation");
             var materialsIndex = nodeNames.indexOf("materials");
+            
+            var wtfMaterialId = this.reader.getString(grandChildren[materialsIndex].children[0], 'id');
             var textureIndex = nodeNames.indexOf("texture");
             var childrenIndex = nodeNames.indexOf("children");
 
@@ -773,7 +787,6 @@ export class MySceneGraph {
 
             // Transformations
             var parsedTransformation = this.parseComponentTransformation(grandChildren[transformationIndex]);
-            console.log(parsedTransformation);  // TODO: DELETE
 
             // Materials
 
@@ -785,7 +798,7 @@ export class MySceneGraph {
             var node = new ComponentNode(
                 componentID, 
                 parsedTransformation, 
-                "todo", 
+                wtfMaterialId, 
                 "todo", 
                 parsedChildren['components'], 
                 parsedChildren['primitives']
@@ -924,6 +937,24 @@ export class MySceneGraph {
             'axis': axis,
             'angle': angle
         }
+    }
+
+    parseMat(node, messageError) {
+        // Get axis
+        var r = this.reader.getFloat(node, 'r');
+        if (!(r != null && !isNaN(r)))
+            return "unable to parse  of the " + messageError;
+        var g = this.reader.getFloat(node, 'g');
+        if (!(g != null && !isNaN(g)))
+            return "unable to parse  of the " + messageError;
+        var b = this.reader.getFloat(node, 'b');
+        if (!(b != null && !isNaN(b)))
+            return "unable to parse  of the " + messageError;
+        var a = this.reader.getFloat(node, 'a');
+        if (!(a != null && !isNaN(a)))
+            return "unable to parse  of the " + messageError;
+
+        return [r,g,b,a];
     }
 
     /**

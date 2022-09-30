@@ -12,6 +12,7 @@ export class SceneData {
         this.scene = scene;
         this.textures = textures;
         this.materials = materials;
+        this.matStack = [];
         this.transformations = transformations;
         this.primitives = primitives;
     }
