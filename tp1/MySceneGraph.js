@@ -33,8 +33,6 @@ export class MySceneGraph {
         this.scene = scene;
         scene.graph = this;
 
-        this.nodes = [];
-
         this.idRoot = null;                    // The id of the root element.
         this.embeddedTransformationCount = 0;
 
@@ -70,6 +68,12 @@ export class MySceneGraph {
         }
 
         this.loadedOk = true;
+
+        this.rootNode = this.components[this.idRoot];
+        if (this.rootNode == null) {
+            this.onXMLError("Root node component does not exist.");
+            return;
+        }
         
         this.sceneData = new SceneData(this.scene, this.textures, this.materials, this.transformations, this.primitives);
 
@@ -446,7 +450,9 @@ export class MySceneGraph {
     }
 
     /** 
-     * TODO
+     * Parses a transformation sequence in the given list.
+     * @param {list with transformations} transformationList
+     * @param {transformation id} transformationID
      */
     parseTransformationSequence(transformationList, transformationID=""){
         // Specifications for the current transformation.
@@ -495,7 +501,8 @@ export class MySceneGraph {
     }
 
     /**
-     * TODO
+     * Parses the given transformation node.
+     * @param {transformation node} transformationNode
      */
     parseTransformation(transformationNode){
         if (transformationNode.nodeName != "transformation") {
@@ -519,7 +526,8 @@ export class MySceneGraph {
     }
 
     /**
-     * TODO
+     * Parses the transformation of a component, verifying if it is defined locally or referenced.
+     * @param {transformation node} transformationNode
      */
     parseComponentTransformation(transformationNode){
         if (transformationNode.nodeName != "transformation") {
@@ -677,7 +685,7 @@ export class MySceneGraph {
 
                 // Slices
                 var slices = this.reader.getInteger(grandChildren[0], 'slices');
-                if (!(slices != null && !isNaN(slices) && slices > 0))  // TODO: SLICES > ?
+                if (!(slices != null && !isNaN(slices) && slices > 2))
                     return "unable to parse slices of the primitive coordinates for ID = " + primitiveId;
 
                 // Stacks
@@ -981,7 +989,6 @@ export class MySceneGraph {
      */
     displayScene() {
         //To do: Create display loop for transversing the scene graph
-        var root = this.components[this.idRoot]; // TODO: Check if exists???s
-        root.display(this.sceneData);
+        this.rootNode.display(this.sceneData);
     }
 }
