@@ -161,6 +161,10 @@
             <translate x="0.9" y="0.9" z="0"/>
             <scale x="1" y="0.8" z="1"/>
         </transformation>
+        <transformation id="tr_car_lateral_right">
+            <translate x="-0.795" y="0.9" z="0"/>
+            <scale x="1" y="0.8" z="1"/>
+        </transformation>
         <transformation id="tr_car_lateral_window">
             <rotate axis="y" angle="90" />
             <translate x="-0.05" y="-0.45" z="0.7"/>
@@ -557,7 +561,7 @@
             </materials>
             <texture id="inherit"/>
             <children>
-                <componentref id="p_cube_without_base" />
+                <componentref id="p_cube" />
             </children>
         </component>
 
@@ -565,7 +569,7 @@
             <transformation>
             </transformation>
             <materials>
-                <material id="inherit" />
+                <material id="green" />
             </materials>
             <texture id="inherit"/>
             <children>
@@ -576,14 +580,15 @@
         
         <component id="car_lateral_right">
             <transformation>
-                <transformationref id="tr_flipX"/>
+                <transformationref id="tr_car_lateral_right"/>
             </transformation>
             <materials>
                 <material id="inherit" />
             </materials>
             <texture id="inherit"/>
             <children>
-                <componentref id="car_lateral_left" />
+                <componentref id="car_lateral_pillars" />
+                <componentref id="car_lateral_windows_right" />
             </children>
         </component>
 
@@ -597,11 +602,11 @@
             <texture id="inherit"/>
             <children>
                 <componentref id="car_lateral_pillars" />
-                <componentref id="car_lateral_windows" />
+                <componentref id="car_lateral_windows_left" />
             </children>
         </component>
         
-        <component id="car_lateral_windows">
+        <component id="car_lateral_windows_left">
             <transformation>
             </transformation>
             <materials>
@@ -609,11 +614,26 @@
             </materials>
             <texture id="inherit"/>
             <children>
-                <componentref id="car_lateral_window" />
+                <componentref id="car_lateral_window_left" />
             </children>
         </component>
 
-        <component id="car_lateral_window">
+        <component id="car_lateral_windows_right">
+            <transformation>
+                <rotate axis="y" angle="180"/>
+                <scale x="1" y="1" z="1.03"/>
+                <translate x="-0.1" y="0" z="-0.79"/>
+            </transformation>
+            <materials>
+                <material id="light_green" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="car_lateral_windows_left" />
+            </children>
+        </component>
+
+        <component id="car_lateral_window_left">
             <transformation>
                 <transformationref id="tr_car_lateral_window"/>
             </transformation>
