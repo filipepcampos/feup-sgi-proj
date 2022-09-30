@@ -779,7 +779,7 @@ export class MySceneGraph {
             var transformationIndex = nodeNames.indexOf("transformation");
             var materialsIndex = nodeNames.indexOf("materials");
             
-            var wtfMaterialId = this.reader.getString(grandChildren[materialsIndex].children[0], 'id');
+            var materialId = this.reader.getString(grandChildren[materialsIndex].children[0], 'id');
             var textureIndex = nodeNames.indexOf("texture");
             var childrenIndex = nodeNames.indexOf("children");
 
@@ -798,7 +798,7 @@ export class MySceneGraph {
             var node = new ComponentNode(
                 componentID, 
                 parsedTransformation, 
-                wtfMaterialId, 
+                materialId, 
                 "todo", 
                 parsedChildren['components'], 
                 parsedChildren['primitives']
