@@ -422,19 +422,22 @@ export class MySceneGraph {
 
         this.materials = [];
 
-        var grandChildren = [];
-        var nodeNames = [];
-
         // Any number of materials.
         for (var i = 0; i < children.length; i++) {
-            this.parseMaterial(children[i]);
+            var error = this.parseMaterial(children[i]);
+            if(error != null){
+                this.onXMLMinorError(error);
+            }
         }
 
-        //this.log("Parsed materials");
+        this.log("Parsed materials");
         return null;
     }
 
-    // TODO: Document
+    /**
+     * Parses a single <material> block
+     * @param {material node} node 
+     */
     parseMaterial(node){
         if (node.nodeName != "material") {
             this.onXMLMinorError("unknown tag <" + node.nodeName + ">");
@@ -448,12 +451,12 @@ export class MySceneGraph {
 
         // Checks for repeated IDs.
         if (this.materials[materialID] != null)
-            return "ID must be unique for each light (conflict: ID = " + materialID + ")";
+            return "ID must be unique for each material (conflict: ID = " + materialID + ")";
 
         var children = node.children;
         var params = [];
         for(var i = 0; i < children.length; i++){
-            params.push(this.parseMat(children[i], "scale transformation for ID " + materialID));
+            params.push(this.parseColor(children[i], "material component for ID " + materialID));
         }
         this.materials[materialID] = new Material(...params, this.scene);
     }
@@ -943,24 +946,6 @@ export class MySceneGraph {
             'axis': axis,
             'angle': angle
         }
-    }
-
-    parseMat(node, messageError) {
-        // Get axis
-        var r = this.reader.getFloat(node, 'r');
-        if (!(r != null && !isNaN(r)))
-            return "unable to parse  of the " + messageError;
-        var g = this.reader.getFloat(node, 'g');
-        if (!(g != null && !isNaN(g)))
-            return "unable to parse  of the " + messageError;
-        var b = this.reader.getFloat(node, 'b');
-        if (!(b != null && !isNaN(b)))
-            return "unable to parse  of the " + messageError;
-        var a = this.reader.getFloat(node, 'a');
-        if (!(a != null && !isNaN(a)))
-            return "unable to parse  of the " + messageError;
-
-        return [r,g,b,a];
     }
 
     /**
