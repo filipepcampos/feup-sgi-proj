@@ -536,25 +536,31 @@ export class MySceneGraph {
 
     /**
      * Parses the transformation of a component, verifying if it is defined locally or referenced.
+     * Returns null if transformation is invalid or doesn't exist.
      * @param {transformation node} transformationNode
      */
     parseComponentTransformation(transformationNode){
         if (transformationNode.nodeName != "transformation") {
             this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
-            return;
+            return null;
         }
         var children = transformationNode.children;
         if(children.length == 1 && children[0].nodeName === "transformationref") {
             var id = this.reader.getString(children[0], 'id');
-            if(this.transformations[id] == null){ // TODO: Proper error handling
+            if(this.transformations[id] == null){
                 this.onXMLMinorError('transformation with id=' + id + ' is not defined.');
+                return null;
             }
         } else {
-            var transfMatrix = this.parseTransformationSequence(children);
-            do {
-                var id = '_embeddedtransf' + (this.embeddedTransformationCount++);
-            } while(this.transformations[id] != null);
-            this.transformations[id] = transfMatrix;
+            if(children.length > 0){
+                var transfMatrix = this.parseTransformationSequence(children);
+                do {
+                    var id = '_embeddedtransf' + (this.embeddedTransformationCount++);
+                } while(this.transformations[id] != null);
+                this.transformations[id] = transfMatrix;
+            } else {
+                return null;
+            }
         }
         return id;
     }
@@ -568,11 +574,12 @@ export class MySceneGraph {
 
         this.transformations = {};
 
-        var grandChildren = [];
-
         // Any number of transformations.
         for (var i = 0; i < children.length; i++) {
-            this.parseTransformation(children[i]);
+            let error = this.parseTransformation(children[i]);
+            if(error != null){
+                this.onXMLMinorError(error);
+            }
         }
 
         this.log("Parsed transformations");
@@ -749,7 +756,6 @@ export class MySceneGraph {
         this.components = {};
 
         var grandChildren = [];
-        var grandgrandChildren = [];
         var nodeNames = [];
 
         // Any number of components.

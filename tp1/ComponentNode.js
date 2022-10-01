@@ -23,7 +23,7 @@ export class ComponentNode {
     }
 
     display(sceneData){
-        var matrix = sceneData.getTransformation(this.transformationId);
+        var matrix = this.transformationId != null ? sceneData.getTransformation(this.transformationId) : mat4.create();
         var scene = sceneData.getScene();
 
         if(this.materialId != 'inherit'){
