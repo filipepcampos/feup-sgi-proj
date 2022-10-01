@@ -5,14 +5,14 @@ import { CGFobject } from '../lib/CGF.js';
  * @param scene - Reference to MyScene object
  * @param radius - Radius of sphere
  * @param slices - Number of slices
- * @param stacks - Number of stacks
+ * @param stacks - Number of stacks between the center and one of the poles.
  */
 export class MySphere extends CGFobject {
 	constructor(scene, radius, slices, stacks) {
 		super(scene);
 		this.radius = radius;
         this.slices = slices;
-        this.stacks = stacks;
+        this.stacks = 2 * stacks;
 
 		this.initBuffers();
 	}
