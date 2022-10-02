@@ -1,3 +1,4 @@
+import { CGFappearance } from "../lib/CGF.js";
 import { Stack } from "./Stack.js";
 
 /**

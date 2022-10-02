@@ -1,4 +1,4 @@
-import { CGFXMLreader } from '../lib/CGF.js';
+import { CGFXMLreader, CGFappearance } from '../lib/CGF.js';
 import { MyRectangle } from './MyRectangle.js';
 import { ComponentNode } from './ComponentNode.js';
 import { MyTriangle } from './MyTriangle.js';
@@ -455,26 +455,26 @@ export class MySceneGraph {
             return "ID must be unique for each material (conflict: ID = " + materialID + ")";
 
         let shininess = this.reader.getString(node, 'shininess');
-        if(shininess == null){
-            this.onXMLMinorError("expected shininess value for material with ID " + materialID);
+        if (shininess == null) {
+            this.onXMLMinorError("Expected shininess value for material with ID " + materialID);
             shininess = 10;
         }
 
         let blockParser = new BlockParser();
         const func = (c) => this.parseColor(c, "material component for ID " + materialID);
         const handlerEntries = {
-            "emission": [func, [0,0,0,1]],
-            "ambient": [func, [0,0,0,1]],
-            "diffuse": [func, [0,0,0,1]],
-            "specular": [func, [0,0,0,1]],
+            "emission": [func, [0, 0, 0, 1]],
+            "ambient": [func, [0, 0, 0, 1]],
+            "diffuse": [func, [0, 0, 0, 1]],
+            "specular": [func, [0, 0, 0, 1]],
         };
         const handlerMap = new Map(Object.entries(handlerEntries));
         const [parseResult, errors] = blockParser.parse(node, handlerMap);
-        for(const error of errors){
-            this.onXMLMinorError(error);
+        for (const error of errors) {
+            this.onXMLMinorError("Material with ID " + materialID + ": " + error);
         }
 
-        this.materials[materialID] = new Material(
+        let mat = new Material(
             parseResult["emission"],
             parseResult["ambient"],
             parseResult["diffuse"],
@@ -482,6 +482,47 @@ export class MySceneGraph {
             shininess,
             this.scene
         );
+        this.materials[materialID] = mat.getAppearence();
+    }
+
+    /**
+     * Pass the <materials> block of a component
+     * @param {Materials block} node 
+     */
+    parseComponentMaterials(node) {
+        let children = node.children;
+        let materials = [];
+        for(let child of children){
+            if(child.nodeName != "material"){
+                this.onXMLMinorError("Unexpected tag <" + child.nodeName + "/>");
+                continue;
+            }
+            let id = this.reader.getString(child, "id");
+            if(id != null) {
+                if(this.materials[id] != null || id == "inherit") {
+                    materials.push(id);
+                } else {
+                    this.onXMLMinorError("Material with ID " + id + " does not exist.");
+                }
+            } else {
+                this.onXMLMinorError("Missing id on <material/>");
+            }
+        }
+
+        // Check if materials is not empty, if not setup a default material
+        if(this.defaultMaterial == null){
+            let n = 0;
+            do {
+                var id = '_default' + (n++);
+            } while (this.materials[id] != null);
+            this.materials[id] = new CGFappearance(this.scene); 
+            this.defaultMaterial = id;
+            materials.push(this.defaultMaterial);
+        } else {
+            materials.push(this.defaultMaterial);
+        }
+        
+        return materials;
     }
 
     /** 
@@ -810,8 +851,6 @@ export class MySceneGraph {
 
             var transformationIndex = nodeNames.indexOf("transformation");
             var materialsIndex = nodeNames.indexOf("materials");
-
-            var materialId = this.reader.getString(grandChildren[materialsIndex].children[0], 'id'); // TODO:
             var textureIndex = nodeNames.indexOf("texture");
             var childrenIndex = nodeNames.indexOf("children");
 
@@ -821,6 +860,7 @@ export class MySceneGraph {
             var parsedTransformation = this.parseComponentTransformation(grandChildren[transformationIndex]);
 
             // Materials
+            var materialIds = this.parseComponentMaterials(grandChildren[materialsIndex]);
 
             // Texture
 
@@ -830,7 +870,7 @@ export class MySceneGraph {
             var node = new ComponentNode(
                 componentID,
                 parsedTransformation,
-                materialId,
+                materialIds,
                 "todo",
                 parsedChildren['components'],
                 parsedChildren['primitives']

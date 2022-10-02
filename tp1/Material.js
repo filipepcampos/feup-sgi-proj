@@ -9,4 +9,8 @@ export class Material {
         this.appearance.setEmission(...emission);
         this.appearance.setShininess(shininess);
     }
+
+    getAppearence(){
+        return this.appearance;
+    }
 }

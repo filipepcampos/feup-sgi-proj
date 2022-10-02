@@ -649,7 +649,7 @@
             <transformation>
             </transformation>
             <materials>
-                <material id="green" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit"/>
             <children>

@@ -1,4 +1,18 @@
-// TODO: Documentation
+/**
+ * Pass a tag block (<material> for example, receiving a map that matches each subtag to an handler function
+ * Example: 
+ * <material>
+ *      <subtag1/> 
+ *      <subtag2/>
+ * </material>
+ * 
+ * tagHandlerMap
+ * {
+ *   "subtag1": [func, [0, 0, 0, 1]], where func is a function that receives the <subtag1/> node 
+ *                                  and the second element the default value to be used in case of error
+ *   "subtag2": [func, [0, 0, 0, 1]],
+ * }
+ */
 export class BlockParser {
     parse(node, tagHandlerMap){
         let children = node.children;
