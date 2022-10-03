@@ -28,12 +28,11 @@ export class ComponentNode {
         var scene = sceneData.getScene();
 
         let material = this.materialIds[this.currentMaterial];
-        if(material != 'inherit'){
-            sceneData.materialStack.push(material);
-            sceneData.getMaterial(material).apply();
-        } else {
-            sceneData.materialStack.push(sceneData.materialStack.top());
+        if(material == 'inherit'){
+            material = sceneData.materialStack.top();
         }
+        sceneData.materialStack.push(material);
+        sceneData.getMaterial(material).apply();
         
         // Save matrix
         scene.pushMatrix();
@@ -49,8 +48,6 @@ export class ComponentNode {
         scene.popMatrix();
 
         var topMaterial = sceneData.materialStack.pop();
-        if(topMaterial != material){
-            sceneData.getMaterial(topMaterial).apply();
-        }
+        sceneData.getMaterial(topMaterial).apply();
     }
 }
