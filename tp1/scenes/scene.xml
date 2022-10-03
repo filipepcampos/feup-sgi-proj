@@ -1,5 +1,5 @@
 <sxs>
-    <scene root="root" axis_length="0.001"/>
+    <scene root="root" axis_length="5"/>
 
     <views default="default_camera">
         <perspective id="default_camera" near="0.1" far="500" angle="45">
@@ -248,7 +248,7 @@
         </transformation>
         <transformation id="tr_street_building0_helipad">
             <rotate axis="x" angle="90"/>
-            <scale x="5.0" y="1" z="5.0"/>
+            <scale x="8.0" y="1" z="8.0"/>
             <translate x="-10" y="30.0" z="5"/>
         </transformation>
     </transformations>
@@ -270,7 +270,7 @@
             <sphere radius="1.0" slices="16" stacks="16" />
         </primitive>
         <primitive id="torus">
-            <torus inner="0.1" outer="0.4" slices="16" loops="16"/>
+            <torus inner="0.03" outer="0.5" slices="16" loops="16"/>
         </primitive>
         <primitive id="car_lateral_window_primitive1">
             <triangle x1="-0.1" y1="0" z1="0" x2="2.225" y2="0" z2="0" x3="0.25537" y3="1.09371" z3="0"/>
