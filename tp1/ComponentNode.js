@@ -3,16 +3,17 @@
  * @constructor
  * @param id - Node id
  * @param transformationId - Id of the transformation used
- * @param materialId - Id of the material used (Or "inherit")
+ * @param materialIds - List of ids of the materials used (Or "inherit")
  * @param textureId - Id of the texture used (Or "inherit" / "none")
  * @param childComponentsId - Ids of all the children components
  * @param childPrimitivesId - Ids of all the children primitives
  */
 export class ComponentNode {
-    constructor(id, transformationId, materialId, textureId, childComponentsId, childPrimitivesId) {
+    constructor(id, transformationId, materialIds, textureId, childComponentsId, childPrimitivesId) {
         this.id = id;
         this.transformationId = transformationId;
-        this.materialId = materialId;
+        this.materialIds = materialIds;
+        this.currentMaterial = 0;
         this.textureId = textureId;
         this.childComponentsId = childComponentsId;
         this.childPrimitivesId = childPrimitivesId;
@@ -22,17 +23,26 @@ export class ComponentNode {
         this.children = children;
     }
 
-    display(sceneData){
+    updateMaterial(){
+        this.currentMaterial = (this.currentMaterial + 1) % this.materialIds.length;
+
+        for(let child of this.children){
+            if(child instanceof ComponentNode){
+                child.updateMaterial();
+            }
+        }
+    }
+
+    display(sceneData, parentMaterial=""){
         var matrix = this.transformationId != null ? sceneData.getTransformation(this.transformationId) : mat4.create();
         var scene = sceneData.getScene();
 
-        if(this.materialId != 'inherit'){
-            sceneData.matStack.push(this.materialId);
-            sceneData.materials[this.materialId].appearance.apply();
-        } else {
-            sceneData.matStack.push('inherit');
+        let material = this.materialIds[this.currentMaterial];
+        if(material == 'inherit'){
+            material = parentMaterial;
         }
-
+        sceneData.getMaterial(material).apply();
+        
         // Save matrix
         scene.pushMatrix();
         
@@ -41,15 +51,9 @@ export class ComponentNode {
 
         // Display children
         for(var child of this.children){
-            child.display(sceneData);
+            child.display(sceneData, material);
         }
         // Restore matrix
         scene.popMatrix();
-
-        var topMat = sceneData.matStack.pop();
-        topMat = sceneData.matStack[sceneData.matStack.length - 1]
-        if(topMat != 'inherit' && topMat != null){
-            sceneData.materials[topMat].appearance.apply();
-        }
     }
 }
