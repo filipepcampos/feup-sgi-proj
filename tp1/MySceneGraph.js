@@ -5,6 +5,7 @@ import { MyTriangle } from './MyTriangle.js';
 import { SceneData } from './SceneData.js';
 import { MyCylinder } from './MyCylinder.js';
 import { MySphere } from './MySphere.js';
+import { MyTorus } from './MyTorus.js';
 import { Material } from './Material.js';
 
 var DEGREE_TO_RAD = Math.PI / 180;
@@ -750,6 +751,30 @@ export class MySceneGraph {
                 var sphere = new MySphere(this.scene, radius, slices, stacks);
 
                 this.primitives[primitiveId] = sphere;
+            }
+            else if (primitiveType == 'torus') {
+                // inner
+                var inner = this.reader.getFloat(grandChildren[0], 'inner');
+                if (!(inner != null && !isNaN(inner) && inner > 0))
+                    return "unable to parse inner of the primitive coordinates for ID = " + primitiveId;
+
+                // outer
+                var outer = this.reader.getFloat(grandChildren[0], 'outer');
+                if (!(outer != null && !isNaN(outer) && outer > 0))
+                    return "unable to parse outer of the primitive coordinates for ID = " + primitiveId;
+
+                // stacks
+                var loops = this.reader.getInteger(grandChildren[0], 'loops');
+                if (!(loops != null && !isNaN(loops) && loops > 0))
+                    return "unable to parse stacks of the primitive coordinates for ID = " + primitiveId;
+
+                // slices
+                var slices = this.reader.getInteger(grandChildren[0], 'slices');
+                if (!(slices != null && !isNaN(slices) && slices > 0))
+                    return "unable to parse slices of the primitive coordinates for ID = " + primitiveId;
+
+                var torus = new MyTorus(this.scene, inner, outer, slices, loops);
+                this.primitives[primitiveId] = torus;
             }
             else {
                 console.warn("To do: Parse other primitives.");
