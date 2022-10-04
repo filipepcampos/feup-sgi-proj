@@ -510,16 +510,18 @@ export class MySceneGraph {
         }
 
         // Check if materials is not empty, if not setup a default material
-        if(this.defaultMaterial == null){
-            let n = 0;
-            do {
-                var id = '_default' + (n++);
-            } while (this.materials[id] != null);
-            this.materials[id] = new CGFappearance(this.scene); 
-            this.defaultMaterial = id;
-            materials.push(this.defaultMaterial);
-        } else {
-            materials.push(this.defaultMaterial);
+        if(materials.length == 0){
+            if(this.defaultMaterial == null){
+                let n = 0;
+                do {
+                    var id = '_default' + (n++);
+                } while (this.materials[id] != null);
+                this.materials[id] = new CGFappearance(this.scene); 
+                this.defaultMaterial = id;
+                materials.push(this.defaultMaterial);
+            } else {
+                materials.push(this.defaultMaterial);
+            }
         }
         
         return materials;
@@ -1042,6 +1044,10 @@ export class MySceneGraph {
         color.push(...[r, g, b, a]);
 
         return color;
+    }
+
+    updateMaterials(){
+        this.rootNode.updateMaterial();
     }
 
     /*

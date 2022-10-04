@@ -13,7 +13,7 @@ export class ComponentNode {
         this.id = id;
         this.transformationId = transformationId;
         this.materialIds = materialIds;
-        this.currentMaterial = this.materialIds.length > 0 ? 0 : -1;
+        this.currentMaterial = 0;
         this.textureId = textureId;
         this.childComponentsId = childComponentsId;
         this.childPrimitivesId = childPrimitivesId;
@@ -21,6 +21,16 @@ export class ComponentNode {
 
     setChildren(children) {
         this.children = children;
+    }
+
+    updateMaterial(){
+        this.currentMaterial = (this.currentMaterial + 1) % this.materialIds.length;
+
+        for(let child of this.children){
+            if(child instanceof ComponentNode){
+                child.updateMaterial();
+            }
+        }
     }
 
     display(sceneData, parentMaterial=""){
