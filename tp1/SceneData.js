@@ -1,5 +1,4 @@
 import { CGFappearance } from "../lib/CGF.js";
-import { Stack } from "./Stack.js";
 
 /**
  * SceneData
@@ -15,7 +14,6 @@ export class SceneData {
         this.scene = scene;
         this.textures = textures;
         this.materials = materials;
-        this.materialStack = new Stack();
         this.transformations = transformations;
         this.primitives = primitives;
     }

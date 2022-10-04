@@ -23,15 +23,14 @@ export class ComponentNode {
         this.children = children;
     }
 
-    display(sceneData){
+    display(sceneData, parentMaterial=""){
         var matrix = this.transformationId != null ? sceneData.getTransformation(this.transformationId) : mat4.create();
         var scene = sceneData.getScene();
 
         let material = this.materialIds[this.currentMaterial];
         if(material == 'inherit'){
-            material = sceneData.materialStack.top();
+            material = parentMaterial;
         }
-        sceneData.materialStack.push(material);
         sceneData.getMaterial(material).apply();
         
         // Save matrix
@@ -42,12 +41,9 @@ export class ComponentNode {
 
         // Display children
         for(var child of this.children){
-            child.display(sceneData);
+            child.display(sceneData, material);
         }
         // Restore matrix
         scene.popMatrix();
-
-        var topMaterial = sceneData.materialStack.pop();
-        sceneData.getMaterial(topMaterial).apply();
     }
 }
