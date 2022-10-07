@@ -246,7 +246,7 @@
             <rotate axis="z" angle="180"/>
             <translate x="-0.5" y="-0.433" z="0"/>
         </transformation>
-        <transformation id="tr_street_building0_helipad">
+        <transformation id="tr_street_building0_helipad_circle">
             <translate x="-10" y="30.0" z="5"/>
             <scale x="8.0" y="1" z="8.0"/>
             <rotate axis="x" angle="90"/>
@@ -336,10 +336,22 @@
 
         <component id="street_building0_helipad">
             <transformation>
-                <transformationref id="tr_street_building0_helipad"/>
             </transformation>
             <materials>
-                <material id="pastel_yellow" />
+                <material id="dark_gray" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="street_building0_helipad_circle"/>
+            </children>
+        </component>
+
+        <component id="street_building0_helipad_circle">
+            <transformation>
+                <transformationref id="tr_street_building0_helipad_circle"/>
+            </transformation>
+            <materials>
+                <material id="dark_gray" />
             </materials>
             <texture id="none"/>
             <children>
