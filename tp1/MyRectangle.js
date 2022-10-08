@@ -68,5 +68,22 @@ export class MyRectangle extends CGFobject {
 		this.texCoords = [...coords];
 		this.updateTexCoordsGLBuffers();
 	}
+
+	/**
+	 * Updates the texture coordinates of the rectangle according to the given lengths.
+	 * @param {float} length_u - Horizontal length of the texture
+	 * @param {float} length_v - Vertical length of the texture
+	 */
+	 updateTexLength(length_u, length_v) {
+		let u = 1 / length_u;
+		let v = 1 / length_v;
+		let coords = [
+			0, v,
+			u, v,
+			0, 0,
+			u, 0
+		];
+		this.updateTexCoords(coords);
+	}
 }
 

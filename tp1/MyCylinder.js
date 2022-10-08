@@ -76,4 +76,13 @@ export class MyCylinder extends CGFobject {
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
     }
+
+    /**
+	 * Updates the texture coordinates of the primitive according to the given lengths.
+	 * @param {float} length_u - Horizontal length of the texture
+	 * @param {float} length_v - Vertical length of the texture
+	 */
+    updateTexLength(length_u, length_v) {
+        // Not implemented
+	}
 }
