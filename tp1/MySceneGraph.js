@@ -1,4 +1,4 @@
-import { CGFXMLreader, CGFtexture, CGFappearance } from '../lib/CGF.js';
+import { CGFXMLreader, CGFtexture, CGFappearance, CGFcamera, CGFcameraOrtho } from '../lib/CGF.js';
 import { MyRectangle } from './MyRectangle.js';
 import { ComponentNode } from './ComponentNode.js';
 import { PrimitiveNode } from './PrimitiveNode.js';
@@ -128,7 +128,7 @@ export class MySceneGraph {
                 this.onXMLMinorError("tag <views> out of order");
 
             //Parse views block
-            if ((error = this.parseView(nodes[index])) != null)
+            if ((error = this.parseViews(nodes[index])) != null)
                 return error;
         }
 
@@ -246,10 +246,106 @@ export class MySceneGraph {
      * Parses the <views> block.
      * @param {view block element} viewsNode
      */
-    parseView(viewsNode) {
-        this.onXMLMinorError("To do: Parse views and create cameras.");
+    parseViews(viewsNode) {
+        var children = viewsNode.children;
+        this.views = [];
+
+        var defaultCamera = this.reader.getString(viewsNode, "default");
+        for(var child of children){
+            this.parseView(child);
+        }
+
+        if(defaultCamera == null || this.views[defaultCamera] == null){ 
+            var hasDefaultCamera = false;
+            for (const [cameraId, cameraNode] of Object.entries(this.views)) {
+                defaultCamera = cameraId;
+                hasDefaultCamera = true;
+                break;
+            }
+            if(!hasDefaultCamera){
+                this.onXMLError("Default view is undefined");
+                return null;
+            }
+        }
+
+        this.defaultView = defaultCamera;
 
         return null;
+    }
+
+    parseFloatAttribute(node, attributeName, errorMessage, defaultValue=null){
+        let value = this.reader.getFloat(node, attributeName);
+        if (value == null) {
+            this.onXMLMinorError(errorMessage);
+            return defaultValue;
+        }
+        return value;
+    }
+
+    /**
+     * TODO
+     */
+    parseView(node){
+        if (node.nodeName != "perspective" && node.nodeName != "ortho") {
+            this.onXMLMinorError("unknown tag <" + node.nodeName + ">");
+            return;
+        }
+
+        // Get id of the current material.
+        var viewID = this.reader.getString(node, 'id');
+        if (viewID == null)
+            return "no ID defined for view";
+
+        // Checks for repeated IDs.
+        if (this.views[viewID] != null)
+            return "ID must be unique for each view (conflict: ID = " + viewID + ")";
+
+        let near = this.parseFloatAttribute(node, "near", "Expected near value for view with ID " + viewID, 0);
+        let far = this.parseFloatAttribute(node, "far", "Expected far value for view with ID " + viewID, 0);
+
+        let blockParser = new BlockParser();
+        const func = (c) => this.parseCoordinates3D(c, "view for ID " + viewID);
+        const handlerEntries = {
+            "from": [func, [0, 0, 0]],
+            "to": [func, [0, 0, 0]]
+        };
+        const handlerMap = new Map(Object.entries(handlerEntries));
+        const [parseResult, errors] = blockParser.parse(node, handlerMap);
+        for (const error of errors) {
+            this.onXMLMinorError("View with ID " + materialID + ": " + error);
+        }
+        
+        if(node.nodeName == "perspective") {
+            let angle = this.parseFloatAttribute(node, "angle", "Expected angle value for view with ID " + viewID, 0);
+
+            var camera = new CGFcamera(
+                angle * DEGREE_TO_RAD, 
+                near, far, 
+                vec3.fromValues(...parseResult["from"]), 
+                vec3.fromValues(...parseResult["to"])
+            );
+        } else if (node.nodeName == "ortho") {
+            let left = this.parseFloatAttribute(node, "left", "Expected left value for view with ID " + viewID, 0);
+            let right = this.parseFloatAttribute(node, "right", "Expected right value for view with ID " + viewID, 0);
+            let top = this.parseFloatAttribute(node, "top", "Expected top value for view with ID " + viewID, 0);
+            let bottom = this.parseFloatAttribute(node, "bottom", "Expected bottom value for view with ID " + viewID, 0);
+            let up = [0,1,0]
+            for(const child of node.children){
+                if(child.nodeName == "up") {
+                    up = this.parseCoordinates3D(child, "view for ID " + viewID);
+                }
+            }
+
+            var camera = new CGFcameraOrtho(
+                left, right, bottom, top, 
+                near, far, 
+                vec3.fromValues(...parseResult["from"]),
+                vec3.fromValues(...parseResult["to"]),
+                vec3.fromValues(...up) 
+            );
+        }
+
+        this.views[viewID] = camera;
     }
 
     /**
@@ -489,7 +585,7 @@ export class MySceneGraph {
         if (this.materials[materialID] != null)
             return "ID must be unique for each material (conflict: ID = " + materialID + ")";
 
-        let shininess = this.reader.getString(node, 'shininess');
+        let shininess = this.reader.getFloat(node, 'shininess');
         if (shininess == null) {
             this.onXMLMinorError("Expected shininess value for material with ID " + materialID);
             shininess = 10;
