@@ -328,7 +328,7 @@
             <materials>
                 <material id="pastel_yellow" />
             </materials>
-            <texture id="tex_brick"/>
+            <texture id="tex_brick" length_s="1" length_t="1"/>
             <children>
                 <componentref id="p_cube_without_base"/>
             </children>
@@ -366,7 +366,7 @@
             <materials>
                 <material id="pastel_yellow" />
             </materials>
-            <texture id="tex_brick"/>
+            <texture id="tex_brick" length_s="1.0" length_t="1.8"/>
             <children>
                 <componentref id="p_cube_without_base"/>
             </children>
@@ -422,7 +422,7 @@
             <materials>
                 <material id="dark_gray" />
             </materials>
-            <texture id="tex_asphalt"/>
+            <texture id="tex_asphalt" length_s="1" length_t="1"/>
             <children>
                 <componentref id="p_cube_without_base"/>
             </children>
@@ -542,6 +542,7 @@
             </transformation>
             <materials>
                 <material id="green" />
+                <material id="red" />
             </materials>
             <texture id="inherit"/>
             <children>
@@ -612,6 +613,7 @@
             </transformation>
             <materials>
                 <material id="light_green" />
+                <material id="white"/>
             </materials>
             <texture id="inherit"/>
             <children>
@@ -637,6 +639,7 @@
             </transformation>
             <materials>
                 <material id="light_green" />
+                <material id="white"/>
             </materials>
             <texture id="inherit"/>
             <children>
@@ -703,6 +706,7 @@
             </transformation>
             <materials>
                 <material id="light_green" />
+                <material id="white"/>
             </materials>
             <texture id="inherit"/>
             <children>
@@ -716,6 +720,7 @@
             </transformation>
             <materials>
                 <material id="light_green" />
+                <material id="white"/>
             </materials>
             <texture id="inherit"/>
             <children>

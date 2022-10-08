@@ -1,12 +1,14 @@
-import { CGFXMLreader, CGFappearance } from '../lib/CGF.js';
+import { CGFXMLreader, CGFtexture, CGFappearance } from '../lib/CGF.js';
 import { MyRectangle } from './MyRectangle.js';
 import { ComponentNode } from './ComponentNode.js';
+import { PrimitiveNode } from './PrimitiveNode.js';
 import { MyTriangle } from './MyTriangle.js';
 import { SceneData } from './SceneData.js';
 import { MyCylinder } from './MyCylinder.js';
 import { MySphere } from './MySphere.js';
 import { MyTorus } from './MyTorus.js';
 import { Material } from './Material.js';
+import { Texture } from "./Texture.js";
 import { BlockParser } from './BlockParser.js';
 
 var DEGREE_TO_RAD = Math.PI / 180;
@@ -409,7 +411,39 @@ export class MySceneGraph {
      * @param {textures block element} texturesNode
      */
     parseTextures(texturesNode) {
+        var children = texturesNode.children;
 
+        this.textures = [];
+
+        for (var i = 0; i < children.length; i++){
+            var child = children[i];
+            if (child.nodeName != "texture") {
+                this.onXMLMinorError("unknown tag <" + node.nodeName + ">");
+                return;
+            }
+    
+            // Get id of the current material.
+            var textureId = this.reader.getString(child, 'id');
+            if (textureId == null) {
+                this.onXMLMinorError("no ID defined for texture");
+                continue;
+            }
+    
+            // Checks for repeated IDs.
+            if (this.textures[textureId] != null) {
+                this.onXMLMinorError("ID must be unique for each textutre (conflict: ID = " + textureId + ")");
+                continue;
+            }
+    
+            var fileUrl = this.reader.getString(child, 'file');
+            if (fileUrl == null) {
+                this.onXMLMinorError("no file defined for texture with ID = " + textureId);
+                continue;
+            }
+            // TODO: Check if file exists?
+            
+            this.textures[textureId] = new CGFtexture(this.scene, fileUrl);
+        }
         //For each texture in textures block, check ID and file URL
         this.onXMLMinorError("To do: Parse textures.");
         return null;
@@ -719,7 +753,7 @@ export class MySceneGraph {
                 if (!(y2 != null && !isNaN(y2) && y2 > y1))
                     return "unable to parse y2 of the primitive coordinates for ID = " + primitiveId;
 
-                var rect = new MyRectangle(this.scene, primitiveId, x1, x2, y1, y2);
+                var rect = new PrimitiveNode(new MyRectangle(this.scene, primitiveId, x1, x2, y1, y2));
 
                 this.primitives[primitiveId] = rect;
             } else if (primitiveType == 'triangle') { // TODO: Check conditions
@@ -905,16 +939,17 @@ export class MySceneGraph {
             var materialIds = this.parseComponentMaterials(grandChildren[materialsIndex]);
 
             // Texture
+            var texture = this.parseComponentTexture(grandChildren[textureIndex]);
 
             // Children
             var parsedChildren = this.parseChildren(grandChildren[childrenIndex]);
 
             var node = new ComponentNode(
-                componentID,
-                parsedTransformation,
-                materialIds,
-                "todo",
-                parsedChildren['components'],
+                componentID, 
+                parsedTransformation, 
+                materialIds, 
+                texture, 
+                parsedChildren['components'], 
                 parsedChildren['primitives']
             );
 
@@ -940,6 +975,47 @@ export class MySceneGraph {
 
             componentNode.setChildren(componentChildren);
         }
+    }
+
+    /**
+     * TODO
+     */
+    parseComponentTexture(node) {
+        if (node.nodeName != "texture") {
+            this.onXMLMinorError("unknown tag <" + node.nodeName + ">");
+            return new Texture("none");
+        }
+
+        // Get id of the current material.
+        var textureId = this.reader.getString(node, 'id');
+        if (textureId == null) {
+            this.onXMLMinorError("no ID defined for texture");
+            return new Texture("none");
+        }
+
+        if(textureId == "inherit" || textureId == "none") {
+            return new Texture(textureId);
+        }
+
+        // Check if texture exists
+        if (this.textures[textureId] == null) {
+            this.onXMLMinorError("Texture with ID " + textureId + " does not exist");
+            return new Texture("none");
+        }
+
+        var length_s = this.reader.getFloat(node, 'length_s');
+        if (!(length_s != null && !isNaN(length_s))) {
+            this.onXMLMinorError("unable to parse length_s of the texture for ID = " + textureId);
+            length_s = 1;
+        }
+
+        var length_t = this.reader.getFloat(node, 'length_t');
+        if (!(length_t != null && !isNaN(length_t))) {
+            this.onXMLMinorError("unable to parse length_t of the texture for ID = " + textureId);
+            length_t = 1;
+        }
+
+        return new Texture(textureId, length_s, length_t);
     }
 
     /**
@@ -1086,8 +1162,11 @@ export class MySceneGraph {
         return color;
     }
 
+    // TODO: Document
     updateMaterials(){
-        this.rootNode.updateMaterial();
+        for (const [componentId, componentNode] of Object.entries(this.components)) {
+            componentNode.updateMaterial();
+        }
     }
 
     /*
