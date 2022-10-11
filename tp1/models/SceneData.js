@@ -1,5 +1,3 @@
-import { CGFappearance } from "../../lib/CGF.js";
-
 /**
  * SceneData
  * @constructor
@@ -19,9 +17,7 @@ export class SceneData {
         this.textures = {};
         this.materials = {};
         this.transformations = {};
-
         this.primitives = {};
         this.components = {}
-
     }
 }
