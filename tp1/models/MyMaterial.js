@@ -1,12 +1,13 @@
 import { CGFappearance } from "../../lib/CGF.js";
 
 export class MyMaterial {
-    constructor(appearance){
-        this.appearance = appearance;
+    constructor(id, CGFAppearance){
+        this.id = id;
+        this.CGFAppearance = CGFAppearance;
     }
 
-    static instantiate(ambient, diffuse, specular, emission, shininess, scene) {
-        let appearance = new CGFappearance(scene);
+    static instantiate(id, ambient, diffuse, specular, emission, shininess, scene) {
+        let CGFAppearance = new CGFappearance(scene);
 
         appearance.setAmbient(...ambient);
         appearance.setDiffuse(...diffuse);
@@ -14,11 +15,15 @@ export class MyMaterial {
         appearance.setEmission(...emission);
         appearance.setShininess(shininess);
 
-        return new MyMaterial(appearance);
+        return new MyMaterial(id, CGFAppearance);
     }
 
-    getAppearence(){
-        return this.appearance;
+    getId() {
+        return this.id;
+    }
+
+    getCGFAppearance(){
+        return this.CGFAppearance;
     }
 
     getEmission(){
