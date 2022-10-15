@@ -9,11 +9,11 @@ export class MyMaterial {
     static instantiate(id, ambient, diffuse, specular, emission, shininess, scene) {
         let CGFAppearance = new CGFappearance(scene);
 
-        appearance.setAmbient(...ambient);
-        appearance.setDiffuse(...diffuse);
-        appearance.setSpecular(...specular);
-        appearance.setEmission(...emission);
-        appearance.setShininess(shininess);
+        CGFAppearance.setAmbient(...ambient.getArray());
+        CGFAppearance.setDiffuse(...diffuse.getArray());
+        CGFAppearance.setSpecular(...specular.getArray());
+        CGFAppearance.setEmission(...emission.getArray());
+        CGFAppearance.setShininess(shininess);
 
         return new MyMaterial(id, CGFAppearance);
     }
@@ -27,22 +27,22 @@ export class MyMaterial {
     }
 
     getEmission(){
-        return this.appearance.emission;
+        return this.CGFAppearance.emission;
     }
 
     getAmbient(){
-        return this.appearance.ambient;
+        return this.CGFAppearance.ambient;
     }
 
     getDiffuse(){
-        return this.appearance.diffuse;
+        return this.CGFAppearance.diffuse;
     }
 
     getSpecular(){
-        return this.appearance.specular;
+        return this.CGFAppearance.specular;
     }
 
     getShininess(){
-        return this.appearance.shininess;
+        return this.CGFAppearance.shininess;
     }
 }

@@ -1,4 +1,4 @@
-import { ParserResult } from "./ParserResult";
+import { ParserResult } from "./ParserResult.js";
 
 /**
  * Pass a tag block (<material> for example, receiving a map that matches each subtag to an handler function
