@@ -5,7 +5,7 @@
 export class SceneData {
     constructor(scene) {
         // Global values
-        this.scene = scene;
+        this.scene = scene; // TODO: Do we need to save this?
         this.root = null;
 
         // Active (default) values
