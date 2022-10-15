@@ -1,4 +1,4 @@
-import { CGFappearance } from "../../lib/CGF.js";
+import { CGFappearance } from "../../../lib/CGF.js";
 
 export class MyMaterial {
     constructor(id, CGFAppearance){

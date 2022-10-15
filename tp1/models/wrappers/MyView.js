@@ -1,4 +1,4 @@
-import { CGFcamera, CGFcameraOrtho } from "../../lib/CGF.js";
+import { CGFcamera, CGFcameraOrtho } from "../../../lib/CGF.js";
 
 export class MyView{
     constructor(id, CGFCamera){

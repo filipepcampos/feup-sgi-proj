@@ -1,4 +1,4 @@
-import { Texture } from "./MyTexture.js";
+import { Texture } from "../wrappers/MyTexture.js";
 
 /**
  * Component Node representation, contains data from <component>

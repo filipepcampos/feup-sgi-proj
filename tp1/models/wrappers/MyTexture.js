@@ -1,4 +1,4 @@
-import { CGFtexture } from "../../lib/CGF.js";
+import { CGFtexture } from "../../../lib/CGF.js";
 
 // TODO: Document
 export class MyTexture {
