@@ -8,12 +8,12 @@ import { MyView } from "../models/wrappers/MyView.js";
 var DEGREE_TO_RAD = Math.PI / 180;
 
 export class ViewParser {
-    static parse(node, reader, scene) {
+    static parse(node, reader) {
         if (node.nodeName != "perspective" && node.nodeName != "ortho") {
             return ParserResult.fromError("unknown tag <" + node.nodeName + ">");
         }
+        let id = reader.getString(node, "id");
 
-        let id = reader.getString(node, 'id');
         if (id == null)
             return ParserResult.fromError("no ID defined for view");
         
@@ -82,7 +82,7 @@ export class ViewParser {
         }
     }
 /*
-        // Checks for repeated IDs.
+        // TODO: Checks for repeated IDs.
         if (this.views[viewID] != null)
             return "ID must be unique for each view (conflict: ID = " + viewID + ")";
 */

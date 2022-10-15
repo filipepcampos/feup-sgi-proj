@@ -7,8 +7,7 @@ export class MaterialsParser {
         let errors = [];
 
         for (const child of node.children) {
-            // parse Child
-            let result = MaterialParser.parse(child, scene, reader);
+            let result = MaterialParser.parse(child, reader, scene);
             materials.push(result.getValue());
             errors.push(...result.getErrors());
         }

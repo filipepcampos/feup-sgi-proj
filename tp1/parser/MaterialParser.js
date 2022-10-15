@@ -6,7 +6,7 @@ import { BlockParser } from "./BlockParser.js";
 import { MyMaterial } from "../models/wrappers/MyMaterial.js";
 
 export class MaterialParser {
-    static parse(node, scene, reader) {
+    static parse(node, reader, scene) {
         if (node.nodeName != "material") {
             return ParserResult.fromError("unknown tag <" + node.nodeName + ">");
         }

@@ -1,7 +1,8 @@
 import { CGFXMLreader } from '../lib/CGF.js';
-import { MyRectangle } from './primitives/MyRectangle.js';
 import { MaterialsParser } from './parser/MaterialsParser.js';
 import { TransformationsParser } from './parser/TransformationsParser.js';
+import { PrimitivesParser } from "./parser/PrimitivesParser.js";
+import { ViewsParser } from "./parser/ViewsParser.js";
 
 var DEGREE_TO_RAD = Math.PI / 180;
 
@@ -232,6 +233,8 @@ export class MySceneGraph {
      * @param {view block element} viewsNode
      */
     parseView(viewsNode) {
+        let result = ViewsParser.parse(viewsNode, this.reader);
+        console.log("Views", result);
         this.onXMLMinorError("To do: Parse views and create cameras.");
 
         return null;
@@ -408,7 +411,8 @@ export class MySceneGraph {
      */
     parseMaterials(materialsNode) {
         let result = MaterialsParser.parse(materialsNode, this.scene, this.reader);
-        console.log(result);
+        console.log("Materials", result);
+        return null;
     }
 
     /**
@@ -416,7 +420,8 @@ export class MySceneGraph {
      * @param {transformations block element} transformationsNode
      */
     parseTransformations(transformationsNode) {
-        console.log(TransformationsParser.parse(transformationsNode, this.reader));
+        let result = TransformationsParser.parse(transformationsNode, this.reader);
+        console.log("Transformations", result);
         return null;
     }
 
@@ -425,74 +430,9 @@ export class MySceneGraph {
      * @param {primitives block element} primitivesNode
      */
     parsePrimitives(primitivesNode) {
-        var children = primitivesNode.children;
-
-        this.primitives = [];
-
-        var grandChildren = [];
-
-        // Any number of primitives.
-        for (var i = 0; i < children.length; i++) {
-
-            if (children[i].nodeName != "primitive") {
-                this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
-                continue;
-            }
-
-            // Get id of the current primitive.
-            var primitiveId = this.reader.getString(children[i], 'id');
-            if (primitiveId == null)
-                return "no ID defined for texture";
-
-            // Checks for repeated IDs.
-            if (this.primitives[primitiveId] != null)
-                return "ID must be unique for each primitive (conflict: ID = " + primitiveId + ")";
-
-            grandChildren = children[i].children;
-
-            // Validate the primitive type
-            if (grandChildren.length != 1 ||
-                (grandChildren[0].nodeName != 'rectangle' && grandChildren[0].nodeName != 'triangle' &&
-                    grandChildren[0].nodeName != 'cylinder' && grandChildren[0].nodeName != 'sphere' &&
-                    grandChildren[0].nodeName != 'torus')) {
-                return "There must be exactly 1 primitive type (rectangle, triangle, cylinder, sphere or torus)"
-            }
-
-            // Specifications for the current primitive.
-            var primitiveType = grandChildren[0].nodeName;
-
-            // Retrieves the primitive coordinates.
-            if (primitiveType == 'rectangle') {
-                // x1
-                var x1 = this.reader.getFloat(grandChildren[0], 'x1');
-                if (!(x1 != null && !isNaN(x1)))
-                    return "unable to parse x1 of the primitive coordinates for ID = " + primitiveId;
-
-                // y1
-                var y1 = this.reader.getFloat(grandChildren[0], 'y1');
-                if (!(y1 != null && !isNaN(y1)))
-                    return "unable to parse y1 of the primitive coordinates for ID = " + primitiveId;
-
-                // x2
-                var x2 = this.reader.getFloat(grandChildren[0], 'x2');
-                if (!(x2 != null && !isNaN(x2) && x2 > x1))
-                    return "unable to parse x2 of the primitive coordinates for ID = " + primitiveId;
-
-                // y2
-                var y2 = this.reader.getFloat(grandChildren[0], 'y2');
-                if (!(y2 != null && !isNaN(y2) && y2 > y1))
-                    return "unable to parse y2 of the primitive coordinates for ID = " + primitiveId;
-
-                var rect = new MyRectangle(this.scene, primitiveId, x1, x2, y1, y2);
-
-                this.primitives[primitiveId] = rect;
-            }
-            else {
-                console.warn("To do: Parse other primitives.");
-            }
-        }
-
-        this.log("Parsed primitives");
+        let result = PrimitivesParser.parse(primitivesNode, this.reader, this.scene);
+        console.log("Primitives", result);
+        this.primitives = result.getValue();
         return null;
     }
 

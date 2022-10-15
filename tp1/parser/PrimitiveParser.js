@@ -1,4 +1,4 @@
-import { ParserResult } from "./ParserResult";
+import { ParserResult } from "./ParserResult.js";
 import { FloatParser } from "./FloatParser.js";
 import { IntegerParser } from "./IntegerParser.js";
 import { MyRectangle } from "../primitives/MyRectangle.js";
@@ -9,8 +9,8 @@ import { MyTorus } from "../primitives/MyTorus.js";
 
 export class PrimitiveParser {
     static parse(node, reader, scene) {
-        if (children[i].nodeName != "primitive") {
-            return ParserResult.fromError("unknown tag <" + children[i].nodeName + ">");
+        if (node.nodeName != "primitive") {
+            return ParserResult.fromError("unknown tag <" + node.nodeName + ">");
         }
 
         let id = reader.getString(node, "id");
@@ -23,14 +23,15 @@ export class PrimitiveParser {
             let primitiveType = childNode.nodeName;
 
             if (primitiveType == 'rectangle') {
+                return PrimitiveParser.parseRectangle(childNode, reader, scene, id);
             } else if (primitiveType == 'triangle') {
-                return PrimitiveParser.parseRectangle(node, reader, scene, id);
+                return PrimitiveParser.parseTriangle(childNode, reader, scene, id);
             } else if (primitiveType == 'cylinder') {
-                return PrimitiveParser.parseCylinder(node, reader, scene, id);
+                return PrimitiveParser.parseCylinder(childNode, reader, scene, id);
             } else if (primitiveType == 'sphere') {
-                return PrimitiveParser.parseSphere(node, reader, scene, id);
+                return PrimitiveParser.parseSphere(childNode, reader, scene, id);
             } else if (primitiveType == 'torus') {
-                return PrimitiveParser.parseTorus(node, reader, scene, id);
+                return PrimitiveParser.parseTorus(childNode, reader, scene, id);
             }
         }
         return ParserResult.fromError("There must be exactly 1 primitive type (rectangle, triangle, cylinder, sphere or torus)");
@@ -52,7 +53,6 @@ export class PrimitiveParser {
         }
 
         let rectangle = new MyRectangle(scene, id, x1.getValue(), x2.getValue(), y1.getValue(), y2.getValue());
-
         return ParserResult.fromValue(rectangle)
     }
 
@@ -145,9 +145,9 @@ export class PrimitiveParser {
         let inner = FloatParser.parse(node, reader, 'inner', 0);
         let outer = FloatParser.parse(node, reader, 'outer', 0);
         let slices = IntegerParser.parse(node, reader, 'slices', 1);
-        let stacks = IntegerParser.parse(node, reader, 'stacks', 1);
+        let loops = IntegerParser.parse(node, reader, 'loops', 1);
 
-        let collection = ParserResult.collect(null, [inner, outer, slices, stacks]);
+        let collection = ParserResult.collect(null, [inner, outer, slices, loops]);
         if (collection.hasError()) {
             return collection;
         }
@@ -157,7 +157,7 @@ export class PrimitiveParser {
             inner.getValue(),
             outer.getValue(),
             slices.getValue(),
-            stacks.getValue()
+            loops.getValue()
         );
 
         return ParserResult.fromValue(torus);

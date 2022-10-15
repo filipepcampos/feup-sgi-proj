@@ -1,4 +1,4 @@
-import { ParserResult } from "./ParserResult";
+import { ParserResult } from "./ParserResult.js";
 import { MyTexture } from "../models/wrappers/MyTexture.js";
 
 export class TextureParser {
