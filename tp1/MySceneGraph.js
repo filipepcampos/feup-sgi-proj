@@ -430,7 +430,8 @@ export class MySceneGraph {
             if (!(aux != null && !isNaN(aux) && (aux == true || aux == false)))
                 this.onXMLMinorError("unable to parse value component of the 'enable light' field for ID = " + lightId + "; assuming 'value = 1'");
 
-            enableLight = aux || 1;
+            //enableLight = aux || 1;
+            enableLight = aux && 1;
 
             //Add enabled boolean and type name to light info
             global.push(enableLight);
@@ -497,6 +498,8 @@ export class MySceneGraph {
             return "at least one light must be defined";
         else if (numLights > 8)
             this.onXMLMinorError("too many lights defined; WebGL imposes a limit of 8 lights");
+
+        console.log(this.lights);
 
         this.log("Parsed lights");
         return null;
