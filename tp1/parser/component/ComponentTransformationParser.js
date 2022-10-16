@@ -16,11 +16,13 @@ export class ComponentTransformationParser {
             }
         } else {
             if (children.length > 0) {
-                let transformationMatrix = TransformationParser.parse(node, reader, false).getValue(); // TODO: Add error
+                const transformationMatrixResult = TransformationParser.parse(node, reader, false);
+                const transformationMatrix = transformationMatrixResult.getValue();
                 do {
                     id = '_embeddedtransf' + (this.embeddedTransformationCount++);
                 } while (sceneData.transformations[id] != null);
                 sceneData.transformations[id] = transformationMatrix;
+                return ParserResult.collect(transformationMatrix, [transformationMatrixResult], "parsing <transformation>");
             } else {
                 return ParserResult.fromValue(null);
             }

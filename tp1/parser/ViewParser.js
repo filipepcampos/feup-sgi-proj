@@ -7,6 +7,7 @@ import { MyView } from "../models/wrappers/MyView.js";
 
 var DEGREE_TO_RAD = Math.PI / 180;
 
+// TODO: Collect errors
 export class ViewParser {
     static parse(node, reader) {
         if (node.nodeName != "perspective" && node.nodeName != "ortho") {
@@ -21,7 +22,7 @@ export class ViewParser {
         let far = FloatParser.parse(node, reader, "far", 0);
 
         if (near.hasError() || far.hasError()) {
-            return ParserResult.collect(null, [near, far]);
+            return ParserResult.collect(null, [near, far], "parsing view with id=" + id);
         }
 
         const defaultCoord = new Coordinate3D(0, 0, 0);

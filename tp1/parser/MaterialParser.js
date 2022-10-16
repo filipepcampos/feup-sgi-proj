@@ -40,6 +40,6 @@ export class MaterialParser {
             shininessResult.getValueOrDefault(10),
             scene
         );
-        return ParserResult.collect(mat, [shininessResult, parseResult]);
+        return ParserResult.collect(mat, [shininessResult, parseResult], "parsing <material> with id=" + id);
     }
 }

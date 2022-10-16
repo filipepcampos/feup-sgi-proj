@@ -38,6 +38,7 @@ export class PrimitiveParser {
         return ParserResult.fromError("There must be exactly 1 primitive type (rectangle, triangle, cylinder, sphere or torus)");
     }
 
+    // TODO: Use .collect 
     static parseRectangle(node, reader, scene, id) {
         let x1 = FloatParser.parse(node, reader, 'x1');
         let y1 = FloatParser.parse(node, reader, 'y1');

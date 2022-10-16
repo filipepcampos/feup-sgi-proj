@@ -4,15 +4,15 @@ import { ParserResult } from "./ParserResult.js";
 export class PrimitivesParser {
     static parse(node, scene, reader) {
         let primitives = {};
-        let errors = [];
+        let results = [];
 
         for (const child of node.children) {
             const result = PrimitiveParser.parse(child, scene, reader);
             const primitive = result.getValue();
             primitives[primitive.getId()] = primitive; // TODO: REPEATED IDS
-            errors.push(...result.getErrors());
+            results.push(result);
         }
 
-        return new ParserResult(primitives, errors);
+        return ParserResult.collect(primitives, results, "parsing <primitives>");
     }
 }

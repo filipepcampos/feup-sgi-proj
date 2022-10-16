@@ -3,11 +3,11 @@ import { MyTexture } from "../models/wrappers/MyTexture.js";
 
 export class TextureParser {
     static parse(node, reader, scene) {
-        if (node.nodeName != "texture") {
+        if (node.nodeName !== "texture") {
             return ParserResult.fromError("unknown tag <" + node.nodeName + ">");
         }
 
-        let id = reader.getString(node, "id");
+        const id = reader.getString(node, "id");
         if (id == null) {
             return ParserResult.fromError("no ID defined for texture");
         }
@@ -24,6 +24,7 @@ export class TextureParser {
         }
         // TODO: Check if file exists?
         // TODO: GET LENGTHS
+        // TODO: Collect
         return ParserResult.fromValue(new MyTexture.instantiate(id, 1, 1, scene, fileUrl));
     }
 }

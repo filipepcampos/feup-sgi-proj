@@ -13,6 +13,6 @@ export class ComponentsParser {
             results.push(result);
         }
 
-        return ParserResult.collect(components, results, "In <components>");
+        return ParserResult.collect(components, results, "parsing <components>");
     }
 }

@@ -3,10 +3,10 @@ export class ParserErrorPrinter {
         if(Array.isArray(error)){
             for(const e of error){
                 if (typeof e === 'string' || e instanceof String){
-                    console.warn(" ".repeat(nesting_level*4) + error);
+                    console.warn(" ".repeat(nesting_level*4) + e);
                 } else {
                     for(const [context, otherErrors] of Object.entries(e)) {
-                        console.warn(" ".repeat(nesting_level*4) + context);
+                        console.warn(" ".repeat(nesting_level*4) + "context: " + context);
                         this.print(otherErrors, nesting_level+1);
                     }
                 }

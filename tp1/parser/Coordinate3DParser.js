@@ -10,7 +10,8 @@ export class Coordinate3DParser {
 
         return ParserResult.collect(
             new Coordinate3D(x.getValueOrDefault(0), y.getValueOrDefault(0), z.getValueOrDefault(0)),
-            [x, y, z]
+            [x, y, z],
+            "parsing xyz coordinates"
         );
     }
 }

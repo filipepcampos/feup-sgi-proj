@@ -3,6 +3,7 @@ import { ComponentNode } from "../../models/graph/ComponentNode.js";
 import {ComponentTransformationParser} from "./ComponentTransformationParser.js";
 import {ComponentChildrenParser} from "./ComponentChildrenParser.js";
 import {MyTexture} from "../../models/wrappers/MyTexture.js";
+import {FloatParser} from "../FloatParser.js";
 export class ComponentParser {
     static parse(node, reader, sceneData) {
         if (node.nodeName != "component") {
@@ -40,7 +41,7 @@ export class ComponentParser {
                 childrenResult.getValue()["primitives"],
             ),
             [transformationResult, childrenResult, textureResult],
-            "component with ID=" + id
+            "parsing <component> with id=" + id
         );
     }
 
@@ -65,18 +66,12 @@ export class ComponentParser {
         }
 
         let errors = [];
-        let length_s = reader.getFloat(node, 'length_s');
-        if (!(length_s != null && !isNaN(length_s))) {
-            errors.push("unable to parse length_s of the texture for ID = " + id);
-            length_s = 1;
-        }
+        const length_sResult = FloatParser.parse(node, reader, 'length_s'); // TODO: Limits?
+        const length_s = length_sResult.getValueOrDefault(1);
 
-        let length_t = reader.getFloat(node, 'length_t');
-        if (!(length_t != null && !isNaN(length_t))) {
-            errors.push("unable to parse length_t of the texture for ID = " + id);
-            length_t = 1;
-        }
+        const length_tResult = FloatParser.parse(node, reader, 'length_t'); // TODO Limits?
+        const length_t = length_tResult.getValueOrDefault(1);
 
-        return new ParserResult(new MyTexture(id, sceneData.textures[id], length_s, length_t), errors);
+        return ParserResult.collect(new MyTexture(id, sceneData.textures[id], length_s, length_t), [length_sResult, length_tResult], "parsing <texture>");
     }
 }

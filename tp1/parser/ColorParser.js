@@ -11,7 +11,8 @@ export class ColorParser {
         
         return ParserResult.collect(
             new Color(r.getValueOrDefault(0), g.getValueOrDefault(0), b.getValueOrDefault(0), a.getValueOrDefault(1)),
-            [r, g, b, a]
+            [r, g, b, a],
+            "parsing rgba color"
         );
     }
 }

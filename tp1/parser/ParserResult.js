@@ -12,8 +12,8 @@ export class ParserResult {
         return new ParserResult(value, []);
     }
     
-    static collect(value, parserResults, context=""){
-        let errors = [];
+    static collect(value, parserResults, context, other_errors=[]){
+        let errors = other_errors;
         for(const parserResult of parserResults){
             errors = errors.concat(parserResult.getErrors());
         }

@@ -4,12 +4,13 @@ import { ParserResult } from "./ParserResult.js";
 export class TransformationsParser {
     static parse(node, reader) {
         let transformations = {};
+        let results = [];
         let errors = [];
 
         for(let child of node.children){
             const result = TransformationParser.parse(child, reader);
             const transformation = result.getValue();
-            errors.push(...result.getErrors());
+            results.push(result);
 
             if(transformations[transformation.getId()] == null){
                 transformations[transformation.getId()] = transformation;
@@ -18,7 +19,7 @@ export class TransformationsParser {
             }
         }
         
-        console.log("Parsed transformations");
-        return new ParserResult(transformations, errors);
+        console.log("Parsed transformations", results);
+        return ParserResult.collect(transformations, results, "parsing <transformations>", errors);
     }
 }

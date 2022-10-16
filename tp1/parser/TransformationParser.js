@@ -18,6 +18,7 @@ export class TransformationParser {
         }
 
         let transformationMatrix = mat4.create();
+        let results = [];
         let errors = [];
 
         for(let child of node.children) {
@@ -31,7 +32,7 @@ export class TransformationParser {
                             translate_coordinates.getValue().getArray()
                         );
                     } else {
-                        errors = errors.concat(translate_coordinates.getErrors());
+                        results.push(translate_coordinates);
                     }
                     break;
                 case 'scale':
@@ -43,7 +44,7 @@ export class TransformationParser {
                             scale_coordinates.getValue().getArray()
                         );
                     } else {
-                        errors = errors.concat(scale_coordinates.getErrors());
+                        results.push(scale_coordinates);
                     }
                     break;
                 case 'rotate':
@@ -56,14 +57,14 @@ export class TransformationParser {
                             rotation.getValue().getAxisArray()
                         );
                     } else {
-                        errors = errors.concat(rotation.getErrors());
+                        results.push(rotation);
                     }
                     break;
                 default:
-                    errors.add("unknown tag <" + child.nodeName + ">");
+                    errors.push("unknown tag <" + child.nodeName + ">");
                     break;
             }
         }
-        return new ParserResult(new MyTransformation(id, transformationMatrix), errors);
+        return ParserResult.collect(new MyTransformation(id, transformationMatrix), results, "parsing <transformation>", errors);
     }
 }

@@ -430,6 +430,7 @@ export class MySceneGraph {
     parseTransformations(transformationsNode) {
         let result = TransformationsParser.parse(transformationsNode, this.reader);
         this.sceneData.transformations = result.getValue();
+        ParserErrorPrinter.print(result.getErrors());
         console.log("Transformations", result);
         return null;
     }
