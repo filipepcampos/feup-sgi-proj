@@ -4,20 +4,19 @@ import {ParserResult} from "./ParserResult.js";
 export class ComponentTransformationParser {
     static embeddedTransformationCount = 0;
     static parse(node, reader, sceneData){
-        if (node.nodeName != "transformation") {
+        if (node.nodeName !== "transformation") {
             return ParserResult.fromError("unknown tag <" + node.nodeName + ">");
         }
         const children = node.children;
         let id = "";
         if (children.length === 1 && children[0].nodeName === "transformationref") {
             id = reader.getString(children[0], 'id');
-            console.log(id);
             if (sceneData.transformations[id] == null) {
                 return ParserResult.fromError("transformation with id=" + id + " is not defined");
             }
         } else {
             if (children.length > 0) {
-                let transformationMatrix = TransformationParser.parse(node, reader).getValue(); // TODO: Add error
+                let transformationMatrix = TransformationParser.parse(node, reader, false).getValue(); // TODO: Add error
                 do {
                     id = '_embeddedtransf' + (this.embeddedTransformationCount++);
                 } while (sceneData.transformations[id] != null);
@@ -26,6 +25,6 @@ export class ComponentTransformationParser {
                 return ParserResult.fromValue(null);
             }
         }
-        return ParserResult.fromValue(sceneData.transformations[id]);
+        return ParserResult.fromValue(sceneData.transformations[id].getMat());
     }
 }

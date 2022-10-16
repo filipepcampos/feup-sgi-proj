@@ -32,7 +32,7 @@ export class MySceneGraph {
 
         // Establish bidirectional references between scene and graph.
         this.scene = scene;
-        this.sceneData = new SceneData();
+        this.sceneData = new SceneData(scene);
         scene.graph = this;
 
         this.nodes = [];
@@ -219,6 +219,7 @@ export class MySceneGraph {
             return "no root defined for scene";
 
         this.idRoot = root;
+        this.sceneData.root = root;
 
         // Get axis length        
         var axis_length = this.reader.getFloat(sceneNode, 'axis_length');
@@ -565,15 +566,5 @@ export class MySceneGraph {
      */
     log(message) {
         console.log("   " + message);
-    }
-
-    /**
-     * Displays the scene, processing each node, starting in the root node.
-     */
-    displayScene() {
-        //To do: Create display loop for transversing the scene graph
-
-        //To test the parsing/creation of the primitives, call the display function directly
-        //this.primitives['demoRectangle'].display();
     }
 }

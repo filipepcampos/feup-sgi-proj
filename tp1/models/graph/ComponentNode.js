@@ -27,35 +27,23 @@
         this.children = children;
     }
 
+    getChildren() {
+        return this.children;
+    }
+
+    getTransformation() {
+        return this.transformation;
+    }
+
+    getMaterial() {
+        return this.materials[this.currentMaterial];
+    }
+
+    getTexture() {
+        return this.texture;
+    }
+
     updateMaterial() {
         this.currentMaterial = (this.currentMaterial + 1) % this.materialIds.length;
     }
-
-    /*
-    display(sceneData, parentMaterial="", parentTexture=null){
-        var matrix = this.transformationId != null ? sceneData.getTransformation(this.transformationId) : mat4.create();
-        var scene = sceneData.getScene();
-
-        let material = this.materialIds[this.currentMaterial];
-        if(material == 'inherit'){
-            material = parentMaterial;
-        }
-        
-        sceneData.getMaterial(material).apply();
-
-        var texture = this.texture.apply(parentTexture, sceneData);
-        
-        // Save matrix
-        scene.pushMatrix();
-        
-        // Apply transformation
-        scene.multMatrix(matrix);
-
-        // Display children
-        for(var child of this.children){
-            child.display(sceneData, material, texture);
-        }
-        // Restore matrix
-        scene.popMatrix();
-    } */
 }

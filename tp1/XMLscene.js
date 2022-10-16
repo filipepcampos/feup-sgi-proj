@@ -1,5 +1,6 @@
 import { CGFscene } from '../lib/CGF.js';
 import { CGFaxis,CGFcamera } from '../lib/CGF.js';
+import {SceneRenderer} from "./rendering/SceneRenderer.js";
 
 
 var DEGREE_TO_RAD = Math.PI / 180;
@@ -112,6 +113,8 @@ export class XMLscene extends CGFscene {
         this.initLights();
         this.initCameras();
 
+        this.renderer = new SceneRenderer(this.graph.sceneData);
+
         this.sceneInited = true;
     }
 
@@ -144,8 +147,8 @@ export class XMLscene extends CGFscene {
             // Draw axis
             this.setDefaultAppearance();
 
-            // Displays the scene (MySceneGraph function).
-            this.graph.displayScene();
+            // Displays the scene.
+            this.renderer.display();
         }
 
         this.popMatrix();

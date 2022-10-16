@@ -4,14 +4,17 @@ import { RotationParser } from "./RotationParser.js";
 import { Coordinate3DParser } from "./Coordinate3DParser.js";
 
 export class TransformationParser {
-    static parse(node, reader) {
-        if(node.nodeName != "transformation") {
+    static parse(node, reader, needsId=true) {
+        if(node.nodeName !== "transformation") {
             return ParserResult.fromError("unknown tag <" + node.nodeName + ">");
         }
 
-        let id = reader.getString(node, "id");
-        if (id == null) {
-            return ParserResult.fromError("no ID defined for transformation");
+        let id = null;
+        if(needsId){
+            id = reader.getString(node, "id");
+            if (id == null) {
+                return ParserResult.fromError("no ID defined for transformation");
+            }
         }
 
         let transformationMatrix = mat4.create();
@@ -34,7 +37,7 @@ export class TransformationParser {
                 case 'scale':
                     let scale_coordinates = Coordinate3DParser.parse(child, reader);
                     if(!scale_coordinates.hasError()){
-                        transformationMatrix = mat4.translate(
+                        transformationMatrix = mat4.scale(
                             transformationMatrix, 
                             transformationMatrix, 
                             scale_coordinates.getValue().getArray()
@@ -53,7 +56,7 @@ export class TransformationParser {
                             rotation.getValue().getAxisArray()
                         );
                     } else {
-                        errors = errors.concat(scale_coordinates.getErrors());
+                        errors = errors.concat(rotation.getErrors());
                     }
                     break;
                 default:
@@ -61,7 +64,7 @@ export class TransformationParser {
                     break;
             }
         }
-
+        console.log(id);
         return new ParserResult(new MyTransformation(id, transformationMatrix), errors);
     }
 }
