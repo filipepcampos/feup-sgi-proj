@@ -1,5 +1,3 @@
-import { Texture } from "../wrappers/MyTexture.js";
-
 /**
  * Component Node representation, contains data from <component>
  * @constructor
@@ -8,17 +6,17 @@ import { Texture } from "../wrappers/MyTexture.js";
  * @param materials - List of ids of the materials used (Or "inherit")
  * @param {Texture} texture - Texture used
  * @param childComponentsId - Ids of all the children components
- * @param childPrimitives - All the children primitives
+ * @param childPrimitivesId - Ids of all the children primitives
  */
  export class ComponentNode {
-    constructor(id, transformation, materials, texture, childComponentsId, childPrimitives) {
+    constructor(id, transformation, materials, texture, childComponentsId, childPrimitivesId) {
         this.id = id;
         this.transformation = transformation;
         this.materials = materials;
         this.currentMaterial = 0;
         this.texture = texture;
         this.childComponentsId = childComponentsId;
-        this.childPrimitives = childPrimitives;
+        this.childPrimitivesId = childPrimitivesId;
     }
 
     setChildren(children) {

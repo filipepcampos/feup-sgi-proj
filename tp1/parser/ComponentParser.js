@@ -1,6 +1,7 @@
 import { ParserResult } from "./ParserResult.js";
-import { TransformationParser } from "./TransformationParser.js";
-
+import { ComponentNode } from "../models/graph/ComponentNode.js";
+import {ComponentTransformationParser} from "./ComponentTransformationParser.js";
+import {ComponentChildrenParser} from "./ComponentChildrenParser.js";
 export class ComponentParser {
     static parse(node, reader, sceneData) {
         if (node.nodeName != "component") {
@@ -12,45 +13,29 @@ export class ComponentParser {
             return ParserResult.fromError("no ID defined for component");
         }
 
+        const children = node.children;
         let nodeNames = [];
-        for (var j = 0; j < grandChildren.length; j++) {
-            nodeNames.push(grandChildren[j].nodeName);
+        for (let j = 0; j < children.length; j++) {
+            nodeNames.push(children[j].nodeName);
         }
-        var transformationIndex = nodeNames.indexOf("transformation");
-        var materialsIndex = nodeNames.indexOf("materials");
-        var textureIndex = nodeNames.indexOf("texture");
-        var childrenIndex = nodeNames.indexOf("children");
+        const transformationIndex = nodeNames.indexOf("transformation");
+        const materialsIndex = nodeNames.indexOf("materials");
+        const textureIndex = nodeNames.indexOf("texture");
+        const childrenIndex = nodeNames.indexOf("children");
         // TODO: Handle missing subnodes
 
-        const transformation = this.parseTransformation(nodeNames.at(transformationIndex), reader, sceneData);
+        const transformationResult = ComponentTransformationParser.parse(children[transformationIndex], reader, sceneData);
+        const childrenResult = ComponentChildrenParser.parse(children[childrenIndex], reader);
 
-        return null;
-    }
-
-    static embeddedTransformationCount = 0;
-
-    static parseTransformation(node, reader, sceneData){
-        if (node.nodeName != "transformation") {
-            return ParserResult.fromError("unknown tag <" + node.nodeName + ">");
-        }
-        const children = transformationNode.children;
-        let id = "";
-        if (children.length === 1 && children[0].nodeName === "transformationref") {
-            id = reader.getString(children[0], 'id');
-            if (sceneData.transformations[id] == null) {
-                return ParserResult.fromError("transformation with id=" + id + " is not defined");
-            }
-        } else {
-            if (children.length > 0) {
-                let transformationMatrix = TransformationParser.parse(node, reader).getValue(); // TODO: Add error
-                do {
-                    id = '_embeddedtransf' + (this.embeddedTransformationCount++);
-                } while (sceneData.transformations[id] != null);
-                sceneData.transformations[id] = transformationMatrix;
-            } else {
-                return null // TODO
-            }
-        }
-        return ParserResult.fromValue(sceneData.transformations[id]);
+        return ParserResult.fromValue(
+            new ComponentNode(
+                id,
+                transformationResult.getValue(),
+                null, // materials
+                null, // texture
+                childrenResult.getValue()['components'],
+                childrenResult.getValue()['primitives'],
+            )
+        );
     }
 }

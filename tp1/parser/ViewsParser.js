@@ -3,13 +3,13 @@ import { ParserResult } from "./ParserResult.js";
 
 export class ViewsParser {
     static parse(node, reader) {
-        let views = [];
+        let views = {};
         let errors = [];
 
         for (const child of node.children) {
-            let result = ViewParser.parse(child, reader);
-            console.log("viewparser: ", result);
-            views.push(result.getValue());
+            const result = ViewParser.parse(child, reader);
+            const view = result.getValue();
+            views[view.getId()] = view; // TODO: REPEATED IDS
             errors.push(...result.getErrors());
         }
 

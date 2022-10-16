@@ -3,6 +3,8 @@ import { MaterialsParser } from './parser/MaterialsParser.js';
 import { TransformationsParser } from './parser/TransformationsParser.js';
 import { PrimitivesParser } from "./parser/PrimitivesParser.js";
 import { ViewsParser } from "./parser/ViewsParser.js";
+import {ComponentsParser} from "./parser/ComponentsParser.js";
+import {SceneData} from "./models/SceneData.js";
 
 var DEGREE_TO_RAD = Math.PI / 180;
 
@@ -29,6 +31,7 @@ export class MySceneGraph {
 
         // Establish bidirectional references between scene and graph.
         this.scene = scene;
+        this.sceneData = new SceneData();
         scene.graph = this;
 
         this.nodes = [];
@@ -235,6 +238,7 @@ export class MySceneGraph {
     parseView(viewsNode) {
         let result = ViewsParser.parse(viewsNode, this.reader);
         console.log("Views", result);
+        this.sceneData.views = result.getValue();
         this.onXMLMinorError("To do: Parse views and create cameras.");
 
         return null;
@@ -411,6 +415,7 @@ export class MySceneGraph {
      */
     parseMaterials(materialsNode) {
         let result = MaterialsParser.parse(materialsNode, this.scene, this.reader);
+        this.sceneData.materials = result.getValue();
         console.log("Materials", result);
         return null;
     }
@@ -421,6 +426,7 @@ export class MySceneGraph {
      */
     parseTransformations(transformationsNode) {
         let result = TransformationsParser.parse(transformationsNode, this.reader);
+        this.sceneData.transformations = result.getValue();
         console.log("Transformations", result);
         return null;
     }
@@ -431,8 +437,8 @@ export class MySceneGraph {
      */
     parsePrimitives(primitivesNode) {
         let result = PrimitivesParser.parse(primitivesNode, this.reader, this.scene);
+        this.sceneData.primitives = result.getValue();
         console.log("Primitives", result);
-        this.primitives = result.getValue();
         return null;
     }
 
@@ -441,52 +447,11 @@ export class MySceneGraph {
    * @param {components block element} componentsNode
    */
     parseComponents(componentsNode) {
-        var children = componentsNode.children;
-
-        this.components = [];
-
-        var grandChildren = [];
-        var grandgrandChildren = [];
-        var nodeNames = [];
-
-        // Any number of components.
-        for (var i = 0; i < children.length; i++) {
-
-            if (children[i].nodeName != "component") {
-                this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
-                continue;
-            }
-
-            // Get id of the current component.
-            var componentID = this.reader.getString(children[i], 'id');
-            if (componentID == null)
-                return "no ID defined for componentID";
-
-            // Checks for repeated IDs.
-            if (this.components[componentID] != null)
-                return "ID must be unique for each component (conflict: ID = " + componentID + ")";
-
-            grandChildren = children[i].children;
-
-            nodeNames = [];
-            for (var j = 0; j < grandChildren.length; j++) {
-                nodeNames.push(grandChildren[j].nodeName);
-            }
-
-            var transformationIndex = nodeNames.indexOf("transformation");
-            var materialsIndex = nodeNames.indexOf("materials");
-            var textureIndex = nodeNames.indexOf("texture");
-            var childrenIndex = nodeNames.indexOf("children");
-
-            this.onXMLMinorError("To do: Parse components.");
-            // Transformations
-
-            // Materials
-
-            // Texture
-
-            // Children
-        }
+        let result = ComponentsParser.parse(componentsNode, this.reader, this.sceneData);
+        this.sceneData.components = result.getValue();
+        ComponentsLinker.link(this.sceneData);
+        console.log("Components", result);
+        return null;
     }
 
 
@@ -608,6 +573,6 @@ export class MySceneGraph {
         //To do: Create display loop for transversing the scene graph
 
         //To test the parsing/creation of the primitives, call the display function directly
-        this.primitives['demoRectangle'].display();
+        //this.primitives['demoRectangle'].display();
     }
 }

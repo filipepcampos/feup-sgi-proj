@@ -3,12 +3,13 @@ import { ParserResult } from "./ParserResult.js";
 
 export class MaterialsParser {
     static parse(node, scene, reader) {
-        let materials = [];
+        let materials = {};
         let errors = [];
 
         for (const child of node.children) {
-            let result = MaterialParser.parse(child, reader, scene);
-            materials.push(result.getValue());
+            const result = MaterialParser.parse(child, reader, scene);
+            const material = result.getValue();
+            materials[material.getId()] = material; // TODO: Repeated Id
             errors.push(...result.getErrors());
         }
 
