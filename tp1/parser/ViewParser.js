@@ -24,7 +24,6 @@ export class ViewParser {
             return ParserResult.collect(null, [near, far]);
         }
 
-        let blockParser = new BlockParser();
         const defaultCoord = new Coordinate3D(0, 0, 0);
         const func = (c) => Coordinate3DParser.parse(c, reader);
         const handlerEntries = {
@@ -33,7 +32,7 @@ export class ViewParser {
         };
 
         const handlerMap = new Map(Object.entries(handlerEntries));
-        const result = blockParser.parse(node, handlerMap);
+        const result = BlockParser.parse(node, handlerMap);
         if (result.hasError())
             return result;
 
@@ -42,17 +41,19 @@ export class ViewParser {
             if (angle.hasError())
                 return angle;
             
-            let view = new MyView.instantiate(
+            console.log(result);
+
+            let view = MyView.instantiate(
                 id, 
                 angle.getValue() * DEGREE_TO_RAD, 
                 near.getValue(),
                 far.getValue(),
-                vec3.fromValues(...result.getValue()["from"]),
-                vec3.fromValues(...result.getValue()["to"])
+                vec3.fromValues(...result.getValue()["from"].getArray()),
+                vec3.fromValues(...result.getValue()["to"].getArray())
             );
 
             return ParserResult.fromValue(view);
-        } else if (nodeName == "ortho") {
+        } else if (node.nodeName == "ortho") {
             let left = FloatParser.parse(node, reader, "left", 0);
             let right = FloatParser.parse(node, reader, "right", 0);
             let top = FloatParser.parse(node, reader, "top", 0);
@@ -73,8 +74,8 @@ export class ViewParser {
                 top.getValue(),
                 near.getValue(),
                 far.getValue(),
-                vec3.fromValues(...result.getValue()["from"]),
-                vec3.fromValues(...result.getValue()["to"]),
+                vec3.fromValues(...result.getValue()["from"].getArray()),
+                vec3.fromValues(...result.getValue()["to"].getArray()),
                 up.getArray()
             );
 
