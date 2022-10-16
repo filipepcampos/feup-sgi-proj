@@ -12,7 +12,6 @@ export class ComponentsParser {
             components[component.getId()] = component; // TODO: Repeated Ids
             errors.push(...result.getErrors());
         }
-        // TODO: Check for repeated ids
 
         return new ParserResult(components, errors);
     }

@@ -6,10 +6,11 @@ import { MyTriangle } from "../primitives/MyTriangle.js";
 import { MyCylinder } from "../primitives/MyCylinder.js";
 import { MySphere } from "../primitives/MySphere.js";
 import { MyTorus } from "../primitives/MyTorus.js";
+import {PrimitiveNode} from "../models/graph/PrimitiveNode.js";
 
 export class PrimitiveParser {
     static parse(node, reader, scene) {
-        if (node.nodeName != "primitive") {
+        if (node.nodeName !== "primitive") {
             return ParserResult.fromError("unknown tag <" + node.nodeName + ">");
         }
 
@@ -22,15 +23,15 @@ export class PrimitiveParser {
             let childNode = node.children[0];
             let primitiveType = childNode.nodeName;
 
-            if (primitiveType == 'rectangle') {
+            if (primitiveType === 'rectangle') {
                 return PrimitiveParser.parseRectangle(childNode, reader, scene, id);
-            } else if (primitiveType == 'triangle') {
+            } else if (primitiveType === 'triangle') {
                 return PrimitiveParser.parseTriangle(childNode, reader, scene, id);
-            } else if (primitiveType == 'cylinder') {
+            } else if (primitiveType === 'cylinder') {
                 return PrimitiveParser.parseCylinder(childNode, reader, scene, id);
-            } else if (primitiveType == 'sphere') {
+            } else if (primitiveType === 'sphere') {
                 return PrimitiveParser.parseSphere(childNode, reader, scene, id);
-            } else if (primitiveType == 'torus') {
+            } else if (primitiveType === 'torus') {
                 return PrimitiveParser.parseTorus(childNode, reader, scene, id);
             }
         }
@@ -53,7 +54,7 @@ export class PrimitiveParser {
         }
 
         let rectangle = new MyRectangle(scene, id, x1.getValue(), x2.getValue(), y1.getValue(), y2.getValue());
-        return ParserResult.fromValue(rectangle)
+        return ParserResult.fromValue(new PrimitiveNode(id, rectangle));
     }
 
     static parseTriangle(node, reader, scene, id) {
@@ -94,7 +95,7 @@ export class PrimitiveParser {
             z3.getValue()
         );
 
-        return ParserResult.fromValue(triangle);
+        return ParserResult.fromValue(new PrimitiveNode(id, triangle));
     }
 
     static parseCylinder(node, reader, scene, id) {
@@ -118,7 +119,7 @@ export class PrimitiveParser {
             stacks.getValue()
         );
         
-        return ParserResult.fromValue(cylinder);
+        return ParserResult.fromValue(new PrimitiveNode(id, cylinder));
     }
 
     static parseSphere(node, reader, scene, id) {
@@ -138,7 +139,7 @@ export class PrimitiveParser {
             stacks.getValue()
         );
 
-        return ParserResult.fromValue(sphere);
+        return ParserResult.fromValue(new PrimitiveNode(id, sphere));
     }
 
     static parseTorus(node, reader, scene, id) {
@@ -160,7 +161,7 @@ export class PrimitiveParser {
             loops.getValue()
         );
 
-        return ParserResult.fromValue(torus);
+        return ParserResult.fromValue(new PrimitiveNode(id, torus));
     }
 
     /*

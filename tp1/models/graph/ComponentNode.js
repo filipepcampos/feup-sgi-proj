@@ -19,11 +19,15 @@
         this.childPrimitivesId = childPrimitivesId;
     }
 
+    getId() {
+        return this.id;
+    }
+
     setChildren(children) {
         this.children = children;
     }
 
-    updateMaterial(){
+    updateMaterial() {
         this.currentMaterial = (this.currentMaterial + 1) % this.materialIds.length;
     }
 
