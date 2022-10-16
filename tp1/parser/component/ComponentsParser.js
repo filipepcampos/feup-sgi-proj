@@ -4,15 +4,15 @@ import { ParserResult } from "../ParserResult.js";
 export class ComponentsParser {
     static parse(node, reader, sceneData) {
         let components = {};
-        let errors = [];
+        let results = [];
 
         for (const child of node.children) {
             const result = ComponentParser.parse(child, reader, sceneData);
             const component = result.getValue();
             components[component.getId()] = component; // TODO: Repeated Ids
-            errors.push(...result.getErrors());
+            results.push(result);
         }
 
-        return new ParserResult(components, errors);
+        return ParserResult.collect(components, results, "In <components>");
     }
 }

@@ -6,6 +6,7 @@ import { ViewsParser } from "./parser/ViewsParser.js";
 import {ComponentsParser} from "./parser/component/ComponentsParser.js";
 import {SceneData} from "./models/SceneData.js";
 import {ComponentsLinker} from "./parser/component/ComponentsLinker.js";
+import {ParserErrorPrinter} from "./parser/ParserErrorPrinter.js";
 
 var DEGREE_TO_RAD = Math.PI / 180;
 
@@ -450,8 +451,13 @@ export class MySceneGraph {
    */
     parseComponents(componentsNode) {
         let result = ComponentsParser.parse(componentsNode, this.reader, this.sceneData);
+        console.log(result);
+        ParserErrorPrinter.print(result.getErrors());
         this.sceneData.components = result.getValue();
-        ComponentsLinker.link(this.sceneData);
+
+        console.log("Linking child components");
+        ParserErrorPrinter.print(ComponentsLinker.link(this.sceneData));
+
         console.log("Components", result);
         return null;
     }

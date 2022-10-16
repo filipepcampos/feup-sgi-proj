@@ -64,7 +64,6 @@ export class TransformationParser {
                     break;
             }
         }
-        console.log(id);
         return new ParserResult(new MyTransformation(id, transformationMatrix), errors);
     }
 }

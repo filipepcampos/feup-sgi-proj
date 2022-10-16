@@ -9,6 +9,7 @@ export class ViewsParser {
         for (const child of node.children) {
             const result = ViewParser.parse(child, reader);
             const view = result.getValue();
+            console.log(result);
             views[view.getId()] = view; // TODO: REPEATED IDS
             errors.push(...result.getErrors());
         }

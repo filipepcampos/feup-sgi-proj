@@ -12,12 +12,17 @@ export class ParserResult {
         return new ParserResult(value, []);
     }
     
-    static collect(value, parserResults){
+    static collect(value, parserResults, context=""){
         let errors = [];
         for(const parserResult of parserResults){
             errors = errors.concat(parserResult.getErrors());
         }
-        return new ParserResult(value, errors);
+        if(errors.length > 0){
+            let k = {};
+            k[context] = errors;
+            return new ParserResult(value, [k]);
+        }
+        return this.fromValue(value);
     }
 
     getValue() {

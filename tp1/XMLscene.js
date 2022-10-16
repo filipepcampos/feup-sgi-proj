@@ -148,7 +148,7 @@ export class XMLscene extends CGFscene {
             this.setDefaultAppearance();
 
             // Displays the scene.
-            this.renderer.display();
+this.renderer.display();
         }
 
         this.popMatrix();
