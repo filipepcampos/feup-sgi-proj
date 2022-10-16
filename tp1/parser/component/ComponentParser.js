@@ -1,5 +1,5 @@
-import { ParserResult } from "./ParserResult.js";
-import { ComponentNode } from "../models/graph/ComponentNode.js";
+import { ParserResult } from "../ParserResult.js";
+import { ComponentNode } from "../../models/graph/ComponentNode.js";
 import {ComponentTransformationParser} from "./ComponentTransformationParser.js";
 import {ComponentChildrenParser} from "./ComponentChildrenParser.js";
 export class ComponentParser {

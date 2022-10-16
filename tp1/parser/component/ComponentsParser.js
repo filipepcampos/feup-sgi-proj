@@ -1,5 +1,5 @@
 import { ComponentParser } from "./ComponentParser.js";
-import { ParserResult } from "./ParserResult.js";
+import { ParserResult } from "../ParserResult.js";
 
 export class ComponentsParser {
     static parse(node, reader, sceneData) {

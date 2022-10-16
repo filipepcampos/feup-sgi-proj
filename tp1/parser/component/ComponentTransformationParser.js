@@ -1,5 +1,5 @@
-import {TransformationParser} from "./TransformationParser.js";
-import {ParserResult} from "./ParserResult.js";
+import {TransformationParser} from "../TransformationParser.js";
+import {ParserResult} from "../ParserResult.js";
 
 export class ComponentTransformationParser {
     static embeddedTransformationCount = 0;

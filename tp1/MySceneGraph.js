@@ -3,9 +3,9 @@ import { MaterialsParser } from './parser/MaterialsParser.js';
 import { TransformationsParser } from './parser/TransformationsParser.js';
 import { PrimitivesParser } from "./parser/PrimitivesParser.js";
 import { ViewsParser } from "./parser/ViewsParser.js";
-import {ComponentsParser} from "./parser/ComponentsParser.js";
+import {ComponentsParser} from "./parser/component/ComponentsParser.js";
 import {SceneData} from "./models/SceneData.js";
-import {ComponentsLinker} from "./parser/ComponentsLinker.js";
+import {ComponentsLinker} from "./parser/component/ComponentsLinker.js";
 
 var DEGREE_TO_RAD = Math.PI / 180;
 

@@ -1,4 +1,4 @@
-import {ParserResult} from "./ParserResult.js";
+import {ParserResult} from "../ParserResult.js";
 
 export class ComponentChildrenParser {
     static parse(node, reader) {
