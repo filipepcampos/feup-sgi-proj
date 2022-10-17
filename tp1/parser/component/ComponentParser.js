@@ -72,7 +72,13 @@ export class ComponentParser {
         const length_tResult = FloatParser.parse(node, reader, 'length_t'); // TODO Limits?
         const length_t = length_tResult.getValueOrDefault(1);
 
-        return ParserResult.collect(new MyTexture(id, sceneData.textures[id], length_s, length_t), [length_sResult, length_tResult], "parsing <texture>");
+        const referenceTexture = sceneData.textures[id];
+        console.log(referenceTexture);
+        return ParserResult.collect(
+                new MyTexture(referenceTexture.getId(), referenceTexture.getCGFTexture(), length_s, length_t),
+                [length_sResult, length_tResult],
+                "parsing <texture> with id=" + id
+        );
     }
 
     static parseMaterial(node, reader, sceneData) {

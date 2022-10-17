@@ -7,12 +7,19 @@ export class SceneRenderer {
 
     display(node=this.sceneData.components[this.sceneData.root], parentMaterial=null, parentTexture=null) {
         if(node instanceof PrimitiveNode){
-            node.getObject().display();
+            this.displayPrimitive(node, parentTexture);
         } else {
             this.displayComponent(node, parentMaterial, parentTexture);
         }
     }
 
+    displayPrimitive(node, texture) {
+        const obj = node.getObject();
+        if(texture !== "inherit" && texture !== "none"){
+            obj.updateTexLength(texture.getLength_s(), texture.getLength_t()); // TODO: CONFIRM THE ORDER OF PARAMETERS
+        }
+        node.getObject().display();
+    }
     displayComponent(node, parentMaterial, parentTexture) {
         const matrix = node.getTransformation() != null ? node.getTransformation() : mat4.create();
         const scene = this.sceneData.scene;
@@ -24,11 +31,22 @@ export class SceneRenderer {
 
         material.getCGFAppearance().apply();
 
+
+        let texture = node.getTexture();
+        if(texture === "inherit") {
+            texture = parentTexture;
+        }
+        if(texture !== "none") {
+            //console.log(texture.getCGFTexture());
+            //console.log(texture);
+            texture.getCGFTexture().bind(0);
+        }
+
         scene.pushMatrix();
         scene.multMatrix(matrix);
 
         for(const child of node.getChildren()){
-            this.display(child, material, parentTexture);
+            this.display(child, material, texture);
         }
 
         scene.popMatrix();
