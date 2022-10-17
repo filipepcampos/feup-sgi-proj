@@ -1,12 +1,14 @@
 import { CGFXMLreader } from '../lib/CGF.js';
-import { MaterialsParser } from './parser/MaterialsParser.js';
-import { TransformationsParser } from './parser/TransformationsParser.js';
-import { PrimitivesParser } from "./parser/PrimitivesParser.js";
 import { ViewsParser } from "./parser/ViewsParser.js";
-import {ComponentsParser} from "./parser/component/ComponentsParser.js";
 import {SceneData} from "./models/SceneData.js";
 import {ComponentsLinker} from "./parser/component/ComponentsLinker.js";
 import {ParserErrorPrinter} from "./parser/ParserErrorPrinter.js";
+import {GenericChildParser} from "./parser/GenericChildParser.js";
+import {TransformationParser} from "./parser/TransformationParser.js";
+import {MaterialParser} from "./parser/MaterialParser.js";
+import {ComponentParser} from "./parser/component/ComponentParser.js";
+import {PrimitiveParser} from "./parser/PrimitiveParser.js";
+import {TextureParser} from "./parser/TextureParser.js";
 
 var DEGREE_TO_RAD = Math.PI / 180;
 
@@ -406,6 +408,9 @@ export class MySceneGraph {
      * @param {textures block element} texturesNode
      */
     parseTextures(texturesNode) {
+        let result = GenericChildParser.parse(texturesNode, this.reader, this.scene, TextureParser, "texture");
+        this.sceneData.textures = result.getValue();
+        console.log("Textures", result);
 
         //For each texture in textures block, check ID and file URL
         this.onXMLMinorError("To do: Parse textures.");
@@ -417,7 +422,7 @@ export class MySceneGraph {
      * @param {materials block element} materialsNode
      */
     parseMaterials(materialsNode) {
-        let result = MaterialsParser.parse(materialsNode, this.scene, this.reader);
+        let result = GenericChildParser.parse(materialsNode, this.reader, this.scene, MaterialParser, "material");
         this.sceneData.materials = result.getValue();
         console.log("Materials", result);
         return null;
@@ -428,7 +433,7 @@ export class MySceneGraph {
      * @param {transformations block element} transformationsNode
      */
     parseTransformations(transformationsNode) {
-        let result = TransformationsParser.parse(transformationsNode, this.reader);
+        let result = GenericChildParser.parse(transformationsNode, this.reader, this.scene, TransformationParser, "transformation");
         this.sceneData.transformations = result.getValue();
         ParserErrorPrinter.print(result.getErrors());
         console.log("Transformations", result);
@@ -440,7 +445,7 @@ export class MySceneGraph {
      * @param {primitives block element} primitivesNode
      */
     parsePrimitives(primitivesNode) {
-        let result = PrimitivesParser.parse(primitivesNode, this.reader, this.scene);
+        let result = GenericChildParser.parse(primitivesNode, this.reader, this.scene, PrimitiveParser, "primitive");
         this.sceneData.primitives = result.getValue();
         console.log("Primitives", result);
         return null;
@@ -451,7 +456,7 @@ export class MySceneGraph {
    * @param {components block element} componentsNode
    */
     parseComponents(componentsNode) {
-        let result = ComponentsParser.parse(componentsNode, this.reader, this.sceneData);
+        let result = GenericChildParser.parse(componentsNode, this.reader, this.sceneData, ComponentParser, "component");
         console.log(result);
         ParserErrorPrinter.print(result.getErrors());
         this.sceneData.components = result.getValue();

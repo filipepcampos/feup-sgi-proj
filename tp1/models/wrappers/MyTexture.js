@@ -2,7 +2,7 @@ import { CGFtexture } from "../../../lib/CGF.js";
 
 // TODO: Document
 export class MyTexture {
-    constructor(id, texture, length_s, length_t) {
+    constructor(id, CGFTexture, length_s, length_t) {
         this.id = id;
         this.CGFTexture = CGFTexture;
         this.length_s = length_s;

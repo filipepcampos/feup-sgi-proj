@@ -78,7 +78,6 @@ export class ComponentParser {
     static parseMaterial(node, reader, sceneData) {
         let materials = [];
         let errors = []
-        console.log(node.children);
         for(const child of node.children) {
             if(child.nodeName !== "material"){
                 errors.push("Unexpected tag <" + child.nodeName + ">");
@@ -99,7 +98,6 @@ export class ComponentParser {
         }
 
         // TODO: Set default material in case its missing
-        console.log(materials);
         return new ParserResult(materials, errors);
     }
 }
