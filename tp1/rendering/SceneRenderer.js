@@ -17,11 +17,18 @@ export class SceneRenderer {
         const matrix = node.getTransformation() != null ? node.getTransformation() : mat4.create();
         const scene = this.sceneData.scene;
 
+        let material = node.getMaterial();
+        if(material === "inherit") {
+            material = parentMaterial;
+        }
+
+        material.getCGFAppearance().apply();
+
         scene.pushMatrix();
         scene.multMatrix(matrix);
 
         for(const child of node.getChildren()){
-            this.display(child, parentMaterial, parentTexture);
+            this.display(child, material, parentTexture);
         }
 
         scene.popMatrix();

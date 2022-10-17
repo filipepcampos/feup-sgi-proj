@@ -29,13 +29,14 @@ export class ComponentParser {
         // TODO: Error handle all these results
         const transformationResult = ComponentTransformationParser.parse(children[transformationIndex], reader, sceneData);
         const childrenResult = ComponentChildrenParser.parse(children[childrenIndex], reader);
+        const materialResult = this.parseMaterial(children[materialsIndex], reader, sceneData);
         const textureResult = this.parseTexture(children[textureIndex], reader, sceneData);
 
         return ParserResult.collect(
             new ComponentNode(
                 id,
                 transformationResult.getValue(),
-                null, // materials
+                materialResult.getValue(), // materials
                 textureResult.getValueOrDefault("none"),
                 childrenResult.getValue()["components"],
                 childrenResult.getValue()["primitives"],
@@ -65,7 +66,6 @@ export class ComponentParser {
             return ParserResult.fromError("Texture with ID " + id + " does not exist");
         }
 
-        let errors = [];
         const length_sResult = FloatParser.parse(node, reader, 'length_s'); // TODO: Limits?
         const length_s = length_sResult.getValueOrDefault(1);
 
@@ -73,5 +73,33 @@ export class ComponentParser {
         const length_t = length_tResult.getValueOrDefault(1);
 
         return ParserResult.collect(new MyTexture(id, sceneData.textures[id], length_s, length_t), [length_sResult, length_tResult], "parsing <texture>");
+    }
+
+    static parseMaterial(node, reader, sceneData) {
+        let materials = [];
+        let errors = []
+        console.log(node.children);
+        for(const child of node.children) {
+            if(child.nodeName !== "material"){
+                errors.push("Unexpected tag <" + child.nodeName + ">");
+                continue;
+            }
+            const id = reader.getString(child, "id");
+            if(id != null){
+                if(sceneData.materials[id] != null) {
+                    materials.push(sceneData.materials[id]);
+                } else if(id === "inherit") {
+                    materials.push(id);
+                } else {
+                    errors.push("material with id=" + id + " does not exist");
+                }
+            } else {
+                errors.push("missing id on <material>");
+            }
+        }
+
+        // TODO: Set default material in case its missing
+        console.log(materials);
+        return new ParserResult(materials, errors);
     }
 }
