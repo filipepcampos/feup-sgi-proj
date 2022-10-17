@@ -1,5 +1,4 @@
 import { CGFXMLreader } from '../lib/CGF.js';
-import { ViewsParser } from "./parser/ViewsParser.js";
 import {SceneData} from "./models/SceneData.js";
 import {ComponentsLinker} from "./parser/component/ComponentsLinker.js";
 import {ParserErrorPrinter} from "./parser/ParserErrorPrinter.js";
@@ -9,6 +8,7 @@ import {MaterialParser} from "./parser/MaterialParser.js";
 import {ComponentParser} from "./parser/component/ComponentParser.js";
 import {PrimitiveParser} from "./parser/PrimitiveParser.js";
 import {TextureParser} from "./parser/TextureParser.js";
+import {ViewParser} from "./parser/ViewParser.js";
 
 var DEGREE_TO_RAD = Math.PI / 180;
 
@@ -241,7 +241,7 @@ export class MySceneGraph {
      * @param {view block element} viewsNode
      */
     parseView(viewsNode) {
-        let result = ViewsParser.parse(viewsNode, this.reader);
+        let result = GenericChildParser.parse(viewsNode, this.reader, this.scene, ViewParser, "view");
         console.log("Views", result);
         this.sceneData.views = result.getValue();
         this.onXMLMinorError("To do: Parse views and create cameras.");
