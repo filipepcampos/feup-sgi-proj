@@ -73,7 +73,6 @@ export class ComponentParser {
         const length_t = length_tResult.getValueOrDefault(1);
 
         const referenceTexture = sceneData.textures[id];
-        console.log(referenceTexture);
         return ParserResult.collect(
                 new MyTexture(referenceTexture.getId(), referenceTexture.getCGFTexture(), length_s, length_t),
                 [length_sResult, length_tResult],

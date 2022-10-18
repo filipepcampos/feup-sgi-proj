@@ -232,8 +232,6 @@ export class MySceneGraph {
 
         this.referenceLength = axis_length || 1;
 
-        this.log("Parsed scene");
-
         return null;
     }
 
@@ -246,8 +244,6 @@ export class MySceneGraph {
         this.sceneData.defaultView = this.reader.getString(viewsNode, 'default');
         console.log("Views", result);
         this.sceneData.views = result.getValue();
-        this.onXMLMinorError("To do: Parse views and create cameras.");
-
         return null;
     }
 
@@ -282,8 +278,6 @@ export class MySceneGraph {
         else
             this.background = color;
 
-        this.log("Parsed ambient");
-
         return null;
     }
 
@@ -294,10 +288,8 @@ export class MySceneGraph {
     parseLights(lightsNode) {
         let result = LightsParser.parse(lightsNode, this.reader);
         this.sceneData.lights = result.getValue();
-        // TODO: Print errors
+        ParserErrorPrinter.print(result.getErrors());
         console.log("Lights", result.getValue());
-
-        this.log("Parsed lights");
         return null;
     }
 
@@ -309,9 +301,6 @@ export class MySceneGraph {
         let result = GenericChildParser.parse(texturesNode, this.reader, this.scene, TextureParser, "texture");
         this.sceneData.textures = result.getValue();
         console.log("Textures", result);
-
-        //For each texture in textures block, check ID and file URL
-        this.onXMLMinorError("To do: Parse textures.");
         return null;
     }
 
@@ -355,7 +344,6 @@ export class MySceneGraph {
    */
     parseComponents(componentsNode) {
         let result = GenericChildParser.parse(componentsNode, this.reader, this.sceneData, ComponentParser, "component");
-        console.log(result);
         ParserErrorPrinter.print(result.getErrors());
         this.sceneData.components = result.getValue();
 

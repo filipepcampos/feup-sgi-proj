@@ -37,8 +37,6 @@ export class SceneRenderer {
             texture = parentTexture;
         }
         if(texture !== "none") {
-            //console.log(texture.getCGFTexture());
-            //console.log(texture);
             texture.getCGFTexture().bind(0);
         }
 

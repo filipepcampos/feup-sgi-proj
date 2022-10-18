@@ -42,7 +42,6 @@ export class MyInterface extends CGFinterface {
                 .name(this.scene.lightsIds[i])
                 .onChange((value) => {
                     this.scene.setLight(i, value);
-                    console.log(i, value);
             });
         }
     }
