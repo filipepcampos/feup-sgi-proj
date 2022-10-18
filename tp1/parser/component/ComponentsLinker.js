@@ -1,4 +1,12 @@
+/**
+ * Class responsible for linking components references
+ */
 export class ComponentsLinker {
+    /**
+     * Links the components references in the given SceneData
+     * @param {SceneData} sceneData - Reference to the SceneData
+     * @returns List of errors
+     */
     static link(sceneData){
         let errors = [];
         for(const [componentId, component] of Object.entries(sceneData.components)) {

@@ -1,9 +1,19 @@
 import {TransformationParser} from "../TransformationParser.js";
 import {ParserResult} from "../ParserResult.js";
-import { MyTransformation } from "../../models/wrappers/MyTransformation.js";
 
+/**
+ * Class responsible for parsing a component transformation
+ */
 export class ComponentTransformationParser {
     static embeddedTransformationCount = 0;
+
+    /**
+     * Parses the transformation in the given node
+     * @param {*} node - XML node that contains the transformation
+     * @param {*} reader - XML reader
+     * @param {SceneData} sceneData - Reference to the SceneData
+     * @returns Reference to the ParseResult
+     */
     static parse(node, reader, sceneData){
         if (node.nodeName !== "transformation") {
             return ParserResult.fromError("unknown tag <" + node.nodeName + ">");

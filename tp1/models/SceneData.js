@@ -1,8 +1,10 @@
 /**
- * SceneData
- * @constructor
+ * Model that contains information about a scene
  */
 export class SceneData {
+    /**
+     * @param {CGFscene} scene - Reference to the CGFscene
+     */
     constructor(scene) {
         // Global values
         this.scene = scene;
