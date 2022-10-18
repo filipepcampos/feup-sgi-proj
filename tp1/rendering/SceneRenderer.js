@@ -16,7 +16,7 @@ export class SceneRenderer {
     displayPrimitive(node, texture) {
         const obj = node.getObject();
         if(texture !== "inherit" && texture !== "none"){
-            obj.updateTexLength(texture.getLength_s(), texture.getLength_t()); // TODO: CONFIRM THE ORDER OF PARAMETERS
+            obj.updateTexLength(texture.getLength_s(), texture.getLength_t());
         }
         node.getObject().display();
     }

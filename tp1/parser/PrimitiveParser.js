@@ -54,7 +54,7 @@ export class PrimitiveParser {
             return ParserResult.collect(null, [x2, y2]);
         }
 
-        let rectangle = new MyRectangle(scene, id, x1.getValue(), x2.getValue(), y1.getValue(), y2.getValue());
+        let rectangle = new MyRectangle(scene, x1.getValue(), x2.getValue(), y1.getValue(), y2.getValue());
         return ParserResult.fromValue(new PrimitiveNode(id, rectangle));
     }
 

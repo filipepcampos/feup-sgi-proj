@@ -83,9 +83,4 @@ export class ViewParser {
             return ParserResult.fromValue(viewOrtho);
         }
     }
-/*
-        // TODO: Checks for repeated IDs.
-        if (this.views[viewID] != null)
-            return "ID must be unique for each view (conflict: ID = " + viewID + ")";
-*/
 }

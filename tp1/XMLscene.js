@@ -50,7 +50,7 @@ export class XMLscene extends CGFscene {
 
     // todo:
     initCameras() {
-        this.setCamera(this.graph.sceneData.defaultView); // TODO Use function?
+        this.setCamera(this.graph.sceneData.defaultView);
         this.camerasIds = Object.keys(this.graph.sceneData.views);
     }
 

@@ -29,21 +29,4 @@ export class MyTexture {
     getLength_t() {
         return this.length_t;
     }
-
-    // TODO: this should be in display engine module
-    /*apply(parentTexture, sceneData) {
-        if (this.textureId == "inherit") {
-            if (parentTexture != null && parentTexture.textureId != "none") {
-                let texture = sceneData.getTexture(parentTexture.textureId);
-                texture.bind(0);
-                return parentTexture;
-            }
-        }
-        else if (this.textureId != "none") {
-            let texture = sceneData.getTexture(this.textureId);
-            texture.bind(0);
-            return this;
-        }
-        return null;
-    }*/
 }
