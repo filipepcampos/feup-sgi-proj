@@ -2,11 +2,20 @@ import { CGFobject } from '../../lib/CGF.js';
 
 /**
  * MyTriangle
- * @constructor
- * @param scene - Reference to MyScene object
- * TODO:
  */
 export class MyTriangle extends CGFobject {
+	/**
+	 * @param {CGFScene} scene - Reference to MyScene object
+	 * @param {float} x1 - x coordinate of the first point
+	 * @param {float} y1 - y coordinate of the first point
+	 * @param {float} z1 - z coordinate of the first point
+	 * @param {float} x2 - x coordinate of the second point
+	 * @param {float} y2 - y coordinate of the second point
+	 * @param {float} z2 - z coordinate of the second point
+	 * @param {float} x3 - x coordinate of the third point
+	 * @param {float} y3 - y coordinate of the third point
+	 * @param {float} z3 - z coordinate of the third point
+	 */
 	constructor(scene, x1, x2, x3, y1, y2, y3, z1, z2, z3) {
 		super(scene);
 		// Vertex 1
@@ -38,10 +47,19 @@ export class MyTriangle extends CGFobject {
 		this.initBuffers();
 	}
 
+	/**
+	 * Calculates the distance between two vertices
+	 * @param {Array<float>} v1 - Coordinates of the first vertex
+	 * @param {Array<float>} v2 - Coordinates of the second vertex
+	 * @returns distance between the two vertices
+	 */
 	static calculateDistance(v1, v2) {
 		return Math.sqrt(Math.pow(v1[0] - v2[0], 2) + Math.pow(v1[1] - v2[1], 2) + Math.pow(v1[2] - v2[2], 2));
 	}
 	
+	/**
+	 * Initializes the triangle buffers
+	 */
 	initBuffers() {
 		this.vertices = [
 			this.x1, this.y1, this.z1,	//0

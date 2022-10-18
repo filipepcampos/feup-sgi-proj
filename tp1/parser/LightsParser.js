@@ -1,6 +1,16 @@
 import { ParserResult } from "./ParserResult.js";
 
+/**
+ * Parser for the <lights> block
+ * This is an wrapper for the base code implementation of this functionality
+ */
 export class LightsParser {
+    /**
+     * Parse the <lights> block
+     * @param {lights element} node - Node that should be parsed
+     * @param {CGFXMLreader} reader - XMLreader
+     * @returns {ParserResult} - Containing a array containing the parsed lights, and errors that occurred while parsing
+     */
     static parse(node, reader) {
         const children = node.children;
 
@@ -143,8 +153,10 @@ export class LightsParser {
 
     /**
      * Parse the coordinates from a node with id=id
-     * @param {block element} node
-     * @param {message to be displayed in case of error} messageError
+     * @param {block element} node - Node that should be parsed
+     * @param {CGFXMLreader} reader - XMLreader
+     * @param {message to be displayed in case of error} messageError - Message to be displayed in case of error
+     * @returns {Array} - Containing the parsed coordinates
     */
     static parseCoordinates3D(node, reader, messageError) {
         var position = [];
@@ -171,8 +183,10 @@ export class LightsParser {
 
     /**
      * Parse the coordinates from a node with id=id
-     * @param {block element} node
-     * @param {message to be displayed in case of error} messageError
+     * @param {block element} node - Node to be parsed
+     * @param {CGFXMLreader} reader - XMLreader
+     * @param {message to be displayed in case of error} messageError - Message to be displayed in case of error
+     * @returns {Array} - Containing the parsed coordinates
      */
     static parseCoordinates4D(node, reader, messageError) {
         var position = [];
@@ -196,8 +210,10 @@ export class LightsParser {
 
     /**
      * Parse the color components from a node
-     * @param {block element} node
-     * @param {message to be displayed in case of error} messageError
+     * @param {block element} node - Node to be parsed
+     * @param {CGFXMLreader} reader - XMLreader
+     * @param {message to be displayed in case of error} messageError - Message to be displayed in case of error
+     * @returns {Array} - Containing the parsed color
      */
     static parseColor(node, reader, messageError) {
         var color = [];

@@ -6,8 +6,19 @@ import {MyTexture} from "../../models/wrappers/MyTexture.js";
 import { MyTransformation } from "../../models/wrappers/MyTransformation.js";
 import {FloatParser} from "../FloatParser.js";
 
+/**
+ * Parser for the <component> node
+ */
 export class ComponentParser {
+    /**
+     * Parse a single <component> node
+     * @param {Component element} node - Node that should be parsed
+     * @param {CGFXMLreader} reader - XMLreader
+     * @param {SceneData} sceneData - Scene data
+     * @returns {ParserResult} - Containing the parsed MyComponent and errors that occurred while parsing
+     */
     static parse(node, reader, sceneData) {
+        console.log(node, typeof node);
         if (node.nodeName != "component") {
             return ParserResult.fromError("unknown tag <" + node.nodeName + ">");
         }
@@ -81,6 +92,13 @@ export class ComponentParser {
         );
     }
 
+    /**
+     * Parse the <texture> node within an <element> node
+     * @param {texture element} node - Node that should be parsed
+     * @param {CGFXMLreader} reader - XMLreader
+     * @param {SceneData} sceneData - Scene data
+     * @returns {ParserResult} - Containing the parsed MyTexture (or "inherit"/"none") and errors that occurred while parsing
+     */
     static parseTexture(node, reader, sceneData) {
         if (node.nodeName !== "texture") {
             return ParserResult.fromError("unknown tag <" + node.nodeName + ">");
@@ -115,6 +133,13 @@ export class ComponentParser {
         );
     }
 
+    /**
+     * Parse the <materials> node within an <element> node
+     * @param {materials element} node - Node that should be parsed
+     * @param {CGFXMLreader} reader - XMLreader
+     * @param {SceneData} sceneData - Scene data
+     * @returns {ParserResult} - Containing the parsed materials (or "inherit") and errors that occurred while parsing
+     */
     static parseMaterial(node, reader, sceneData) {
         let materials = [];
         let errors = []

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">tp1/XMLscene.js | sgi</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="## Group T04G05 | Name                          | Number    | E-Mail                   | | ----------------------------- | --------- | ------------------------ | | Filipe Pinto Campos           | 201905609 | up201905609@edu.fe.up.pt | | Francisco Gon&#xE7;alves Cerqueira | 201905337 | up201905337@edu.fe.up.pt |"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="sgi"><meta property="twitter:description" content="## Group T04G05 | Name                          | Number    | E-Mail                   | | ----------------------------- | --------- | ------------------------ | | Filipe Pinto Campos           | 201905609 | up201905609@edu.fe.up.pt | | Francisco Gon&#xE7;alves Cerqueira | 201905337 | up201905337@edu.fe.up.pt |"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a href="https://git.fe.up.pt/sgi-meic/sgi-2022-2023/t04/sgi-t04-g05.git">Repository</a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/MyInterface.js~MyInterface.html">MyInterface</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/MySceneGraph.js~MySceneGraph.html">MySceneGraph</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/XMLscene.js~XMLscene.html">XMLscene</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#models">models</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/models/Color.js~Color.html">Color</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/models/Coordinate3D.js~Coordinate3D.html">Coordinate3D</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/models/Rotation.js~Rotation.html">Rotation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/models/SceneData.js~SceneData.html">SceneData</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#models-graph">models/graph</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/models/graph/ComponentNode.js~ComponentNode.html">ComponentNode</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/models/graph/PrimitiveNode.js~PrimitiveNode.html">PrimitiveNode</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#models-wrappers">models/wrappers</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/models/wrappers/MyLight.js~MyLight.html">MyLight</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/models/wrappers/MyMaterial.js~MyMaterial.html">MyMaterial</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/models/wrappers/MySpotLight.js~MySpotLights.html">MySpotLights</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/models/wrappers/MyTexture.js~MyTexture.html">MyTexture</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/models/wrappers/MyTransformation.js~MyTransformation.html">MyTransformation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/models/wrappers/MyView.js~MyView.html">MyView</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#parser">parser</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/AmbientParser.js~AmbientParser.html">AmbientParser</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/BlockParser.js~BlockParser.html">BlockParser</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/ColorParser.js~ColorParser.html">ColorParser</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/Coordinate3DParser.js~Coordinate3DParser.html">Coordinate3DParser</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/FloatParser.js~FloatParser.html">FloatParser</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/GenericChildParser.js~GenericChildParser.html">GenericChildParser</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/IntegerParser.js~IntegerParser.html">IntegerParser</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/LightsParser.js~LightsParser.html">LightsParser</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/MaterialParser.js~MaterialParser.html">MaterialParser</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/ParserErrorPrinter.js~ParserErrorPrinter.html">ParserErrorPrinter</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/ParserResult.js~ParserResult.html">ParserResult</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/PrimitiveParser.js~PrimitiveParser.html">PrimitiveParser</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/RotationParser.js~RotationParser.html">RotationParser</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/TextureParser.js~TextureParser.html">TextureParser</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/TransformationParser.js~TransformationParser.html">TransformationParser</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/ViewParser.js~ViewParser.html">ViewParser</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#parser-component">parser/component</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/component/ComponentChildrenParser.js~ComponentChildrenParser.html">ComponentChildrenParser</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/component/ComponentParser.js~ComponentParser.html">ComponentParser</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/component/ComponentsLinker.js~ComponentsLinker.html">ComponentsLinker</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#primitives">primitives</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/primitives/MyCylinder.js~MyCylinder.html">MyCylinder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/primitives/MyRectangle.js~MyRectangle.html">MyRectangle</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/primitives/MySphere.js~MySphere.html">MySphere</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/primitives/MyTorus.js~MyTorus.html">MyTorus</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/primitives/MyTriangle.js~MyTriangle.html">MyTriangle</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#rendering">rendering</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/rendering/MaterialUpdater.js~MaterialUpdater.html">MaterialUpdater</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/rendering/SceneRenderer.js~SceneRenderer.html">SceneRenderer</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">tp1/XMLscene.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { CGFscene } from &apos;../lib/CGF.js&apos;;
+import { CGFaxis,CGFcamera } from &apos;../lib/CGF.js&apos;;
+import {SceneRenderer} from &quot;./rendering/SceneRenderer.js&quot;;
+
+
+var DEGREE_TO_RAD = Math.PI / 180;
+
+/**
+ * XMLscene class, representing the scene that is to be rendered.
+ */
+export class XMLscene extends CGFscene {
+    /**
+     * @constructor
+     * @param {MyInterface} myinterface 
+     */
+    constructor(myinterface) {
+        super();
+
+        this.interface = myinterface;
+    }
+
+    /**
+     * Initializes the scene, setting some WebGL defaults, initializing the camera and the axis.
+     * @param {CGFApplication} application
+     */
+    init(application) {
+        super.init(application);
+
+        this.sceneInited = false;
+
+        this.initDefaultCameras();
+
+        this.enableTextures(true);
+
+        this.gl.clearDepth(100.0);
+        this.gl.enable(this.gl.DEPTH_TEST);
+        this.gl.enable(this.gl.CULL_FACE);
+        this.gl.depthFunc(this.gl.LEQUAL);
+
+        this.axis = new CGFaxis(this);
+        this.setUpdatePeriod(100);
+    }
+
+    /**
+     * Initializes the scene cameras.
+     */
+    initDefaultCameras() {
+        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+    }
+
+    // todo:
+    initCameras() {
+        this.setCamera(this.sceneData.defaultView);
+        this.camerasIds = Object.keys(this.sceneData.views);
+    }
+
+    setCamera(cameraId) {
+        this.camera = this.sceneData.views[cameraId].getCGFCamera();
+        this.interface.setActiveCamera(this.camera);
+    }
+
+    setLight(lightIndex, enabled) {
+        if(enabled) {
+            this.lights[lightIndex].enable();
+        } else {
+            this.lights[lightIndex].disable();
+        }
+        this.lights[lightIndex].update();
+    }
+
+
+    /**
+     * Initializes the scene lights with the values read from the XML file.
+     */
+    initLights() {
+        var i = 0;
+        // Lights index.
+
+        // Reads the lights from the scene graph.
+        this.lightsIds = [];
+        for (var key in this.sceneData.lights) {
+            if (i &gt;= 8)
+                break;              // Only eight lights allowed by WebGL.
+
+            if (this.sceneData.lights.hasOwnProperty(key)) {
+                this.lightsIds.push(key);
+                var light = this.sceneData.lights[key];
+
+                this.lights[i].setPosition(light[2][0], light[2][1], light[2][2], light[2][3]);
+                this.lights[i].setAmbient(light[3][0], light[3][1], light[3][2], light[3][3]);
+                this.lights[i].setDiffuse(light[4][0], light[4][1], light[4][2], light[4][3]);
+                this.lights[i].setSpecular(light[5][0], light[5][1], light[5][2], light[5][3]);
+
+                if (light[1] == &quot;spot&quot;) {
+                    this.lights[i].setSpotCutOff(light[6]);
+                    this.lights[i].setSpotExponent(light[7]);
+                    this.lights[i].setSpotDirection(light[8][0], light[8][1], light[8][2]);
+                }
+
+                this.lights[i].setVisible(true);
+                if (light[0])
+                    this.lights[i].enable();
+                else
+                    this.lights[i].disable();
+
+                this.lights[i].update();
+
+                i++;
+            }
+        }
+        this.lights = this.lights.slice(0, i);
+    }
+
+    setDefaultAppearance() {
+        this.setAmbient(0.2, 0.4, 0.8, 1.0);
+        this.setDiffuse(0.2, 0.4, 0.8, 1.0);
+        this.setSpecular(0.2, 0.4, 0.8, 1.0);
+        this.setShininess(10.0);
+    }
+    /** Handler called when the graph is finally loaded. 
+     * As loading is asynchronous, this may be called already after the application has started the run loop
+     */
+    onGraphLoaded() {
+        this.axis = new CGFaxis(this, this.sceneData.referenceLength);
+
+        this.gl.clearColor(this.sceneData.background[0], this.sceneData.background[1], this.sceneData.background[2], this.sceneData.background[3]);
+
+        this.setGlobalAmbientLight(this.sceneData.ambient[0], this.sceneData.ambient[1], this.sceneData.ambient[2], this.sceneData.ambient[3]);
+
+        this.initLights();
+        this.initCameras();
+
+        this.renderer = new SceneRenderer(this.sceneData);
+
+        this.interface.onGraphLoaded();
+
+        this.sceneInited = true;
+    }
+
+    /**
+     * Displays the scene.
+     */
+    display() {
+        // ---- BEGIN Background, camera and axis setup
+
+        // Clear image and depth buffer everytime we update the scene
+        this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
+        this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
+
+        // Initialize Model-View matrix as identity (no transformation
+        this.updateProjectionMatrix();
+        this.loadIdentity();
+
+        // Apply transformations corresponding to the camera position relative to the origin
+        this.applyViewMatrix();
+
+        this.pushMatrix();
+        this.axis.display();
+
+        for (var i = 0; i &lt; this.lights.length; i++) {
+            this.lights[i].setVisible(true);
+            this.lights[i].update();
+        }
+
+        if (this.sceneInited) {
+            // Draw axis
+            this.setDefaultAppearance();
+
+            // Displays the scene.
+            this.renderer.display();
+        }
+
+        this.popMatrix();
+        // ---- END Background, camera and axis setup
+    }
+}</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

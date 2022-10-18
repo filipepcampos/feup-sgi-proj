@@ -2,7 +2,16 @@ import {ColorParser} from "./ColorParser.js";
 import {ParserResult} from "./ParserResult.js";
 import {Color} from "../models/Color.js";
 
+/**
+ * Parser for the <ambient> node
+ */
 export class AmbientParser {
+    /**
+     * Parse the <ambient> node
+     * @param {ambient element} node - Node that should be parsed
+     * @param {CGFXMLreader} reader - XMLreader
+     * @returns {ParserResult} - Containing a object with the parsed ambient and background colors, and errors that occurred while parsing
+     */
     static parse(node, reader) {
         let ambient = [];
         let background = [];

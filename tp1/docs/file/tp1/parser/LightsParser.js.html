@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">tp1/parser/LightsParser.js | sgi</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="## Group T04G05 | Name                          | Number    | E-Mail                   | | ----------------------------- | --------- | ------------------------ | | Filipe Pinto Campos           | 201905609 | up201905609@edu.fe.up.pt | | Francisco Gon&#xE7;alves Cerqueira | 201905337 | up201905337@edu.fe.up.pt |"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="sgi"><meta property="twitter:description" content="## Group T04G05 | Name                          | Number    | E-Mail                   | | ----------------------------- | --------- | ------------------------ | | Filipe Pinto Campos           | 201905609 | up201905609@edu.fe.up.pt | | Francisco Gon&#xE7;alves Cerqueira | 201905337 | up201905337@edu.fe.up.pt |"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a href="https://git.fe.up.pt/sgi-meic/sgi-2022-2023/t04/sgi-t04-g05.git">Repository</a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/MyInterface.js~MyInterface.html">MyInterface</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/MySceneGraph.js~MySceneGraph.html">MySceneGraph</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/XMLscene.js~XMLscene.html">XMLscene</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#models">models</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/models/Color.js~Color.html">Color</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/models/Coordinate3D.js~Coordinate3D.html">Coordinate3D</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/models/Rotation.js~Rotation.html">Rotation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/models/SceneData.js~SceneData.html">SceneData</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#models-graph">models/graph</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/models/graph/ComponentNode.js~ComponentNode.html">ComponentNode</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/models/graph/PrimitiveNode.js~PrimitiveNode.html">PrimitiveNode</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#models-wrappers">models/wrappers</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/models/wrappers/MyLight.js~MyLight.html">MyLight</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/models/wrappers/MyMaterial.js~MyMaterial.html">MyMaterial</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/models/wrappers/MySpotLight.js~MySpotLights.html">MySpotLights</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/models/wrappers/MyTexture.js~MyTexture.html">MyTexture</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/models/wrappers/MyTransformation.js~MyTransformation.html">MyTransformation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/models/wrappers/MyView.js~MyView.html">MyView</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#parser">parser</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/AmbientParser.js~AmbientParser.html">AmbientParser</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/BlockParser.js~BlockParser.html">BlockParser</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/ColorParser.js~ColorParser.html">ColorParser</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/Coordinate3DParser.js~Coordinate3DParser.html">Coordinate3DParser</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/FloatParser.js~FloatParser.html">FloatParser</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/GenericChildParser.js~GenericChildParser.html">GenericChildParser</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/IntegerParser.js~IntegerParser.html">IntegerParser</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/LightsParser.js~LightsParser.html">LightsParser</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/MaterialParser.js~MaterialParser.html">MaterialParser</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/ParserErrorPrinter.js~ParserErrorPrinter.html">ParserErrorPrinter</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/ParserResult.js~ParserResult.html">ParserResult</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/PrimitiveParser.js~PrimitiveParser.html">PrimitiveParser</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/RotationParser.js~RotationParser.html">RotationParser</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/TextureParser.js~TextureParser.html">TextureParser</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/TransformationParser.js~TransformationParser.html">TransformationParser</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/ViewParser.js~ViewParser.html">ViewParser</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#parser-component">parser/component</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/component/ComponentChildrenParser.js~ComponentChildrenParser.html">ComponentChildrenParser</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/component/ComponentParser.js~ComponentParser.html">ComponentParser</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/parser/component/ComponentsLinker.js~ComponentsLinker.html">ComponentsLinker</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#primitives">primitives</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/primitives/MyCylinder.js~MyCylinder.html">MyCylinder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/primitives/MyRectangle.js~MyRectangle.html">MyRectangle</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/primitives/MySphere.js~MySphere.html">MySphere</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/primitives/MyTorus.js~MyTorus.html">MyTorus</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/primitives/MyTriangle.js~MyTriangle.html">MyTriangle</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#rendering">rendering</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/rendering/MaterialUpdater.js~MaterialUpdater.html">MaterialUpdater</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/tp1/rendering/SceneRenderer.js~SceneRenderer.html">SceneRenderer</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">tp1/parser/LightsParser.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { ParserResult } from &quot;./ParserResult.js&quot;;
+
+/**
+ * Parser for the &lt;lights&gt; block
+ * This is an wrapper for the base code implementation of this functionality
+ */
+export class LightsParser {
+    /**
+     * Parse the &lt;lights&gt; block
+     * @param {lights element} node - Node that should be parsed
+     * @param {CGFXMLreader} reader - XMLreader
+     * @returns {ParserResult} - Containing a array containing the parsed lights, and errors that occurred while parsing
+     */
+    static parse(node, reader) {
+        const children = node.children;
+
+        let errors = [];
+
+        let lights = [];
+        let numLights = 0;
+
+        let grandChildren = [];
+        let nodeNames = [];
+
+        // Any number of lights.
+        for (let i = 0; i &lt; children.length; i++) {
+
+            // Storing light information
+            let global = [];
+            let attributeNames = [];
+            let attributeTypes = [];
+
+            //Check type of light
+            if (children[i].nodeName != &quot;omni&quot; &amp;&amp; children[i].nodeName != &quot;spot&quot;) {
+                errors.push(&quot;unknown tag &lt;&quot; + children[i].nodeName + &quot;&gt;&quot;);
+                continue;
+            }
+            else {
+                attributeNames.push(...[&quot;location&quot;, &quot;ambient&quot;, &quot;diffuse&quot;, &quot;specular&quot;]);
+                attributeTypes.push(...[&quot;position&quot;, &quot;color&quot;, &quot;color&quot;, &quot;color&quot;]);
+            }
+
+            // Get id of the current light.
+            let lightId = reader.getString(children[i], &apos;id&apos;);
+            if (lightId == null) {
+                errors.push(&quot;no ID defined for light&quot;);
+                continue;
+            }
+
+            // Checks for repeated IDs.
+            if (lights[lightId] != null) {
+                errors.push(&quot;ID must be unique for each light (conflict: id= &quot; + lightId + &quot;)&quot;);
+                continue;
+            }
+
+            // Light enable/disable
+            let enableLight = true;
+            var aux = reader.getBoolean(children[i], &apos;enabled&apos;);
+            if (!(aux != null &amp;&amp; !isNaN(aux) &amp;&amp; (aux == true || aux == false)))
+                errors.push(&quot;unable to parse value component of the &apos;enable light&apos; field for id= &quot; + lightId + &quot;; assuming &apos;value = 1&apos;&quot;);
+
+            enableLight = aux &amp;&amp; 1;
+
+            //Add enabled boolean and type name to light info
+            global.push(enableLight);
+            global.push(children[i].nodeName);
+
+            grandChildren = children[i].children;
+            // Specifications for the current light.
+
+            nodeNames = [];
+            for (let j = 0; j &lt; grandChildren.length; j++) {
+                nodeNames.push(grandChildren[j].nodeName);
+            }
+
+
+            let hasUndefinedAttribute = false;
+            for (let j = 0; j &lt; attributeNames.length; j++) {
+                let attributeIndex = nodeNames.indexOf(attributeNames[j]);
+
+
+                if (attributeIndex != -1) {
+                    if (attributeTypes[j] == &quot;position&quot;)
+                        var aux = this.parseCoordinates4D(grandChildren[attributeIndex], reader, &quot;light position for ID&quot; + lightId);
+                    else
+                        var aux = this.parseColor(grandChildren[attributeIndex], reader, attributeNames[j] + &quot; illumination for ID&quot; + lightId);
+
+                    if (!Array.isArray(aux)){
+                        errors.push(&quot;light attribute &quot; + attributeNames[j] + &quot; undefined for id=&quot; + lightId);
+                        hasUndefinedAttribute = true;
+                        continue;
+                    }
+
+
+                    global.push(aux);
+                }
+                else {
+                    errors.push(&quot;light &quot; + attributeNames[i] + &quot; undefined for id=&quot; + lightId);
+                    hasUndefinedAttribute = true;
+                }
+            }
+            if(hasUndefinedAttribute) {
+                continue;
+            }
+
+            // Gets the additional attributes of the spot light
+            if (children[i].nodeName == &quot;spot&quot;) {
+                var angle = reader.getFloat(children[i], &apos;angle&apos;);
+                if (!(angle != null &amp;&amp; !isNaN(angle))) {
+                    errors.push(&quot;unable to parse angle of the light for id= &quot; + lightId);
+                    continue;
+                }
+
+                var exponent = reader.getFloat(children[i], &apos;exponent&apos;);
+                if (!(exponent != null &amp;&amp; !isNaN(exponent))) {
+                    errors.push(&quot;unable to parse exponent of the light for id= &quot; + lightId);
+                    continue;
+                }
+
+                let targetIndex = nodeNames.indexOf(&quot;target&quot;);
+
+                // Retrieves the light target.
+                var targetLight = [];
+                if (targetIndex != -1) {
+                    let aux = this.parseCoordinates3D(grandChildren[targetIndex], reader, &quot;target light for ID &quot; + lightId);
+                    if (!Array.isArray(aux)){
+                        errors.push(aux);
+                        continue;
+                    }
+
+
+                    targetLight = aux;
+                }
+                else {
+                    errors.push(&quot;light target undefined for id= &quot; + lightId);
+                    continue;
+                }
+
+                global.push(...[angle, exponent, targetLight])
+            }
+
+            lights[lightId] = global;
+            numLights++;
+        }
+
+        if (numLights == 0)
+            errors.push(&quot;at least one light must be defined&quot;);
+        else if (numLights &gt; 8)
+            errors.push(&quot;too many lights defined; WebGL imposes a limit of 8 lights&quot;);
+
+        return new ParserResult(lights, errors);
+    }
+
+    /**
+     * Parse the coordinates from a node with id=id
+     * @param {block element} node - Node that should be parsed
+     * @param {CGFXMLreader} reader - XMLreader
+     * @param {message to be displayed in case of error} messageError - Message to be displayed in case of error
+     * @returns {Array} - Containing the parsed coordinates
+    */
+    static parseCoordinates3D(node, reader, messageError) {
+        var position = [];
+
+        // x
+        var x = reader.getFloat(node, &apos;x&apos;);
+        if (!(x != null &amp;&amp; !isNaN(x)))
+            return &quot;unable to parse x-coordinate of the &quot; + messageError;
+
+        // y
+        var y = reader.getFloat(node, &apos;y&apos;);
+        if (!(y != null &amp;&amp; !isNaN(y)))
+            return &quot;unable to parse y-coordinate of the &quot; + messageError;
+
+        // z
+        var z = reader.getFloat(node, &apos;z&apos;);
+        if (!(z != null &amp;&amp; !isNaN(z)))
+            return &quot;unable to parse z-coordinate of the &quot; + messageError;
+
+        position.push(...[x, y, z]);
+
+        return position;
+    }
+
+    /**
+     * Parse the coordinates from a node with id=id
+     * @param {block element} node - Node to be parsed
+     * @param {CGFXMLreader} reader - XMLreader
+     * @param {message to be displayed in case of error} messageError - Message to be displayed in case of error
+     * @returns {Array} - Containing the parsed coordinates
+     */
+    static parseCoordinates4D(node, reader, messageError) {
+        var position = [];
+
+        //Get x, y, z
+        position = this.parseCoordinates3D(node, reader, messageError);
+
+        if (!Array.isArray(position))
+            return position;
+
+
+        // w
+        var w = reader.getFloat(node, &apos;w&apos;);
+        if (!(w != null &amp;&amp; !isNaN(w)))
+            return &quot;unable to parse w-coordinate of the &quot; + messageError;
+
+        position.push(w);
+
+        return position;
+    }
+
+    /**
+     * Parse the color components from a node
+     * @param {block element} node - Node to be parsed
+     * @param {CGFXMLreader} reader - XMLreader
+     * @param {message to be displayed in case of error} messageError - Message to be displayed in case of error
+     * @returns {Array} - Containing the parsed color
+     */
+    static parseColor(node, reader, messageError) {
+        var color = [];
+
+        // R
+        var r = reader.getFloat(node, &apos;r&apos;);
+        if (!(r != null &amp;&amp; !isNaN(r) &amp;&amp; r &gt;= 0 &amp;&amp; r &lt;= 1))
+            return &quot;unable to parse R component of the &quot; + messageError;
+
+        // G
+        var g = reader.getFloat(node, &apos;g&apos;);
+        if (!(g != null &amp;&amp; !isNaN(g) &amp;&amp; g &gt;= 0 &amp;&amp; g &lt;= 1))
+            return &quot;unable to parse G component of the &quot; + messageError;
+
+        // B
+        var b = reader.getFloat(node, &apos;b&apos;);
+        if (!(b != null &amp;&amp; !isNaN(b) &amp;&amp; b &gt;= 0 &amp;&amp; b &lt;= 1))
+            return &quot;unable to parse B component of the &quot; + messageError;
+
+        // A
+        var a = reader.getFloat(node, &apos;a&apos;);
+        if (!(a != null &amp;&amp; !isNaN(a) &amp;&amp; a &gt;= 0 &amp;&amp; a &lt;= 1))
+            return &quot;unable to parse A component of the &quot; + messageError;
+
+        color.push(...[r, g, b, a]);
+
+        return color;
+    }
+}</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

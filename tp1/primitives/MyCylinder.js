@@ -2,15 +2,16 @@ import { CGFobject } from '../../lib/CGF.js';
 
 /**
  * MyCilinder
- * @constructor
- * @param scene - Reference to MyScene object
- * @param baseRadius - radius of the cylinder base
- * @param topRadius - radius of the cylinder top
- * @param height - height of the cylinder
- * @param slices - number of divisions around the Y axis
- * @param stacks - number of divisions along the height
  */
 export class MyCylinder extends CGFobject {
+    /**
+     * @param {CGFscene} scene - Reference to MyScene object
+     * @param {float} baseRadius - radius of the cylinder base
+     * @param {float} topRadius - radius of the cylinder top
+     * @param {float} height - height of the cylinder
+     * @param {int} slices - number of divisions around the Y axis
+     * @param {int} stacks - number of divisions along the height
+     */
     constructor(scene, baseRadius, topRadius, height, slices, stacks) {
         super(scene);
         this.baseRadius = baseRadius;
@@ -21,6 +22,9 @@ export class MyCylinder extends CGFobject {
         this.initBuffers();
     }
 
+    /**
+     * Initializes the buffers of the primitive
+     */
     initBuffers() {
         this.vertices = [];
         this.indices = [];

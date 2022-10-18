@@ -1,6 +1,15 @@
 import {ParserResult} from "../ParserResult.js";
 
+/**
+ * Parse the <children> element inside a <component> element
+ */
 export class ComponentChildrenParser {
+    /**
+     * Parse the <children> element inside a <component> element
+     * @param {children element} node - <children> element
+     * @param {XMLReader} reader - XMLReader
+     * @returns {ParserResult} - ParserResult with a Object containing a list of component ids and a list of primitive ids, and errors that occurred while parsing
+     */
     static parse(node, reader) {
         let components = [];
         let primitives = [];

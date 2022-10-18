@@ -4,7 +4,6 @@ import { MaterialUpdater } from './rendering/MaterialUpdater.js';
 /**
 * MyInterface class, creating a GUI interface.
 */
-
 export class MyInterface extends CGFinterface {
     /**
      * @constructor

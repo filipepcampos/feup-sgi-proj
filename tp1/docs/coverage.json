@@ -1,0 +1,430 @@
+{
+  "coverage": "44.34%",
+  "expectCount": 327,
+  "actualCount": 145,
+  "files": {
+    "tp1/MyInterface.js": {
+      "expectCount": 11,
+      "actualCount": 4,
+      "undocumentLines": [
+        24,
+        33,
+        34,
+        54,
+        57,
+        65,
+        69
+      ]
+    },
+    "tp1/MySceneGraph.js": {
+      "expectCount": 31,
+      "actualCount": 15,
+      "undocumentLines": [
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        36,
+        39,
+        40,
+        43,
+        49,
+        62,
+        385
+      ]
+    },
+    "tp1/XMLscene.js": {
+      "expectCount": 20,
+      "actualCount": 7,
+      "undocumentLines": [
+        6,
+        19,
+        29,
+        40,
+        48,
+        52,
+        54,
+        57,
+        62,
+        80,
+        111,
+        114,
+        133
+      ]
+    },
+    "tp1/main.js": {
+      "expectCount": 2,
+      "actualCount": 0,
+      "undocumentLines": [
+        6,
+        15
+      ]
+    },
+    "tp1/models/Color.js": {
+      "expectCount": 7,
+      "actualCount": 3,
+      "undocumentLines": [
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    "tp1/models/Coordinate3D.js": {
+      "expectCount": 6,
+      "actualCount": 3,
+      "undocumentLines": [
+        11,
+        12,
+        13
+      ]
+    },
+    "tp1/models/Rotation.js": {
+      "expectCount": 6,
+      "actualCount": 4,
+      "undocumentLines": [
+        10,
+        12
+      ]
+    },
+    "tp1/models/SceneData.js": {
+      "expectCount": 15,
+      "actualCount": 2,
+      "undocumentLines": [
+        10,
+        11,
+        12,
+        13,
+        14,
+        17,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
+      ]
+    },
+    "tp1/models/graph/ComponentNode.js": {
+      "expectCount": 17,
+      "actualCount": 9,
+      "undocumentLines": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        36
+      ]
+    },
+    "tp1/models/graph/PrimitiveNode.js": {
+      "expectCount": 6,
+      "actualCount": 4,
+      "undocumentLines": [
+        10,
+        11
+      ]
+    },
+    "tp1/models/wrappers/MyLight.js": {
+      "expectCount": 16,
+      "actualCount": 9,
+      "undocumentLines": [
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ]
+    },
+    "tp1/models/wrappers/MyMaterial.js": {
+      "expectCount": 12,
+      "actualCount": 10,
+      "undocumentLines": [
+        12,
+        13
+      ]
+    },
+    "tp1/models/wrappers/MySpotLight.js": {
+      "expectCount": 8,
+      "actualCount": 5,
+      "undocumentLines": [
+        19,
+        20,
+        21
+      ]
+    },
+    "tp1/models/wrappers/MyTexture.js": {
+      "expectCount": 11,
+      "actualCount": 7,
+      "undocumentLines": [
+        14,
+        15,
+        16,
+        17
+      ]
+    },
+    "tp1/models/wrappers/MyTransformation.js": {
+      "expectCount": 6,
+      "actualCount": 4,
+      "undocumentLines": [
+        10,
+        11
+      ]
+    },
+    "tp1/models/wrappers/MyView.js": {
+      "expectCount": 8,
+      "actualCount": 6,
+      "undocumentLines": [
+        12,
+        13
+      ]
+    },
+    "tp1/parser/AmbientParser.js": {
+      "expectCount": 2,
+      "actualCount": 2,
+      "undocumentLines": []
+    },
+    "tp1/parser/BlockParser.js": {
+      "expectCount": 2,
+      "actualCount": 2,
+      "undocumentLines": []
+    },
+    "tp1/parser/ColorParser.js": {
+      "expectCount": 2,
+      "actualCount": 2,
+      "undocumentLines": []
+    },
+    "tp1/parser/Coordinate3DParser.js": {
+      "expectCount": 2,
+      "actualCount": 2,
+      "undocumentLines": []
+    },
+    "tp1/parser/FloatParser.js": {
+      "expectCount": 2,
+      "actualCount": 2,
+      "undocumentLines": []
+    },
+    "tp1/parser/GenericChildParser.js": {
+      "expectCount": 2,
+      "actualCount": 2,
+      "undocumentLines": []
+    },
+    "tp1/parser/IntegerParser.js": {
+      "expectCount": 2,
+      "actualCount": 2,
+      "undocumentLines": []
+    },
+    "tp1/parser/LightsParser.js": {
+      "expectCount": 5,
+      "actualCount": 5,
+      "undocumentLines": []
+    },
+    "tp1/parser/MaterialParser.js": {
+      "expectCount": 2,
+      "actualCount": 0,
+      "undocumentLines": [
+        8,
+        9
+      ]
+    },
+    "tp1/parser/ParserErrorPrinter.js": {
+      "expectCount": 2,
+      "actualCount": 0,
+      "undocumentLines": [
+        1,
+        2
+      ]
+    },
+    "tp1/parser/ParserResult.js": {
+      "expectCount": 11,
+      "actualCount": 0,
+      "undocumentLines": [
+        1,
+        2,
+        3,
+        4,
+        7,
+        11,
+        15,
+        28,
+        32,
+        36,
+        40
+      ]
+    },
+    "tp1/parser/PrimitiveParser.js": {
+      "expectCount": 7,
+      "actualCount": 0,
+      "undocumentLines": [
+        11,
+        12,
+        41,
+        61,
+        93,
+        121,
+        140
+      ]
+    },
+    "tp1/parser/RotationParser.js": {
+      "expectCount": 2,
+      "actualCount": 0,
+      "undocumentLines": [
+        5,
+        6
+      ]
+    },
+    "tp1/parser/TextureParser.js": {
+      "expectCount": 2,
+      "actualCount": 0,
+      "undocumentLines": [
+        4,
+        5
+      ]
+    },
+    "tp1/parser/TransformationParser.js": {
+      "expectCount": 2,
+      "actualCount": 0,
+      "undocumentLines": [
+        6,
+        7
+      ]
+    },
+    "tp1/parser/ViewParser.js": {
+      "expectCount": 3,
+      "actualCount": 0,
+      "undocumentLines": [
+        8,
+        10,
+        11
+      ]
+    },
+    "tp1/parser/component/ComponentChildrenParser.js": {
+      "expectCount": 2,
+      "actualCount": 2,
+      "undocumentLines": []
+    },
+    "tp1/parser/component/ComponentParser.js": {
+      "expectCount": 4,
+      "actualCount": 4,
+      "undocumentLines": []
+    },
+    "tp1/parser/component/ComponentsLinker.js": {
+      "expectCount": 2,
+      "actualCount": 2,
+      "undocumentLines": []
+    },
+    "tp1/primitives/MyCylinder.js": {
+      "expectCount": 14,
+      "actualCount": 4,
+      "undocumentLines": [
+        17,
+        18,
+        19,
+        20,
+        21,
+        29,
+        30,
+        31,
+        32,
+        80
+      ]
+    },
+    "tp1/primitives/MyRectangle.js": {
+      "expectCount": 14,
+      "actualCount": 5,
+      "undocumentLines": [
+        15,
+        16,
+        17,
+        18,
+        27,
+        35,
+        41,
+        58,
+        64
+      ]
+    },
+    "tp1/primitives/MySphere.js": {
+      "expectCount": 12,
+      "actualCount": 4,
+      "undocumentLines": [
+        14,
+        15,
+        16,
+        25,
+        26,
+        27,
+        28,
+        79
+      ]
+    },
+    "tp1/primitives/MyTorus.js": {
+      "expectCount": 12,
+      "actualCount": 4,
+      "undocumentLines": [
+        16,
+        17,
+        18,
+        19,
+        28,
+        29,
+        30,
+        89
+      ]
+    },
+    "tp1/primitives/MyTriangle.js": {
+      "expectCount": 25,
+      "actualCount": 6,
+      "undocumentLines": [
+        22,
+        23,
+        24,
+        27,
+        28,
+        29,
+        32,
+        33,
+        34,
+        37,
+        38,
+        39,
+        42,
+        43,
+        64,
+        71,
+        81,
+        89,
+        99
+      ]
+    },
+    "tp1/rendering/MaterialUpdater.js": {
+      "expectCount": 4,
+      "actualCount": 3,
+      "undocumentLines": [
+        9
+      ]
+    },
+    "tp1/rendering/SceneRenderer.js": {
+      "expectCount": 6,
+      "actualCount": 0,
+      "undocumentLines": [
+        3,
+        4,
+        5,
+        8,
+        16,
+        24
+      ]
+    }
+  }
+}
