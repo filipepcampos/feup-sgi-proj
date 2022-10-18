@@ -7,9 +7,12 @@ export class SceneData {
         // Global values
         this.scene = scene;
         this.root = null;
+        this.referenceLength = 1;
+        this.ambient = [];
+        this.background = [];
 
         // Active (default) values
-        this.activeCamera = 0;
+        this.defaultView = "";
 
         // Lists of elements
         this.views = {};

@@ -18,7 +18,6 @@ export class GenericChildParser {
             }
         }
 
-        console.log("Parsed " + typeName + "s", results);
         return ParserResult.collect(output, results, "parsing <" + typeName + "s>", errors);
     }
 }

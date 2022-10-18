@@ -32,7 +32,7 @@ export class MyInterface extends CGFinterface {
     }
 
     onGraphLoaded() {
-        this.materialUpdater = new MaterialUpdater(this.scene.graph.sceneData);
+        this.materialUpdater = new MaterialUpdater(this.scene.sceneData);
         this.gui.add(this.scene, 'camerasIds', this.scene.camerasIds)
             .name('Active Camera')
             .onChange((value) => this.scene.setCamera(value));
@@ -42,7 +42,6 @@ export class MyInterface extends CGFinterface {
                 .name(this.scene.lightsIds[i])
                 .onChange((value) => {
                     this.scene.setLight(i, value);
-                    console.log(i, value);
             });
         }
     }

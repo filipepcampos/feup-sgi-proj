@@ -41,8 +41,6 @@ export class ViewParser {
             let angle = FloatParser.parse(node, reader, "angle", 0);
             if (angle.hasError())
                 return angle;
-            
-            console.log(result);
 
             let view = MyView.instantiate(
                 id, 

@@ -39,7 +39,7 @@ export class LightsParser {
 
             // Checks for repeated IDs.
             if (lights[lightId] != null) {
-                errors.push("ID must be unique for each light (conflict: ID = " + lightId + ")");
+                errors.push("ID must be unique for each light (conflict: id= " + lightId + ")");
                 continue;
             }
 
@@ -47,9 +47,9 @@ export class LightsParser {
             let enableLight = true;
             var aux = reader.getBoolean(children[i], 'enabled');
             if (!(aux != null && !isNaN(aux) && (aux == true || aux == false)))
-                errors.push("unable to parse value component of the 'enable light' field for ID = " + lightId + "; assuming 'value = 1'");
+                errors.push("unable to parse value component of the 'enable light' field for id= " + lightId + "; assuming 'value = 1'");
 
-            enableLight = aux || 1;
+            enableLight = aux && 1;
 
             //Add enabled boolean and type name to light info
             global.push(enableLight);
@@ -63,8 +63,11 @@ export class LightsParser {
                 nodeNames.push(grandChildren[j].nodeName);
             }
 
+
+            let hasUndefinedAttribute = false;
             for (let j = 0; j < attributeNames.length; j++) {
                 let attributeIndex = nodeNames.indexOf(attributeNames[j]);
+
 
                 if (attributeIndex != -1) {
                     if (attributeTypes[j] == "position")
@@ -72,26 +75,35 @@ export class LightsParser {
                     else
                         var aux = this.parseColor(grandChildren[attributeIndex], reader, attributeNames[j] + " illumination for ID" + lightId);
 
-                    if (!Array.isArray(aux))
-                        return aux;
+                    if (!Array.isArray(aux)){
+                        errors.push("light attribute " + attributeNames[j] + " undefined for id=" + lightId);
+                        hasUndefinedAttribute = true;
+                        continue;
+                    }
+
 
                     global.push(aux);
                 }
-                else
-                    return "light " + attributeNames[i] + " undefined for ID = " + lightId;
+                else {
+                    errors.push("light " + attributeNames[i] + " undefined for id=" + lightId);
+                    hasUndefinedAttribute = true;
+                }
+            }
+            if(hasUndefinedAttribute) {
+                continue;
             }
 
             // Gets the additional attributes of the spot light
             if (children[i].nodeName == "spot") {
                 var angle = reader.getFloat(children[i], 'angle');
                 if (!(angle != null && !isNaN(angle))) {
-                    errors.push("unable to parse angle of the light for ID = " + lightId);
+                    errors.push("unable to parse angle of the light for id= " + lightId);
                     continue;
                 }
 
                 var exponent = reader.getFloat(children[i], 'exponent');
                 if (!(exponent != null && !isNaN(exponent))) {
-                    errors.push("unable to parse exponent of the light for ID = " + lightId);
+                    errors.push("unable to parse exponent of the light for id= " + lightId);
                     continue;
                 }
 
@@ -101,13 +113,16 @@ export class LightsParser {
                 var targetLight = [];
                 if (targetIndex != -1) {
                     let aux = this.parseCoordinates3D(grandChildren[targetIndex], reader, "target light for ID " + lightId);
-                    if (!Array.isArray(aux))
-                        return aux;
+                    if (!Array.isArray(aux)){
+                        errors.push(aux);
+                        continue;
+                    }
+
 
                     targetLight = aux;
                 }
                 else {
-                    errors.push("light target undefined for ID = " + lightId);
+                    errors.push("light target undefined for id= " + lightId);
                     continue;
                 }
 
@@ -127,7 +142,7 @@ export class LightsParser {
     }
 
     /**
-     * Parse the coordinates from a node with ID = id
+     * Parse the coordinates from a node with id=id
      * @param {block element} node
      * @param {message to be displayed in case of error} messageError
     */
@@ -155,7 +170,7 @@ export class LightsParser {
     }
 
     /**
-     * Parse the coordinates from a node with ID = id
+     * Parse the coordinates from a node with id=id
      * @param {block element} node
      * @param {message to be displayed in case of error} messageError
      */

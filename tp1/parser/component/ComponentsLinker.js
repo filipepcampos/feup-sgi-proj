@@ -5,7 +5,7 @@ export class ComponentsLinker {
             let children = [];
             for(const id of component.childComponentsId) {
                 if(sceneData.components[id] != null){
-                    children.push(sceneData.components[id]); // TODO: Check for existing keys
+                    children.push(sceneData.components[id]);
                 } else {
                     errors.push("Component with id=" + id + " does not exists (Used in componente with id=" + componentId + ")");
                 }
@@ -13,7 +13,7 @@ export class ComponentsLinker {
             }
             for(const id of component.childPrimitivesId) {
                 if(sceneData.primitives[id] != null){
-                    children.push(sceneData.primitives[id]); // TODO: Check for existing keys
+                    children.push(sceneData.primitives[id]);
                 }else {
                     errors.push("Primitive with id=" + id + " does not exists (Used in componente with id=" + componentId + ")");
                 }

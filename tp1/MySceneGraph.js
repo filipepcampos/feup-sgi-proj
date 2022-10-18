@@ -10,19 +10,19 @@ import {PrimitiveParser} from "./parser/PrimitiveParser.js";
 import {TextureParser} from "./parser/TextureParser.js";
 import {ViewParser} from "./parser/ViewParser.js";
 import { LightsParser } from './parser/LightsParser.js';
+import {AmbientParser} from "./parser/AmbientParser.js";
 
-var DEGREE_TO_RAD = Math.PI / 180;
 
 // Order of the groups in the XML document.
-var SCENE_INDEX = 0;
-var VIEWS_INDEX = 1;
-var AMBIENT_INDEX = 2;
-var LIGHTS_INDEX = 3;
-var TEXTURES_INDEX = 4;
-var MATERIALS_INDEX = 5;
-var TRANSFORMATIONS_INDEX = 6;
-var PRIMITIVES_INDEX = 7;
-var COMPONENTS_INDEX = 8;
+const SCENE_INDEX = 0;
+const VIEWS_INDEX = 1;
+const AMBIENT_INDEX = 2;
+const LIGHTS_INDEX = 3;
+const TEXTURES_INDEX = 4;
+const MATERIALS_INDEX = 5;
+const TRANSFORMATIONS_INDEX = 6;
+const PRIMITIVES_INDEX = 7;
+const COMPONENTS_INDEX = 8;
 
 /**
  * MySceneGraph class, representing the scene graph.
@@ -37,11 +37,7 @@ export class MySceneGraph {
         // Establish bidirectional references between scene and graph.
         this.scene = scene;
         this.sceneData = new SceneData(scene);
-        scene.graph = this;
-
-        this.nodes = [];
-
-        this.idRoot = null;                    // The id of the root element.
+        scene.sceneData = this.sceneData;
 
         this.axisCoords = [];
         this.axisCoords['x'] = [1, 0, 0];
@@ -64,10 +60,10 @@ export class MySceneGraph {
      */
     onXMLReady() {
         this.log("XML Loading finished.");
-        var rootElement = this.reader.xmlDoc.documentElement;
+        const rootElement = this.reader.xmlDoc.documentElement;
 
         // Here should go the calls for different functions to parse the various blocks
-        var error = this.parseXMLFile(rootElement);
+        const error = this.parseXMLFile(rootElement);
 
         if (error != null) {
             this.onXMLError(error);
@@ -88,21 +84,20 @@ export class MySceneGraph {
         if (rootElement.nodeName != "sxs")
             return "root tag <sxs> missing";
 
-        var nodes = rootElement.children;
+        const nodes = rootElement.children;
 
         // Reads the names of the nodes to an auxiliary buffer.
-        var nodeNames = [];
+        let nodeNames = [];
 
-        for (var i = 0; i < nodes.length; i++) {
+        for (let i = 0; i < nodes.length; i++) {
             nodeNames.push(nodes[i].nodeName);
         }
 
-        var error;
+        let error;
 
         // Processes each node, verifying errors.
-
         // <scene>
-        var index;
+        let index;
         if ((index = nodeNames.indexOf("scene")) == -1)
             return "tag <scene> missing";
         else {
@@ -218,21 +213,18 @@ export class MySceneGraph {
     parseScene(sceneNode) {
 
         // Get root of the scene.
-        var root = this.reader.getString(sceneNode, 'root')
+        let root = this.reader.getString(sceneNode, 'root')
         if (root == null)
             return "no root defined for scene";
 
-        this.idRoot = root;
         this.sceneData.root = root;
 
         // Get axis length        
-        var axis_length = this.reader.getFloat(sceneNode, 'axis_length');
+        let axis_length = this.reader.getFloat(sceneNode, 'axis_length');
         if (axis_length == null)
             this.onXMLMinorError("no axis_length defined for scene; assuming 'length = 1'");
 
-        this.referenceLength = axis_length || 1;
-
-        this.log("Parsed scene");
+        this.sceneData.referenceLength = axis_length || 1;
 
         return null;
     }
@@ -243,11 +235,10 @@ export class MySceneGraph {
      */
     parseView(viewsNode) {
         let result = GenericChildParser.parse(viewsNode, this.reader, this.scene, ViewParser, "view");
-        this.sceneData.defaultView = this.reader.getString(viewsNode, 'default');
+        this.sceneData.defaultView = this.reader.getString(viewsNode, 'default'); // TODO: This can go wrong, obviously
+        ParserErrorPrinter.print(result.getErrors());
         console.log("Views", result);
         this.sceneData.views = result.getValue();
-        this.onXMLMinorError("To do: Parse views and create cameras.");
-
         return null;
     }
 
@@ -256,34 +247,11 @@ export class MySceneGraph {
      * @param {ambient block element} ambientsNode
      */
     parseAmbient(ambientsNode) {
-
-        var children = ambientsNode.children;
-
-        this.ambient = [];
-        this.background = [];
-
-        var nodeNames = [];
-
-        for (var i = 0; i < children.length; i++)
-            nodeNames.push(children[i].nodeName);
-
-        var ambientIndex = nodeNames.indexOf("ambient");
-        var backgroundIndex = nodeNames.indexOf("background");
-
-        var color = this.parseColor(children[ambientIndex], "ambient");
-        if (!Array.isArray(color))
-            return color;
-        else
-            this.ambient = color;
-
-        color = this.parseColor(children[backgroundIndex], "background");
-        if (!Array.isArray(color))
-            return color;
-        else
-            this.background = color;
-
-        this.log("Parsed ambient");
-
+        let result = AmbientParser.parse(ambientsNode, this.reader);
+        ParserErrorPrinter.print(result.getErrors());
+        console.log("Ambient", result);
+        this.sceneData.ambient = result.getValue()['ambient'];
+        this.sceneData.background = result.getValue()['background'];
         return null;
     }
 
@@ -294,10 +262,8 @@ export class MySceneGraph {
     parseLights(lightsNode) {
         let result = LightsParser.parse(lightsNode, this.reader);
         this.sceneData.lights = result.getValue();
-        // TODO: Print errors
+        ParserErrorPrinter.print(result.getErrors());
         console.log("Lights", result.getValue());
-
-        this.log("Parsed lights");
         return null;
     }
 
@@ -309,9 +275,6 @@ export class MySceneGraph {
         let result = GenericChildParser.parse(texturesNode, this.reader, this.scene, TextureParser, "texture");
         this.sceneData.textures = result.getValue();
         console.log("Textures", result);
-
-        //For each texture in textures block, check ID and file URL
-        this.onXMLMinorError("To do: Parse textures.");
         return null;
     }
 
@@ -355,7 +318,6 @@ export class MySceneGraph {
    */
     parseComponents(componentsNode) {
         let result = GenericChildParser.parse(componentsNode, this.reader, this.sceneData, ComponentParser, "component");
-        console.log(result);
         ParserErrorPrinter.print(result.getErrors());
         this.sceneData.components = result.getValue();
 
@@ -364,60 +326,6 @@ export class MySceneGraph {
 
         console.log("Components", result);
         return null;
-    }
-
-
-    /**
-     * Parse the coordinates from a node with ID = id
-     * @param {block element} node
-     * @param {message to be displayed in case of error} messageError
-     */
-    parseCoordinates3D(node, messageError) {
-        var position = [];
-
-        // x
-        var x = this.reader.getFloat(node, 'x');
-        if (!(x != null && !isNaN(x)))
-            return "unable to parse x-coordinate of the " + messageError;
-
-        // y
-        var y = this.reader.getFloat(node, 'y');
-        if (!(y != null && !isNaN(y)))
-            return "unable to parse y-coordinate of the " + messageError;
-
-        // z
-        var z = this.reader.getFloat(node, 'z');
-        if (!(z != null && !isNaN(z)))
-            return "unable to parse z-coordinate of the " + messageError;
-
-        position.push(...[x, y, z]);
-
-        return position;
-    }
-
-    /**
-     * Parse the coordinates from a node with ID = id
-     * @param {block element} node
-     * @param {message to be displayed in case of error} messageError
-     */
-    parseCoordinates4D(node, messageError) {
-        var position = [];
-
-        //Get x, y, z
-        position = this.parseCoordinates3D(node, messageError);
-
-        if (!Array.isArray(position))
-            return position;
-
-
-        // w
-        var w = this.reader.getFloat(node, 'w');
-        if (!(w != null && !isNaN(w)))
-            return "unable to parse w-coordinate of the " + messageError;
-
-        position.push(w);
-
-        return position;
     }
 
     /**

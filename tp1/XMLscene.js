@@ -50,12 +50,12 @@ export class XMLscene extends CGFscene {
 
     // todo:
     initCameras() {
-        this.setCamera(this.graph.sceneData.defaultView);
-        this.camerasIds = Object.keys(this.graph.sceneData.views);
+        this.setCamera(this.sceneData.defaultView);
+        this.camerasIds = Object.keys(this.sceneData.views);
     }
 
     setCamera(cameraId) {
-        this.camera = this.graph.sceneData.views[cameraId].getCGFCamera();
+        this.camera = this.sceneData.views[cameraId].getCGFCamera();
         this.interface.setActiveCamera(this.camera);
     }
 
@@ -78,13 +78,13 @@ export class XMLscene extends CGFscene {
 
         // Reads the lights from the scene graph.
         this.lightsIds = [];
-        for (var key in this.graph.sceneData.lights) {
+        for (var key in this.sceneData.lights) {
             if (i >= 8)
                 break;              // Only eight lights allowed by WebGL.
 
-            if (this.graph.sceneData.lights.hasOwnProperty(key)) {
+            if (this.sceneData.lights.hasOwnProperty(key)) {
                 this.lightsIds.push(key);
-                var light = this.graph.sceneData.lights[key];
+                var light = this.sceneData.lights[key];
 
                 this.lights[i].setPosition(light[2][0], light[2][1], light[2][2], light[2][3]);
                 this.lights[i].setAmbient(light[3][0], light[3][1], light[3][2], light[3][3]);
@@ -121,16 +121,16 @@ export class XMLscene extends CGFscene {
      * As loading is asynchronous, this may be called already after the application has started the run loop
      */
     onGraphLoaded() {
-        this.axis = new CGFaxis(this, this.graph.referenceLength);
+        this.axis = new CGFaxis(this, this.sceneData.referenceLength);
 
-        this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
+        this.gl.clearColor(this.sceneData.background[0], this.sceneData.background[1], this.sceneData.background[2], this.sceneData.background[3]);
 
-        this.setGlobalAmbientLight(this.graph.ambient[0], this.graph.ambient[1], this.graph.ambient[2], this.graph.ambient[3]);
+        this.setGlobalAmbientLight(this.sceneData.ambient[0], this.sceneData.ambient[1], this.sceneData.ambient[2], this.sceneData.ambient[3]);
 
         this.initLights();
         this.initCameras();
 
-        this.renderer = new SceneRenderer(this.graph.sceneData);
+        this.renderer = new SceneRenderer(this.sceneData);
 
         this.interface.onGraphLoaded();
 
