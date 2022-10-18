@@ -115,6 +115,8 @@ export class XMLscene extends CGFscene {
 
         this.renderer = new SceneRenderer(this.graph.sceneData);
 
+        this.interface.onGraphLoaded();
+
         this.sceneInited = true;
     }
 

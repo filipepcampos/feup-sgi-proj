@@ -44,6 +44,6 @@
     }
 
     updateMaterial() {
-        this.currentMaterial = (this.currentMaterial + 1) % this.materialIds.length;
+        this.currentMaterial = (this.currentMaterial + 1) % this.materials.length;
     }
 }

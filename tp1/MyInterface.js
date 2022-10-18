@@ -1,4 +1,5 @@
 import { CGFinterface, CGFapplication, dat } from '../lib/CGF.js';
+import { MaterialUpdater } from './rendering/MaterialUpdater.js';
 
 /**
 * MyInterface class, creating a GUI interface.
@@ -30,6 +31,10 @@ export class MyInterface extends CGFinterface {
         return true;
     }
 
+    onGraphLoaded() {
+        this.materialUpdater = new MaterialUpdater(this.scene.graph.sceneData);
+    }
+
     /**
      * initKeys
      */
@@ -43,7 +48,7 @@ export class MyInterface extends CGFinterface {
         this.activeKeys[event.code]=true;
         
         if(event.code == "KeyM") {
-            this.scene.graph.updateMaterials();
+            this.materialUpdater.update();
         }
     };
 
