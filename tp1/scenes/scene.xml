@@ -301,7 +301,7 @@
             <transformation>
             </transformation>
             <materials>
-                <material id="default_material" />
+                <material id="inherit" />
             </materials>
             <texture id="none"/>
             <children>

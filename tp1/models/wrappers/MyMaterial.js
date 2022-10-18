@@ -16,10 +16,10 @@ export class MyMaterial {
     /**
      * Instantiate a material with the given parameters
      * @param {string} id - Material id
-     * @param {vec3} ambient - Ambient component
-     * @param {vec3} diffuse - Diffuse component
-     * @param {vec3} specular - Specular component
-     * @param {vec3} emission - Emission component
+     * @param {Color} ambient - Ambient component
+     * @param {Color} diffuse - Diffuse component
+     * @param {Color} specular - Specular component
+     * @param {Color} emission - Emission component
      * @param {int} shininess - Shininess of the material
      * @param {CGFScene} scene - Scene
      * @returns 

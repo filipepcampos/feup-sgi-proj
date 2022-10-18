@@ -12,6 +12,8 @@ import {ViewParser} from "./parser/ViewParser.js";
 import { LightsParser } from './parser/LightsParser.js';
 import {AmbientParser} from "./parser/AmbientParser.js";
 import { MyView } from './models/wrappers/MyView.js';
+import { MyMaterial } from './models/wrappers/MyMaterial.js';
+import { Color} from "./models/Color.js";
 
 
 // Order of the groups in the XML document.
@@ -340,6 +342,25 @@ export class MySceneGraph {
 
         console.log("Linking child components");
         ParserErrorPrinter.print(ComponentsLinker.link(this.sceneData));
+
+        if(!(this.sceneData.root in this.sceneData.components)) {
+            if(Object.keys(this.sceneData.components).length > 0) {
+                this.onXMLMinorError("root component not found, defaulting to first component");
+                this.sceneData.root = Object.keys(this.sceneData.components)[0];
+            } else {
+                return "no components defined";
+            }
+        }
+
+        let rootMaterials = this.sceneData.components[this.sceneData.root].materials;
+        // Ensure the scene is rendered, even if the root node has no valid material
+        rootMaterials = rootMaterials.filter(mat => (mat != "inherit")); // Remove inherited materials from root node
+        if(rootMaterials.length == 0){ // Make sure root node has at least one material
+            this.onXMLMinorError("Root component has no valid materials, creating default material");
+            const color = new Color(0.5, 0.5, 0.5, 1);
+            rootMaterials.push(MyMaterial.instantiate(null, color, color, color, color, 10, this.scene));
+        }
+        this.sceneData.components[this.sceneData.root].materials = rootMaterials;
 
         console.log("Components", result);
         return null;

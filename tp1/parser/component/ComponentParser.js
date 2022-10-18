@@ -18,7 +18,6 @@ export class ComponentParser {
      * @returns {ParserResult} - Containing the parsed MyComponent and errors that occurred while parsing
      */
     static parse(node, reader, sceneData) {
-        console.log(node, typeof node);
         if (node.nodeName != "component") {
             return ParserResult.fromError("unknown tag <" + node.nodeName + ">");
         }
