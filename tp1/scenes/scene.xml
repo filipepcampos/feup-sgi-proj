@@ -27,7 +27,7 @@
         <spot id="headlight_right" enabled="1" angle="75" exponent="0.2">
             <location x="-2.1" y="1.4" z="2.0" w="1.0" />
             <target x="-2.1" y="1.4" z="3.0" />
-            <ambient r="0.0" g="0" b="0" a="1.0" />
+            <ambient r="0.1" g="0.1" b="0" a="1.0" />
             <diffuse r="1.0" g="1.0" b="0.0" a="1.0" />
             <specular r="1.0" g="1.0" b="0.0" a="1.0" />
             <attenuation constant="0.0" linear="1.0" quadratic="0.0" />

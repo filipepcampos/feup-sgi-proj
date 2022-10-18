@@ -18,7 +18,6 @@ export class TextureParser {
         }
         // TODO: Check if file exists?
 
-        // TODO: Collect
         return ParserResult.fromValue(MyTexture.instantiate(id, 1, 1, scene, fileUrl));
     }
 }

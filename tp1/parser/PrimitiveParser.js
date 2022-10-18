@@ -16,7 +16,7 @@ export class PrimitiveParser {
 
         let id = reader.getString(node, "id");
         if (id == null) {
-            return ParserResult.fromError("no ID defined for texture");
+            return ParserResult.fromError("no id defined for primitive");
         }
 
         if (node.children.length === 1) {
@@ -37,25 +37,25 @@ export class PrimitiveParser {
         }
         return ParserResult.fromError("There must be exactly 1 primitive type (rectangle, triangle, cylinder, sphere or torus)");
     }
-
-    // TODO: Use .collect 
+    
     static parseRectangle(node, reader, scene, id) {
         let x1 = FloatParser.parse(node, reader, 'x1');
         let y1 = FloatParser.parse(node, reader, 'y1');
+        let x2 = FloatParser.parse(node, reader, 'x2', x1.getValueOrDefault(0));
+        let y2 = FloatParser.parse(node, reader, 'y2', y1.getValueOrDefault(0));
 
-        if (x1.hasError() || y1.hasError()) {
-            return ParserResult.collect(null, [x1, y1]);
-        }
-
-        let x2 = FloatParser.parse(node, reader, 'x2', x1.getValue());
-        let y2 = FloatParser.parse(node, reader, 'y2', y1.getValue());
-
-        if (x2.hasError() || y2.hasError()) {
-            return ParserResult.collect(null, [x2, y2]);
-        }
-
-        let rectangle = new MyRectangle(scene, x1.getValue(), x2.getValue(), y1.getValue(), y2.getValue());
-        return ParserResult.fromValue(new PrimitiveNode(id, rectangle));
+        let rectangle = new MyRectangle(
+            scene, 
+            x1.getValueOrDefault(0), 
+            x2.getValueOrDefault(1), 
+            y1.getValueOrDefault(0), 
+            y2.getValueOrDefault(1)
+        );
+        return ParserResult.collect(
+            new PrimitiveNode(id, rectangle),
+            [x1, y1, x2, y2],
+            "parsing <rectangle> with id=" + id
+        );
     }
 
     static parseTriangle(node, reader, scene, id) {
@@ -63,40 +63,31 @@ export class PrimitiveParser {
         let y1 = FloatParser.parse(node, reader, 'y1');
         let z1 = FloatParser.parse(node, reader, 'z1');
 
-        if (x1.hasError() || y1.hasError() || z1.hasError()) {
-            return ParserResult.collect(null, [x1, y1, z1]);
-        }
-
         let x2 = FloatParser.parse(node, reader, 'x2');
         let y2 = FloatParser.parse(node, reader, 'y2');
         let z2 = FloatParser.parse(node, reader, 'z2');
-
-        if (x2.hasError() || y2.hasError() || z2.hasError()) {
-            return ParserResult.collect(null, [x2, y2, z2]);
-        }
 
         let x3 = FloatParser.parse(node, reader, 'x3');
         let y3 = FloatParser.parse(node, reader, 'y3');
         let z3 = FloatParser.parse(node, reader, 'z3');
 
-        if (x3.hasError() || y3.hasError() || z3.hasError()) {
-            return ParserResult.collect(null, [x3, y3, z3]);
-        }
-
         let triangle = new MyTriangle(
             scene, 
-            x1.getValue(), 
-            x2.getValue(),
-            x3.getValue(),
-            y1.getValue(),
-            y2.getValue(),
-            y3.getValue(),
-            z1.getValue(),
-            z2.getValue(),
-            z3.getValue()
+            x1.getValueOrDefault(0), 
+            x2.getValueOrDefault(1),
+            x3.getValueOrDefault(0),
+            y1.getValueOrDefault(0),
+            y2.getValueOrDefault(0),
+            y3.getValueOrDefault(1),
+            z1.getValueOrDefault(0),
+            z2.getValueOrDefault(0),
+            z3.getValueOrDefault(0)
         );
 
-        return ParserResult.fromValue(new PrimitiveNode(id, triangle));
+        return ParserResult.fromValue(
+            new PrimitiveNode(id, triangle),
+            [x1,y1,z1,x2,y2,z2,x3,y3,z3],
+            "parsing <triangle> with id=" + id);
     }
 
     static parseCylinder(node, reader, scene, id) {
@@ -113,14 +104,18 @@ export class PrimitiveParser {
 
         let cylinder = new MyCylinder(
             scene, 
-            baseRadius.getValue(),
-            topRadius.getValue(),
-            height.getValue(),
-            slices.getValue(),
-            stacks.getValue()
+            baseRadius.getValueOrDefault(1),
+            topRadius.getValueOrDefault(1),
+            height.getValueOrDefault(1),
+            slices.getValueOrDefault(8),
+            stacks.getValueOrDefault(8)
         );
         
-        return ParserResult.fromValue(new PrimitiveNode(id, cylinder));
+        return ParserResult.collect(
+            new PrimitiveNode(id, cylinder),
+            [baseRadius, topRadius, height, slices, stacks],
+            "parsing <cylinder> with id=" + id
+        );
     }
 
     static parseSphere(node, reader, scene, id) {
@@ -128,19 +123,18 @@ export class PrimitiveParser {
         let slices = IntegerParser.parse(node, reader, 'slices', 1);
         let stacks = IntegerParser.parse(node, reader, 'stacks', 1);
 
-        let collection = ParserResult.collect(null, [radius, slices, stacks]);
-        if (collection.hasError()) {
-            return collection;
-        }
-
         let sphere = new MySphere(
             scene, 
-            radius.getValue(),
-            slices.getValue(),
-            stacks.getValue()
+            radius.getValueOrDefault(1),
+            slices.getValueOrDefault(8),
+            stacks.getValueOrDefault(8)
         );
 
-        return ParserResult.fromValue(new PrimitiveNode(id, sphere));
+        return ParserResult.collect(
+            new PrimitiveNode(id, sphere),
+            [radius, slices, stacks],
+            "parsing <sphere> with id=" + id
+        );
     }
 
     static parseTorus(node, reader, scene, id) {
@@ -149,25 +143,18 @@ export class PrimitiveParser {
         let slices = IntegerParser.parse(node, reader, 'slices', 1);
         let loops = IntegerParser.parse(node, reader, 'loops', 1);
 
-        let collection = ParserResult.collect(null, [inner, outer, slices, loops]);
-        if (collection.hasError()) {
-            return collection;
-        }
-
         let torus = new MyTorus(
             scene, 
-            inner.getValue(),
-            outer.getValue(),
-            slices.getValue(),
-            loops.getValue()
+            inner.getValueOrDefault(1),
+            outer.getValueOrDefault(1),
+            slices.getValueOrDefault(8),
+            loops.getValueOrDefault(8)
         );
 
-        return ParserResult.fromValue(new PrimitiveNode(id, torus));
+        return ParserResult.collect(
+            new PrimitiveNode(id, torus),
+            [inner, outer, slices, loops],
+            "parsing <torus> with id=" + id
+        );
     }
-
-    /*
-            // Checks for repeated IDs.
-            if (this.primitives[primitiveId] != null)
-                return "ID must be unique for each primitive (conflict: ID = " + primitiveId + ")";
-            */
 }
