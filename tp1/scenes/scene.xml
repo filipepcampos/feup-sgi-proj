@@ -1,7 +1,7 @@
 <sxs>
     <scene root="root" axis_length="5"/>
 
-    <views default="default_camera">
+    <views default="da">
         <perspective id="default_camera" near="0.1" far="500" angle="45">
             <from x="15" y="15" z="25" />
             <to x="0" y="-2" z="0" />
@@ -555,7 +555,7 @@
         <!-- Car components -->
         <component id="car">
             <transformation>
-                <transformationref id="tr_car"/>
+                <translate x="-1.5" y="1.18" z="-2.5"/>
             </transformation>
             <materials>
                 <material id="green" />

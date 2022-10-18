@@ -66,7 +66,6 @@ export class ComponentParser {
             var texture = "none";
         }
 
-        console.log(id, nodeNames, transformationIndex, errors);
         return ParserResult.collect(
             new ComponentNode(
                 id,

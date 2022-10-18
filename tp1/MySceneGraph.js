@@ -11,6 +11,7 @@ import {TextureParser} from "./parser/TextureParser.js";
 import {ViewParser} from "./parser/ViewParser.js";
 import { LightsParser } from './parser/LightsParser.js';
 import {AmbientParser} from "./parser/AmbientParser.js";
+import { MyView } from './models/wrappers/MyView.js';
 
 
 // Order of the groups in the XML document.
@@ -235,10 +236,26 @@ export class MySceneGraph {
      */
     parseView(viewsNode) {
         let result = GenericChildParser.parse(viewsNode, this.reader, this.scene, ViewParser, "view");
-        this.sceneData.defaultView = this.reader.getString(viewsNode, 'default'); // TODO: This can go wrong, obviously
         ParserErrorPrinter.print(result.getErrors());
         console.log("Views", result);
         this.sceneData.views = result.getValue();
+
+        let defaultView = this.reader.getString(viewsNode, 'default');
+        this.sceneData.defaultView = this.reader.getString(viewsNode, 'default');
+
+        if(defaultView == null || !(defaultView in Object.keys(this.sceneData.views)) ) {
+            if(Object.keys(this.sceneData.views).length > 0) {
+                defaultView = Object.keys(this.sceneData.views)[0];
+                this.onXMLMinorError("no default view defined, defaulting to view with id=" + defaultView);
+            } else {
+                defaultView = 'default_view';
+                this.sceneData.views['default_view'] = MyView.instantiate('default_view', 1.5, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+                this.onXMLMinorError("no default view defined and no views were defined, creating a default view");
+            }
+        }
+
+        this.sceneData.defaultView = defaultView;
+
         return null;
     }
 

@@ -6,8 +6,7 @@ export class MaterialUpdater {
     }
 
     update() {
-        // TODO See if its possible to iterate only the components
-        for (const [id, component] of Object.entries(this.sceneData.components)) {
+        for (const component of Object.values(this.sceneData.components)) {
             component.updateMaterial();
         }
     }

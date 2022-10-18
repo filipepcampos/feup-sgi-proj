@@ -20,6 +20,7 @@ export class SceneRenderer {
         }
         node.getObject().display();
     }
+
     displayComponent(node, parentMaterial, parentTexture) {
         const matrix = node.getTransformation() != null ? node.getTransformation() : mat4.create();
         const scene = this.sceneData.scene;
