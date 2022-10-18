@@ -1,15 +1,15 @@
 import { CGFobject } from '../../lib/CGF.js';
 
 /**
- * MyTorus
+ * Torus primitive
  */
 export class MyTorus extends CGFobject {
     /**
-     * @param {CGFScene} scene - Reference to MyScene object
-     * @param {float} inner - inner radius of the torus
-     * @param {float} outer - outer radius of the torus
-     * @param {int} slices - number of slices
-     * @param {int} loops - number of loops
+     * @param {CGFscene} scene - Reference to CGFscene
+     * @param {number} inner - Inner radius
+     * @param {number} outer - Outer radius
+     * @param {number} slices - Number of sides
+     * @param {number} loops - Number of turns arround the circular axis
      */
 	constructor(scene, inner, outer, slices, loops) {
 		super(scene);
@@ -22,8 +22,8 @@ export class MyTorus extends CGFobject {
 	}
 
 	/**
-     * Initializes the buffers of the primitive
-     */
+	 * Initializes the necessary buffers
+	 */
 	initBuffers() {
 		this.vertices = [];
 		this.indices = [];

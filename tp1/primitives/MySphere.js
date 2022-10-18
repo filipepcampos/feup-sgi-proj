@@ -1,13 +1,15 @@
 import { CGFobject } from '../../lib/CGF.js';
+
 /**
- * MySphere
+ * Sphere primitive
  */
 export class MySphere extends CGFobject {
 	/**
- 	* @param scene - Reference to MyScene object
-	* @param radius - Radius of sphere
-	* @param slices - Number of slices
-	* @param stacks - Number of stacks between the center and one of the poles.
+	 * 
+	 * @param {CGFscene} scene - Reference to CGFscene
+	 * @param {number} radius - Radius of the sphere
+	 * @param {number} slices - Number of sides
+	 * @param {number} stacks - Number of divisions along the z axis, from the center to one of the poles
 	 */
 	constructor(scene, radius, slices, stacks) {
 		super(scene);
@@ -19,7 +21,7 @@ export class MySphere extends CGFobject {
 	}
 
 	/**
-	 * Initializes the buffers of the primitive
+	 * Initializes the necessary buffers
 	 */
 	initBuffers() {
 		this.vertices = [];

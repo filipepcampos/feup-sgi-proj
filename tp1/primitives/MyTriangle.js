@@ -1,20 +1,20 @@
 import { CGFobject } from '../../lib/CGF.js';
 
 /**
- * MyTriangle
+ * Triangle primitive
  */
 export class MyTriangle extends CGFobject {
 	/**
-	 * @param {CGFScene} scene - Reference to MyScene object
-	 * @param {float} x1 - x coordinate of the first point
-	 * @param {float} y1 - y coordinate of the first point
-	 * @param {float} z1 - z coordinate of the first point
-	 * @param {float} x2 - x coordinate of the second point
-	 * @param {float} y2 - y coordinate of the second point
-	 * @param {float} z2 - z coordinate of the second point
-	 * @param {float} x3 - x coordinate of the third point
-	 * @param {float} y3 - y coordinate of the third point
-	 * @param {float} z3 - z coordinate of the third point
+	 * @param {CGFscene} scene - Reference to CGFscene
+	 * @param {number} x1 - x coordinate of the first position 
+	 * @param {number} x2 - x coordinate of the second position 
+	 * @param {number} x3 - x coordinate of the third position 
+	 * @param {number} y1 - y coordinate of the first position 
+	 * @param {number} y2 - y coordinate of the second position 
+	 * @param {number} y3 - y coordinate of the third position 
+	 * @param {number} z1 - z coordinate of the first position 
+	 * @param {number} z2 - z coordinate of the second position 
+	 * @param {number} z3 - z coordinate of the third position 
 	 */
 	constructor(scene, x1, x2, x3, y1, y2, y3, z1, z2, z3) {
 		super(scene);
@@ -49,16 +49,16 @@ export class MyTriangle extends CGFobject {
 
 	/**
 	 * Calculates the distance between two vertices
-	 * @param {Array<float>} v1 - Coordinates of the first vertex
-	 * @param {Array<float>} v2 - Coordinates of the second vertex
-	 * @returns distance between the two vertices
+	 * @param {Array<number>} v1 - First vertex
+	 * @param {Array<number>} v2 - Second
+	 * @returns Distance between the two given vertices
 	 */
 	static calculateDistance(v1, v2) {
 		return Math.sqrt(Math.pow(v1[0] - v2[0], 2) + Math.pow(v1[1] - v2[1], 2) + Math.pow(v1[2] - v2[2], 2));
 	}
 	
 	/**
-	 * Initializes the triangle buffers
+	 * Initializes the necessary buffers
 	 */
 	initBuffers() {
 		this.vertices = [
@@ -91,9 +91,8 @@ export class MyTriangle extends CGFobject {
 	}
 
 	/**
-	 * @method updateTexCoords
 	 * Updates the list of texture coordinates of the triangle
-	 * @param {Array} coords - Array of texture coordinates
+	 * @param {Array<number>} coords - Array of texture coordinates
 	 */
 	updateTexCoords(coords) {
 		this.texCoords = [...coords];
