@@ -55,10 +55,10 @@ export class ViewParser {
 
             return ParserResult.fromValue(view);
         } else if (node.nodeName == "ortho") {
-            let left = FloatParser.parse(node, reader, "left", 0);
-            let right = FloatParser.parse(node, reader, "right", 0);
-            let top = FloatParser.parse(node, reader, "top", 0);
-            let bottom = FloatParser.parse(node, reader, "bottom", 0);
+            let left = FloatParser.parse(node, reader, "left");
+            let right = FloatParser.parse(node, reader, "right");
+            let top = FloatParser.parse(node, reader, "top");
+            let bottom = FloatParser.parse(node, reader, "bottom");
 
             let up = new Coordinate3D(0, 1, 0);
             for (const child of node.children) {

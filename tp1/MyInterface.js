@@ -33,6 +33,9 @@ export class MyInterface extends CGFinterface {
 
     onGraphLoaded() {
         this.materialUpdater = new MaterialUpdater(this.scene.graph.sceneData);
+        this.gui.add(this.scene, 'camerasIds', this.scene.camerasIds)
+            .name('camerasIds')
+            .onChange((value) => this.scene.setCamera(value));
     }
 
     /**

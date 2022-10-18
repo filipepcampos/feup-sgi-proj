@@ -243,6 +243,7 @@ export class MySceneGraph {
      */
     parseView(viewsNode) {
         let result = GenericChildParser.parse(viewsNode, this.reader, this.scene, ViewParser, "view");
+        this.sceneData.defaultView = this.reader.getString(viewsNode, 'default');
         console.log("Views", result);
         this.sceneData.views = result.getValue();
         this.onXMLMinorError("To do: Parse views and create cameras.");

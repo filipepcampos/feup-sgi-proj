@@ -17,7 +17,7 @@ export class TextureParser {
             return ParserResult.fromError("no file defined for texture with ID = " + id);
         }
         // TODO: Check if file exists?
-        // TODO: GET LENGTHS
+
         // TODO: Collect
         return ParserResult.fromValue(MyTexture.instantiate(id, 1, 1, scene, fileUrl));
     }
