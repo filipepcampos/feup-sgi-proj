@@ -7,7 +7,6 @@ import { MyView } from "../models/wrappers/MyView.js";
 
 var DEGREE_TO_RAD = Math.PI / 180;
 
-// TODO: Collect errors
 export class ViewParser {
     static parse(node, reader) {
         if (node.nodeName != "perspective" && node.nodeName != "ortho") {
@@ -21,10 +20,6 @@ export class ViewParser {
         let near = FloatParser.parse(node, reader, "near", 0);
         let far = FloatParser.parse(node, reader, "far", 0);
 
-        if (near.hasError() || far.hasError()) {
-            return ParserResult.collect(null, [near, far], "parsing view with id=" + id);
-        }
-
         const defaultCoord = new Coordinate3D(0, 0, 0);
         const func = (c) => Coordinate3DParser.parse(c, reader);
         const handlerEntries = {
@@ -34,8 +29,6 @@ export class ViewParser {
 
         const handlerMap = new Map(Object.entries(handlerEntries));
         const result = BlockParser.parse(node, handlerMap);
-        if (result.hasError())
-            return result;
 
         if (node.nodeName == "perspective") {
             let angle = FloatParser.parse(node, reader, "angle", 0);
@@ -44,38 +37,42 @@ export class ViewParser {
 
             let view = MyView.instantiate(
                 id, 
-                angle.getValue() * DEGREE_TO_RAD, 
-                near.getValue(),
-                far.getValue(),
+                angle.getValueOrDefault(90) * DEGREE_TO_RAD, 
+                near.getValueOrDefault(0),
+                far.getValueOrDefault(100),
                 vec3.fromValues(...result.getValue()["from"].getArray()),
                 vec3.fromValues(...result.getValue()["to"].getArray())
             );
 
-            return ParserResult.fromValue(view);
+            return ParserResult.fromValue(
+                view,
+                [angle, near, far, result],
+                "parsing <perspective> with id=" + id
+            );
         } else if (node.nodeName == "ortho") {
             let left = FloatParser.parse(node, reader, "left");
             let right = FloatParser.parse(node, reader, "right");
             let top = FloatParser.parse(node, reader, "top");
             let bottom = FloatParser.parse(node, reader, "bottom");
 
-            let up = new Coordinate3D(0, 1, 0);
+            let up = ParserResult.fromValue(new Coordinate3D(0, 1, 0));
             for (const child of node.children) {
                 if (child.nodeName == "up") {
-                    up = Coordinate3DParser.parse(child, reader).getValue();
+                    up = Coordinate3DParser.parse(child, reader);
                 }
             }
 
             let viewOrtho = MyView.instantiateOrtho(
                 id,
-                left.getValue(),
-                right.getValue(),
-                bottom.getValue(),
-                top.getValue(),
-                near.getValue(),
-                far.getValue(),
+                left.getValueOrDefault(-10),
+                right.getValueOrDefault(10),
+                bottom.getValueOrDefault(-10),
+                top.getValueOrDefault(10),
+                near.getValueOrDefault(0),
+                far.getValueOrDefault(100),
                 vec3.fromValues(...result.getValue()["from"].getArray()),
                 vec3.fromValues(...result.getValue()["to"].getArray()),
-                up.getArray()
+                up.getValueOrDefault([0,1,0]).getArray()
             );
 
             return ParserResult.fromValue(viewOrtho);

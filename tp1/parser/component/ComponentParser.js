@@ -3,7 +3,9 @@ import { ComponentNode } from "../../models/graph/ComponentNode.js";
 import {ComponentTransformationParser} from "./ComponentTransformationParser.js";
 import {ComponentChildrenParser} from "./ComponentChildrenParser.js";
 import {MyTexture} from "../../models/wrappers/MyTexture.js";
+import { MyTransformation } from "../../models/wrappers/MyTransformation.js";
 import {FloatParser} from "../FloatParser.js";
+
 export class ComponentParser {
     static parse(node, reader, sceneData) {
         if (node.nodeName != "component") {
@@ -24,25 +26,59 @@ export class ComponentParser {
         const materialsIndex = nodeNames.indexOf("materials");
         const textureIndex = nodeNames.indexOf("texture");
         const childrenIndex = nodeNames.indexOf("children");
-        // TODO: Handle missing subnodes
 
-        // TODO: Error handle all these results
-        const transformationResult = ComponentTransformationParser.parse(children[transformationIndex], reader, sceneData);
-        const childrenResult = ComponentChildrenParser.parse(children[childrenIndex], reader);
-        const materialResult = this.parseMaterial(children[materialsIndex], reader, sceneData);
-        const textureResult = this.parseTexture(children[textureIndex], reader, sceneData);
+        let errors = [];
+        let results = [];
 
+        if(transformationIndex != -1) {
+            var transformationResult = ComponentTransformationParser.parse(children[transformationIndex], reader, sceneData);
+            results.push(transformationResult);
+            var transformation = transformationResult.getValue();
+        } else {
+            errors.push("required <transformation> is missing");
+            var transformation = new MyTransformation(null);
+        }
+
+        if(childrenIndex != -1) {
+            var childrenResult = ComponentChildrenParser.parse(children[childrenIndex], reader);
+            results.push(childrenResult);
+            var componentChildren = childrenResult.getValue();
+        } else {
+            errors.push("required <children> is missing");
+            var componentChildren = {"components": [], "primitives": []};
+        }
+
+        if(materialsIndex != -1) {
+            var materialsResult = this.parseMaterial(children[materialsIndex], reader, sceneData);
+            results.push(materialsResult);
+            var materials = materialsResult.getValue();
+        } else {
+            errors.push("required <materials> is missing");
+            var materials = ["inherit"];
+        }
+
+        if (textureIndex != -1) {
+            var textureResult = this.parseTexture(children[textureIndex], reader, sceneData);
+            results.push(textureResult);
+            var texture = textureResult.getValue();
+        } else {
+            errors.push("required <texture> is missing");
+            var texture = "none";
+        }
+
+        console.log(id, nodeNames, transformationIndex, errors);
         return ParserResult.collect(
             new ComponentNode(
                 id,
-                transformationResult.getValue(),
-                materialResult.getValue(), // materials
-                textureResult.getValueOrDefault("none"),
-                childrenResult.getValue()["components"],
-                childrenResult.getValue()["primitives"],
+                transformation,
+                materials,
+                texture,
+                componentChildren["components"],
+                componentChildren["primitives"],
             ),
-            [transformationResult, childrenResult, textureResult],
-            "parsing <component> with id=" + id
+            results,
+            "parsing <component> with id=" + id,
+            errors
         );
     }
 
@@ -66,10 +102,10 @@ export class ComponentParser {
             return ParserResult.fromError("Texture with ID " + id + " does not exist");
         }
 
-        const length_sResult = FloatParser.parse(node, reader, 'length_s'); // TODO: Limits?
+        const length_sResult = FloatParser.parse(node, reader, 'length_s', 0);
         const length_s = length_sResult.getValueOrDefault(1);
 
-        const length_tResult = FloatParser.parse(node, reader, 'length_t'); // TODO Limits?
+        const length_tResult = FloatParser.parse(node, reader, 'length_t', 0);
         const length_t = length_tResult.getValueOrDefault(1);
 
         const referenceTexture = sceneData.textures[id];
@@ -102,7 +138,6 @@ export class ComponentParser {
             }
         }
 
-        // TODO: Set default material in case its missing
         return new ParserResult(materials, errors);
     }
 }

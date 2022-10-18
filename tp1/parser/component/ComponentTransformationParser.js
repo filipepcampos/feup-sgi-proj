@@ -17,6 +17,7 @@ export class ComponentTransformationParser {
             }
         } else {
             if (children.length > 0) {
+                // TODO This is probably unecessary
                 const transformationMatrixResult = TransformationParser.parse(node, reader, false);
                 const transformationMatrix = transformationMatrixResult.getValue();
                 do {
