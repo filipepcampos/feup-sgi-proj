@@ -12,7 +12,7 @@ export class SceneData {
         this.background = [];
 
         // Active (default) values
-        this.activeCamera = 0; // TODO: Remove or use?
+        this.defaultView = "";
 
         // Lists of elements
         this.views = {};

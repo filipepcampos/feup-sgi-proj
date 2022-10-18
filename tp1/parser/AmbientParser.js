@@ -1,10 +1,12 @@
 import {ColorParser} from "./ColorParser.js";
 import {ParserResult} from "./ParserResult.js";
+import {Color} from "../models/Color.js";
 
 export class AmbientParser {
     static parse(node, reader) {
         let ambient = [];
         let background = [];
+        let errors = [];
         let nodeNames = [];
         for(const child of node.children) {
             nodeNames.push(child.nodeName);
@@ -12,16 +14,30 @@ export class AmbientParser {
 
         const ambientIndex = nodeNames.indexOf("ambient");
         const backgroundIndex = nodeNames.indexOf("background");
+        let results = [];
+        if(ambientIndex != -1) {
+            var ambientColorResult = ColorParser.parse(node.children[ambientIndex], reader);
+            ambient = ambientColorResult.getValue();
+            results.push(ambientColorResult);
+        } else {
+            ambient = new Color([0,0,0,0]);
+            errors.push("missing <ambient> tag")
+        }
 
-        const ambientColorResult = ColorParser.parse(node.children[ambientIndex], reader);
-        ambient = ambientColorResult.getValueOrDefault([0,0,0,0]);
+        if(backgroundIndex != -1) {
+            var backgroundColorResult = ColorParser.parse(node.children[backgroundIndex], reader);
+            background = backgroundColorResult.getValue();
+            results.push(backgroundColorResult);
+        } else {
+            background = new Color([0,0,0,0]);
+            errors.push("missing <background> tag");
+        }
 
-        const backgroundColorResult = ColorParser.parse(node.children[backgroundIndex], reader);
-        background = backgroundColorResult.getValueOrDefault([0,0,0,0]);
 
         return ParserResult.collect(
                 {"ambient": ambient.getArray(), "background": background.getArray()},
-                [ambientColorResult, backgroundColorResult],
-                "parsing <ambient>");
+                results,
+                "parsing <ambient>",
+                errors);
     }
 }
