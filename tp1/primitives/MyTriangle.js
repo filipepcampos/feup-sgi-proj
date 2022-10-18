@@ -33,6 +33,8 @@ export class MyTriangle extends CGFobject {
 		this.cosA = (Math.pow(this.a, 2) - Math.pow(this.b, 2) + Math.pow(this.c, 2)) / (2 * this.a * this.c);
 		this.sinA = Math.sqrt(1 - Math.pow(this.cosA, 2));
 
+		this.texCoordsBuffer
+
 		this.initBuffers();
 	}
 

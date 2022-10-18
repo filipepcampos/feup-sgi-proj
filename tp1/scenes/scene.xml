@@ -24,12 +24,20 @@
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />
         </omni>
-        <spot id="spotlight" enabled="1" angle="30" exponent="1.0">
-            <location x="-1.5" y="5" z="-0.5" w="1.0" />
-            <target x="-1.5" y="0" z="-0.5" />
-            <ambient r="0.1" g="0.1" b="0" a="1.0" />
+        <spot id="headlight_right" enabled="1" angle="75" exponent="0.2">
+            <location x="-2.1" y="1.4" z="2.0" w="1.0" />
+            <target x="-2.1" y="1.4" z="3.0" />
+            <ambient r="0.0" g="0" b="0" a="1.0" />
             <diffuse r="1.0" g="1.0" b="0.0" a="1.0" />
             <specular r="1.0" g="1.0" b="0.0" a="1.0" />
+            <attenuation constant="0.0" linear="1.0" quadratic="0.0" />
+        </spot>
+        <spot id="overhead_light" enabled="1" angle="75" exponent="0.6">
+            <location x="-1" y="8" z="0" w="1.0" />
+            <target x="-1" y="0" z="0" />
+            <ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
             <attenuation constant="0.0" linear="1.0" quadratic="0.0" />
         </spot>
     </lights>
@@ -251,9 +259,6 @@
             <scale x="8.0" y="1" z="8.0"/>
             <rotate axis="x" angle="90"/>
         </transformation>
-        <transformation id="tr_light_pos">
-            <translate x="-1.5" y="5" z="-0.5"/>
-        </transformation>
     </transformations>
 
     <primitives>
@@ -293,7 +298,6 @@
             <texture id="none"/>
             <children>
                 <componentref id="street" />
-                <componentref id="light_pos" />
             </children>
         </component>
 
@@ -1073,19 +1077,6 @@
             <texture id="inherit"/>
             <children>
                 <primitiveref id="triangle"/>
-            </children>
-        </component>
-
-        <component id="light_pos">
-            <transformation>
-                <transformationref id="tr_light_pos"/>
-            </transformation>
-            <materials>
-                <material id="inherit" />
-            </materials>
-            <texture id="inherit"/>
-            <children>
-                <componentref id="p_cube"/>
             </children>
         </component>
     </components>
