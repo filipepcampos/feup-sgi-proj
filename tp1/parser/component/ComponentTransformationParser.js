@@ -1,5 +1,6 @@
 import {TransformationParser} from "../TransformationParser.js";
 import {ParserResult} from "../ParserResult.js";
+import { MyTransformation } from "../../models/wrappers/MyTransformation.js";
 
 export class ComponentTransformationParser {
     static embeddedTransformationCount = 0;
@@ -21,7 +22,7 @@ export class ComponentTransformationParser {
                 do {
                     id = '_embeddedtransf' + (this.embeddedTransformationCount++);
                 } while (sceneData.transformations[id] != null);
-                sceneData.transformations[id] = transformationMatrix;
+                sceneData.transformations[id] = new MyTransformation(id, transformationMatrix);
                 return ParserResult.collect(transformationMatrix, [transformationMatrixResult], "parsing <transformation>");
             } else {
                 return ParserResult.fromValue(null);

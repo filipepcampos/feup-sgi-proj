@@ -59,6 +59,15 @@ export class XMLscene extends CGFscene {
         this.interface.setActiveCamera(this.camera);
     }
 
+    setLight(lightIndex, enabled) {
+        if(enabled) {
+            this.lights[lightIndex].enable();
+        } else {
+            this.lights[lightIndex].disable();
+        }
+        this.lights[lightIndex].update();
+    }
+
 
     /**
      * Initializes the scene lights with the values read from the XML file.
@@ -68,11 +77,13 @@ export class XMLscene extends CGFscene {
         // Lights index.
 
         // Reads the lights from the scene graph.
+        this.lightsIds = [];
         for (var key in this.graph.sceneData.lights) {
             if (i >= 8)
                 break;              // Only eight lights allowed by WebGL.
 
             if (this.graph.sceneData.lights.hasOwnProperty(key)) {
+                this.lightsIds.push(key);
                 var light = this.graph.sceneData.lights[key];
 
                 this.lights[i].setPosition(light[2][0], light[2][1], light[2][2], light[2][3]);
@@ -97,6 +108,7 @@ export class XMLscene extends CGFscene {
                 i++;
             }
         }
+        this.lights = this.lights.slice(0, i);
     }
 
     setDefaultAppearance() {
@@ -147,7 +159,6 @@ export class XMLscene extends CGFscene {
 
         for (var i = 0; i < this.lights.length; i++) {
             this.lights[i].setVisible(true);
-            this.lights[i].enable();
         }
 
         if (this.sceneInited) {
@@ -155,7 +166,7 @@ export class XMLscene extends CGFscene {
             this.setDefaultAppearance();
 
             // Displays the scene.
-this.renderer.display();
+            this.renderer.display();
         }
 
         this.popMatrix();

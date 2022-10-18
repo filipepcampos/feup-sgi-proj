@@ -1,11 +1,7 @@
 export class MyTransformation {
-    constructor(id, mat){
+    constructor(id, mat=mat4.create()){
         this.id = id;
         this.mat = mat;
-    }
-
-    static instantiate(id) {
-        return new MyTransformation(id, mat4.create())
     }
 
     getId() {
