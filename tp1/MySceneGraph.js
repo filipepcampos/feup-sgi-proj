@@ -245,7 +245,7 @@ export class MySceneGraph {
         let defaultView = this.reader.getString(viewsNode, 'default');
         this.sceneData.defaultView = this.reader.getString(viewsNode, 'default');
 
-        if(defaultView == null || !(defaultView in Object.keys(this.sceneData.views)) ) {
+        if(defaultView == null || Object.keys(this.sceneData.views).indexOf(defaultView) === -1) {
             if(Object.keys(this.sceneData.views).length > 0) {
                 defaultView = Object.keys(this.sceneData.views)[0];
                 this.onXMLMinorError("no default view defined, defaulting to view with id=" + defaultView);
