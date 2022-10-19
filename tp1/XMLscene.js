@@ -1,5 +1,6 @@
 import { CGFscene } from '../lib/CGF.js';
 import { CGFaxis,CGFcamera } from '../lib/CGF.js';
+import {SceneRenderer} from "./rendering/SceneRenderer.js";
 
 
 var DEGREE_TO_RAD = Math.PI / 180;
@@ -71,6 +72,15 @@ export class XMLscene extends CGFscene {
         this.interface.setActiveCamera(this.camera);
     }
 
+    setLight(lightIndex, enabled) {
+        if(enabled) {
+            this.lights[lightIndex].enable();
+        } else {
+            this.lights[lightIndex].disable();
+        }
+        this.lights[lightIndex].update();
+    }
+
 
     /**
      * Initializes the scene lights with the values read from the XML file.
@@ -80,7 +90,8 @@ export class XMLscene extends CGFscene {
         // Lights index.
 
         // Reads the lights from the scene graph.
-        for (var key in this.graph.lights) {
+        this.lightsIds = [];
+        for (var key in this.sceneData.lights) {
             if (i >= 8)
                 break;              // Only eight lights allowed by WebGL.
             console.log(i);
@@ -123,14 +134,18 @@ export class XMLscene extends CGFscene {
      * As loading is asynchronous, this may be called already after the application has started the run loop
      */
     onGraphLoaded() {
-        this.axis = new CGFaxis(this, this.graph.referenceLength);
+        this.axis = new CGFaxis(this, this.sceneData.referenceLength);
 
-        this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
+        this.gl.clearColor(this.sceneData.background[0], this.sceneData.background[1], this.sceneData.background[2], this.sceneData.background[3]);
 
-        this.setGlobalAmbientLight(this.graph.ambient[0], this.graph.ambient[1], this.graph.ambient[2], this.graph.ambient[3]);
+        this.setGlobalAmbientLight(this.sceneData.ambient[0], this.sceneData.ambient[1], this.sceneData.ambient[2], this.sceneData.ambient[3]);
 
         this.initLights();
         this.initCameras();
+
+        this.renderer = new SceneRenderer(this.sceneData);
+
+        this.interface.onGraphLoaded();
 
         this.sceneInited = true;
     }
@@ -157,15 +172,15 @@ export class XMLscene extends CGFscene {
 
         for (var i = 0; i < this.lights.length; i++) {
             this.lights[i].setVisible(true);
-            this.lights[i].enable();
+            this.lights[i].update();
         }
 
         if (this.sceneInited) {
             // Draw axis
             this.setDefaultAppearance();
 
-            // Displays the scene (MySceneGraph function).
-            this.graph.displayScene();
+            // Displays the scene.
+            this.renderer.display();
         }
 
         this.popMatrix();

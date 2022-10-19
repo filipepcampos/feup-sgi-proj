@@ -1,13 +1,16 @@
-import { CGFobject } from '../lib/CGF.js';
+import { CGFobject } from '../../lib/CGF.js';
 /**
  * MyRectangle
- * @constructor
- * @param scene - Reference to MyScene object
- * @param x - Scale of rectangle in X
- * @param y - Scale of rectangle in Y
  */
 export class MyRectangle extends CGFobject {
-	constructor(scene, id, x1, x2, y1, y2) {
+	/**
+	 * @param {CGFScene} scene - Reference to MyScene object
+	 * @param {float} x1 - x coordinate of the first point
+	 * @param {float} x2 - x coordinate of the second point
+	 * @param {float} y1 - y coordinate of the first point
+	 * @param {float} y2 - y coordinate of the second point
+	 */
+	constructor(scene, x1, x2, y1, y2) {
 		super(scene);
 		this.x1 = x1;
 		this.x2 = x2;
@@ -17,6 +20,9 @@ export class MyRectangle extends CGFobject {
 		this.initBuffers();
 	}
 	
+	/**
+	 * Initializes the buffers of the primitive
+	 */
 	initBuffers() {
 		this.vertices = [
 			this.x1, this.y1, 0,	//0

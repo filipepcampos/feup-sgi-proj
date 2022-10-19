@@ -1,9 +1,9 @@
 import { CGFinterface, CGFapplication, dat } from '../lib/CGF.js';
+import { MaterialUpdater } from './rendering/MaterialUpdater.js';
 
 /**
 * MyInterface class, creating a GUI interface.
 */
-
 export class MyInterface extends CGFinterface {
     /**
      * @constructor
@@ -34,6 +34,21 @@ export class MyInterface extends CGFinterface {
         return true;
     }
 
+    onGraphLoaded() {
+        this.materialUpdater = new MaterialUpdater(this.scene.sceneData);
+        this.gui.add(this.scene, 'camerasIds', this.scene.camerasIds)
+            .name('Active Camera')
+            .onChange((value) => this.scene.setCamera(value));
+        let folder = this.gui.addFolder('Lights');
+        for(let i = 0; i < this.scene.lights.length; ++i) {
+            folder.add(this.scene.lights[i], 'enabled')
+                .name(this.scene.lightsIds[i])
+                .onChange((value) => {
+                    this.scene.setLight(i, value);
+            });
+        }
+    }
+
     /**
      * initKeys
      */
@@ -47,7 +62,7 @@ export class MyInterface extends CGFinterface {
         this.activeKeys[event.code]=true;
         
         if(event.code == "KeyM") {
-            this.scene.graph.updateMaterials();
+            this.materialUpdater.update();
         }
     };
 
