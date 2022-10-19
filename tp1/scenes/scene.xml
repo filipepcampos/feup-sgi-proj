@@ -24,7 +24,7 @@
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />
         </omni>
 
-        <spot id="headlight_right" enabled="1" angle="45" exponent="1.0">
+        <spot id="headlight_right" enabled="0" angle="30" exponent="1.0">
             <location x="-2.1" y="1.4" z="-0.5" w="1.0" />
             <target x="-2.1" y="1.4" z="0" />
             <ambient r="0.05" g="0.05" b="0" a="1.0" />
@@ -32,7 +32,7 @@
             <specular r="1.0" g="1.0" b="0.0" a="1.0" />
             <attenuation constant="0.0" linear="1.0" quadratic="0.0" />
         </spot>
-        <spot id="headlight_left" enabled="1" angle="45" exponent="1.0">
+        <spot id="headlight_left" enabled="0" angle="30" exponent="1.0">
             <location x="-0.9" y="1.4" z="-0.5" w="1.0" />
             <target x="-0.9" y="1.4" z="0" />
             <ambient r="0.05" g="0.05" b="0" a="1.0" />
@@ -51,8 +51,9 @@
     </lights>
 
     <textures>
-        <texture id="tex_asphalt" file="scenes/images/asphalt.jpg" />
+        <texture id="tex_asphalt" file="scenes/images/asphalt2.png" />
         <texture id="tex_brick" file="scenes/images/brick.jpg" />
+        <texture id="tex_concrete" file="scenes/images/concrete2.jpg" />
     </textures>
 
     <materials>
@@ -73,12 +74,6 @@
             <ambient r="0.588" g="0.858" b="0.490" a="1.0" />
             <diffuse r="0.588" g="0.858" b="0.490" a="1.0" />
             <specular r="0.588" g="0.858" b="0.490" a="1.0" />
-        </material>
-        <material id="pastel_yellow" shininess="10">
-            <emission r="0" g="0" b="0" a="1.0" />
-            <ambient r="0.949" g="0.878" b="0.600" a="1.0" />
-            <diffuse r="0.949" g="0.878" b="0.600" a="0.2" />
-            <specular r="0" g="0" b="0" a="1.0" />
         </material>
         <material id="headlight_yellow" shininess="10">
             <emission r="0.949" g="0.878" b="0.600" a="1.0" />
@@ -301,7 +296,7 @@
             <transformation>
             </transformation>
             <materials>
-                <material id="inherit" />
+                <material id="default_material" />
             </materials>
             <texture id="none"/>
             <children>
@@ -328,7 +323,7 @@
             <transformation>
             </transformation>
             <materials>
-                <material id="pastel_yellow" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit"/>
             <children>
@@ -342,9 +337,9 @@
                 <transformationref id="tr_street_building0" />
             </transformation>
             <materials>
-                <material id="pastel_yellow" />
+                <material id="inherit" />
             </materials>
-            <texture id="tex_brick" length_s="1" length_t="1"/>
+            <texture id="tex_brick"  length_s="0.3" length_t="0.3"/>
             <children>
                 <componentref id="p_cube_without_base"/>
             </children>
@@ -380,9 +375,9 @@
                 <transformationref id="tr_street_building1" />
             </transformation>
             <materials>
-                <material id="pastel_yellow" />
+                <material id="inherit" />
             </materials>
-            <texture id="tex_brick" length_s="1.0" length_t="1.8"/>
+            <texture id="tex_brick" length_s="0.3" length_t="0.3"/>
             <children>
                 <componentref id="p_cube_without_base"/>
             </children>
@@ -396,6 +391,7 @@
             </materials>
             <texture id="inherit"/>
             <children>
+                <primitiveref id="triangle"/>
                 <componentref id="street_ground_floor"/>
                 <componentref id="street_ground_sign"/>
                 <componentref id="street_road"/>
@@ -436,9 +432,9 @@
                 <transformationref id="tr_street_road_floor" />
             </transformation>
             <materials>
-                <material id="dark_gray" />
+                <material id="medium_gray" />
             </materials>
-            <texture id="tex_asphalt" length_s="1" length_t="1"/>
+            <texture id="tex_asphalt" length_s="1.0" length_t="0.2"/>
             <children>
                 <componentref id="p_cube_without_base"/>
             </children>
@@ -463,9 +459,9 @@
                 <transformationref id="tr_street_ground_walkway_left" />
             </transformation>
             <materials>
-                <material id="medium_gray" />
+                <material id="white" />
             </materials>
-            <texture id="inherit"/>
+            <texture id="tex_concrete" length_s="1.0" length_t="0.1"/>
             <children>
                 <componentref id="p_cube_without_base"/>
             </children>
@@ -476,9 +472,9 @@
                 <transformationref id="tr_street_ground_walkway_right" />
             </transformation>
             <materials>
-                <material id="medium_gray" />
+                <material id="white" />
             </materials>
-            <texture id="inherit"/>
+            <texture id="tex_concrete" length_s="1.0" length_t="0.1"/>
             <children>
                 <componentref id="p_cube_without_base"/>
             </children>

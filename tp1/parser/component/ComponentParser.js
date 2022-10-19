@@ -161,6 +161,11 @@ export class ComponentParser {
             }
         }
 
+        if(materials.length === 0) {
+            materials.push("inherit");
+            errors.push("component has no material defined, defaulting to inherit");
+        }
+
         return new ParserResult(materials, errors);
     }
 }

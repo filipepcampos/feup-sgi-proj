@@ -72,6 +72,9 @@ export class SceneRenderer {
             this.display(child, material, texture);
         }
 
+        if(texture !== "none") {
+            texture.getCGFTexture().unbind(0);
+        }
         scene.popMatrix();
     }
 }
