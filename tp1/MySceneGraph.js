@@ -14,6 +14,7 @@ import {AmbientParser} from "./parser/AmbientParser.js";
 import { MyView } from './models/wrappers/MyView.js';
 import { MyMaterial } from './models/wrappers/MyMaterial.js';
 import { Color} from "./models/Color.js";
+import {RecursionChecker} from "./parser/RecursionChecker.js";
 
 
 // Order of the groups in the XML document.
@@ -351,6 +352,9 @@ export class MySceneGraph {
                 return "no components defined";
             }
         }
+
+        console.log("Checking for recursion");
+        ParserErrorPrinter.print(RecursionChecker.checkRecursion(this.sceneData));
 
         let rootMaterials = this.sceneData.components[this.sceneData.root].materials;
         // Ensure the scene is rendered, even if the root node has no valid material
