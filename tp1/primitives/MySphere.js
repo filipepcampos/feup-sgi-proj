@@ -26,8 +26,7 @@ export class MySphere extends CGFobject {
 	initBuffers() {
 		this.vertices = [];
 		this.indices = [];
-		this.normals = [];
-		this.texCoords = [];
+		this.normals = []
 
 		var phi = 0;
 		var phiInc = Math.PI / this.stacks;

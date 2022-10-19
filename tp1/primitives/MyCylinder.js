@@ -29,7 +29,6 @@ export class MyCylinder extends CGFobject {
         this.vertices = [];
         this.indices = [];
         this.normals = [];
-        this.texCoords = [];
 
         const alphaAng = 2 * Math.PI / this.slices;
         const alphaHeight = this.height / this.stacks;
