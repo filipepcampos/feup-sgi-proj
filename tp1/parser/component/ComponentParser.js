@@ -115,7 +115,7 @@ export class ComponentParser {
 
         // Check if texture exists
         if (sceneData.textures[id] == null) {
-            return ParserResult.fromError("none", "texture with id=" + id + " does not exist");
+            return ParserResult.fromError("texture with id=" + id + " does not exist");
         }
 
         const length_sResult = FloatParser.parse(node, reader, 'length_s', 0);
