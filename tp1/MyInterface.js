@@ -26,6 +26,10 @@ export class MyInterface extends CGFinterface {
         // add a group of controls (and open/expand by defult)
 
         this.initKeys();
+        this.gui.add(this.scene, 'activeCameraIndex', this.scene.cameraIds)
+            .name("Camera")
+            .onChange(this.scene.setActiveCamera.bind(this.scene)
+        );
 
         return true;
     }
