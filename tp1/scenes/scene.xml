@@ -260,7 +260,7 @@
         </transformation>
         <transformation id="tr_street_building0_helipad_circle">
             <translate x="-10" y="30.0" z="5"/>
-            <scale x="8.0" y="1" z="8.0"/>
+            <scale x="8.0" y="8" z="8.0"/>
             <rotate axis="x" angle="90"/>
         </transformation>
     </transformations>
@@ -282,7 +282,7 @@
             <sphere radius="1.0" slices="16" stacks="16" />
         </primitive>
         <primitive id="torus">
-            <torus inner="0.03" outer="0.5" slices="8" loops="64"/>
+            <torus inner="0.05" outer="0.5" slices="8" loops="64"/>
         </primitive>
         <primitive id="car_lateral_window_primitive1">
             <triangle x1="-0.1" y1="0" z1="0" x2="2.225" y2="0" z2="0" x3="0.25537" y3="1.09371" z3="0"/>
@@ -326,7 +326,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="inherit"/>
+            <texture id="tex_brick"  length_s="1.0" length_t="1.0"/>
             <children>
                 <componentref id="street_building0_body"/>
                 <componentref id="street_building0_helipad"/>
@@ -340,7 +340,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="tex_brick"  length_s="0.3" length_t="0.2"/>
+            <texture id="inherit"/>
             <children>
                 <componentref id="p_cube_without_base"/>
             </children>
@@ -365,7 +365,7 @@
             <materials>
                 <material id="dark_gray" />
             </materials>
-            <texture id="none"/>
+            <texture id="inherit"/>
             <children>
                 <primitiveref id="torus"/>
             </children>
@@ -378,7 +378,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="tex_brick" length_s="0.3" length_t="0.3"/>
+            <texture id="tex_brick" length_s="1.0" length_t="1.8"/>
             <children>
                 <componentref id="p_cube_without_base"/>
             </children>
