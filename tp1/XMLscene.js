@@ -45,30 +45,17 @@ export class XMLscene extends CGFscene {
      * Initializes the scene cameras.
      */
     initDefaultCameras() {
-        this.cameras = [new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0))];
-        this.cameraIds = ['defaultCamera'];
-        this.activeCameraIndex = 'defaultCamera';
-        this.camera = this.cameras[0];
+        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
     }
 
     // todo:
     initCameras() {
-        this.cameras = [];
-        this.cameraIds = [];
-        for (const [cameraId, camera] of Object.entries(this.graph.views)) {
-            this.cameraIds.push(cameraId);
-            this.cameras.push(camera);
-        }
-        console.log("Initting cameras", this.cameras, this.graph.views);
-        //this.graph.views[this.graph.defaultView]; // TODO Use function?
-        this.activeCameraIndex = this.graph.defaultView; // TODO: This is debug
-        this.setActiveCamera();
+        this.setCamera(this.sceneData.defaultView);
+        this.camerasIds = Object.keys(this.sceneData.views);
     }
 
-    setActiveCamera() {
-        console.log("SETTING active Camera", this.activeCameraIndex, this.cameras, this.cameraIds);
-        let index = this.cameraIds.indexOf(this.activeCameraIndex);
-        this.camera = this.cameras[index];
+    setCamera(cameraId) {
+        this.camera = this.sceneData.views[cameraId].getCGFCamera();
         this.interface.setActiveCamera(this.camera);
     }
 
@@ -94,9 +81,10 @@ export class XMLscene extends CGFscene {
         for (var key in this.sceneData.lights) {
             if (i >= 8)
                 break;              // Only eight lights allowed by WebGL.
-            console.log(i);
-            if (this.graph.lights.hasOwnProperty(key)) {
-                var light = this.graph.lights[key];
+
+            if (this.sceneData.lights.hasOwnProperty(key)) {
+                this.lightsIds.push(key);
+                var light = this.sceneData.lights[key];
 
                 this.lights[i].setPosition(light[2][0], light[2][1], light[2][2], light[2][3]);
                 this.lights[i].setAmbient(light[3][0], light[3][1], light[3][2], light[3][3]);
@@ -109,7 +97,6 @@ export class XMLscene extends CGFscene {
                     this.lights[i].setSpotDirection(light[8][0], light[8][1], light[8][2]);
                 }
 
-                console.log(light);
                 this.lights[i].setVisible(true);
                 if (light[0])
                     this.lights[i].enable();
@@ -117,10 +104,10 @@ export class XMLscene extends CGFscene {
                     this.lights[i].disable();
 
                 this.lights[i].update();
+
                 i++;
             }
         }
-
         this.lights = this.lights.slice(0, i);
     }
 
