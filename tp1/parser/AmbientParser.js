@@ -29,7 +29,7 @@ export class AmbientParser {
             ambient = ambientColorResult.getValue();
             results.push(ambientColorResult);
         } else {
-            ambient = new Color([0,0,0,0]);
+            ambient = new Color(0,0,0,0);
             errors.push("missing <ambient> tag")
         }
 
