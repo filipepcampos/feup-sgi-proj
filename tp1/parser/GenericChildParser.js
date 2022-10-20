@@ -24,10 +24,12 @@ export class GenericChildParser {
             const v = result.getValue();
             results.push(result);
 
-            if(output[v.getId()] == null){
-                output[v.getId()] = v;
-            } else {
-                errors.push(typeName + " with id=" + v.getId() + " already exists");
+            if(v != null){
+                if(output[v.getId()] == null){
+                    output[v.getId()] = v;
+                } else {
+                    errors.push(typeName + " with id=" + v.getId() + " already exists");
+                } 
             }
         }
 
