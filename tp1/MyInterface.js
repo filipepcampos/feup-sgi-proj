@@ -34,7 +34,7 @@ export class MyInterface extends CGFinterface {
         this.materialUpdater = new MaterialUpdater(this.scene.sceneData);
         this.gui.add(this.scene, 'cameraId', this.scene.camerasIds)
             .name('Active Camera')
-            .onChange(this.scene.setCamera);
+            .onChange((value) => {this.scene.setCamera(value) });
         let folder = this.gui.addFolder('Lights');
         for(let i = 0; i < this.scene.lights.length; ++i) {
             folder.add(this.scene.lights[i], 'enabled')

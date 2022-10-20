@@ -111,9 +111,9 @@ export class MyTriangle extends CGFobject {
 	 */
 	updateTexLength(length_u, length_v) {
         let coords = [
-			0, 0,
-			this.texBuffer[2] / length_u, 0,
-			this.texBuffer[4] / length_u, this.texBuffer[5] / length_v
+			0, 1,
+			this.texBuffer[2] / length_u, 1,
+			this.texBuffer[4] / length_u, 1 - (this.texBuffer[5] / length_v)
 		];
 		this.updateTexCoords(coords);
 	}

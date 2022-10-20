@@ -50,8 +50,7 @@ export class XMLscene extends CGFscene {
      * Initialize cameras based on the sceneData
      */
     initCameras() {
-        this.cameraId = this.sceneData.defaultView;
-        this.setCamera();
+        this.setCamera(this.sceneData.defaultView);
         this.camerasIds = Object.keys(this.sceneData.views);
     }
     
@@ -59,8 +58,9 @@ export class XMLscene extends CGFscene {
      * Set an camera to be the active camera, based on id
      * @param {string} cameraId - Camera Id
      */
-    setCamera() {
-        this.camera = this.sceneData.views[this.cameraId].getCGFCamera();
+    setCamera(id) {
+        this.cameraId = id;
+        this.camera = this.sceneData.views[id].getCGFCamera();
         this.interface.setActiveCamera(this.camera);
     }
 
@@ -107,7 +107,6 @@ export class XMLscene extends CGFscene {
                     this.lights[i].setSpotDirection(light[8][0], light[8][1], light[8][2]);
                 }
 
-                this.lights[i].setVisible(true);
                 if (light[0])
                     this.lights[i].enable();
                 else
@@ -171,7 +170,6 @@ export class XMLscene extends CGFscene {
         this.axis.display();
 
         for (var i = 0; i < this.lights.length; i++) {
-            this.lights[i].setVisible(true);
             this.lights[i].update();
         }
 
