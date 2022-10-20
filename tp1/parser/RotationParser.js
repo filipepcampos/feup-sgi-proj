@@ -2,7 +2,16 @@ import { ParserResult } from "./ParserResult.js";
 import { Rotation } from "../models/Rotation.js";
 import { FloatParser } from "./FloatParser.js";
 
+/**
+ * Parser for the node with rotation attributes
+ */
 export class RotationParser {
+    /**
+     * Parse the <view> node
+     * @param {element} node - Node that should be parsed 
+     * @param {CGFXMLreader} reader - XMLreader
+     * @returns ParserResult containing an object with the parsed rotation and errors that occurred while parsing
+     */
     static parse(node, reader){
         let errors = [];
 

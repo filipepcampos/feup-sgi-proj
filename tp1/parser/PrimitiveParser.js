@@ -8,7 +8,17 @@ import { MySphere } from "../primitives/MySphere.js";
 import { MyTorus } from "../primitives/MyTorus.js";
 import {PrimitiveNode} from "../models/graph/PrimitiveNode.js";
 
+/**
+ * Parser for the <primitive> node
+ */
 export class PrimitiveParser {
+    /**
+     * Parse the <primitive> node
+     * @param {element} node - Node that should be parsed 
+     * @param {CGFXMLreader} reader - XMLreader
+     * @param {CGFscene} scene - CGFscene
+     * @returns ParserResult containing an object with the parsed primitive and errors that occurred while parsing
+     */
     static parse(node, reader, scene) {
         if (node.nodeName !== "primitive") {
             return ParserResult.fromError("unknown tag <" + node.nodeName + ">");
@@ -38,6 +48,14 @@ export class PrimitiveParser {
         return ParserResult.fromError("There must be exactly 1 primitive type (rectangle, triangle, cylinder, sphere or torus)");
     }
     
+    /**
+     * Parse the rectangle primitive
+     * @param {element} node - Node that should be parsed 
+     * @param {CGFXMLreader} reader - XMLreader
+     * @param {CGFscene} scene - CGFscene
+     * @param {string} id - Id of the primitive
+     * @returns ParserResult containing an object with the parsed primitive and errors that occurred while parsing
+     */
     static parseRectangle(node, reader, scene, id) {
         let x1 = FloatParser.parse(node, reader, 'x1');
         let y1 = FloatParser.parse(node, reader, 'y1');
@@ -58,6 +76,14 @@ export class PrimitiveParser {
         );
     }
 
+    /**
+     * Parse the triangle primitive
+     * @param {element} node - Node that should be parsed 
+     * @param {CGFXMLreader} reader - XMLreader
+     * @param {CGFscene} scene - CGFscene
+     * @param {string} id - Id of the primitive
+     * @returns ParserResult containing an object with the parsed primitive and errors that occurred while parsing
+     */
     static parseTriangle(node, reader, scene, id) {
         let x1 = FloatParser.parse(node, reader, 'x1');
         let y1 = FloatParser.parse(node, reader, 'y1');
@@ -90,6 +116,14 @@ export class PrimitiveParser {
             "parsing <triangle> with id=" + id);
     }
 
+    /**
+     * Parse the cylinder primitive
+     * @param {element} node - Node that should be parsed 
+     * @param {CGFXMLreader} reader - XMLreader
+     * @param {CGFscene} scene - CGFscene
+     * @param {string} id - Id of the primitive
+     * @returns ParserResult containing an object with the parsed primitive and errors that occurred while parsing
+     */
     static parseCylinder(node, reader, scene, id) {
         let baseRadius = FloatParser.parse(node, reader, 'base', 0);
         let topRadius = FloatParser.parse(node, reader, 'top', 0);
@@ -118,6 +152,14 @@ export class PrimitiveParser {
         );
     }
 
+    /**
+     * Parse the sphere primitive
+     * @param {element} node - Node that should be parsed 
+     * @param {CGFXMLreader} reader - XMLreader
+     * @param {CGFscene} scene - CGFscene
+     * @param {string} id - Id of the primitive
+     * @returns ParserResult containing an object with the parsed primitive and errors that occurred while parsing
+     */
     static parseSphere(node, reader, scene, id) {
         let radius = FloatParser.parse(node, reader, 'radius', 0);
         let slices = IntegerParser.parse(node, reader, 'slices', 1);
@@ -137,6 +179,14 @@ export class PrimitiveParser {
         );
     }
 
+    /**
+     * Parse the torus primitive
+     * @param {element} node - Node that should be parsed 
+     * @param {CGFXMLreader} reader - XMLreader
+     * @param {CGFscene} scene - CGFscene
+     * @param {string} id - Id of the primitive
+     * @returns ParserResult containing an object with the parsed primitive and errors that occurred while parsing
+     */
     static parseTorus(node, reader, scene, id) {
         let inner = FloatParser.parse(node, reader, 'inner', 0);
         let outer = FloatParser.parse(node, reader, 'outer', 0);
