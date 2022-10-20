@@ -3,8 +3,6 @@ import { CGFaxis,CGFcamera } from '../lib/CGF.js';
 import {SceneRenderer} from "./rendering/SceneRenderer.js";
 
 
-var DEGREE_TO_RAD = Math.PI / 180;
-
 /**
  * XMLscene class, representing the scene that is to be rendered.
  */
@@ -42,23 +40,34 @@ export class XMLscene extends CGFscene {
     }
 
     /**
-     * Initializes the scene cameras.
+     * Initializes the default camera (Before graph is loaded).
      */
     initDefaultCameras() {
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
     }
 
-    // todo:
+    /**
+     * Initialize cameras based on the sceneData
+     */
     initCameras() {
         this.setCamera(this.sceneData.defaultView);
         this.camerasIds = Object.keys(this.sceneData.views);
     }
-
+    
+    /**
+     * Set an camera to be the active camera, based on id
+     * @param {string} cameraId - Camera Id
+     */
     setCamera(cameraId) {
         this.camera = this.sceneData.views[cameraId].getCGFCamera();
         this.interface.setActiveCamera(this.camera);
     }
 
+    /**
+     * Set enabled/disabled value of a light
+     * @param {int} lightIndex - Index of the lights in the this.lights array
+     * @param {boolean} enabled - Boolean value
+     */
     setLight(lightIndex, enabled) {
         if(enabled) {
             this.lights[lightIndex].enable();
@@ -111,6 +120,9 @@ export class XMLscene extends CGFscene {
         this.lights = this.lights.slice(0, i);
     }
 
+    /**
+     * Set default appearance
+     */
     setDefaultAppearance() {
         this.setAmbient(0.2, 0.4, 0.8, 1.0);
         this.setDiffuse(0.2, 0.4, 0.8, 1.0);
