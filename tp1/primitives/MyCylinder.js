@@ -37,7 +37,6 @@ export class MyCylinder extends CGFobject {
         var radius = this.baseRadius;
         var x, y, ang, height = 0;
 
-        // TODO: OPTIMIZE RADIUS = 0 ?
         for (var stack = 0; stack <= this.stacks; ++stack) {
             ang = 0;
             for (var slice = 0; slice <= this.slices; ++slice) {
@@ -57,16 +56,19 @@ export class MyCylinder extends CGFobject {
             height += alphaHeight;
         }
 
-        // TODO: OPTIMIZE CALCULATIONS (repetitions like: vertexPerStack * i)
         var vertexPerStack = this.slices + 1;
         var bottomCurrent, bottomNext, topCurrent, topNext;
+        var curStackIdx, nextStackIdx;
         for (var i = 0; i < this.stacks; ++i) {
             for (var j = 0; j < this.slices; ++j) {
                 // Update variables
-                bottomCurrent = vertexPerStack * i + j;
-                bottomNext = vertexPerStack * i + (j + 1);
-                topCurrent = vertexPerStack * (i + 1) + j;
-                topNext = vertexPerStack * (i + 1) + (j + 1);
+                curStackIdx = vertexPerStack * i;
+                nextStackIdx = vertexPerStack * (i + 1);
+
+                bottomCurrent = curStackIdx + j;
+                bottomNext = curStackIdx + (j + 1);
+                topCurrent = nextStackIdx + j;
+                topNext = nextStackIdx + (j + 1);
 
                 // Top Triangle
                 this.indices.push(bottomNext, topCurrent, bottomCurrent);
