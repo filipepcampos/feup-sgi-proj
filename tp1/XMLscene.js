@@ -50,7 +50,8 @@ export class XMLscene extends CGFscene {
      * Initialize cameras based on the sceneData
      */
     initCameras() {
-        this.setCamera(this.sceneData.defaultView);
+        this.cameraId = this.sceneData.defaultView;
+        this.setCamera();
         this.camerasIds = Object.keys(this.sceneData.views);
     }
     
@@ -58,8 +59,8 @@ export class XMLscene extends CGFscene {
      * Set an camera to be the active camera, based on id
      * @param {string} cameraId - Camera Id
      */
-    setCamera(cameraId) {
-        this.camera = this.sceneData.views[cameraId].getCGFCamera();
+    setCamera() {
+        this.camera = this.sceneData.views[this.cameraId].getCGFCamera();
         this.interface.setActiveCamera(this.camera);
     }
 
