@@ -34,7 +34,7 @@ export class MyTorus extends CGFobject {
         let phi = 0;
         let phiInc = 2*Math.PI / this.loops;
 
-        var phiCache = [];
+        let phiCache = [];
 		for(let loop = 0; loop < this.loops; ++loop){
 			phiCache.push([Math.sin(phi), Math.cos(phi)]);
             phi += phiInc;
@@ -50,40 +50,44 @@ export class MyTorus extends CGFobject {
             //     ----------------
             //     sliceComponent
 
-            let sliceComponent = this.outer+this.inner*cosTheta;
-            let z = this.inner * sinTheta;
+            const sliceComponent = this.outer+this.inner*cosTheta;
+            const z = this.inner * sinTheta;
 
             for(let loop = 0; loop < this.loops; ++loop) { // phi
-                let [sinPhi, cosPhi] = phiCache[loop];
+                const [sinPhi, cosPhi] = phiCache[loop];
                 
-                let x = sliceComponent * cosPhi;
-                let y = sliceComponent * sinPhi;
+                const x = sliceComponent * cosPhi;
+                const y = sliceComponent * sinPhi;
                 this.vertices.push(...[x,y,z]);
 
-                let normalX = cosTheta * cosPhi;
-                let normalY = cosTheta * sinPhi;
-                let normalZ = sinTheta;
+                const normalX = cosTheta * cosPhi;
+                const normalY = cosTheta * sinPhi;
+                const normalZ = sinTheta;
                 this.normals.push(...[normalX, normalY, normalZ]);
             }
             theta += thetaInc;
         }
 
+        let sliceOffset = 0;
         for(let slice = 0; slice < this.slices; ++slice){
-            let sliceOffset = slice * (this.loops); // TODO: Optimize? next could be reused
-            let nextSliceOffset = ((slice+1) % this.slices) * (this.loops);
+            let nextSliceOffset = ((slice+1) % this.slices) * this.loops;
 
             for(let loop = 0; loop < this.loops; ++loop){
+                let nextLoop = (loop+1) % this.loops;
+
                 this.indices.push(...[
                     sliceOffset+loop, 
-                    sliceOffset+((loop+1)%this.loops),
+                    sliceOffset+nextLoop,
                     nextSliceOffset+loop
                 ]);
                 this.indices.push(...[
                     nextSliceOffset+loop, 
-                    sliceOffset+((loop+1)%this.loops),
-                    nextSliceOffset+((loop+1)%this.loops)
+                    sliceOffset+nextLoop,
+                    nextSliceOffset+nextLoop
                 ]);
             }
+
+            sliceOffset = nextSliceOffset;
         }
 
 		this.primitiveType = this.scene.gl.TRIANGLES;
