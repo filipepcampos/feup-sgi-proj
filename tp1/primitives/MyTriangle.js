@@ -42,7 +42,7 @@ export class MyTriangle extends CGFobject {
 		this.cosA = (Math.pow(this.a, 2) - Math.pow(this.b, 2) + Math.pow(this.c, 2)) / (2 * this.a * this.c);
 		this.sinA = Math.sqrt(1 - Math.pow(this.cosA, 2));
 
-		this.texCoordsBuffer
+		this.texBuffer = [];
 
 		this.initBuffers();
 	}
@@ -84,6 +84,11 @@ export class MyTriangle extends CGFobject {
 			normal[0], normal[1], normal[2]
 		];
 		
+        this.texBuffer = [
+            0, 0,
+            this.a, 0,
+            this.c * this.cosA, this.c * this.sinA
+        ];
 		this.updateTexLength(1, 1);
 
 		this.primitiveType = this.scene.gl.TRIANGLES;
@@ -105,10 +110,10 @@ export class MyTriangle extends CGFobject {
 	 * @param {float} length_v - Vertical length of the texture
 	 */
 	updateTexLength(length_u, length_v) {
-		let coords = [
+        let coords = [
 			0, 0,
-			this.a / length_u, 0,
-			this.c * this.cosA / length_u, this.c * this.sinA / length_v
+			this.texBuffer[2] / length_u, 0,
+			this.texBuffer[4] / length_u, this.texBuffer[5] / length_v
 		];
 		this.updateTexCoords(coords);
 	}
