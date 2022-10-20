@@ -1,4 +1,12 @@
+/**
+ * Printer for the parser errors
+ */
 export class ParserErrorPrinter {
+    /**
+     * Prints the given error with the given nesting level
+     * @param {*} error - String or object with error messages
+     * @param {number} nesting_level - Level of identation
+     */
     static print(error, nesting_level=0) {
         if(Array.isArray(error)){
             for(const e of error){

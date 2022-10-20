@@ -5,7 +5,17 @@ import { FloatParser } from "./FloatParser.js";
 import { BlockParser } from "./BlockParser.js";
 import { MyMaterial } from "../models/wrappers/MyMaterial.js";
 
+/**
+ * Parser for the <material> node
+ */
 export class MaterialParser {
+    /**
+     * Parse the <material> node
+     * @param {element} node - Node that should be parsed 
+     * @param {CGFXMLreader} reader - XMLreader
+     * @param {CGFscene} scene - CGFscene
+     * @returns ParserResult containing an object with the parsed material and errors that occurred while parsing
+     */
     static parse(node, reader, scene) {
         if (node.nodeName != "material") {
             return ParserResult.fromError("unknown tag <" + node.nodeName + ">");

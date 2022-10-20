@@ -3,7 +3,17 @@ import { MyTransformation } from "../models/wrappers/MyTransformation.js";
 import { RotationParser } from "./RotationParser.js";
 import { Coordinate3DParser } from "./Coordinate3DParser.js";
 
+/**
+ * Parser for the <transformation> node
+ */
 export class TransformationParser {
+    /**
+     * Parse the <transformation> node
+     * @param {element} node - Node that should be parsed 
+     * @param {CGFXMLreader} reader - XMLreader
+     * @param {boolean} needsId - Indicates if the transformation needs to have an id
+     * @returns ParserResult containing an object with the parsed transformation and errors that occurred while parsing
+     */
     static parse(node, reader, needsId=true) {
         if(node.nodeName !== "transformation") {
             return ParserResult.fromError("unknown tag <" + node.nodeName + ">");

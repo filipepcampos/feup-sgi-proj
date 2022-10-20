@@ -7,7 +7,16 @@ import { MyView } from "../models/wrappers/MyView.js";
 
 var DEGREE_TO_RAD = Math.PI / 180;
 
+/**
+ * Parser for the <view> node
+ */
 export class ViewParser {
+    /**
+     * Parse the <view> node
+     * @param {element} node - Node that should be parsed 
+     * @param {CGFXMLreader} reader - XMLreader
+     * @returns ParserResult containing an object with the parsed view and errors that occurred while parsing
+     */
     static parse(node, reader) {
         if (node.nodeName != "perspective" && node.nodeName != "ortho") {
             return ParserResult.fromError("unknown tag <" + node.nodeName + ">");
