@@ -1,4 +1,4 @@
-import { CGFinterface, CGFapplication, dat } from '../lib/CGF.js';
+import { CGFinterface, dat } from '../lib/CGF.js';
 import { MaterialUpdater } from './rendering/MaterialUpdater.js';
 
 /**
@@ -60,11 +60,11 @@ export class MyInterface extends CGFinterface {
         if(event.code == "KeyM") {
             this.materialUpdater.update();
         }
-    };
+    }
 
     processKeyUp(event) {
         this.activeKeys[event.code]=false;
-    };
+    }
 
     isKeyPressed(keyCode) {
         return this.activeKeys[keyCode] || false;

@@ -1,7 +1,8 @@
+import { MyLight } from "./MyLight.js";
 /**
  * Model representing a spot light
  */
-export class MySpotLights extends MyLight {
+export class MySpotLight extends MyLight {
     /**
      * @param {string} id - Light id
      * @param {bool} enabled - Define if the light is enabled or not
