@@ -20,6 +20,12 @@
   - Our scene shows a small city street model, containing two buildings, a car on a road surrounded by two walkways. 
   - We include two cameras, one perspective and one orthographic camera alongside four different light sources.
   - (relative link to the scene)
+
+![Screenshot 1](images/screenshots/screenshot0.png)
+![Screenshot 2](images/screenshots/screenshot1.png)
+![Screenshot 3](images/screenshots/screenshot2.png)
+![Screenshot 4](images/screenshots/screenshot3.png)
+![Screenshot 5](images/screenshots/screenshot4.png)
 ----
 ## Issues/Problems
 
