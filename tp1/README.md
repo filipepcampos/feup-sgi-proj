@@ -29,4 +29,4 @@
 ----
 ## Issues/Problems
 
-- The LightsParser class simply acts as an wrapper to the light parsing function provided in the base code. This decision leads to a parser class with a different structure than the others, which is not ideal, but it was the most reasonable solution to integrate the provided code with our architecture.
+- The LightsParser class simply acts as an wrapper to the light parsing function provided in the base code. This decision leads to a parser class with a different structure than the others, which is not ideal, but it was the most reasonable solution to integrate the provided base code with our architecture.
