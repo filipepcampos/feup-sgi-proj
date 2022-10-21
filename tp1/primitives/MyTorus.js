@@ -59,16 +59,14 @@ export class MyTorus extends CGFobject {
                 
                 const x = sliceComponent * cosPhi;
                 const y = sliceComponent * sinPhi;
-                this.vertices.push(...[x,y,z]);
+                this.vertices.push(x,y,z);
 
                 const normalX = cosTheta * cosPhi;
                 const normalY = cosTheta * sinPhi;
                 const normalZ = sinTheta;
-                this.normals.push(...[normalX, normalY, normalZ]);
+                this.normals.push(normalX, normalY, normalZ);
 
-                this.texCoords.push(...[
-                    slice / this.slices, loop / this.loops
-                ])
+                this.texCoords.push(loop / this.loops, slice / this.slices)
             }
             theta += thetaInc;
         }
@@ -80,16 +78,16 @@ export class MyTorus extends CGFobject {
             for(let loop = 0; loop < this.loops; ++loop){
                 let nextLoop = (loop+1) % this.loops;
 
-                this.indices.push(...[
+                this.indices.push(
                     sliceOffset+loop, 
                     sliceOffset+nextLoop,
                     nextSliceOffset+loop
-                ]);
-                this.indices.push(...[
+                );
+                this.indices.push(
                     nextSliceOffset+loop, 
                     sliceOffset+nextLoop,
                     nextSliceOffset+nextLoop
-                ]);
+                );
             }
 
             sliceOffset = nextSliceOffset;

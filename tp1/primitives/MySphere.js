@@ -64,8 +64,8 @@ export class MySphere extends CGFobject {
 					// pushing two triangles using indices from this round (current, current+1)
 					// and the ones directly south (next, next+1)
 					// (i.e. one full round of slices ahead)
-					this.indices.push( current + 1, current, next);
-					this.indices.push( current + 1, next, next +1);
+					this.indices.push(current + 1, current, next);
+					this.indices.push(current + 1, next, next +1);
 				}
 
 				//--- Normals
