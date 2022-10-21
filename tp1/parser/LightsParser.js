@@ -36,8 +36,8 @@ export class LightsParser {
                 continue;
             }
             else {
-                attributeNames.push(...["location", "ambient", "diffuse", "specular"]);
-                attributeTypes.push(...["position", "color", "color", "color"]);
+                attributeNames.push(...["location", "ambient", "diffuse", "specular", "attenuation"]);
+                attributeTypes.push(...["position", "color", "color", "color", "attenuation"]);
             }
 
             // Get id of the current light.
@@ -78,15 +78,15 @@ export class LightsParser {
             for (let j = 0; j < attributeNames.length; j++) {
                 let attributeIndex = nodeNames.indexOf(attributeNames[j]);
 
-
                 if (attributeIndex != -1) {
                     if (attributeTypes[j] == "position")
-                        var aux = this.parseCoordinates4D(grandChildren[attributeIndex], reader, "light position for ID" + lightId);
-                    else
-                        var aux = this.parseColor(grandChildren[attributeIndex], reader, attributeNames[j] + " illumination for ID" + lightId);
-
+                        var aux = this.parseCoordinates4D(grandChildren[attributeIndex], reader, "light position for id=" + lightId);
+                    else if(attributeTypes[j] == "color")
+                        var aux = this.parseColor(grandChildren[attributeIndex], reader, attributeNames[j] + " illumination for id=" + lightId);
+                    else 
+                        var aux = this.parseAttenuation(grandChildren[attributeIndex], reader, attributeNames[j] + " attenuation for id=" + lightId);
                     if (!Array.isArray(aux)){
-                        errors.push("light attribute " + attributeNames[j] + " undefined for id=" + lightId);
+                        errors.push("error while parsing " + attributeNames[j] + ": " + aux);
                         hasUndefinedAttribute = true;
                         continue;
                     }
@@ -95,7 +95,7 @@ export class LightsParser {
                     global.push(aux);
                 }
                 else {
-                    errors.push("light " + attributeNames[i] + " undefined for id=" + lightId);
+                    errors.push("light " + attributeNames[j] + " undefined for id=" + lightId);
                     hasUndefinedAttribute = true;
                 }
             }
@@ -241,5 +241,51 @@ export class LightsParser {
         color.push(...[r, g, b, a]);
 
         return color;
+    }
+
+
+    /**
+     * Parse the attenuation components from a node
+     * @param {block element} node - Node to be parsed
+     * @param {CGFXMLreader} reader - XMLreader
+     * @param {message to be displayed in case of error} messageError - Message to be displayed in case of error
+     * @returns {Array} - Containing the parsed attenuation values (constant, linear, quadratic)
+     */
+     static parseAttenuation(node, reader, messageError) {
+        var attenuation = [];
+
+        // constant
+        var constant = reader.getFloat(node, 'constant');
+        if (!(constant != null && !isNaN(constant) && constant >= 0))
+            return "unable to parse constant attenuation component of the " + messageError;
+
+        // linear
+        var linear = reader.getFloat(node, 'linear');
+        if (!(linear != null && !isNaN(linear) && linear >= 0))
+            return "unable to parse linear attenuation component of the " + messageError;
+
+        // quadratic
+        var quadratic = reader.getFloat(node, 'quadratic');
+        if (!(quadratic != null && !isNaN(quadratic) && quadratic >= 0))
+            return "unable to parse quadratic attenuation component of the " + messageError;
+
+        if(constant != 1.0 && constant != 0.0) {
+            return "invalid value for constant attenuation component of the " + messageError;
+        }
+        if(linear != 1.0 && linear != 0.0) {
+            return "invalid value for linear attenuation component of the " + messageError;
+        }
+        if(quadratic != 1.0 && quadratic != 0.0) {
+            return "invalid value for quadratic attenuation component of the " + messageError;
+        }
+
+        if(constant+linear+quadratic != 1.0) {
+            return "only one attenuation component can be different from 0.0 for the " + messageError;
+        }
+        
+
+        attenuation.push(...[constant, linear, quadratic]);
+
+        return attenuation;
     }
 }
