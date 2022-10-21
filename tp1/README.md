@@ -16,7 +16,7 @@
 - Parser contains many fault tolerance mechanisms, to ensure that the application doesn't crash due to a malformed input file. Missing attributes, materials or transformations, etc... are handled gracefully by using default values.
 - Cyclic graphs are handled by removing edges that cause cycles and emitting an error.
 - Our file structure allows for contextualized and helpful warning messages.
-- Scene
+- [Scene](scenes/scene.xml)
   - Our scene shows a small city street model, containing two buildings, a car on a road surrounded by two walkways. 
   - We include two cameras, one perspective and one orthographic camera alongside four different light sources.
   - (relative link to the scene)
