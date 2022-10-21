@@ -26,7 +26,8 @@ export class MySphere extends CGFobject {
 	initBuffers() {
 		this.vertices = [];
 		this.indices = [];
-		this.normals = []
+		this.normals = [];
+		this.texCoords = [];
 
 		var phi = 0;
 		var phiInc = Math.PI / this.stacks;
@@ -73,6 +74,8 @@ export class MySphere extends CGFobject {
 				// in a sphere of radius equal to one, the vector length is one.
 				// therefore, the value of the normal is equal to the position vector
 				this.normals.push(x, y, z);
+
+				this.texCoords.push(slice/this.slices, stack/this.stacks);
 			}
 			phi += phiInc;
 		}

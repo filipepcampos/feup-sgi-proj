@@ -28,6 +28,7 @@ export class MyTorus extends CGFobject {
 		this.vertices = [];
 		this.indices = [];
 		this.normals = [];
+        this.texCoords = [];
 
         let theta = 0;
         let thetaInc = 2*Math.PI / this.slices;
@@ -64,6 +65,10 @@ export class MyTorus extends CGFobject {
                 const normalY = cosTheta * sinPhi;
                 const normalZ = sinTheta;
                 this.normals.push(...[normalX, normalY, normalZ]);
+
+                this.texCoords.push(...[
+                    slice / this.slices, loop / this.loops
+                ])
             }
             theta += thetaInc;
         }

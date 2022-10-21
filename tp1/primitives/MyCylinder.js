@@ -29,6 +29,7 @@ export class MyCylinder extends CGFobject {
         this.vertices = [];
         this.indices = [];
         this.normals = [];
+        this.texCoords = [];
 
         const alphaAng = 2 * Math.PI / this.slices;
         const alphaHeight = this.height / this.stacks;
@@ -50,6 +51,7 @@ export class MyCylinder extends CGFobject {
                 // Push vertex normal
                 this.normals.push(x, y, normalSlope);
 
+                this.texCoords.push(slice / this.slices, stack / this.stacks);
                 ang += alphaAng;
             }
             radius += alphaRadius;
