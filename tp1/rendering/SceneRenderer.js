@@ -65,6 +65,7 @@ export class SceneRenderer {
             texture.getCGFTexture().bind(0);
         }
 
+        //material.getCGFAppearance().apply();
         scene.pushMatrix();
         scene.multMatrix(matrix);
 
@@ -76,5 +77,9 @@ export class SceneRenderer {
             texture.getCGFTexture().unbind(0);
         }
         scene.popMatrix();
+        
+        if(material != parentMaterial && parentMaterial != null) {
+            parentMaterial.getCGFAppearance().apply();
+        }
     }
 }
