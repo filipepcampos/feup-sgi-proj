@@ -56,6 +56,8 @@
         <texture id="tex_brick" file="scenes/images/brick.jpg" />
         <texture id="tex_concrete" file="scenes/images/concrete.jpg" />
         <texture id="tex_flag" file="scenes/images/portugal.png"/>
+        <texture id="tex_metal" file="scenes/images/metal.jpg" />
+        <texture id="tex_donut" file="scenes/images/donut.jpg" />
     </textures>
 
     <materials>
@@ -129,8 +131,7 @@
             <translate x="-10" y="15" z="5"/>
             <scale x="10" y="30" z="10"/>
         </transformation>
-        <transformation id="tr_street_building1">
-            <translate x="-10" y="7.6" z="-7"/>
+        <transformation id="tr_street_building1_body">
             <scale x="10" y="15" z="8"/>
         </transformation>
         <transformation id="tr_street_ground_floor">
@@ -281,6 +282,9 @@
         <primitive id="torus">
             <torus inner="0.05" outer="0.5" slices="8" loops="64"/>
         </primitive>
+        <primitive id="donut">
+            <torus inner="0.4" outer="1.0" slices="16" loops="64"/>
+        </primitive>
         <primitive id="car_lateral_window_primitive1">
             <triangle x1="-0.1" y1="0" z1="0" x2="2.225" y2="0" z2="0" x3="0.25537" y3="1.09371" z3="0"/>
         </primitive>
@@ -373,17 +377,46 @@
                 <primitiveref id="torus"/>
             </children>
         </component>
-
+        
         <component id="street_building1">
             <transformation>
-                <transformationref id="tr_street_building1" />
+                <translate x="-10" y="7.6" z="-7"/>
             </transformation>
             <materials>
                 <material id="inherit" />
             </materials>
             <texture id="tex_brick" length_s="1.0" length_t="1.8"/>
             <children>
+                <componentref id="street_building1_body"/>
+                <componentref id="street_building1_donut"/>
+            </children>
+        </component>
+
+        <component id="street_building1_body">
+            <transformation>
+                <transformationref id="tr_street_building1_body" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
                 <componentref id="p_cube_without_base"/>
+            </children>
+        </component>
+
+        <component id="street_building1_donut">
+            <transformation>
+                <translate x="0" y="11.5" z="0"/>
+                <scale x="3" y="3" z="3"/>
+                <rotate axis="y" angle="90"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="tex_donut" length_t="1.0" length_s="1.0"/>
+            <children>
+                <primitiveref id="donut"/>
             </children>
         </component>
 
@@ -544,7 +577,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="inherit"/>
+            <texture id="tex_metal" length_t="1.0" length_s="1.0"/>
             <children>
                 <primitiveref id="cylinder"/>
             </children>
