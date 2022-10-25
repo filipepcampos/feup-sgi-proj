@@ -1,5 +1,5 @@
 <sxs>
-    <scene root="root" axis_length="0.001"/>
+    <scene root="test_patch_component" axis_length="0.001"/>
     <views default="default_camera">
         <perspective id="default_camera" near="0.1" far="500" angle="45">
             <from x="15" y="15" z="25" />
@@ -297,6 +297,14 @@
         </primitive>
         <primitive id="flag_triangle1">
             <triangle x1="0" y1="0" z1="0" x3="1.2" y3="0.0" z3="0" x2="0" y2="0.5" z2="0"/>
+        </primitive>
+        <primitive id="test_patch">
+            <patch degree_u="1" degree_v="1" parts_u="1" parts_v="1">
+                <controlpoint x="-0.5" y="-0.5" z="0.0"/>
+                <controlpoint x="0.5" y="-0.5" z="0.0"/>
+                <controlpoint x="-0.5" y="0.5" z="0.0"/>
+                <controlpoint x="0.5" y="0.5" z="0.0"/>
+            </patch>
         </primitive>
     </primitives>
 

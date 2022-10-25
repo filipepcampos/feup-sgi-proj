@@ -1,12 +1,14 @@
 import { ParserResult } from "./ParserResult.js";
 import { FloatParser } from "./FloatParser.js";
 import { IntegerParser } from "./IntegerParser.js";
+import { Coordinate3DParser } from "./Coordinate3DParser.js";
 import { MyRectangle } from "../primitives/MyRectangle.js";
 import { MyTriangle } from "../primitives/MyTriangle.js";
 import { MyCylinder } from "../primitives/MyCylinder.js";
 import { MySphere } from "../primitives/MySphere.js";
 import { MyTorus } from "../primitives/MyTorus.js";
 import {PrimitiveNode} from "../models/graph/PrimitiveNode.js";
+import { MyPatch } from "../primitives/MyPatch.js";
 
 /**
  * Parser for the <primitive> node
@@ -43,6 +45,8 @@ export class PrimitiveParser {
                 return PrimitiveParser.parseSphere(childNode, reader, scene, id);
             } else if (primitiveType === 'torus') {
                 return PrimitiveParser.parseTorus(childNode, reader, scene, id);
+            } else if (primitiveType === 'patch') {
+                return PrimitiveParser.parsePatch(childNode, reader, scene, id);
             }
         }
         return ParserResult.fromError("There must be exactly 1 primitive type (rectangle, triangle, cylinder, sphere or torus)");
@@ -206,5 +210,62 @@ export class PrimitiveParser {
             [inner, outer, slices, loops],
             "parsing <torus> with id=" + id
         );
+    }
+
+    /**
+     * Parse the patch primitive
+     * @param {element} node - Node that should be parsed 
+     * @param {CGFXMLreader} reader - XMLreader
+     * @param {CGFscene} scene - CGFscene
+     * @param {string} id - Id of the primitive
+     * @returns ParserResult containing an object with the parsed primitive and errors that occurred while parsing
+     */
+    static parsePatch(node, reader, scene, id) {
+        console.log("PARSING PATCH");
+        let degree_uResult = IntegerParser.parse(node, reader, 'degree_u', 1); // TODO: Check if max is 3 or not
+        let degree_vResult = IntegerParser.parse(node, reader, 'degree_v', 1);
+        let parts_u = IntegerParser.parse(node, reader, 'parts_u', 1);
+        let parts_v = IntegerParser.parse(node, reader, 'parts_v', 1);
+        // TODO: Collect these results
+        
+        const degree_u = degree_uResult.getValueOrDefault(1);
+        const degree_v = degree_vResult.getValueOrDefault(1);
+        
+        const nControlVertices = (degree_u + 1) * (degree_v + 1);
+
+        if(nControlVertices != node.children.length) {
+            return ParserResult.fromError("Invalid number of control vertices for patch with id=" + id);
+        }
+
+        let results = [];
+        let points = [];
+        let sublist = [];
+        for(const child of node.children) {
+            if(child.nodeName != "controlpoint") {
+                return ParserResult.fromError("Invalid child node for patch with id=" + id);
+            }
+            const coordinatesResult = Coordinate3DParser.parse(child, reader);
+            const coordinates = coordinatesResult.getValue().getArray();
+            coordinates.push(1.0); // TODO: WTF IS THIS?
+            sublist.push(coordinates);
+            console.log(sublist, points);
+            if (sublist.length == (degree_v + 1)) {
+                points.push(sublist); 
+                sublist = [];
+            }
+            results.push(coordinatesResult);
+        }
+
+        console.log(points);
+
+        let patch = new MyPatch(
+            scene, 
+            degree_u, 
+            degree_v,
+            points,
+            parts_u.getValueOrDefault(1), // TODO: CHECK DEFAULT
+            parts_v.getValueOrDefault(1)  // TODO: CHECK DEFAULT
+        );
+        return ParserResult.collect(new PrimitiveNode(id, patch), results, "parsing <patch> with id=" + id);
     }
 }
