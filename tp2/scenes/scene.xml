@@ -1,5 +1,5 @@
 <sxs>
-    <scene root="root" axis_length="5"/>
+    <scene root="barrel" axis_length="5"/>
     <views default="default_camera">
         <perspective id="default_camera" near="0.1" far="500" angle="45">
             <from x="15" y="15" z="25" />
@@ -305,6 +305,44 @@
                 <controlpoint x="0.5" y="0.5" z="0.0"/>
                 <controlpoint x="-0.5" y="-0.5" z="0.0"/>
                 <controlpoint x="0.5" y="-0.5" z="0.0"/>
+            </patch>
+        </primitive>
+        <primitive id="tent_patch">
+            <patch degree_u="1" degree_v="2" parts_u="32" parts_v="32">
+                <controlpoint x="-1" y="0" z="-1"/>
+                <controlpoint x="0" y="2" z="-1"/>
+                <controlpoint x="1" y="0" z="-1"/>
+                <controlpoint x="-1" y="0" z="1"/>
+                <controlpoint x="0" y="2" z="1"/>
+                <controlpoint x="1" y="0" z="1"/>
+            </patch>
+        </primitive>
+        <primitive id="semibarrel_patch">
+            <patch degree_u="2" degree_v="3" parts_u="32" parts_v="32">
+                <controlpoint x="3" y="0" z="3"/>
+                <controlpoint x="3" y="4" z="3"/>
+                <controlpoint x="-3" y="4" z="3"/>
+                <controlpoint x="-3" y="0" z="3"/>
+                <controlpoint x="5.25" y="0" z="0"/>
+                <controlpoint x="5.25" y="7" z="0"/>
+                <controlpoint x="-5.25" y="7" z="0"/>
+                <controlpoint x="-5.25" y="0" z="0"/>
+                <controlpoint x="3" y="0" z="-3"/>
+                <controlpoint x="3" y="4" z="-3"/>
+                <controlpoint x="-3" y="4" z="-3"/>
+                <controlpoint x="-3" y="0" z="-3"/>
+            </patch>
+        </primitive>
+        <primitive id="semibarrel_top_patch">
+            <patch degree_u="1" degree_v="3" parts_u="1" parts_v="32">
+                <controlpoint x="3" y="0" z="-3"/>
+                <controlpoint x="3" y="4" z="-3"/>
+                <controlpoint x="-3" y="4" z="-3"/>
+                <controlpoint x="-3" y="0" z="-3"/>
+                <controlpoint x="3" y="0.00001" z="-3"/>
+                <controlpoint x="3" y="-4" z="-3"/>
+                <controlpoint x="-3" y="-4" z="-3"/>
+                <controlpoint x="-3" y="0.00001" z="-3"/>
             </patch>
         </primitive>
     </primitives>
@@ -1081,6 +1119,60 @@
             <texture id="inherit"/>
             <children>
                 <primitiveref id="cone"/>
+            </children>
+        </component>
+
+        <component id="tent">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="tent_patch"/>
+            </children>
+        </component>
+
+        <component id="barrel">
+            <transformation>
+                <scale x="0.5" y="0.5" z="0.8"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="flipped_semibarrel"/>
+                <componentref id="flipped_semibarrel_top"/>
+                <primitiveref id="semibarrel_patch"/>
+                <primitiveref id="semibarrel_top_patch"/>
+            </children>
+        </component>
+
+        <component id="flipped_semibarrel">
+            <transformation>
+                <rotate axis="z" angle="180"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="semibarrel_patch"/>
+            </children>
+        </component>
+
+        <component id="flipped_semibarrel_top">
+            <transformation>
+                <rotate axis="y" angle="180"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="semibarrel_top_patch"/>
             </children>
         </component>
 
