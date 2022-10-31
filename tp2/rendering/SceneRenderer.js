@@ -76,6 +76,9 @@ export class SceneRenderer {
         if(texture !== "none") {
             texture.getCGFTexture().unbind(0);
         }
+        if(parentTexture !== null) {
+            parentTexture.getCGFTexture().bind(0);
+        }
         scene.popMatrix();
         
         if(material != parentMaterial && parentMaterial != null) {

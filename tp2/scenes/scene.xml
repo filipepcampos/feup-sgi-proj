@@ -1,5 +1,5 @@
 <sxs>
-    <scene root="barrel" axis_length="5"/>
+    <scene root="metro" axis_length="5"/>
     <views default="default_camera">
         <perspective id="default_camera" near="0.1" far="500" angle="45">
             <from x="15" y="15" z="25" />
@@ -17,7 +17,7 @@
     </ambient>
 
     <lights>
-        <omni id="global_light" enabled="0">
+        <omni id="global_light" enabled="1">
             <location x="9.8" y="11.9" z="10" w="1.0" />
             <ambient r="0.4" g="0.4" b="0.4" a="1.0" />
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
@@ -59,6 +59,9 @@
         <texture id="tex_metal" file="scenes/images/metal.jpg" />
         <texture id="tex_donut" file="scenes/images/donut.jpg" />
         <texture id="tex_football" file="scenes/images/football.jpg" />
+        <texture id="tex_metro1" file="scenes/images/metro1.jpg"/>
+        <texture id="tex_metro2" file="scenes/images/metro2.png"/>
+        <texture id="tex_metro3" file="scenes/images/metro3.png"/>
     </textures>
 
     <materials>
@@ -343,6 +346,69 @@
                 <controlpoint x="3" y="-4" z="-3"/>
                 <controlpoint x="-3" y="-4" z="-3"/>
                 <controlpoint x="-3" y="0.00001" z="-3"/>
+            </patch>
+        </primitive>
+        <primitive id="metro_patch">
+            <patch degree_u="3" degree_v="3" parts_u="32" parts_v="32">
+                <controlpoint x="-5.0" y="0.0" z="5.0"/>
+                <controlpoint x="-5.0" y="4.0" z="4.0"/>
+                <controlpoint x="-5.0" y="11.0" z="2.0"/>
+                <controlpoint x="-5.0" y="11.0" z="0.0"/>
+
+                <controlpoint x="-5.0" y="0.0" z="6.0"/>
+                <controlpoint x="-5.0" y="5.0" z="4.5"/>
+                <controlpoint x="-5.0" y="13.5" z="2.0"/>
+                <controlpoint x="-5.0" y="13.5" z="0.0"/>
+
+                <controlpoint x="5.0" y="0.0" z="6.0"/>
+                <controlpoint x="5.0" y="5.0" z="4.5"/>
+                <controlpoint x="5.0" y="13.5" z="2.0"/>
+                <controlpoint x="5.0" y="13.5" z="0.0"/>
+
+                <controlpoint x="5.0" y="0.0" z="5.0"/>
+                <controlpoint x="5.0" y="4.0" z="4.0"/>
+                <controlpoint x="5.0" y="11.0" z="2.0"/>
+                <controlpoint x="5.0" y="11.0" z="0.0"/>
+            </patch>
+        </primitive>
+        <primitive id="metro_top_patch">
+            <patch degree_u="1" degree_v="3" parts_u="32" parts_v="32">
+                <controlpoint x="-5" y="11" z="-30"/>
+                <controlpoint x="-5" y="13.5" z="-30"/>
+                <controlpoint x="5" y="13.5" z="-30"/>
+                <controlpoint x="5" y="11" z="-30"/>
+
+                <controlpoint x="-5" y="11" z="0"/>
+                <controlpoint x="-5" y="13.5" z="0"/>
+                <controlpoint x="5" y="13.5" z="0"/>
+                <controlpoint x="5" y="11" z="0"/>
+            </patch>
+        </primitive>
+        <primitive id="metro_frontside_patch_left">
+            <patch degree_u="1" degree_v="3" parts_u="32" parts_v="32">
+                <controlpoint x="5.0" y="0.0" z="5.0"/>
+                <controlpoint x="5.0" y="4.0" z="4.0"/>
+                <controlpoint x="5.0" y="11.0" z="2.0"/>
+                <controlpoint x="5.0" y="11.0" z="0.0"/>
+
+                <controlpoint x="5.0" y="0.0" z="5.0"/>
+                <controlpoint x="5.0" y="0.0" z="4.0"/>
+                <controlpoint x="5.0" y="0.0" z="1.0"/>
+                <controlpoint x="5.0" y="0.0" z="0.0"/>
+            </patch>
+        </primitive>
+
+        <primitive id="metro_frontside_patch_right">
+            <patch degree_u="1" degree_v="3" parts_u="32" parts_v="32">
+                <controlpoint x="-5.0" y="0.0" z="5.0"/>
+                <controlpoint x="-5.0" y="0.0" z="4.0"/>
+                <controlpoint x="-5.0" y="0.0" z="1.0"/>
+                <controlpoint x="-5.0" y="0.0" z="0.0"/>
+
+                <controlpoint x="-5.0" y="0.0" z="5.0"/>
+                <controlpoint x="-5.0" y="4.0" z="4.0"/>
+                <controlpoint x="-5.0" y="11.0" z="2.0"/>
+                <controlpoint x="-5.0" y="11.0" z="0.0"/>
             </patch>
         </primitive>
     </primitives>
@@ -1147,6 +1213,75 @@
                 <componentref id="flipped_semibarrel_top"/>
                 <primitiveref id="semibarrel_patch"/>
                 <primitiveref id="semibarrel_top_patch"/>
+            </children>
+        </component>
+
+        <component id="metro">
+            <transformation>
+                <scale x="0.5" y="0.5" z="0.8"/>
+            </transformation>
+            <materials>
+                <material id="white"/>
+            </materials>
+            <texture id="tex_metro1" length_t="1" length_s="1"/>
+            <children>
+                <primitiveref id="metro_patch"/>
+                <componentref id="metro_side"/>
+                <componentref id="metro_top"/>
+                <componentref id="metro_frontside"/>
+                <componentref id="metro_frontside_flipped"/>
+            </children>
+        </component>
+
+        <component id="metro_top">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="dark_gray"/>
+            </materials>
+            <children>
+                <primitiveref id="metro_top_patch"/>
+            </children>
+        </component>
+
+        <component id="metro_frontside">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="tex_metro3" length_t="1.0" length_s="1.0"/>
+            <children>
+                <primitiveref id="metro_frontside_patch_right"/>
+            </children>
+        </component>
+
+        <component id="metro_frontside_flipped">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="tex_metro3" length_t="1.0" length_s="1.0"/>
+            <children>
+                <primitiveref id="metro_frontside_patch_left"/>
+            </children>
+        </component>
+
+
+
+        <component id="metro_side">
+            <transformation>
+                <translate x="4.95" y="0" z="0.8"/>
+                <scale x="1.0" y="11" z="15"/>
+                <rotate axis="y" angle="90"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="tex_metro2" length_s="1.0" length_t="1.0"/>
+            <children>
+                <primitiveref id="rectangle"/>
             </children>
         </component>
 
