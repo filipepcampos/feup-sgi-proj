@@ -62,6 +62,7 @@
         <texture id="tex_metro1" file="scenes/images/metro1.jpg"/>
         <texture id="tex_metro2" file="scenes/images/metro2.png"/>
         <texture id="tex_metro3" file="scenes/images/metro3.png"/>
+        <texture id="tex_metro4" file="scenes/images/metro4.png"/>
     </textures>
 
     <materials>
@@ -1250,7 +1251,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="tex_metro3" length_t="1.0" length_s="1.0"/>
+            <texture id="tex_metro4" length_t="1.0" length_s="1.0"/>
             <children>
                 <primitiveref id="metro_frontside_patch_right"/>
             </children>
