@@ -1,5 +1,5 @@
 <sxs>
-    <scene root="metro" axis_length="5"/>
+    <scene root="root" axis_length="5"/>
     <views default="default_camera">
         <perspective id="default_camera" near="0.1" far="500" angle="45">
             <from x="15" y="15" z="25" />
@@ -503,7 +503,7 @@
             <texture id="tex_brick" length_s="1.0" length_t="1.8"/>
             <children>
                 <componentref id="street_building1_body"/>
-                <componentref id="street_building1_donut"/>
+                <!-- <componentref id="street_building1_donut"/> -->
             </children>
         </component>
 
@@ -549,6 +549,9 @@
                 <componentref id="street_ground_walkway_left"/>
                 <componentref id="street_ground_walkway_right"/>
                 <componentref id="street_ground_football"/>
+                <componentref id="metro"/>
+                <componentref id="barrel"/>
+                <componentref id="tent"/>
             </children>
         </component>
 
@@ -723,7 +726,7 @@
                 <material id="green" />
                 <material id="red" />
             </materials>
-            <texture id="inherit"/>
+            <texture id="none"/>
             <children>
                 <componentref id="car_front"/>
                 <componentref id="car_top" />
@@ -1191,6 +1194,7 @@
 
         <component id="tent">
             <transformation>
+                <translate x="-8" y="0.5" z="12"/>
             </transformation>
             <materials>
                 <material id="inherit"/>
@@ -1203,7 +1207,9 @@
 
         <component id="barrel">
             <transformation>
-                <scale x="0.5" y="0.5" z="0.8"/>
+                <translate x="-6" y="1" z="12"/>
+                <rotate axis="x" angle="90"/>
+                <scale x="0.2" y="0.2" z="0.3"/>
             </transformation>
             <materials>
                 <material id="inherit"/>
@@ -1219,6 +1225,7 @@
 
         <component id="metro">
             <transformation>
+                <translate x="15" y="0" z="0"/>
                 <scale x="0.5" y="0.5" z="0.8"/>
             </transformation>
             <materials>
@@ -1227,8 +1234,26 @@
             <texture id="tex_metro1" length_t="1" length_s="1"/>
             <children>
                 <primitiveref id="metro_patch"/>
+                <componentref id="metro_back"/>
                 <componentref id="metro_side"/>
+                <componentref id="metro_side_flipped"/>
                 <componentref id="metro_top"/>
+                <componentref id="metro_frontside"/>
+                <componentref id="metro_frontside_flipped"/>
+            </children>
+        </component>
+
+        <component id="metro_back">
+            <transformation>
+                <translate x="0" y="0" z="-28.9"/>
+                <rotate axis="y" angle="180"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id="metro_patch"/>
                 <componentref id="metro_frontside"/>
                 <componentref id="metro_frontside_flipped"/>
             </children>
@@ -1236,10 +1261,12 @@
 
         <component id="metro_top">
             <transformation>
+                <scale x="1" y="1" z="0.965"/>
             </transformation>
             <materials>
                 <material id="dark_gray"/>
             </materials>
+            <texture id="inherit"/>
             <children>
                 <primitiveref id="metro_top_patch"/>
             </children>
@@ -1269,9 +1296,47 @@
             </children>
         </component>
 
-
+        <component id="metro_side_flipped">
+            <transformation>
+                <translate x="0" y="0" z="-28.9"/>
+                <rotate axis="y" angle="180"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="metro_side"/>
+            </children>
+        </component>
 
         <component id="metro_side">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="tex_metro2" length_s="1.0" length_t="1.0"/>
+            <children>
+                <componentref id="metro_side_rectangle0"/>
+                <componentref id="metro_side_rectangle1"/>
+            </children>
+        </component>
+
+        <component id="metro_side_rectangle1">
+            <transformation>
+                <translate x="0" y="0" z="-14.8"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="metro_side_rectangle0"/>
+            </children>
+        </component>
+
+        <component id="metro_side_rectangle0">
             <transformation>
                 <translate x="4.95" y="0" z="0.8"/>
                 <scale x="1.0" y="11" z="15"/>
@@ -1280,7 +1345,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="tex_metro2" length_s="1.0" length_t="1.0"/>
+            <texture id="inherit"/>
             <children>
                 <primitiveref id="rectangle"/>
             </children>
