@@ -43,6 +43,17 @@ export class MyInterface extends CGFinterface {
                     this.scene.setLight(i, value);
             });
         }
+        
+        folder = this.gui.addFolder('Components');
+        for(let [id, component] of Object.entries(this.scene.sceneData.components)) {
+            if (component.highlight != null){
+                folder.add(component.highlight, 'active')
+                    .name(id)
+                    .onChange((value) => {
+                        component.highlight.setActive(value);
+                    })
+            }
+        }
     }
 
     /**
