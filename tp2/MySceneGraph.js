@@ -1,4 +1,4 @@
-import { CGFXMLreader } from '../lib/CGF.js';
+import { CGFXMLreader, CGFshader } from '../lib/CGF.js';
 import {SceneData} from "./models/SceneData.js";
 import {ComponentsLinker} from "./parser/component/ComponentsLinker.js";
 import {ParserErrorPrinter} from "./parser/ParserErrorPrinter.js";
@@ -42,6 +42,8 @@ export class MySceneGraph {
         this.scene = scene;
         this.sceneData = new SceneData(scene);
         scene.sceneData = this.sceneData;
+
+        this.sceneData.highlightShader = new CGFshader(this.scene.gl, "shaders/texture1.vert", "shaders/sepia.frag")
 
         this.axisCoords = [];
         this.axisCoords['x'] = [1, 0, 0];

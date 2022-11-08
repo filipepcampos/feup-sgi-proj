@@ -18,9 +18,9 @@ export class SceneRenderer {
      * @param {MyMaterial} parentMaterial - Reference to the parent's material
      * @param {MyTexture} parentTexture - Reference to the parent's texture
      */
-    display(node=this.sceneData.components[this.sceneData.root], parentMaterial=null, parentTexture=null) {
+    display(node=this.sceneData.components[this.sceneData.root], parentMaterial=null, parentTexture=null, highlight=false) {
         if(node instanceof PrimitiveNode){
-            this.displayPrimitive(node, parentTexture);
+            this.displayPrimitive(node, parentTexture, highlight);
         } else {
             this.displayComponent(node, parentMaterial, parentTexture);
         }
@@ -31,12 +31,18 @@ export class SceneRenderer {
      * @param {PrimitiveNode} node - Reference to the PrimitiveNode
      * @param {MyTexture} texture - Reference to the parent's texture
      */
-    displayPrimitive(node, texture) {
+    displayPrimitive(node, texture, highlight) {
         const obj = node.getObject();
         if(texture !== "inherit" && texture !== "none"){
             obj.updateTexLength(texture.getLength_s(), texture.getLength_t());
         }
+        if(highlight) {
+            this.sceneData.scene.setActiveShader(this.sceneData.highlightShader);
+        }
         node.getObject().display();
+        if (highlight) {
+            this.sceneData.scene.setActiveShader(this.sceneData.scene.defaultShader);
+        }
     }
 
     /**
@@ -69,8 +75,11 @@ export class SceneRenderer {
         scene.pushMatrix();
         scene.multMatrix(matrix);
 
+        let activateHighlight = node.highlight != null && node.highlight.active;
+
+        // TODO: SEPARETE FOR PRIMITIVES AND COMPONENTS
         for(const child of node.getChildren()){
-            this.display(child, material, texture);
+            this.display(child, material, texture, activateHighlight);
         }
 
         if(texture !== "none") {
