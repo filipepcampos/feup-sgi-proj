@@ -221,7 +221,6 @@ export class PrimitiveParser {
      * @returns ParserResult containing an object with the parsed primitive and errors that occurred while parsing
      */
     static parsePatch(node, reader, scene, id) {
-        console.log("PARSING PATCH");
         let degree_uResult = IntegerParser.parse(node, reader, 'degree_u', 1); // TODO: Check if max is 3 or not
         let degree_vResult = IntegerParser.parse(node, reader, 'degree_v', 1);
         let parts_u = IntegerParser.parse(node, reader, 'parts_u', 1);
@@ -240,23 +239,22 @@ export class PrimitiveParser {
         let results = [];
         let points = [];
         let sublist = [];
+        const weight = 1.0;
         for(const child of node.children) {
             if(child.nodeName != "controlpoint") {
                 return ParserResult.fromError("Invalid child node for patch with id=" + id);
             }
             const coordinatesResult = Coordinate3DParser.parse(child, reader);
             const coordinates = coordinatesResult.getValue().getArray();
-            coordinates.push(1.0); // TODO: WTF IS THIS?
+            coordinates.push(weight);
             sublist.push(coordinates);
-            console.log(sublist, points);
+            
             if (sublist.length == (degree_v + 1)) {
                 points.push(sublist); 
                 sublist = [];
             }
             results.push(coordinatesResult);
         }
-
-        console.log(points);
 
         let patch = new MyPatch(
             scene, 

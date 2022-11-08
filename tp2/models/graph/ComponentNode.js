@@ -9,8 +9,9 @@
     * @param {MyTexture|string} texture - Texture used, can be "inherit", "none" or a MyTexture object
     * @param {Array<string>} childComponentsId - Ids of all the children components
     * @param {Array<string>} childPrimitivesId - Ids of all the children primitives
+    * @param {Highlight} highlight - Highlight object
     */
-    constructor(id, transformation, materials, texture, childComponentsId, childPrimitivesId) {
+    constructor(id, transformation, materials, texture, childComponentsId, childPrimitivesId, highlight=null) {
         this.id = id;
         this.transformation = transformation;
         this.materials = materials;
@@ -18,6 +19,7 @@
         this.texture = texture;
         this.childComponentsId = childComponentsId;
         this.childPrimitivesId = childPrimitivesId;
+        this.highlight = highlight;
     }
 
     /**

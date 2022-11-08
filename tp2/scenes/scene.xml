@@ -1215,6 +1215,7 @@
                 <material id="inherit"/>
             </materials>
             <texture id="none"/>
+            <highlighted r="0.0" g="1.0" b="0.5" scale_h="1.2"/>
             <children>
                 <componentref id="flipped_semibarrel"/>
                 <componentref id="flipped_semibarrel_top"/>
