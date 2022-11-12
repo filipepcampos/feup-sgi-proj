@@ -18,11 +18,11 @@ export class SceneRenderer {
      * @param {MyMaterial} parentMaterial - Reference to the parent's material
      * @param {MyTexture} parentTexture - Reference to the parent's texture
      */
-    display(node=this.sceneData.components[this.sceneData.root], parentMaterial=null, parentTexture=null) {
+    display(timeFactor, node=this.sceneData.components[this.sceneData.root], parentMaterial=null, parentTexture=null, highlight=null) {
         if(node instanceof PrimitiveNode){
-            this.displayPrimitive(node, parentTexture);
+            this.displayPrimitive(node, parentTexture, highlight, timeFactor);
         } else {
-            this.displayComponent(node, parentMaterial, parentTexture);
+            this.displayComponent(node, parentMaterial, parentTexture, timeFactor);
         }
     }
 
@@ -31,12 +31,20 @@ export class SceneRenderer {
      * @param {PrimitiveNode} node - Reference to the PrimitiveNode
      * @param {MyTexture} texture - Reference to the parent's texture
      */
-    displayPrimitive(node, texture) {
+    displayPrimitive(node, texture, highlight, timeFactor) {
         const obj = node.getObject();
         if(texture !== "inherit" && texture !== "none"){
             obj.updateTexLength(texture.getLength_s(), texture.getLength_t());
         }
+        if(highlight != null && highlight.active) {
+            this.sceneData.scene.setActiveShader(this.sceneData.highlightShader);
+            console.log(highlight.scale_h);
+            this.sceneData.highlightShader.setUniformsValues({'scale': highlight.scale_h, 'timeFactor': timeFactor, 'targetColor': highlight.color.getArray()});
+        }
         node.getObject().display();
+        if (highlight) {
+            this.sceneData.scene.setActiveShader(this.sceneData.scene.defaultShader);
+        }
     }
 
     /**
@@ -45,7 +53,7 @@ export class SceneRenderer {
      * @param {MyMaterial} parentMaterial - Reference to the parent's material
      * @param {MyTexture} parentTexture - Reference to the parent's texture
      */
-    displayComponent(node, parentMaterial, parentTexture) {
+    displayComponent(node, parentMaterial, parentTexture, timeFactor) {
         const matrix = node.getTransformation() != null ? node.getTransformation() : mat4.create();
         const scene = this.sceneData.scene;
 
@@ -69,8 +77,9 @@ export class SceneRenderer {
         scene.pushMatrix();
         scene.multMatrix(matrix);
 
+        // TODO: SEPARETE FOR PRIMITIVES AND COMPONENTS
         for(const child of node.getChildren()){
-            this.display(child, material, texture);
+            this.display(timeFactor, child, material, texture, node.highlight);
         }
 
         if(texture !== "none") {

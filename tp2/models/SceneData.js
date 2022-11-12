@@ -24,5 +24,7 @@ export class SceneData {
         this.transformations = {};
         this.primitives = {};
         this.components = {}
+
+        this.highlightShader = null;
     }
 }

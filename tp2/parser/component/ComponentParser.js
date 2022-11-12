@@ -2,8 +2,10 @@ import { ParserResult } from "../ParserResult.js";
 import { ComponentNode } from "../../models/graph/ComponentNode.js";
 import {ComponentTransformationParser} from "./ComponentTransformationParser.js";
 import {ComponentChildrenParser} from "./ComponentChildrenParser.js";
+import {ColorParser} from "../ColorParser.js";
 import {MyTexture} from "../../models/wrappers/MyTexture.js";
 import { MyTransformation } from "../../models/wrappers/MyTransformation.js";
+import { Highlight } from "../../models/Highlight.js";
 import {FloatParser} from "../FloatParser.js";
 
 /**
@@ -36,6 +38,7 @@ export class ComponentParser {
         const materialsIndex = nodeNames.indexOf("materials");
         const textureIndex = nodeNames.indexOf("texture");
         const childrenIndex = nodeNames.indexOf("children");
+        const highlightedIndex = nodeNames.indexOf("highlighted");
 
         let errors = [];
         let results = [];
@@ -76,6 +79,12 @@ export class ComponentParser {
             var texture = "none";
         }
 
+        if (highlightedIndex != -1) {
+            var highlightedResult = this.parseHighlight(children[highlightedIndex], reader);
+            results.push(highlightedResult);
+            var highlighted = highlightedResult.getValue();
+        }
+
         return ParserResult.collect(
             new ComponentNode(
                 id,
@@ -84,6 +93,7 @@ export class ComponentParser {
                 texture,
                 componentChildren["components"],
                 componentChildren["primitives"],
+                highlighted
             ),
             results,
             "parsing <component> with id=" + id,
@@ -167,5 +177,16 @@ export class ComponentParser {
         }
 
         return new ParserResult(materials, errors);
+    }
+
+    static parseHighlight(node, reader, sceneData) {
+        let colorResult = ColorParser.parse(node, reader, 1.0);
+        let scaleResult = FloatParser.parse(node, reader, 'scale_h');
+
+        return ParserResult.collect(
+            new Highlight(colorResult.getValue(), scaleResult.getValue()), 
+            [colorResult, scaleResult], 
+            "parsing <highlight>"
+        );
     }
 }
