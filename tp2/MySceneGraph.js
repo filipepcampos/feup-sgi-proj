@@ -43,7 +43,7 @@ export class MySceneGraph {
         this.sceneData = new SceneData(scene);
         scene.sceneData = this.sceneData;
 
-        this.sceneData.highlightShader = new CGFshader(this.scene.gl, "shaders/highlight.vert", "shaders/highlight.frag")
+        this.sceneData.highlightShader = new CGFshader(this.scene.gl, "shaders/highlight.vert", "shaders/highlight.frag");
 
         this.axisCoords = [];
         this.axisCoords['x'] = [1, 0, 0];

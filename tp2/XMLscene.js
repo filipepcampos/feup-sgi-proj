@@ -37,6 +37,9 @@ export class XMLscene extends CGFscene {
 
         this.axis = new CGFaxis(this);
         this.setUpdatePeriod(100);
+
+        this.highlightSpeed = 500;
+        this.timeFactor = 0;
     }
 
     /**
@@ -152,6 +155,10 @@ export class XMLscene extends CGFscene {
         this.sceneInited = true;
     }
 
+    update(currTime) {
+        this.timeFactor = (currTime / this.highlightSpeed) % 5000 * Math.PI;
+    }
+
     /**
      * Displays the scene.
      */
@@ -181,7 +188,7 @@ export class XMLscene extends CGFscene {
             this.setDefaultAppearance();
 
             // Displays the scene.
-            this.renderer.display();
+            this.renderer.display(this.timeFactor);
         }
 
         this.popMatrix();

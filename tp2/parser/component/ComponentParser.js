@@ -181,7 +181,7 @@ export class ComponentParser {
 
     static parseHighlight(node, reader, sceneData) {
         let colorResult = ColorParser.parse(node, reader, 1.0);
-        let scaleResult = FloatParser.parse(node, reader, 'scale_h', 1.1);
+        let scaleResult = FloatParser.parse(node, reader, 'scale_h');
 
         return ParserResult.collect(
             new Highlight(colorResult.getValue(), scaleResult.getValue()), 

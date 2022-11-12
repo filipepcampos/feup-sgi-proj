@@ -45,6 +45,7 @@ export class MyInterface extends CGFinterface {
         }
         
         folder = this.gui.addFolder('Components');
+        folder.add(this.scene, 'highlightSpeed', 1, 2000);
         for(let [id, component] of Object.entries(this.scene.sceneData.components)) {
             if (component.highlight != null){
                 folder.add(component.highlight, 'active')
