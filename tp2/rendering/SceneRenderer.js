@@ -33,13 +33,15 @@ export class SceneRenderer {
      */
     displayPrimitive(node, texture, highlight, timeFactor) {
         const obj = node.getObject();
+        let hasTexture = false;
         if(texture !== "inherit" && texture !== "none"){
             obj.updateTexLength(texture.getLength_s(), texture.getLength_t());
+            hasTexture = true;
         }
         if(highlight != null && highlight.active) {
             this.sceneData.scene.setActiveShader(this.sceneData.highlightShader);
             console.log(highlight.scale_h);
-            this.sceneData.highlightShader.setUniformsValues({'scale': highlight.scale_h, 'timeFactor': timeFactor, 'targetColor': highlight.color.getArray()});
+            this.sceneData.highlightShader.setUniformsValues({'scale': highlight.scale_h, 'timeFactor': timeFactor, 'targetColor': highlight.color.getArray(), 'hasTexture': hasTexture});
         }
         node.getObject().display();
         if (highlight) {
