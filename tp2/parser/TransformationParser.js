@@ -14,8 +14,8 @@ export class TransformationParser {
      * @param {boolean} needsId - Indicates if the transformation needs to have an id
      * @returns ParserResult containing an object with the parsed transformation and errors that occurred while parsing
      */
-    static parse(node, reader, needsId=true) {
-        if(node.nodeName !== "transformation") {
+    static parse(node, reader, needsId=true, nodeName="transformation") {
+        if(node.nodeName !== nodeName) {
             return ParserResult.fromError("unknown tag <" + node.nodeName + ">");
         }
 

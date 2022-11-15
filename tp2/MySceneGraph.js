@@ -6,6 +6,7 @@ import {GenericChildParser} from "./parser/GenericChildParser.js";
 import {TransformationParser} from "./parser/TransformationParser.js";
 import {MaterialParser} from "./parser/MaterialParser.js";
 import {ComponentParser} from "./parser/component/ComponentParser.js";
+import {KeyframeAnimationParser} from "./parser/animation/KeyframeAnimationParser.js";
 import {PrimitiveParser} from "./parser/PrimitiveParser.js";
 import {TextureParser} from "./parser/TextureParser.js";
 import {ViewParser} from "./parser/ViewParser.js";
@@ -26,7 +27,8 @@ const TEXTURES_INDEX = 4;
 const MATERIALS_INDEX = 5;
 const TRANSFORMATIONS_INDEX = 6;
 const PRIMITIVES_INDEX = 7;
-const COMPONENTS_INDEX = 8;
+const ANIMATIONS_INDEX = 8;
+const COMPONENTS_INDEX = 9;
 
 /**
  * MySceneGraph class, representing the scene graph.
@@ -198,6 +200,18 @@ export class MySceneGraph {
                 return error;
         }
 
+        // <animations>
+        if ((index = nodeNames.indexOf("animations")) == -1)
+            return "tag <animations> missing";
+        else {
+            if (index != ANIMATIONS_INDEX)
+                this.onXMLMinorError("tag <animations> out of order");
+
+            //Parse animations block
+            if ((error = this.parseAnimations(nodes[index])) != null)
+                return error;
+        }
+
         // <components>
         if ((index = nodeNames.indexOf("components")) == -1)
             return "tag <components> missing";
@@ -331,6 +345,17 @@ export class MySceneGraph {
         let result = GenericChildParser.parse(primitivesNode, this.reader, this.scene, PrimitiveParser, "primitive");
         this.sceneData.primitives = result.getValue();
         console.log("Primitives", result);
+        return null;
+    }
+
+    /**
+     * Parses the <animations> block.
+     * @param {animations block element} animationsNode
+     */
+    parseAnimations(animationsNode) {
+        let result = GenericChildParser.parse(animationsNode, this.reader, this.scene, KeyframeAnimationParser, "keyframeanim");
+        //this.sceneData.animations = result.getValue();
+        console.log("Animations", result);
         return null;
     }
 

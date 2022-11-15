@@ -413,7 +413,17 @@
             </patch>
         </primitive>
     </primitives>
-
+    <animations>
+        <keyframeanim id="car_animation">
+            <keyframe instant="5">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="z" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="x" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+        </keyframeanim>
+    </animations>
     <components>
         <component id="root">
             <transformation>
