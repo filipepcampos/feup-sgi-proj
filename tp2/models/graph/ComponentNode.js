@@ -30,20 +30,29 @@
         return this.id;
     }
 
-    /**
+    /** TODO: Update docs
      * Set the component's children, components or primitives
      * @param {MyComponentNode|MyPrimitiveNode} children - Array of child nodes
      */
-    setChildren(children) {
-        this.children = children;
+    setChildren(components, primitives) {
+        this.components = components;
+        this.primitives = primitives;
     }
 
     /**
-     * Get list of child nodes
-     * @returns {Array<MyComponentNode|MyPrimitiveNode>} - List of the children
+     * Get list of child component nodes
+     * @returns {Array<MyComponentNode>} - List of the children components
      */
-    getChildren() {
-        return this.children;
+    getChildComponents() {
+        return this.components;
+    }
+
+    /**
+     * Get list of child primitive nodes
+     * @returns {Array<MyPrimitiveNode>} - List of the children primitives
+     */
+     getChildPrimitives() {
+        return this.primitives;
     }
 
     /**

@@ -148,7 +148,6 @@ export class PrimitiveParser {
             slices.getValueOrDefault(8),
             stacks.getValueOrDefault(8)
         );
-        cylinder.enableNormalViz();
         
         return ParserResult.collect(
             new PrimitiveNode(id, cylinder),

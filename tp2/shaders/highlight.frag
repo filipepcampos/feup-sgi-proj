@@ -14,10 +14,12 @@ uniform bool hasTexture;
 
 void main() {
     vec4 initialColor = vFinalColor;
+    vec4 finalColor = targetColor;
     if(hasTexture){
         vec4 textureColor = texture2D(uSampler, vTextureCoord);
         initialColor = initialColor * textureColor;
+        finalColor = targetColor * textureColor;
     }
-    vec4 deltaColor = targetColor - initialColor;
+    vec4 deltaColor = finalColor - initialColor;
     gl_FragColor = initialColor + (deltaColor * (sin(timeFactor) + 1.0) / 2.0);
 }

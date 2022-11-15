@@ -18,9 +18,9 @@ export class SceneRenderer {
      * @param {MyMaterial} parentMaterial - Reference to the parent's material
      * @param {MyTexture} parentTexture - Reference to the parent's texture
      */
-    display(timeFactor, node=this.sceneData.components[this.sceneData.root], parentMaterial=null, parentTexture=null, highlight=null) {
+    display(timeFactor, node=this.sceneData.components[this.sceneData.root], parentMaterial=null, parentTexture=null) {
         if(node instanceof PrimitiveNode){
-            this.displayPrimitive(node, parentTexture, highlight, timeFactor);
+            this.displayPrimitive(node, parentTexture);
         } else {
             this.displayComponent(node, parentMaterial, parentTexture, timeFactor);
         }
@@ -31,22 +31,12 @@ export class SceneRenderer {
      * @param {PrimitiveNode} node - Reference to the PrimitiveNode
      * @param {MyTexture} texture - Reference to the parent's texture
      */
-    displayPrimitive(node, texture, highlight, timeFactor) {
+    displayPrimitive(node, texture) {
         const obj = node.getObject();
-        let hasTexture = false;
         if(texture !== "inherit" && texture !== "none"){
             obj.updateTexLength(texture.getLength_s(), texture.getLength_t());
-            hasTexture = true;
-        }
-        if(highlight != null && highlight.active) {
-            this.sceneData.scene.setActiveShader(this.sceneData.highlightShader);
-            console.log(highlight.scale_h);
-            this.sceneData.highlightShader.setUniformsValues({'scale': highlight.scale_h, 'timeFactor': timeFactor, 'targetColor': highlight.color.getArray(), 'hasTexture': hasTexture});
         }
         node.getObject().display();
-        if (highlight) {
-            this.sceneData.scene.setActiveShader(this.sceneData.scene.defaultShader);
-        }
     }
 
     /**
@@ -79,9 +69,21 @@ export class SceneRenderer {
         scene.pushMatrix();
         scene.multMatrix(matrix);
 
-        // TODO: SEPARETE FOR PRIMITIVES AND COMPONENTS
-        for(const child of node.getChildren()){
+        for(const child of node.getChildComponents()){
             this.display(timeFactor, child, material, texture, node.highlight);
+        }
+
+        const highlight = node.highlight;
+        let hasTexture = texture !== "none"; // TODO: Check if this makes sense
+        if(highlight != null && highlight.active) {
+            this.sceneData.scene.setActiveShader(this.sceneData.highlightShader);
+            this.sceneData.highlightShader.setUniformsValues({'scale': highlight.scale_h, 'timeFactor': timeFactor, 'targetColor': highlight.color.getArray(), 'hasTexture': hasTexture});
+        }
+        for(const child of node.getChildPrimitives()){
+            this.display(timeFactor, child, material, texture);
+        }
+        if (highlight) {
+            this.sceneData.scene.setActiveShader(this.sceneData.scene.defaultShader);
         }
 
         if(texture !== "none") {

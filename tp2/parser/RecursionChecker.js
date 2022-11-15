@@ -27,7 +27,7 @@ export class RecursionChecker {
         nextVisited[node.getId()] = true;
 
         let hasRecursion = false;
-        let children = node.getChildren();
+        let children = node.getChildComponents();
         for(let i = children.length - 1; i >= 0; i--) {
             if(nextVisited[children[i].getId()] === true) {
                 errors.push("rendering component with id=" + children[i].getId() + " (child of component with id=" + node.getId() + ") would cause recursion, so it will be removed");
