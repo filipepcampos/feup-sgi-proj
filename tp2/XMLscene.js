@@ -157,6 +157,7 @@ export class XMLscene extends CGFscene {
 
     update(currTime) {
         this.timeFactor = (currTime / this.highlightSpeed) % 5000 * Math.PI;
+        this.timeFactor = (Math.sin(this.timeFactor) + 1.0) / 2.0;
     }
 
     /**

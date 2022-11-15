@@ -21,5 +21,5 @@ void main() {
         finalColor = targetColor * textureColor;
     }
     vec4 deltaColor = finalColor - initialColor;
-    gl_FragColor = initialColor + (deltaColor * (sin(timeFactor) + 1.0) / 2.0);
+    gl_FragColor = initialColor + (deltaColor * timeFactor);
 }
