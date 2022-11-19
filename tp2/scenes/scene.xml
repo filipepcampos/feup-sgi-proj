@@ -422,6 +422,13 @@
                 <rotation axis="x" angle="0" />
                 <scale sx="1" sy="1" sz="1" />
             </keyframe>
+            <keyframe instant="15">
+                <translation x="1" y="0" z="20" />
+                <rotation axis="z" angle="0" />
+                <rotation axis="y" angle="20" />
+                <rotation axis="x" angle="-5" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
         </keyframeanim>
     </animations>
     <components>
@@ -745,6 +752,7 @@
                 <componentref id="car_laterals"/>
                 <componentref id="car_bottom"/>
             </children>
+            <animation id="car_animation"/>
         </component>
 
         <component id="car_front">

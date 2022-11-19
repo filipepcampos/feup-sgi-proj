@@ -20,11 +20,12 @@ export class KeyframeAnimationParser {
         let results = [];
         let keyframes = [];
         for(const child of children){
-            // const keyframeResult = KeyframeParser.parse(child, reader, scene);
-            // results.push(keyframeResult);
-            // keyframes.push(keyframeResult.getValue()); // TODO: Think about error handling
+            const keyframeResult = KeyframeParser.parse(child, reader, scene);
+            results.push(keyframeResult);
+            keyframes.push(keyframeResult.getValue()); // TODO: Think about error handling
         }
+        console.log(results);
 
-        return ParserResult.fromValue(new KeyframeAnim(id));
+        return ParserResult.fromValue(new KeyframeAnim(id, keyframes));
     }
 }

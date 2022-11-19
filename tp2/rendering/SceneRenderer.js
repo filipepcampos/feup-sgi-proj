@@ -70,7 +70,7 @@ export class SceneRenderer {
         scene.multMatrix(matrix);
 
         for(const child of node.getChildComponents()){
-            this.display(timeFactor, child, material, texture, node.highlight);
+            this.displayComponent(child, material, texture, timeFactor);
         }
 
         const highlight = node.highlight;
@@ -80,7 +80,7 @@ export class SceneRenderer {
             this.sceneData.highlightShader.setUniformsValues({'scale': highlight.scale_h, 'timeFactor': timeFactor, 'targetColor': highlight.color.getArray(), 'hasTexture': hasTexture});
         }
         for(const child of node.getChildPrimitives()){
-            this.display(timeFactor, child, material, texture);
+            this.displayPrimitive(child, texture);
         }
         if (highlight != null && highlight.active) {
             this.sceneData.scene.setActiveShader(this.sceneData.scene.defaultShader);

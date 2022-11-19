@@ -38,6 +38,7 @@ export class ComponentParser {
         const materialsIndex = nodeNames.indexOf("materials");
         const textureIndex = nodeNames.indexOf("texture");
         const childrenIndex = nodeNames.indexOf("children");
+        const animationIndex = nodeNames.indexOf("animation");
         const highlightedIndex = nodeNames.indexOf("highlighted");
 
         let errors = [];
@@ -85,6 +86,12 @@ export class ComponentParser {
             var highlighted = highlightedResult.getValue();
         }
 
+        if (animationIndex != -1) {
+            var animationResult = this.parseAnimation(children[animationIndex], reader, sceneData);
+            results.push(animationResult);
+            var animation = animationResult.getValue();
+        }
+
         return ParserResult.collect(
             new ComponentNode(
                 id,
@@ -93,7 +100,8 @@ export class ComponentParser {
                 texture,
                 componentChildren["components"],
                 componentChildren["primitives"],
-                highlighted
+                highlighted,
+                animation
             ),
             results,
             "parsing <component> with id=" + id,
@@ -188,5 +196,24 @@ export class ComponentParser {
             [colorResult, scaleResult], 
             "parsing <highlight>"
         );
+    }
+
+    static parseAnimation(node, reader, sceneData) {
+        if (node.nodeName !== "animation") {
+            return ParserResult.fromError("unknown tag <" + node.nodeName + ">");
+        }
+
+        // Get id of the current texture.
+        const id = reader.getString(node, 'id');
+        if (id == null) {
+            return ParserResult.fromError("no ID defined for animation");
+        }
+
+        // Check if texture exists
+        if (sceneData.animations[id] == null) {
+            return ParserResult.fromError("animation with id=" + id + " does not exist");
+        }
+
+        return ParserResult.fromValue(sceneData.animations[id]);
     }
 }

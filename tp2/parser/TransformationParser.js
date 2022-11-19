@@ -14,7 +14,7 @@ export class TransformationParser {
      * @param {boolean} needsId - Indicates if the transformation needs to have an id
      * @returns ParserResult containing an object with the parsed transformation and errors that occurred while parsing
      */
-    static parse(node, reader, needsId=true, nodeName="transformation", scaleAttributeList=["x", "y", "z"]) {
+    static parse(node, reader, needsId=true, nodeName="transformation", translateName="translate", rotationName="rotate", scaleAttributeList=["x", "y", "z"]) {
         if(node.nodeName !== nodeName) {
             return ParserResult.fromError("unknown tag <" + node.nodeName + ">");
         }
@@ -33,7 +33,7 @@ export class TransformationParser {
 
         for(let child of node.children) {
             switch(child.nodeName) {
-                case 'translate':
+                case translateName:
                     let translate_coordinates = Coordinate3DParser.parse(child, reader);
                     if(!translate_coordinates.hasError()){
                         transformationMatrix = mat4.translate(
@@ -57,7 +57,7 @@ export class TransformationParser {
                         results.push(scale_coordinates);
                     }
                     break;
-                case 'rotate':
+                case rotationName:
                     let rotation = RotationParser.parse(child, reader);
                     if(!rotation.hasError()){
                         transformationMatrix = mat4.rotate(

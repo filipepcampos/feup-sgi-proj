@@ -10,8 +10,9 @@
     * @param {Array<string>} childComponentsId - Ids of all the children components
     * @param {Array<string>} childPrimitivesId - Ids of all the children primitives
     * @param {Highlight} highlight - Highlight object
+    * @param {Animation} animation - Animation object
     */
-    constructor(id, transformation, materials, texture, childComponentsId, childPrimitivesId, highlight=null) {
+    constructor(id, transformation, materials, texture, childComponentsId, childPrimitivesId, highlight=null, animation=null) {
         this.id = id;
         this.transformation = transformation;
         this.materials = materials;
@@ -20,6 +21,7 @@
         this.childComponentsId = childComponentsId;
         this.childPrimitivesId = childPrimitivesId;
         this.highlight = highlight;
+        this.animation = animation;
     }
 
     /**
