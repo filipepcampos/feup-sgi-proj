@@ -23,7 +23,8 @@ export class SceneData {
         this.materials = {};
         this.transformations = {};
         this.primitives = {};
-        this.components = {}
+        this.components = {};
+        this.animations = {};
 
         this.highlightShader = null;
     }

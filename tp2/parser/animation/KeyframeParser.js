@@ -2,6 +2,8 @@ import { FloatParser } from "../FloatParser.js";
 import { TransformationParser } from "../TransformationParser.js";
 import { ParserResult } from "../ParserResult.js";
 import { Keyframe } from "../../models/Keyframe.js";
+import { Coordinate3DParser } from "../Coordinate3DParser.js";
+import { RotationParser } from "../RotationParser.js";
 
 const TRANSLATION_INDEX = 0;
 const ROTATION_Z_INDEX = 1;
@@ -30,8 +32,8 @@ export class KeyframeParser {
         }
 
         // PARSE TRANSFORMATIONS
-        const transformationResult = TransformationParser.parse(node, reader, false, "keyframe", "translation", "rotation", ["sx", "sy", "sz"]);
-        return new ParserResult(new Keyframe(instantResult.getValue(), transformationResult.getValue().mat)); // TODO: Error handling
+        const transformationResult = this.parseTransformation(node, reader, scene);
+        return new ParserResult(new Keyframe(instantResult.getValue(), transformationResult.getValue())); // TODO: Error handling
     }
 
     static hasOrderError(node, reader) {
@@ -52,5 +54,34 @@ export class KeyframeParser {
             transformations[ROTATION_Y_INDEX] !== "rotationy" ||
             transformations[ROTATION_X_INDEX] !== "rotationx" ||
             transformations[SCALE_INDEX] !== "scale";
+    }
+
+    static parseTransformation(node, reader, scene) {
+        let results = [];
+
+        // Translation
+        let translate_coordinates = Coordinate3DParser.parse(node.children[TRANSLATION_INDEX], reader);
+        results.push(translate_coordinates);
+
+        // Rotation
+        let rotations = [];
+        for(const index of [ROTATION_Z_INDEX, ROTATION_Y_INDEX, ROTATION_X_INDEX]){
+            let rotation = RotationParser.parse(node.children[index], reader);
+            results.push(rotation);
+            rotations.push(rotation.getValue().angle);
+        }
+        console.log(rotations);
+
+        // Scale
+        let scale_coordinates = Coordinate3DParser.parse(node.children[SCALE_INDEX], reader, ["sx","sy","sz"]);
+        results.push(scale_coordinates);
+
+        return ParserResult.collect({
+            "translation": vec3.fromValues(...translate_coordinates.getValue().getArray()),
+            "rotationz": vec3.fromValues(rotations[0],0,0), 
+            "rotationy": vec3.fromValues(rotations[1],0,0), 
+            "rotationx": vec3.fromValues(rotations[2],0,0),
+            "scale": vec3.fromValues(...scale_coordinates.getValue().getArray())
+        }, results);
     }
 }

@@ -2,12 +2,11 @@ import { MyAnimation } from "./wrappers/MyAnimation.js";
 
 export class KeyframeAnim extends MyAnimation {
     constructor(id, keyframes) {
+        super();
         this.id = id;
         this.keyframes = keyframes;
-        this.matrix = null;
-    
-        // X -- 5   ->  null
-        // 5 ---  X -- 15   ->  i
+        this.transformation = {};
+        this.started = false;
     }
 
     getId() {
@@ -28,26 +27,26 @@ export class KeyframeAnim extends MyAnimation {
             // Interpolate between lastKeyframeIndex and nextKeyframeIndex
             const lastKeyframe = this.keyframes[lastKeyframeIndex];
             const nextKeyframe = this.keyframes[nextKeyframeIndex];
-            // const lastInstant = lastKeyframe.instant;
-            // const nextInstant = nextKeyframe.instant;
-            // const lastMatrix = lastKeyframe.matrix;
-            // const nextMatrix = nextKeyframe.matrix;
-            // const deltaInstant = nextInstant - lastInstant;
-            // deltaInstant = instant - lastInstant;
-            // deltaInstant = deltaInstant / deltaInstant;
-            // this.matrix = lastMatrix.lerp(nextMatrix, deltaInstant);
+            const lastInstant = lastKeyframe.instant;
+            const nextInstant = nextKeyframe.instant;
+            const keyframeDuration = nextInstant - lastInstant;
+            const deltaInstant = instant - lastInstant;
+
+            for(const [name, lastPosition] of Object.entries(lastKeyframe.transformation)) {
+                const nextPosition = nextKeyframe.transformation[name];
+                let output = vec3.fromValues(0, 0, 0);
+                vec3.lerp(output, lastPosition, nextPosition, deltaInstant / keyframeDuration);
+                this.transformation[name] = output;
+            }
         } else { // Animation is finished
-            this.matrix = this.keyframes[lastKeyframeIndex].matrix;
+            this.transformation = this.keyframes[lastKeyframeIndex].transformation;
         }
     }
 
-    hasAnimationStarted() {
-        return this.lastKeyframe != null;
-    }
-
     getLastKeyframeIndex(instant) {
-        for(let i = 0; i < this.keyframes.length; ++i) {
-            if(keyframes[i].instant > instant){
+        for(let i = this.keyframes.length - 1; i >= 0; --i) {
+            if(this.keyframes[i].instant <= instant){
+                this.started = true;
                 return i;
             }
         }
@@ -55,6 +54,12 @@ export class KeyframeAnim extends MyAnimation {
     }
 
     apply(scene) {
-        scene.multMatrix(this.matrix);
+        if(this.started){
+            scene.translate(...this.transformation["translation"]);
+            scene.rotate(this.transformation["rotationx"][0], 1, 0, 0);
+            scene.rotate(this.transformation["rotationy"][0], 0, 1, 0);
+            scene.rotate(this.transformation["rotationz"][0], 0, 0, 1);
+            scene.scale(...this.transformation["scale"]);
+        }
     }
 }

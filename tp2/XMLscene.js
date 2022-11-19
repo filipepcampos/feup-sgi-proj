@@ -153,11 +153,19 @@ export class XMLscene extends CGFscene {
         this.interface.onGraphLoaded();
 
         this.sceneInited = true;
+        this.startTime = null;
     }
 
     update(currTime) {
+        if(this.startTime == null) {
+            this.startTime = currTime;
+        }
         this.timeFactor = (currTime / this.highlightSpeed) % 5000 * Math.PI;
         this.timeFactor = (Math.sin(this.timeFactor) + 1.0) / 2.0;
+
+        for(const [id, anim] of Object.entries(this.sceneData.animations)){
+            anim.update((currTime - this.startTime) / 1000);
+        }
     }
 
     /**

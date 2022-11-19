@@ -1,6 +1,6 @@
 export class Keyframe {
-    constructor(instant, mat) {
+    constructor(instant, transformation) {
         this.instant = instant;
-        this.mat = mat;
+        this.transformation = transformation;
     }
 }

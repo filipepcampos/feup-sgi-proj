@@ -46,6 +46,10 @@ export class SceneRenderer {
      * @param {MyTexture} parentTexture - Reference to the parent's texture
      */
     displayComponent(node, parentMaterial, parentTexture, timeFactor) {
+        if(node.animation != null && !node.animation.started){
+            return;
+        }
+
         const matrix = node.getTransformation() != null ? node.getTransformation() : mat4.create();
         const scene = this.sceneData.scene;
 
@@ -68,6 +72,10 @@ export class SceneRenderer {
         //material.getCGFAppearance().apply();
         scene.pushMatrix();
         scene.multMatrix(matrix);
+
+        if(node.animation != null) {
+            node.animation.apply(scene);
+        }
 
         for(const child of node.getChildComponents()){
             this.displayComponent(child, material, texture, timeFactor);

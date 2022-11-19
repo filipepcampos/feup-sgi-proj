@@ -1,7 +1,7 @@
 <sxs>
     <scene root="root" axis_length="5"/>
-    <views default="default_camera">
-        <perspective id="default_camera" near="0.1" far="500" angle="45">
+    <views default="ortho_camera">
+        <perspective id="perspective_camera" near="0.1" far="500" angle="45">
             <from x="15" y="15" z="25" />
             <to x="0" y="-2" z="0" />
         </perspective>
@@ -140,26 +140,26 @@
             <scale x="10" y="15" z="8"/>
         </transformation>
         <transformation id="tr_street_ground_floor">
-            <scale x="30" y="0.5" z="30" />
+            <scale x="30" y="0.5" z="60" />
         </transformation>
         <transformation id="tr_street_road">
             <translate x="0" y="0.3" z="0"/>
         </transformation>
         <transformation id="tr_street_road_floor">
-            <scale x="6" y="0.1" z="30"/>
+            <scale x="6" y="0.1" z="60"/>
             <rotate axis="x" angle="-90"/>
         </transformation>
         <transformation id="tr_street_road_line">
             <translate x="0" y="0.01" z="0"/>
-            <scale x=".15" y="0.1" z="30"/>
+            <scale x=".15" y="0.1" z="60"/>
         </transformation>
         <transformation id="tr_street_ground_walkway_left">
             <translate x="-3.8" y="0.4" z="0"/>
-            <scale x="1.6" y="0.3" z="30"/>
+            <scale x="1.6" y="0.3" z="60"/>
         </transformation>
         <transformation id="tr_street_ground_walkway_right">
             <translate x="3.9" y="0.4" z="0"/>
-            <scale x="1.8" y="0.3" z="30"/>
+            <scale x="1.8" y="0.3" z="60"/>
         </transformation>
         <transformation id="tr_street_ground_sign">
             <translate x="3.5" y="3" z="-14"/>
@@ -415,18 +415,78 @@
     </primitives>
     <animations>
         <keyframeanim id="car_animation">
-            <keyframe instant="5">
+            <keyframe instant="0">
+                <translation x="0" y="0" z="-30" />
+                <rotation axis="z" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="x" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+            <keyframe instant="4">
+                <translation x="0" y="0" z="5" />
+                <rotation axis="z" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="x" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+            <keyframe instant="6">
+                <translation x="10" y="0" z="15" />
+                <rotation axis="z" angle="0" />
+                <rotation axis="y" angle="110" />
+                <rotation axis="x" angle="-30" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+            <keyframe instant="7.5">
+                <translation x="15" y="0" z="16" />
+                <rotation axis="z" angle="0" />
+                <rotation axis="y" angle="110" />
+                <rotation axis="x" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+            <keyframe instant="10">
+                <translation x="18" y="5" z="30" />
+                <rotation axis="z" angle="360" />
+                <rotation axis="y" angle="110" />
+                <rotation axis="x" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+        </keyframeanim>
+        <keyframeanim id="metro_animation">
+            <keyframe instant="0">
+                <translation x="0" y="0" z="-200" />
+                <rotation axis="z" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="x" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+            <keyframe instant="7.5">
+                <translation x="0" y="0" z="10" />
+                <rotation axis="z" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="x" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+        </keyframeanim>
+        <keyframeanim id="barrel_animation">
+            <keyframe instant="0">
                 <translation x="0" y="0" z="0" />
                 <rotation axis="z" angle="0" />
                 <rotation axis="y" angle="0" />
                 <rotation axis="x" angle="0" />
                 <scale sx="1" sy="1" sz="1" />
             </keyframe>
-            <keyframe instant="15">
-                <translation x="1" y="0" z="20" />
+            <keyframe instant="3.0">
+                <translation x="0" y="0" z="0" />
                 <rotation axis="z" angle="0" />
-                <rotation axis="y" angle="20" />
-                <rotation axis="x" angle="-5" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="x" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+            <keyframe instant="5.5">
+                <translation x="50" y="0" z="0" />
+                <rotation axis="z" angle="-720" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="x" angle="0" />
                 <scale sx="1" sy="1" sz="1" />
             </keyframe>
         </keyframeanim>
@@ -1213,7 +1273,8 @@
 
         <component id="tent">
             <transformation>
-                <translate x="-8" y="0.5" z="12"/>
+                <translate x="-4.8" y="0.25" z="12"/>
+                <scale x="1" y="0.3" z="1"/>
             </transformation>
             <materials>
                 <material id="inherit"/>
@@ -1226,16 +1287,14 @@
 
         <component id="barrel">
             <transformation>
-                <translate x="-6" y="1" z="12"/>
-                <rotate axis="x" angle="90"/>
-                <rotate axis="z" angle="-30"/>
+                <translate x="-8" y="1" z="12"/>
                 <scale x="0.2" y="0.2" z="0.3"/>
             </transformation>
             <materials>
                 <material id="inherit"/>
             </materials>
             <texture id="tex_brick" length_t="1" length_s="1"/>
-            <highlighted r="1.0" g="0.0" b="0.0" scale_h="1.5"/>
+            <animation id="barrel_animation"/>
             <children>
                 <componentref id="flipped_semibarrel"/>
                 <componentref id="flipped_semibarrel_top"/>
@@ -1253,6 +1312,7 @@
                 <material id="white"/>
             </materials>
             <texture id="tex_metro1" length_t="1" length_s="1"/>
+            <animation id="metro_animation"/>
             <children>
                 <primitiveref id="metro_patch"/>
                 <componentref id="metro_back"/>
