@@ -25,9 +25,8 @@ export class KeyframeParser {
             return null;
         }
         // PARSE TRANSFORMATIONS
-        //const transformationResult = TransformationParser.parse(node, reader, false, "keyframe");
-        //console.log(transformationResult);
-        
+        const transformationResult = TransformationParser.parse(node, reader, false, "keyframe", ["sx", "sy", "sz"]);
+        console.log(transformationResult);
     }
 
     static hasOrderError(node, reader) {

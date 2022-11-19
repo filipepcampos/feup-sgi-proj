@@ -82,7 +82,7 @@ export class SceneRenderer {
         for(const child of node.getChildPrimitives()){
             this.display(timeFactor, child, material, texture);
         }
-        if (highlight) {
+        if (highlight != null && highlight.active) {
             this.sceneData.scene.setActiveShader(this.sceneData.scene.defaultShader);
         }
 
