@@ -91,7 +91,7 @@ export class SceneRenderer {
             this.displayPrimitive(child, texture);
         }
         if (highlight != null && highlight.active) {
-            this.sceneData.scene.setActiveShader(this.sceneData.scene.defaultShader);
+            this.sceneData.scene.setActiveShaderSimple(this.sceneData.scene.defaultShader);
         }
 
         if(texture !== "none") {
