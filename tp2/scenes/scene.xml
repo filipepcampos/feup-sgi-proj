@@ -106,6 +106,12 @@
             <diffuse r="0.6" g="0.0" b="0.0" a="1.0" />
             <specular r="0.6" g="0.0" b="0.0" a="1.0" />
         </material>
+        <material id="blue" shininess="10">
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
+            <ambient r="0.0" g="0.0" b="0.4" a="1.0" />
+            <diffuse r="0.0" g="0.0" b="0.6" a="1.0" />
+            <specular r="0.0" g="0.0" b="0.6" a="1.0" />
+        </material>
         <material id="white" shininess="10">
             <emission r="0.0" g="0.0" b="0.0" a="0.3" />
             <ambient r="1.0" g="1.0" b="1.0" a="0.3" />
@@ -939,15 +945,14 @@
                 <rotate axis="y" angle="180"/>
             </transformation>
             <materials>
-                <material id="red" />
-                <material id="green" />
+                <material id="blue" />
             </materials>
             <texture id="none"/>
             <children>
                 <componentref id="car_front"/>
                 <componentref id="car_blinking_headlight"/>
                 <componentref id="car_nonblinking_headlight"/>
-                <componentref id="car_top" />
+                <componentref id="stopped_car_top" />
                 <componentref id="car_back" />
                 <componentref id="car_laterals"/>
                 <componentref id="car_bottom"/>
@@ -1041,8 +1046,8 @@
                 <transformationref id="tr_car_front_window"/>
             </transformation>
             <materials>
-                <material id="light_green" />
                 <material id="white"/>
+                <material id="light_green" />
             </materials>
             <texture id="inherit"/>
             <children>
@@ -1067,8 +1072,8 @@
                 <transformationref id="tr_car_back_window"/>
             </transformation>
             <materials>
-                <material id="light_green" />
                 <material id="white"/>
+                <material id="light_green" />
             </materials>
             <texture id="inherit"/>
             <children>
@@ -1087,6 +1092,81 @@
             <children>
                 <componentref id="car_top_roof" />
                 <componentref id="car_top_flag" />
+            </children>
+        </component>
+
+        <component id="stopped_car_top">
+            <transformation>
+                <translate x="0" y="1.2" z="-0.4"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="car_top_roof" />    
+                <componentref id="car_sirens"/>
+            </children>
+        </component>
+
+        <component id="car_sirens">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="car_siren_right" /> 
+                <componentref id="car_siren_center"/>   
+                <componentref id="car_siren_left"/>
+            </children>
+        </component>
+
+        <component id="car_siren_right">
+            <transformation>
+                <translate x="-0.4" y="0" z="0.5"/>
+                <scale x="0.3" y="0.1" z="0.1"/>
+                <rotate axis="y" angle="90"/>
+            </transformation>
+            <materials>
+                <material id="white" />
+            </materials>
+            <texture id="inherit"/>
+            <highlighted r="0.0" g="0.0" b="1.0" scale_h="1.05"/>
+            <children>
+                <primitiveref id="tent_patch" />  
+            </children>
+        </component>
+
+        <component id="car_siren_center">
+            <transformation>
+                <translate x="0" y="0" z="0.5"/>
+                <scale x="0.15" y="0.11" z="0.11"/>
+                <rotate axis="y" angle="90"/>
+            </transformation>
+            <materials>
+                <material id="dark_gray" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id="tent_patch" />  
+            </children>
+        </component>
+
+        <component id="car_siren_left">
+            <transformation>
+                <translate x="0.4" y="0" z="0.5"/>
+                <scale x="0.3" y="0.1" z="0.1"/>
+                <rotate axis="y" angle="90"/>
+            </transformation>
+            <materials>
+                <material id="white" />
+            </materials>
+            <texture id="inherit"/>
+            <highlighted r="1.0" g="0.0" b="0.0" scale_h="1.05"/>
+            <children>
+                <primitiveref id="tent_patch" />  
             </children>
         </component>
 
@@ -1216,8 +1296,8 @@
             <transformation>
             </transformation>
             <materials>
-                <material id="light_green" />
                 <material id="white"/>
+                <material id="light_green" />
             </materials>
             <texture id="none"/>
             <children>
@@ -1230,8 +1310,8 @@
                 <transformationref id="tr_car_lateral_windows_right"/>
             </transformation>
             <materials>
-                <material id="light_green" />
                 <material id="white"/>
+                <material id="light_green" />
             </materials>
             <texture id="none"/>
             <children>
