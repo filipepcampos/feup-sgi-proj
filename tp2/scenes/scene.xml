@@ -1,5 +1,5 @@
 <sxs>
-    <scene root="root" axis_length="5"/>
+    <scene root="root" axis_length="0.001"/>
     <views default="perspective_camera">
         <perspective id="perspective_camera" near="0.1" far="500" angle="45">
             <from x="15" y="15" z="25" />

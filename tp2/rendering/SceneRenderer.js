@@ -9,6 +9,8 @@ export class SceneRenderer {
      */
     constructor(sceneData) {
         this.sceneData = sceneData;
+        this.activeShader = "default";
+        this.hasAnyHighlight = false;
     }
 
     /**
@@ -19,10 +21,23 @@ export class SceneRenderer {
      * @param {MyTexture} parentTexture - Reference to the parent's texture
      */
     display(timeFactor, node=this.sceneData.components[this.sceneData.root], parentMaterial=null, parentTexture=null) {
-        if(node instanceof PrimitiveNode){
-            this.displayPrimitive(node, parentTexture);
+        this.optimizedAway = 0;
+        if(this.activeShader === "default"){
+            this.hasAnyHighlight = this.displayComponent(node, parentMaterial, parentTexture, timeFactor, false);
+            if(this.hasAnyHighlight){
+                console.log("Drawing highlights");
+                this.sceneData.scene.setActiveShader(this.sceneData.highlightShader);
+                this.displayComponent(node, parentMaterial, parentTexture, timeFactor, true, true);
+            }
+            this.activeShader = "highlight";
         } else {
-            this.displayComponent(node, parentMaterial, parentTexture, timeFactor);
+            if(this.hasAnyHighlight){
+                console.log("Drawing highlights");
+                this.displayComponent(node, parentMaterial, parentTexture, timeFactor, true, true);
+            }
+            this.hasAnyHighlight = this.sceneData.scene.setActiveShaderSimple(this.sceneData.scene.defaultShader);
+            this.displayComponent(node, parentMaterial, parentTexture, timeFactor, false);
+            this.activeShader = "default";
         }
     }
 
@@ -45,9 +60,13 @@ export class SceneRenderer {
      * @param {MyMaterial} parentMaterial - Reference to the parent's material
      * @param {MyTexture} parentTexture - Reference to the parent's texture
      */
-    displayComponent(node, parentMaterial, parentTexture, timeFactor) {
+    displayComponent(node, parentMaterial, parentTexture, timeFactor, highlightMode=false) {
         if(node.animation != null && !node.animation.started){
-            return;
+            return false;
+        }
+
+        if(highlightMode == true && !node.hasHighlight){
+            return false;
         }
 
         const matrix = node.getTransformation() != null ? node.getTransformation() : mat4.create();
@@ -69,7 +88,6 @@ export class SceneRenderer {
             texture.getCGFTexture().bind(0);
         }
 
-        //material.getCGFAppearance().apply();
         scene.pushMatrix();
         scene.multMatrix(matrix);
 
@@ -77,21 +95,23 @@ export class SceneRenderer {
             node.animation.apply(scene);
         }
 
+        const highlight = node.highlight;
+        const hasHighlight = highlight != null && highlight.active;
+        node.hasHighlight = hasHighlight;
+
         for(const child of node.getChildComponents()){
-            this.displayComponent(child, material, texture, timeFactor);
+            node.hasHighlight = this.displayComponent(child, material, texture, timeFactor, highlightMode) || node.hasHighlight;
         }
 
-        const highlight = node.highlight;
-        let hasTexture = texture !== "none"; // TODO: Check if this makes sense
-        if(highlight != null && highlight.active) {
-            this.sceneData.scene.setActiveShader(this.sceneData.highlightShader);
+        const hasTexture = texture !== "none"; // TODO: Check if this makes sense
+
+        if(hasHighlight && highlightMode) {
             this.sceneData.highlightShader.setUniformsValues({'scale': highlight.scale_h, 'timeFactor': timeFactor, 'targetColor': highlight.color.getArray(), 'hasTexture': hasTexture});
         }
-        for(const child of node.getChildPrimitives()){
-            this.displayPrimitive(child, texture);
-        }
-        if (highlight != null && highlight.active) {
-            this.sceneData.scene.setActiveShaderSimple(this.sceneData.scene.defaultShader);
+        if(hasHighlight == highlightMode) {
+            for(const child of node.getChildPrimitives()){
+                this.displayPrimitive(child, texture);
+            }
         }
 
         if(texture !== "none") {
@@ -105,5 +125,7 @@ export class SceneRenderer {
         if(material != parentMaterial && parentMaterial != null) {
             parentMaterial.getCGFAppearance().apply();
         }
+        
+        return node.hasHighlight;
     }
 }
