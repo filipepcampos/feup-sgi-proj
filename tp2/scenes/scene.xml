@@ -107,7 +107,13 @@
             <specular r="0.6" g="0.0" b="0.0" a="1.0" />
         </material>
         <material id="white" shininess="10">
-            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
+            <emission r="0.0" g="0.0" b="0.0" a="0.3" />
+            <ambient r="1.0" g="1.0" b="1.0" a="0.3" />
+            <diffuse r="1.0" g="1.0" b="1.0" a="0.3" />
+            <specular r="0.0" g="0.0" b="0.0" a="0.3" />
+        </material>
+        <material id="emissive_white" shininess="10">
+            <emission r="1.0" g="1.0" b="1.0" a="1.0" />
             <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
             <specular r="0.0" g="0.0" b="0.0" a="1.0" />
@@ -156,7 +162,7 @@
             <translate x="0" y="0.3" z="0"/>
         </transformation>
         <transformation id="tr_street_road_floor">
-            <scale x="6" y="0.1" z="60"/>
+            <scale x="6.2" y="0.1" z="60"/>
             <rotate axis="x" angle="-90"/>
         </transformation>
         <transformation id="tr_street_road_line">
@@ -866,7 +872,7 @@
                 <translate x="16" y="1.0" z="27"/>
             </transformation>
             <materials>
-                <material id="white"/>
+                <material id="emissive_white"/>
             </materials>
             <texture id="tex_explosion"/>
             <children>
