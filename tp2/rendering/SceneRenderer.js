@@ -21,18 +21,15 @@ export class SceneRenderer {
      * @param {MyTexture} parentTexture - Reference to the parent's texture
      */
     display(timeFactor, node=this.sceneData.components[this.sceneData.root], parentMaterial=null, parentTexture=null) {
-        this.optimizedAway = 0;
         if(this.activeShader === "default"){
             this.hasAnyHighlight = this.displayComponent(node, parentMaterial, parentTexture, timeFactor, false);
             if(this.hasAnyHighlight){
-                console.log("Drawing highlights");
                 this.sceneData.scene.setActiveShader(this.sceneData.highlightShader);
                 this.displayComponent(node, parentMaterial, parentTexture, timeFactor, true, true);
             }
             this.activeShader = "highlight";
         } else {
             if(this.hasAnyHighlight){
-                console.log("Drawing highlights");
                 this.displayComponent(node, parentMaterial, parentTexture, timeFactor, true, true);
             }
             this.hasAnyHighlight = this.sceneData.scene.setActiveShaderSimple(this.sceneData.scene.defaultShader);
