@@ -894,7 +894,7 @@
             <materials>
                 <material id="emissive_white"/>
             </materials>
-            <texture id="tex_explosion"/>
+            <texture id="tex_explosion" length_t="1.0" length_s="1.0"/>
             <children>
                 <primitiveref id="sphere"/>
             </children>
@@ -928,7 +928,7 @@
             <materials>
                 <material id="mid_green" />
             </materials>
-            <texture id="tex_damaged_metal"/>
+            <texture id="tex_damaged_metal" length_t="1.0" length_s="1.0"/>
             <children>
                 <componentref id="car_front"/>
                 <componentref id="car_top" />
@@ -1526,9 +1526,9 @@
                 <rotate axis="y" angle="90"/>
             </transformation>
             <materials>
-                <material id="light_gray"/>
+                <material id="default_material"/>
             </materials>
-            <texture id="tex_bump"/>
+            <texture id="tex_bump" length_t="1.0" length_s="1.0"/>
             <children>
                 <primitiveref id="tent_patch"/>
             </children>
