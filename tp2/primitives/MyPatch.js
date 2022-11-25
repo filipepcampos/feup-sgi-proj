@@ -12,7 +12,6 @@ export class MyPatch extends CGFobject {
      */
     constructor(scene, degree_u, degree_v, controlpoints, parts_u, parts_v) {
         super(scene);
-        console.log(degree_u, degree_v, controlpoints)
         let surface = new CGFnurbsSurface(degree_u, degree_v, controlpoints);
         this.obj = new CGFnurbsObject(scene, parts_u, parts_v, surface );
     }

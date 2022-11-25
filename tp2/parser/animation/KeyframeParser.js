@@ -70,7 +70,6 @@ export class KeyframeParser {
             results.push(rotation);
             rotations.push(rotation.getValue().angle);
         }
-        console.log(rotations);
 
         // Scale
         let scale_coordinates = Coordinate3DParser.parse(node.children[SCALE_INDEX], reader, ["sx","sy","sz"]);

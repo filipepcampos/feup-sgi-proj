@@ -24,7 +24,6 @@ export class KeyframeAnimationParser {
             results.push(keyframeResult);
             keyframes.push(keyframeResult.getValue()); // TODO: Think about error handling
         }
-        console.log(results);
 
         return ParserResult.fromValue(new KeyframeAnim(id, keyframes));
     }
