@@ -3,7 +3,7 @@ import { MyAnimation } from "./wrappers/MyAnimation.js";
 /**
  * Class that represents a keyframe animation
  */
-export class KeyframeAnim extends MyAnimation {
+export class MyKeyframeAnimation extends MyAnimation {
     /**
      * @param {string} id - Id of the animation
      * @param {*} keyframes - Keyframes of the animation

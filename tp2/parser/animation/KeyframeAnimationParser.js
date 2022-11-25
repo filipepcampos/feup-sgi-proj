@@ -1,5 +1,5 @@
 import { ParserResult } from "../ParserResult.js";
-import { KeyframeAnim } from "../../models/KeyframeAnim.js";
+import { MyKeyframeAnimation } from "../../models/MyKeyframeAnimation.js";
 import { KeyframeParser } from "./KeyframeParser.js";
 
 /**
@@ -39,7 +39,7 @@ export class KeyframeAnimationParser {
             errors.push("keyframe animation with id=" + id + " is not ordered");
         }
 
-        return new ParserResult(new KeyframeAnim(id, sortedKeyframes), errors);
+        return new ParserResult(new MyKeyframeAnimation(id, sortedKeyframes), errors);
     }
 
     static arraysEqual(a, b) {
