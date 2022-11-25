@@ -40,6 +40,7 @@ export class MyCylinder extends CGFobject {
 
         for (var stack = 0; stack <= this.stacks; ++stack) {
             ang = 0;
+            const stackTexCoord = (this.stacks-stack) / this.stacks;
             for (var slice = 0; slice <= this.slices; ++slice) {
                 // Calculate vertex position
                 x = Math.cos(ang);
@@ -51,7 +52,7 @@ export class MyCylinder extends CGFobject {
                 // Push vertex normal
                 this.normals.push(x, y, normalSlope);
 
-                this.texCoords.push(slice / this.slices, stack / this.stacks);
+                this.texCoords.push(slice / this.slices, stackTexCoord);
                 ang += alphaAng;
             }
             radius += alphaRadius;
