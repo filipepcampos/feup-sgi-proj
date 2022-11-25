@@ -38,7 +38,6 @@ export class KeyframeAnimationParser {
         if (!this.arraysEqual(keyframes, sortedKeyframes)) {
             errors.push("keyframe animation with id=" + id + " is not ordered");
         }
-        // TODO: WARNING NOT BEING PRINTED
 
         return new ParserResult(new KeyframeAnim(id, sortedKeyframes), errors);
     }

@@ -23,14 +23,11 @@ export class KeyframeParser {
         const instantResult = FloatParser.parse(node, reader, "instant");
         
         if (node.children.length !== 5) {
-            // TODO: RETURN ERROR
-            return null;
+            return ParserResult.fromError("invalid number of children for tag <" + node.nodeName + ">, expected 5 but received " + node.children.length);
         }
 
         if (KeyframeParser.hasOrderError(node, reader)) {
-            // TODO: RETURN ERROR
-            console.log("wrong order");
-            return null;
+            return ParserResult.fromError("transformation order is incorrect for keyframe in instant ", instantResult.getValueOrDefault(0));
         }
 
         const transformationResult = this.parseTransformation(node, reader, scene);
