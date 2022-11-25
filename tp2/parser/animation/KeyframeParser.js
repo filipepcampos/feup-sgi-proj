@@ -11,15 +11,17 @@ const ROTATION_Y_INDEX = 2;
 const ROTATION_X_INDEX = 3;
 const SCALE_INDEX = 4;
 
+/**
+ * Class for parsing keyframes.
+ */
 export class KeyframeParser {
     static parse(node, reader, scene) {
         if (node.nodeName !== "keyframe") {
             return ParserResult.fromError("unknown tag <" + node.nodeName + ">");
         }
 
-        const instantResult = FloatParser.parse(node, reader, "instant"); // TODO: Error handle float
+        const instantResult = FloatParser.parse(node, reader, "instant");
         
-        // TODO: What should we do when there's no instant?
         if (node.children.length !== 5) {
             // TODO: RETURN ERROR
             return null;
@@ -31,9 +33,23 @@ export class KeyframeParser {
             return null;
         }
 
-        // PARSE TRANSFORMATIONS
         const transformationResult = this.parseTransformation(node, reader, scene);
-        return new ParserResult(new Keyframe(instantResult.getValue(), transformationResult.getValue())); // TODO: Error handling
+
+        return ParserResult.collect(
+            new Keyframe(
+                instantResult.getValueOrDefault(0),
+                transformationResult.getValueOrDefault(
+                    {
+                        "translation": vec3.fromValues(0, 0, 0),
+                        "rotationz": vec3.fromValues(0, 0, 0), 
+                        "rotationy": vec3.fromValues(0, 0, 0), 
+                        "rotationx": vec3.fromValues(0, 0, 0),
+                        "scale": vec3.fromValues(1, 1, 1)
+                    }
+                )
+            ), 
+            [instantResult, transformationResult]
+        );
     }
 
     static hasOrderError(node, reader) {

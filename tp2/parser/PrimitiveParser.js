@@ -221,11 +221,17 @@ export class PrimitiveParser {
      * @returns ParserResult containing an object with the parsed primitive and errors that occurred while parsing
      */
     static parsePatch(node, reader, scene, id) {
-        let degree_uResult = IntegerParser.parse(node, reader, 'degree_u', 1); // TODO: Check if max is 3 or not
+        let results = [];
+
+        let degree_uResult = IntegerParser.parse(node, reader, 'degree_u', 1);
         let degree_vResult = IntegerParser.parse(node, reader, 'degree_v', 1);
         let parts_u = IntegerParser.parse(node, reader, 'parts_u', 1);
         let parts_v = IntegerParser.parse(node, reader, 'parts_v', 1);
-        // TODO: Collect these results
+        
+        results.push(degree_uResult);
+        results.push(degree_vResult);
+        results.push(parts_u);
+        results.push(parts_v);
         
         const degree_u = degree_uResult.getValueOrDefault(1);
         const degree_v = degree_vResult.getValueOrDefault(1);
@@ -236,7 +242,6 @@ export class PrimitiveParser {
             return ParserResult.fromError("Invalid number of control vertices for patch with id=" + id);
         }
 
-        let results = [];
         let points = [];
         let sublist = [];
         const weight = 1.0;
@@ -261,8 +266,8 @@ export class PrimitiveParser {
             degree_u, 
             degree_v,
             points,
-            parts_u.getValueOrDefault(1), // TODO: CHECK DEFAULT
-            parts_v.getValueOrDefault(1)  // TODO: CHECK DEFAULT
+            parts_u.getValueOrDefault(1),
+            parts_v.getValueOrDefault(1)
         );
         return ParserResult.collect(new PrimitiveNode(id, patch), results, "parsing <patch> with id=" + id);
     }

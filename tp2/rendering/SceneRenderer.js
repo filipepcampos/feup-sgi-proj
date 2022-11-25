@@ -100,7 +100,7 @@ export class SceneRenderer {
             node.hasHighlight = this.displayComponent(child, material, texture, timeFactor, highlightMode) || node.hasHighlight;
         }
 
-        const hasTexture = texture !== "none"; // TODO: Check if this makes sense
+        const hasTexture = texture !== "none";
 
         if(hasHighlight && highlightMode) {
             this.sceneData.highlightShader.setUniformsValues({'scale': highlight.scale_h, 'timeFactor': timeFactor, 'targetColor': highlight.color.getArray(), 'hasTexture': hasTexture});

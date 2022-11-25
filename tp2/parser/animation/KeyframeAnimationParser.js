@@ -2,9 +2,10 @@ import { ParserResult } from "../ParserResult.js";
 import { KeyframeAnim } from "../../models/KeyframeAnim.js";
 import { KeyframeParser } from "./KeyframeParser.js";
 
-// TODO: Documentation
+/**
+ * Class for parsing keyframe animations.
+ */
 export class KeyframeAnimationParser {
-
     static parse(node, reader, scene) {
         if (node.nodeName !== "keyframeanim") {
             return ParserResult.fromError("unknown tag <" + node.nodeName + ">");

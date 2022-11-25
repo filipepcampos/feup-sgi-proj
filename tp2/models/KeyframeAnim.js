@@ -1,6 +1,13 @@
 import { MyAnimation } from "./wrappers/MyAnimation.js";
 
+/**
+ * Class that represents a keyframe animation
+ */
 export class KeyframeAnim extends MyAnimation {
+    /**
+     * @param {string} id - Id of the animation
+     * @param {*} keyframes - Keyframes of the animation
+     */
     constructor(id, keyframes) {
         super();
         this.id = id;
@@ -43,6 +50,11 @@ export class KeyframeAnim extends MyAnimation {
         }
     }
 
+    /**
+     * Gets the index of the last keyframe that has an instant lower than the given instant
+     * @param {number} instant - Instant to compare
+     * @returns {number} Index of the last keyframe that has an instant lower than the given instant
+     */
     getLastKeyframeIndex(instant) {
         for(let i = this.keyframes.length - 1; i >= 0; --i) {
             if(this.keyframes[i].instant <= instant){
