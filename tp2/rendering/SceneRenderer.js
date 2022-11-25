@@ -78,14 +78,15 @@ export class SceneRenderer {
 
 
         let texture = node.getTexture();
+        const gl = this.sceneData.scene.gl;
         if(texture === "inherit") {
             texture = parentTexture;
         }
         if(texture !== "none") {
-            texture.getCGFTexture().bind(0);
-            var gl = this.sceneData.scene.gl;
-            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl["REPEAT"]);
-            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl["REPEAT"]);
+            if(texture.getCGFTexture().bind(0)){
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl["REPEAT"]);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl["REPEAT"]);
+            }
         }
 
         scene.pushMatrix();
