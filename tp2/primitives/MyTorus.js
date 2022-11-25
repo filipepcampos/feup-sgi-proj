@@ -36,12 +36,12 @@ export class MyTorus extends CGFobject {
         let phiInc = 2*Math.PI / this.loops;
 
         let phiCache = [];
-		for(let loop = 0; loop < this.loops; ++loop){
+		for(let loop = 0; loop <= this.loops; ++loop){
 			phiCache.push([Math.sin(phi), Math.cos(phi)]);
             phi += phiInc;
 		}
 
-        for(let slice = 0; slice < this.slices; ++slice){ // theta
+        for(let slice = 0; slice <= this.slices; ++slice){ // theta
             let cosTheta = Math.cos(theta);
             let sinTheta = Math.sin(theta);
 
@@ -72,8 +72,8 @@ export class MyTorus extends CGFobject {
         }
 
         let sliceOffset = 0;
-        for(let slice = 0; slice < this.slices; ++slice){
-            let nextSliceOffset = ((slice+1) % this.slices) * this.loops;
+        for(let slice = 0; slice <= this.slices; ++slice){
+            let nextSliceOffset = ((slice+1) % (this.slices+1)) * this.loops;
 
             for(let loop = 0; loop < this.loops; ++loop){
                 let nextLoop = (loop+1) % this.loops;
@@ -92,6 +92,9 @@ export class MyTorus extends CGFobject {
 
             sliceOffset = nextSliceOffset;
         }
+
+        console.log("N_VERTICES:", this.vertices.length / 3);
+        console.log(this.indices);
 
 		this.primitiveType = this.scene.gl.TRIANGLES;
 		this.initGLBuffers();
