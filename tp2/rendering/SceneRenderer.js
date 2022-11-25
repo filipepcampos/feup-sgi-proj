@@ -83,6 +83,9 @@ export class SceneRenderer {
         }
         if(texture !== "none") {
             texture.getCGFTexture().bind(0);
+            var gl = this.sceneData.scene.gl;
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl["REPEAT"]);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl["REPEAT"]);
         }
 
         scene.pushMatrix();

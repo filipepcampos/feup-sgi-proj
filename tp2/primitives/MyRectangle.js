@@ -81,8 +81,8 @@ export class MyRectangle extends CGFobject {
 	 * @param {float} length_v - Vertical length of the texture
 	 */
 	 updateTexLength(length_u, length_v) {
-		let u = 1 / length_u;
-		let v = 1 / length_v;
+		let u = 1 / length_u / (this.x2-this.x1);
+		let v = 1 / length_v / (this.y2-this.y1);
 		let coords = [
 			0, v,
 			u, v,
