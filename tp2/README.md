@@ -31,6 +31,13 @@ repeat
   - The animation shows a barrel moving onto the road and a car moving to avoid it, causing it to go onto a railway on which a metro is moving. A small sphere is used to represent an explosion.
   - We used highlighted components in the police car (two on the sirens, one has a turn signal) and also one on the road sign post (to demonstrate the highlight with an texture).
 
+![Screenshot 1](images/screenshots/screenshot0.png)
+![Screenshot 2](images/screenshots/screenshot1.png)
+![Screenshot 3](images/screenshots/screenshot2.png)
+![Screenshot 4](images/screenshots/screenshot3.png)
+![Screenshot 5](images/screenshots/screenshot4.png)
+![Screenshot 6](images/screenshots/screenshot5.png)
+
 ----
 ## Issues/Problems
 
