@@ -355,6 +355,7 @@ export class MySceneGraph {
     parseAnimations(animationsNode) {
         let result = GenericChildParser.parse(animationsNode, this.reader, this.scene, KeyframeAnimationParser, "keyframeanim");
         this.sceneData.animations = result.getValue();
+        ParserErrorPrinter.print(result.getErrors());
         console.log("Animations", result);
         return null;
     }

@@ -18,7 +18,6 @@ void main() {
     if(hasTexture){
         vec4 textureColor = texture2D(uSampler, vTextureCoord);
         initialColor = initialColor * textureColor;
-        finalColor = targetColor * textureColor;
     }
     vec4 deltaColor = finalColor - initialColor;
     gl_FragColor = initialColor + (deltaColor * timeFactor);

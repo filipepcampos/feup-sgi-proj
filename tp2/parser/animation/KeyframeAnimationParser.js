@@ -16,16 +16,41 @@ export class KeyframeAnimationParser {
             return ParserResult.fromError("no ID defined for keyframeanim");
         }
 
-        // TODO: CHECK CRESCENT ORDER
         const children = node.children;
         let results = [];
         let keyframes = [];
+        let errors = [];
         for(const child of children){
             const keyframeResult = KeyframeParser.parse(child, reader, scene);
             results.push(keyframeResult);
-            keyframes.push(keyframeResult.getValue()); // TODO: Think about error handling
+            if (!keyframeResult.hasError()) {
+                keyframes.push(keyframeResult.getValue());
+            } else {
+                errors.push(keyframeResult.getErrors());
+            }
         }
 
-        return ParserResult.fromValue(new KeyframeAnim(id, keyframes));
+        let sortedKeyframes = keyframes.slice();
+        sortedKeyframes.sort((k1, k2) => {
+            return k1.instant > k2.instant;
+        });
+
+        if (!this.arraysEqual(keyframes, sortedKeyframes)) {
+            errors.push("keyframe animation with id=" + id + " is not ordered");
+        }
+        // TODO: WARNING NOT BEING PRINTED
+
+        return new ParserResult(new KeyframeAnim(id, sortedKeyframes), errors);
+    }
+
+    static arraysEqual(a, b) {
+        if (a === b) return true;
+        if (a == null || b == null) return false;
+        if (a.length !== b.length) return false;
+      
+        for (var i = 0; i < a.length; ++i) {
+          if (a[i] !== b[i]) return false;
+        }
+        return true;
     }
 }
