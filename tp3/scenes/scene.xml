@@ -68,6 +68,7 @@
         <texture id="tex_damaged_metal" file="scenes/images/damaged_metal.jpg"/>
         <texture id="tex_bump" file="scenes/images/bump.jpg"/>
         <texture id="tex_railway" file="scenes/images/railway.jpg"/>
+        <texture id="tex_wood_board" file="scenes/images/wood_board.jpg"/>
     </textures>
 
     <materials>
@@ -608,6 +609,37 @@
                 <componentref id="car" />
                 <componentref id="car_burnt" />
                 <componentref id="stopped_car" />
+                <componentref id="board"/>
+                <componentref id="cylinder"/>
+            </children>
+        </component>
+
+        <component id="board">
+            <transformation>
+                <translate x="0" y="2" z="0.0"/>
+                <scale x="1.0" y="0.2" z="1.0"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="tex_wood_board"  length_s="1.0" length_t="1.0"/>
+            <children>
+                <componentref id="p_cube"/>
+            </children>
+        </component>
+
+        <component id="piece">
+            <transformation>
+                <scale x="1.0" y="0.2" z="1.0"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="wheel_tire"/>
+                <componentref id="wheel_rims"/>
+                <componentref id="wheel_inner_base"/>
             </children>
         </component>
 
