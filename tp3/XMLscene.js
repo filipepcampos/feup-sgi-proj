@@ -140,8 +140,9 @@ export class XMLscene extends CGFscene {
     /** Handler called when the graph is finally loaded. 
      * As loading is asynchronous, this may be called already after the application has started the run loop
      */
-    onGraphLoaded() {
-        this.axis = new CGFaxis(this, this.sceneData.referenceLength);
+    onGraphLoaded(sceneData) {
+        this.sceneData = sceneData;
+        this.axis = new CGFaxis(this, sceneData.referenceLength);
 
         this.gl.clearColor(this.sceneData.background[0], this.sceneData.background[1], this.sceneData.background[2], this.sceneData.background[3]);
 

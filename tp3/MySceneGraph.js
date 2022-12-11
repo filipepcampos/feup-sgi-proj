@@ -43,7 +43,6 @@ export class MySceneGraph {
         // Establish bidirectional references between scene and graph.
         this.scene = scene;
         this.sceneData = new SceneData(scene);
-        scene.sceneData = this.sceneData;
 
         this.sceneData.highlightShader = new CGFshader(this.scene.gl, "shaders/highlight.vert", "shaders/highlight.frag");
 
@@ -81,7 +80,7 @@ export class MySceneGraph {
         this.loadedOk = true;
 
         // As the graph loaded ok, signal the scene so that any additional initialization depending on the graph can take place
-        this.scene.onGraphLoaded();
+        this.scene.onGraphLoaded(this.sceneData);
     }
 
     /**
