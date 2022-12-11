@@ -16,7 +16,7 @@ export class XMLscene extends CGFscene {
         super();
 
         this.interface = myinterface;
-        this.gameCTO = new MyGameCTO();
+        this.gameCTO = new MyGameCTO(this);
     }
 
     /**
@@ -166,9 +166,13 @@ export class XMLscene extends CGFscene {
         this.timeFactor = (currTime / this.highlightSpeed) % 5000 * Math.PI;
         this.timeFactor = (Math.sin(this.timeFactor) + 1.0) / 2.0;
 
-        for(const [id, anim] of Object.entries(this.sceneData.animations)){
-            anim.update((currTime - this.startTime) / 1000);
+        if(this.sceneInited){
+            for(const [id, anim] of Object.entries(this.sceneData.animations)){
+                anim.update((currTime - this.startTime) / 1000);
+            }
         }
+
+        this.gameCTO.update(currTime);
     }
 
     /**

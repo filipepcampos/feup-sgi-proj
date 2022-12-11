@@ -1,19 +1,25 @@
 import { MenuState } from "./states/MenuState.js";
+import { MySceneGraph } from "../MySceneGraph.js";
 
 export class MyGameCTO {
-    constructor() {
-        this.state = new MenuState();
+    constructor(scene) {
+        this.state = new MenuState(this);
+        this.scene = scene;
     }
 
     setState(state) {
         this.state = state;
     }
 
-    update() {
-        this.state.update();
+    update(currTime) {
+        this.state.update(currTime);
     }
 
     display() {
         this.state.display();
+    }
+
+    changeScene(filename) {
+        new MySceneGraph(filename, this.scene);
     }
 }
