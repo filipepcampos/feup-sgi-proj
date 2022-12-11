@@ -1,6 +1,7 @@
 import { CGFscene } from '../lib/CGF.js';
 import { CGFaxis,CGFcamera } from '../lib/CGF.js';
 import {SceneRenderer} from "./rendering/SceneRenderer.js";
+import { MyGameCTO } from './game/MyGameCTO.js';
 
 
 /**
@@ -15,6 +16,7 @@ export class XMLscene extends CGFscene {
         super();
 
         this.interface = myinterface;
+        this.gameCTO = new MyGameCTO();
     }
 
     /**
@@ -201,6 +203,7 @@ export class XMLscene extends CGFscene {
         }
 
         this.popMatrix();
+        this.gameCTO.display();
         // ---- END Background, camera and axis setup
     }
 }
