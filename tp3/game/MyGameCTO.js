@@ -5,6 +5,7 @@ export class MyGameCTO {
     constructor(scene) {
         this.state = new MenuState(this);
         this.scene = scene;
+        console.log(scene);
     }
 
     setState(state) {
