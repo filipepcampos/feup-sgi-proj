@@ -1,10 +1,10 @@
 import { SceneRenderer } from "../../rendering/SceneRenderer.js";
 
 export class MyPiece {
-    constructor(scene, tile) {
+    constructor(scene) {
         this.scene = scene;
         this.height = 0.05;  // TODO: VARIABLE?
-        this.tile = tile;
+        this.tile = null;
         this.renderer = new SceneRenderer(this.scene.sceneData); // TODO: Maybe receive in constructor
     }
 

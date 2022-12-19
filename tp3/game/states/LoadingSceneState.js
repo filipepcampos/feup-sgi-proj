@@ -1,15 +1,16 @@
-import { GameState } from './GameState.js';
+import { State } from './State.js';
 import { NextTurnState } from './NextTurnState.js';
 import { MyGameCTO } from '../MyGameCTO.js';
 
-export class LoadingSceneState extends GameState {
-    constructor(stateManager, gameCTO) {
-        super(stateManager, gameCTO);
+export class LoadingSceneState extends State {
+    constructor(stateManager) {
+        super(stateManager);
     }
 
     update(current) {
-        if(this.gameCTO.scene.sceneInited) {
-            this.stateManager.setState(new NextTurnState(this.stateManager, this.gameCTO));
+        if(this.stateManager.scene.sceneInited) {
+            let gameCTO = new MyGameCTO(this.stateManager.scene);
+            this.stateManager.setState(new NextTurnState(this.stateManager, gameCTO));
         }
     }
 
