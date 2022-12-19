@@ -42,6 +42,10 @@ export class XMLscene extends CGFscene {
 
         this.highlightSpeed = 500;
         this.timeFactor = 0;
+
+        // the activation of picking capabilities in WebCGF
+        // will use a shader for picking purposes (lib\shaders\picking\vertex.glsl and lib\shaders\picking\fragment.glsl)
+        this.setPickEnabled(true);
     }
 
     /**
@@ -175,10 +179,39 @@ export class XMLscene extends CGFscene {
         this.gameCTO.update(currTime);
     }
 
+    logPicking()
+	{
+		if (this.pickMode == false) {
+			// results can only be retrieved when picking mode is false
+			if (this.pickResults != null && this.pickResults.length > 0) {
+				for (var i=0; i< this.pickResults.length; i++) {
+					var obj = this.pickResults[i][0];
+					if (obj)
+					{
+						var customId = this.pickResults[i][1];				
+						console.log("Picked object: " + obj + ", with pick id " + customId);
+					}
+				}
+				this.pickResults.splice(0,this.pickResults.length);
+			}		
+		}
+	}
+
     /**
      * Displays the scene.
      */
     display() {
+        // When picking is enabled, the scene's display method is called once for picking, 
+		// and then again for rendering.
+		// logPicking does nothing in the beginning of the first pass (when pickMode is true)
+		// during the first pass, a picking buffer is filled.
+		// in the beginning of the second pass (pickMode false), logPicking checks the buffer and
+		// collects the id's of the picked object(s) 
+		this.logPicking();
+
+		// this resets the picking buffer (association between objects and ids)
+		this.clearPickRegistration();
+
         // ---- BEGIN Background, camera and axis setup
 
         // Clear image and depth buffer everytime we update the scene
