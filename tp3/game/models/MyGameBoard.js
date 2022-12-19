@@ -30,12 +30,12 @@ export class MyGameBoard {
 
     setupPieces() {
         for (let i = 0; i < NUM_COLS/2; i++){
-            this.addPiece(new MyPiece(this.scene), this.board[0][2*i+1]);
-            this.addPiece(new MyPiece(this.scene), this.board[1][2*i]);
-            this.addPiece(new MyPiece(this.scene), this.board[2][2*i+1]);
-            this.addPiece(new MyPiece(this.scene), this.board[7][2*i]);
-            this.addPiece(new MyPiece(this.scene), this.board[6][2*i+1]);
-            this.addPiece(new MyPiece(this.scene), this.board[5][2*i]);
+            this.addPiece(new MyPiece(this.scene, 0), this.board[0][2*i+1]);
+            this.addPiece(new MyPiece(this.scene, 0), this.board[1][2*i]);
+            this.addPiece(new MyPiece(this.scene, 0), this.board[2][2*i+1]);
+            this.addPiece(new MyPiece(this.scene, 1), this.board[7][2*i]);
+            this.addPiece(new MyPiece(this.scene, 1), this.board[6][2*i+1]);
+            this.addPiece(new MyPiece(this.scene, 1), this.board[5][2*i]);
         }
     }
 
