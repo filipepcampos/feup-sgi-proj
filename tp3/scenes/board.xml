@@ -953,9 +953,8 @@
         <!-- Car components -->
         <component id="car">
             <transformation>
-                <translate x="0" y="0" z="0.03"/>
-                <scale x="0.03" y="0.03" z="0.03"/>
-                <rotate axis="x" angle="-90"/>
+                <translate x="0" y="0.025" z="0"/>
+                <scale x="0.028" y="0.028" z="0.028"/>
             </transformation>
             <materials>
                 <material id="green" />

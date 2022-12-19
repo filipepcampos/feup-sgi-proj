@@ -18,4 +18,8 @@ export class StateManager {
     display() { 
         this.state.display();
     }
+
+    handleInput(type, obj) {
+        this.state.handleInput(type, obj);
+    }
 }

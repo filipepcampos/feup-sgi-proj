@@ -2,6 +2,7 @@ import { CGFscene } from '../lib/CGF.js';
 import { CGFaxis,CGFcamera } from '../lib/CGF.js';
 import {SceneRenderer} from "./rendering/SceneRenderer.js";
 import { StateManager } from './game/StateManager.js';
+import { PickingTypes } from "./game/PickingTypes.js";
 
 
 /**
@@ -188,14 +189,22 @@ export class XMLscene extends CGFscene {
 					var obj = this.pickResults[i][0];
 					if (obj)
 					{
-						var customId = this.pickResults[i][1];				
-						console.log("Picked object: " + obj + ", with pick id " + customId);
+						var customId = this.pickResults[i][1];
+                        this.stateManager.handleInput(this.getPickingType(customId), obj);
 					}
+                    
 				}
 				this.pickResults.splice(0,this.pickResults.length);
 			}		
 		}
 	}
+
+    getPickingType(id) {
+        if (id < PickingTypes.None) {
+            return PickingTypes.TileSelection;
+        }
+        return PickingTypes.None;
+    }
 
     /**
      * Displays the scene.

@@ -1,5 +1,7 @@
 import { MyPiece } from "./MyPiece.js";
 import { MyTile } from "./MyTile.js";
+import { MyRectangle } from "../../primitives/MyRectangle.js";
+import { PickingTypes } from "../PickingTypes.js";
 
 const NUM_ROWS = 8;
 const NUM_COLS = 8;
@@ -12,6 +14,7 @@ export class MyGameBoard {
         this.setupPieces();
         this.boardHeight = 0.2;
         this.tileWidth = 1/8;
+        this.tileModel = new MyRectangle(scene, -0.5*this.tileWidth, 0.5*this.tileWidth, -0.5*this.tileWidth, 0.5*this.tileWidth);
     }
 
     setupBoard() {
@@ -58,9 +61,12 @@ export class MyGameBoard {
     display() {
         for (let i = 0; i < NUM_ROWS; ++i) {
             for (let j = 0; j < NUM_COLS; ++j) {
-                this.displayTile(this.board[i][j]);
+                const tile = this.board[i][j];
+                this.scene.registerForPick(i*NUM_COLS+j+1+PickingTypes.TileSelection, tile);
+                this.displayTile(tile);
             }
         }
+        this.scene.clearPickRegistration();
     }
 
     displayTile(tile) {
@@ -68,8 +74,14 @@ export class MyGameBoard {
         let colOffset = (tile.col-4) * this.tileWidth + this.tileWidth/2;
         let rowOffset = (tile.row-4) * this.tileWidth + this.tileWidth/2;
         this.scene.translate(colOffset, this.boardHeight / 2, rowOffset);
-        this.scene.rotate(90 * DEGREE_TO_RAD, 1, 0, 0);  // TODO: ROTATION IN XML
         tile.display();
+
+        if(this.scene.pickMode) {
+            this.scene.translate(0, 0.002, 0);
+            this.scene.rotate(-90*DEGREE_TO_RAD, 1, 0, 0);
+            this.tileModel.display();
+        }
+        
         this.scene.popMatrix();
     }
     

@@ -13,4 +13,8 @@ export class NextTurnState extends GameState {
     display() {
         this.gameCTO.display();
     }
+
+    handleInput(type, obj){
+        console.log("Yo I got " + type + " and obj " + obj.row + "/" + obj.col);
+    }
 }

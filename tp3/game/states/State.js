@@ -3,7 +3,7 @@ export class State {
         this.stateManager = stateManager;
     }
     
-    handlePicking() {}
+    handleInput(type, obj) {}
     update() {}
     display() {}
 }
