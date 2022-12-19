@@ -1,7 +1,7 @@
 import { CGFscene } from '../lib/CGF.js';
 import { CGFaxis,CGFcamera } from '../lib/CGF.js';
 import {SceneRenderer} from "./rendering/SceneRenderer.js";
-import { MyGameCTO } from './game/MyGameCTO.js';
+import { StateManager } from './game/StateManager.js';
 
 
 /**
@@ -16,7 +16,7 @@ export class XMLscene extends CGFscene {
         super();
 
         this.interface = myinterface;
-        this.gameCTO = new MyGameCTO(this);
+        this.stateManager = new StateManager(this);
     }
 
     /**
@@ -176,7 +176,7 @@ export class XMLscene extends CGFscene {
             }
         }
 
-        this.gameCTO.update(currTime);
+        this.stateManager.update(currTime);
     }
 
     logPicking()
@@ -241,7 +241,7 @@ export class XMLscene extends CGFscene {
         }
 
         this.popMatrix();
-        this.gameCTO.display();
+        this.stateManager.display();
         // ---- END Background, camera and axis setup
     }
 }

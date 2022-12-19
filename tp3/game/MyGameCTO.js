@@ -1,5 +1,6 @@
 import { MenuState } from "./states/MenuState.js";
 import { MySceneGraph } from "../MySceneGraph.js";
+import { MyGameBoard } from "./models/MyGameBoard.js";
 
 export class MyGameCTO {
     constructor(scene) {
@@ -18,7 +19,7 @@ export class MyGameCTO {
     }
 
     display() {
-        this.state.display();
+        this.board.display();
     }
 
     changeScene(filename) {

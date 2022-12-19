@@ -1,15 +1,16 @@
 import { State } from './State.js';
-import { NextTurnState } from './NextTurnState.js';
+import { LoadingSceneState } from './LoadingSceneState.js';
+import { MyGameCTO } from '../MyGameCTO.js';
 
 export class MenuState extends State {
-    constructor(gameCTO) {
-        super(gameCTO);
+    constructor(stateManager) {
+        super(stateManager);
         this.start = 0;
         this.changed = false;
     }
 
     update(current) {
-        this.gameCTO.setState(new NextTurnState(this.gameCTO)); // TODO: Change for loading
+        this.startGame();
         if (!this.changed) {
             if (this.start == 0) this.start = current;
             else {
@@ -20,6 +21,11 @@ export class MenuState extends State {
                 }                                    
             }
         }
+    }
+
+    startGame() {
+        let gameCTO = new MyGameCTO(this.stateManager.scene);
+        this.stateManager.setState(new LoadingSceneState(this.stateManager, gameCTO));
     }
 
     display() {

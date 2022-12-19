@@ -1,6 +1,6 @@
 export class State {
-    constructor(gameCTO) {
-        this.gameCTO = gameCTO;
+    constructor(stateManager) {
+        this.stateManager = stateManager;
     }
     
     handlePicking() {}
