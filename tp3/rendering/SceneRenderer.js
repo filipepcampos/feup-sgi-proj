@@ -9,8 +9,6 @@ export class SceneRenderer {
      */
     constructor(sceneData) {
         this.sceneData = sceneData;
-        this.activeShader = "default";
-        this.hasAnyHighlight = false;
     }
 
     /**
@@ -25,21 +23,6 @@ export class SceneRenderer {
         this.displayComponent(node, parentMaterial, parentTexture, timeFactor, true, true);
         this.sceneData.scene.setActiveShader(this.sceneData.scene.defaultShader);
         this.displayComponent(node, parentMaterial, parentTexture, timeFactor, false);
-        // if(this.activeShader === "default"){
-        //     this.hasAnyHighlight = this.displayComponent(node, parentMaterial, parentTexture, timeFactor, false);
-        //     if(this.hasAnyHighlight){
-        //         this.sceneData.scene.setActiveShader(this.sceneData.highlightShader);
-        //         this.displayComponent(node, parentMaterial, parentTexture, timeFactor, true, true);
-        //     }
-        //     this.activeShader = "highlight";
-        // } else {
-        //     if(this.hasAnyHighlight){
-        //         this.displayComponent(node, parentMaterial, parentTexture, timeFactor, true, true);
-        //     }
-        //     this.hasAnyHighlight = this.sceneData.scene.setActiveShaderSimple(this.sceneData.scene.defaultShader);
-        //     this.displayComponent(node, parentMaterial, parentTexture, timeFactor, false);
-        //     this.activeShader = "default";
-        // }
     }
 
     /**
@@ -102,10 +85,9 @@ export class SceneRenderer {
 
         const highlight = node.highlight;
         const hasHighlight = highlight != null && highlight.active;
-        node.hasHighlight = hasHighlight;
 
         for(const child of node.getChildComponents()){
-            node.hasHighlight = this.displayComponent(child, material, texture, timeFactor, highlightMode) || node.hasHighlight;
+            this.displayComponent(child, material, texture, timeFactor, highlightMode);
         }
 
         const hasTexture = texture !== "none";
