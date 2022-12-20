@@ -1,9 +1,11 @@
 import { GameState } from './GameState.js';
 import { DestinationSelectionState } from './DestinationSelectionState.js';
+import { GameRenderer } from "../../rendering/GameRenderer.js";
 
 export class NextTurnState extends GameState {
     constructor(stateManager, gameCTO) {
         super(stateManager, gameCTO);
+        this.renderer = new GameRenderer(gameCTO.scene);
     }
 
     update(current) {
@@ -11,7 +13,7 @@ export class NextTurnState extends GameState {
     }
 
     display() {
-        this.gameCTO.display();
+        this.renderer.display(this.gameCTO);
     }
 
     handleInput(type, obj){

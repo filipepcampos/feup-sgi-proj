@@ -13,22 +13,4 @@ export class MyTile {
     clearPiece() {
         this.piece = null;
     }
-
-    display() {
-        if (this.piece) {
-            this.displayPiece();
-        } else {
-            this.displayTile();
-        }
-    }
-
-    displayPiece() {
-        // TODO: 4 IN VARIABLE
-        // TODO: TRANSALTE FOR HEIGHT
-        this.piece.display();
-    }
-
-    displayTile() {
-        // TODO
-    }
 }
