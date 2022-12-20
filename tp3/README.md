@@ -84,6 +84,7 @@ Note: States receive needed information on constructor
 - Score
 - Timer
 - Seconds scene (soccer field with ronaldo and messi as kings)
+- Documentation
 
 Possible improvements:
 - Add sxs elements (instead of reserver ids?)

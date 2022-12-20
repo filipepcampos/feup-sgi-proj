@@ -27,10 +27,21 @@ export class MyGameCTO {
 
     movePiece(piece, targetTile) {
         if (this._canMovePiece(piece, targetTile)) {
+            this.capturePieceBetweenTiles(piece.tile, targetTile);
             this.board.movePiece(piece, targetTile);
             return true;
         }
         return false;
+    }
+
+    capturePieceBetweenTiles(startTile, endTile) {
+        const deltaRow = Math.sign(endTile.row - startTile.row);
+        const deltaCol = Math.sign(endTile.col - startTile.col);
+        const tile = this.board.getTile(startTile.row + deltaRow, startTile.col + deltaCol);
+        console.log("Can capture tile " + tile.row + "/" + tile.col + "?");
+        if(tile != endTile) {
+            tile.piece = null;
+        }
     }
 
     update(currTime) {
@@ -39,6 +50,25 @@ export class MyGameCTO {
 
     changeScene(filename) {
         new MySceneGraph(filename, this.scene);
+    }
+
+    getPossibleCaptures(piece) {
+        let rowDirection = piece.playerId == 0 ? 1 : -1;
+        const pieceRow = piece.tile.row;
+        const pieceCol = piece.tile.col;
+        
+        // Check if diagonal is occupied, and the following space is empty
+        let possibleDestinationTiles = [];
+        for (let offset of [-1 , 1]) {
+            let capturedTile = this.board.getTile(pieceRow+rowDirection, pieceCol+offset);
+            if (capturedTile && capturedTile.piece != null && capturedTile.piece.playerId != piece.playerId) { // There's an enemy piece in the diagonal
+                let destinationTile = this.board.getTile(pieceRow+rowDirection*2, pieceCol+offset*2);
+                if (destinationTile.piece == null) { // Tile is currently empty
+                    possibleDestinationTiles.push(destinationTile);
+                }
+            }
+        }
+        return possibleDestinationTiles;
     }
 
     _canMovePiece(piece, targetTile) {
@@ -54,11 +84,16 @@ export class MyGameCTO {
         if (piece.playerId == 0 && deltaRow <= 0) return false;
         if (piece.playerId == 1 && deltaRow >= 0) return false;
 
-        // Verify it moved diagonally
-        if (Math.abs(deltaRow) !== Math.abs(deltaCol)) return false;
+        const possibleCaptures = this.getPossibleCaptures(piece);
+        if(possibleCaptures.length > 0) {
+            return possibleCaptures.includes(targetTile);
+        } else {
+            // Verify it moved diagonally
+            if (Math.abs(deltaRow) !== Math.abs(deltaCol)) return false;
 
-        // Verify if it moved the correct distance
-        if (Math.abs(deltaRow) + Math.abs(deltaCol) !== 2) return false;
+            // Verify if it moved the correct distance
+            if (Math.abs(deltaRow) + Math.abs(deltaCol) !== 2) return false;
+        }
 
         return true;
     }

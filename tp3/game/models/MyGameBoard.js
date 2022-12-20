@@ -1,6 +1,5 @@
 import { MyPiece } from "./MyPiece.js";
 import { MyTile } from "./MyTile.js";
-import { MyRectangle } from "../../primitives/MyRectangle.js";
 
 const NUM_ROWS = 8;
 const NUM_COLS = 8;
@@ -53,6 +52,9 @@ export class MyGameBoard {
         this.addPiece(piece, destinationTile);
     }
 
+    getTile(row, col){
+        return this.board[row][col];
+    }
 }
 
 // TODO: Possible methods:
