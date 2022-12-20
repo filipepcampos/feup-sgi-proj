@@ -17,9 +17,10 @@ export class NextTurnState extends GameState {
     }
 
     handleInput(type, obj){
-        console.log("Yo I got " + type + " and obj " + obj.row + "/" + obj.col);
         // TODO: verify type == tile and tile has obj
-        if(obj.piece != null){
+        console.log("NextTurnState: Yo I got " + type + " and obj " + obj.row + "/" + obj.col);
+        if(obj.piece != null && this.gameCTO.canPickPiece(obj.piece)){
+            this.gameCTO.pickPiece(obj.piece);
             this.stateManager.setState(new DestinationSelectionState(this.stateManager, this.gameCTO, obj));
         }
     }

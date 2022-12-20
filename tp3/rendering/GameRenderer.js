@@ -7,6 +7,6 @@ export class GameRenderer {
     }
 
     display(gameCTO) {
-        this.boardRenderer.display(gameCTO.board);
+        this.boardRenderer.display(gameCTO.board, gameCTO.selectedPiece);
     }
 }

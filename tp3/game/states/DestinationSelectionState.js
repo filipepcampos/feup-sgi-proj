@@ -19,13 +19,16 @@ export class DestinationSelectionState extends GameState {
 
     handleInput(type, obj){
         // TODO: CHECK TYPE
-        console.log("Yo I got " + type + " and obj " + obj.row + "/" + obj.col);
-        if(obj.piece == null) {
-            this.gameCTO.board.movePiece(this.startTile.piece, obj);
+        console.log("DestinationSelectionState: Yo I got " + type + " and obj " + obj.row + "/" + obj.col);
+        if(this.gameCTO.movePiece(this.startTile.piece, obj)){ // Success
+            this.gameCTO.switchPlayer();
+            this.gameCTO.unpickPiece();
             this.stateManager.setState(new NextTurnState(this.stateManager, this.gameCTO));
-        }
-        if(obj == this.startTile) { // Cancel move
-            this.stateManager.setState(new NextTurnState(this.stateManager, this.gameCTO));    
+        } else {
+            if(obj == this.startTile) { // Cancel move
+                this.gameCTO.unpickPiece();
+                this.stateManager.setState(new NextTurnState(this.stateManager, this.gameCTO));    
+            }
         }
     }
 }

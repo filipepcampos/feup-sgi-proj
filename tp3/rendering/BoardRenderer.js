@@ -13,7 +13,7 @@ export class BoardRenderer {
         this.boardHeight = 0.2;
     }
 
-    display(board) {
+    display(board, selectedPiece) {
         const numRows = board.board.length;
         const numCols = board.board[0].length;
 
@@ -21,19 +21,22 @@ export class BoardRenderer {
             for (let j = 0; j < numCols; ++j) {
                 const tile = board.board[i][j];
                 this.scene.registerForPick(i*numCols+j+1+PickingTypes.TileSelection, tile);
-                this.displayTile(tile);
+                this.displayTile(tile, selectedPiece);
             }
         }
         this.scene.clearPickRegistration();
     }
 
-    displayTile(tile) {
+    displayTile(tile, selectedPiece) {
         this.scene.pushMatrix();
         let colOffset = (tile.col-4) * this.tileWidth + this.tileWidth/2;
         let rowOffset = (tile.row-4) * this.tileWidth + this.tileWidth/2;
         this.scene.translate(colOffset, this.boardHeight / 2, rowOffset);
 
         if(tile.piece) {
+            if(selectedPiece == tile.piece) {
+                this.scene.translate(0, 0.05, 0);
+            }
             this.displayPiece(tile.piece);
         }
 
