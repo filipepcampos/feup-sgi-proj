@@ -67,3 +67,25 @@ Note: States receive needed information on constructor
 - EndGame
   - Display game stats
   - Button to menu
+
+## Missing Features
+
+- Gameplay
+- Check game over
+- Kings
+- Eat pieces
+- Menu
+- Loading
+- Animation after choosing the destination piece
+- Auxiliary Board
+- Game Sequence (Undo / Movie)
+- Undo/Movie Buttons 
+- Animation between cameras
+- Score
+- Timer
+- Seconds scene (soccer field with ronaldo and messi as kings)
+
+Possible improvements:
+- Add sxs elements (instead of reserver ids?)
+- Highlight possible destination tiles
+- Change CTO name
