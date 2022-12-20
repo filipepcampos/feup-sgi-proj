@@ -1,13 +1,17 @@
 <sxs>
     <scene root="root" axis_length="0.001"/>
-    <views default="perspective_camera">
+    <views default="player0_camera">
         <perspective id="perspective_camera" near="0.1" far="500" angle="45">
             <from x="25" y="25" z="45" />
             <to x="5" y="0" z="15" />
         </perspective>
+        <perspective id="player0_camera" near="0.1" far="500" angle="90">
+            <from x="0" y="3" z="-1" />
+            <to x="0" y="2.5" z="0" />
+        </perspective>
         <ortho id="ortho_camera" near="0.1" far="500" left="-30" right="30" top="30" bottom="-30">
             <from x="25" y="40" z="25" />
-            <to x="0" y="0" z="0" />
+            <to x="0" y="2" z="0" />
         </ortho>
     </views>
 
