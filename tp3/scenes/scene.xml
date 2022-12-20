@@ -609,14 +609,25 @@
                 <componentref id="car" />
                 <componentref id="car_burnt" />
                 <componentref id="stopped_car" />
+                <componentref id="boardset"/>
+            </children>
+        </component>
+
+        <component id="boardset">
+            <transformation>
+                <translate x="0" y="2" z="0.0"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
                 <componentref id="board"/>
-                <componentref id="cylinder"/>
             </children>
         </component>
 
         <component id="board">
             <transformation>
-                <translate x="0" y="2" z="0.0"/>
                 <scale x="1.0" y="0.2" z="1.0"/>
             </transformation>
             <materials>
@@ -949,6 +960,43 @@
                 <primitiveref id="sphere"/>
             </children>
             <animation id="explosion_animation"/>
+        </component>
+
+
+        <component id="piece0">
+            <transformation>
+                <translate x="0" y="0.025" z="0"/>
+                <scale x="0.028" y="0.028" z="0.028"/>
+            </transformation>
+            <materials>
+                <material id="green" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="car_front"/>
+                <componentref id="car_top" />
+                <componentref id="car_back" />
+                <componentref id="car_laterals"/>
+                <componentref id="car_bottom"/>
+            </children>
+        </component>
+
+        <component id="piece1">
+            <transformation>
+                <translate x="0" y="0.025" z="0"/>
+                <scale x="0.028" y="0.028" z="0.028"/>
+            </transformation>
+            <materials>
+                <material id="red" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="car_front"/>
+                <componentref id="car_top" />
+                <componentref id="car_back" />
+                <componentref id="car_laterals"/>
+                <componentref id="car_bottom"/>
+            </children>
         </component>
 
         <!-- Car components -->

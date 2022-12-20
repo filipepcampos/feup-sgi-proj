@@ -245,12 +245,9 @@ export class XMLscene extends CGFscene {
             // Draw axis
             this.setDefaultAppearance();
 
-            // Displays the scene.
-            this.renderer.display(this.timeFactor);
         }
-
-        this.popMatrix();
         this.stateManager.display();
+        this.popMatrix();
         // ---- END Background, camera and axis setup
     }
 }

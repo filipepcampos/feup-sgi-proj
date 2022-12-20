@@ -11,12 +11,16 @@ export class BoardRenderer {
         this.tileWidth = 1/8;
         this.tileModel = new MyRectangle(scene, -0.5*this.tileWidth, 0.5*this.tileWidth, -0.5*this.tileWidth, 0.5*this.tileWidth);
         this.boardHeight = 0.2;
+        this.boardsetTransformationMatrix = this.getBoardsetTransformationMatrix();
+        console.log(this.boardsetTransformationMatrix);
     }
 
     display(board, selectedPiece) {
         const numRows = board.board.length;
         const numCols = board.board[0].length;
 
+        this.scene.pushMatrix();
+        this.scene.multMatrix(this.boardsetTransformationMatrix);
         for (let i = 0; i < numRows; ++i) {
             for (let j = 0; j < numCols; ++j) {
                 const tile = board.board[i][j];
@@ -25,6 +29,7 @@ export class BoardRenderer {
             }
         }
         this.scene.clearPickRegistration();
+        this.scene.popMatrix();
     }
 
     displayTile(tile, selectedPiece) {
@@ -53,10 +58,27 @@ export class BoardRenderer {
 
     displayPiece(piece) {
         if(piece.playerId == 0) {
-            this.componentRenderer.display(0, this.scene.sceneData.components["car"]);
+            this.componentRenderer.display(0, this.scene.sceneData.components["piece0"]);
         } else {
             this.scene.rotate(180*DEGREE_TO_RAD, 0, 1, 0);
-            this.componentRenderer.display(0, this.scene.sceneData.components["car"]);
+            this.componentRenderer.display(0, this.scene.sceneData.components["piece1"]);
         }
+    }
+
+    getBoardsetTransformationMatrix(node=this.scene.sceneData.components[this.scene.sceneData.root], matrix=mat4.create()) {
+        const nodeMatrix = node.getTransformation() != null ? node.getTransformation() : mat4.create();
+        const newMatrix = mat4.create();
+        mat4.multiply(newMatrix, matrix, nodeMatrix);
+        
+        if(node.id == "boardset") {
+            return newMatrix;
+        }
+        for(const child of node.getChildComponents()) {
+            let mx = this.getBoardsetTransformationMatrix(child, newMatrix);
+            if(mx){
+                return mx;
+            }
+        }
+        return null;
     }
 }
