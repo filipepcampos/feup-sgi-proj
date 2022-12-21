@@ -9,6 +9,8 @@ export class SceneRenderer {
      */
     constructor(sceneData) {
         this.sceneData = sceneData;
+        this.activeShader = "default";
+        this.hasAnyHighlight = false;
     }
 
     /**
@@ -19,10 +21,27 @@ export class SceneRenderer {
      * @param {MyTexture} parentTexture - Reference to the parent's texture
      */
     display(timeFactor, node=this.sceneData.components[this.sceneData.root], parentMaterial=null, parentTexture=null) {
-        this.sceneData.scene.setActiveShader(this.sceneData.highlightShader);
-        this.displayComponent(node, parentMaterial, parentTexture, timeFactor, true, true);
-        this.sceneData.scene.setActiveShader(this.sceneData.scene.defaultShader);
-        this.displayComponent(node, parentMaterial, parentTexture, timeFactor, false);
+        if(this.sceneData.scene.pickMode) {
+            this.displayComponent(node, parentMaterial, parentTexture, timeFactor, false);
+            this.displayComponent(node, parentMaterial, parentTexture, timeFactor, true);
+        } else {
+            if(this.activeShader === "default"){
+                this.hasAnyHighlight = this.displayComponent(node, parentMaterial, parentTexture, timeFactor, false);
+                if(this.hasAnyHighlight){
+                    this.sceneData.scene.setActiveShader(this.sceneData.highlightShader);
+                    this.displayComponent(node, parentMaterial, parentTexture, timeFactor, true);
+                }
+                this.activeShader = "highlight";
+            } else {
+                if(this.hasAnyHighlight){
+                    this.displayComponent(node, parentMaterial, parentTexture, timeFactor, true);
+                }
+                this.sceneData.scene.setActiveShader(this.sceneData.scene.defaultShader);
+                this.displayComponent(node, parentMaterial, parentTexture, timeFactor, false);
+                this.activeShader = "default";
+            }
+            this.previouslyInPickMode = false;
+        }
     }
 
     /**
@@ -85,9 +104,14 @@ export class SceneRenderer {
 
         const highlight = node.highlight;
         const hasHighlight = highlight != null && highlight.active;
+        node.hasHighlight = hasHighlight;
+
+        if(node.pickingId != null) {
+            this.sceneData.scene.registerForPick(node.pickingId, node.pickingObject);
+        }
 
         for(const child of node.getChildComponents()){
-            this.displayComponent(child, material, texture, timeFactor, highlightMode);
+            node.hasHighlight = this.displayComponent(child, material, texture, timeFactor, highlightMode) || node.hasHighlight;
         }
 
         const hasTexture = texture !== "none";
@@ -95,7 +119,7 @@ export class SceneRenderer {
         if(hasHighlight && highlightMode) {
             this.sceneData.highlightShader.setUniformsValues({'scale': highlight.scale_h, 'timeFactor': timeFactor, 'targetColor': highlight.color.getArray(), 'hasTexture': hasTexture});
         }
-        if(hasHighlight == highlightMode) {
+        if(hasHighlight == highlightMode && !this.sceneData.scene.pickMode) {
             for(const child of node.getChildPrimitives()){
                 this.displayPrimitive(child, texture);
             }
@@ -108,11 +132,11 @@ export class SceneRenderer {
             parentTexture.getCGFTexture().bind(0);
         }
         scene.popMatrix();
-        
+
         if(material != parentMaterial && parentMaterial != null) {
             parentMaterial.getCGFAppearance().apply();
         }
-        
+
         return node.hasHighlight;
     }
 }

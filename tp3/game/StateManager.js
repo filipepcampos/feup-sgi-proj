@@ -1,5 +1,4 @@
 import { MenuState } from "./states/MenuState.js";
-import { MySceneGraph } from "../MySceneGraph.js";
 
 export class StateManager {
     constructor(scene) {
@@ -15,7 +14,7 @@ export class StateManager {
         this.state.update(current);
     }
 
-    display() { 
+    display() {
         this.state.display();
     }
 

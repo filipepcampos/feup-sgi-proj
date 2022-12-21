@@ -1,19 +1,13 @@
 import { GameState } from './GameState.js';
 import { DestinationSelectionState } from './DestinationSelectionState.js';
-import { GameRenderer } from "../../rendering/GameRenderer.js";
 
 export class NextTurnState extends GameState {
-    constructor(stateManager, gameCTO) {
-        super(stateManager, gameCTO);
-        this.renderer = new GameRenderer(gameCTO.scene);
-    }
-
-    update(current) {
-        
+    constructor(stateManager, gameCTO, renderer) {
+        super(stateManager, gameCTO, renderer);
     }
 
     display() {
-        this.renderer.display(this.gameCTO);
+        this.renderer.display(this.gameCTO, this.timeFactor);
     }
 
     handleInput(type, obj){
@@ -21,7 +15,7 @@ export class NextTurnState extends GameState {
         console.log("NextTurnState: Yo I got " + type + " and obj " + obj.row + "/" + obj.col);
         if(obj.piece != null && this.gameCTO.canPickPiece(obj.piece)){
             this.gameCTO.pickPiece(obj.piece);
-            this.stateManager.setState(new DestinationSelectionState(this.stateManager, this.gameCTO, obj));
+            this.stateManager.setState(new DestinationSelectionState(this.stateManager, this.gameCTO, this.renderer, obj));
         }
     }
 }

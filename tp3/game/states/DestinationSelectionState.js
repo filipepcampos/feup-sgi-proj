@@ -1,12 +1,10 @@
 import { GameState } from './GameState.js';
 import { NextTurnState } from './NextTurnState.js';
-import { GameRenderer } from "../../rendering/GameRenderer.js";
 
 export class DestinationSelectionState extends GameState {
-    constructor(stateManager, gameCTO, startTile) {
-        super(stateManager, gameCTO);
+    constructor(stateManager, gameCTO, renderer, startTile) {
+        super(stateManager, gameCTO, renderer);
         this.startTile = startTile;
-        this.renderer = new GameRenderer(gameCTO.scene);
     }
 
     update(current) {
@@ -14,7 +12,7 @@ export class DestinationSelectionState extends GameState {
     }
 
     display() {
-        this.renderer.display(this.gameCTO);
+        this.renderer.display(this.gameCTO, this.timeFactor);
     }
 
     handleInput(type, obj){
@@ -24,11 +22,11 @@ export class DestinationSelectionState extends GameState {
         if(this.gameCTO.movePiece(this.startTile.piece, obj)){ // Success
             this.gameCTO.switchPlayer();
             this.gameCTO.unpickPiece();
-            this.stateManager.setState(new NextTurnState(this.stateManager, this.gameCTO));
+            this.stateManager.setState(new NextTurnState(this.stateManager, this.gameCTO, this.renderer));
         } else {
             if(obj == this.startTile) { // Cancel move
                 this.gameCTO.unpickPiece();
-                this.stateManager.setState(new NextTurnState(this.stateManager, this.gameCTO));    
+                this.stateManager.setState(new NextTurnState(this.stateManager, this.gameCTO, this.renderer));    
             }
         }
     }
