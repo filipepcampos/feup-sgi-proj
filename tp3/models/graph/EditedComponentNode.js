@@ -1,7 +1,9 @@
- export class PickableComponentNode {
-    constructor(id, component) {
-        this.id = id;
+export class EditedComponentNode {
+    constructor(component, offsetTransformation, highlight=null) {
         this.component = component;
+        this.transformation = [];
+        mat4.multiply(this.transformation, offsetTransformation, this.component.getTransformation());
+        this.highlight = highlight==null ? this.component.highlight : highlight;
     }
 
     /**
@@ -9,7 +11,7 @@
      * @returns {string} - Id of the component
      */
     getId() {
-        return this.id;
+        return this.component.id;
     }
 
     /**
@@ -33,11 +35,11 @@
      * @returns {MyTransformation} transformation - Transformation object
      */
     getTransformation() {
-        return this.component.getTransformation();
+        return this.transformation;
     }
 
     getHighlight() {
-        return this.component.getHighlight();
+        return this.highlight;
     }
 
     /**

@@ -57,6 +57,10 @@
         return this.primitives;
     }
 
+    getHighlight() {
+        return this.highlight;
+    }
+
     /**
      * Get the transformation object
      * @returns {MyTransformation} transformation - Transformation object

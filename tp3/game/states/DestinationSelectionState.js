@@ -7,10 +7,6 @@ export class DestinationSelectionState extends GameState {
         this.startTile = startTile;
     }
 
-    update(current) {
-        
-    }
-
     display() {
         this.renderer.display(this.gameCTO, this.timeFactor);
     }

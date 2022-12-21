@@ -40,7 +40,6 @@ export class SceneRenderer {
                 this.displayComponent(node, parentMaterial, parentTexture, timeFactor, false);
                 this.activeShader = "default";
             }
-            this.previouslyInPickMode = false;
         }
     }
 
@@ -102,7 +101,7 @@ export class SceneRenderer {
             node.animation.apply(scene);
         }
 
-        const highlight = node.highlight;
+        const highlight = node.getHighlight();
         const hasHighlight = highlight != null && highlight.active;
         node.hasHighlight = hasHighlight;
 
@@ -116,10 +115,10 @@ export class SceneRenderer {
 
         const hasTexture = texture !== "none";
 
-        if(hasHighlight && highlightMode) {
+        if(hasHighlight && highlightMode && !this.sceneData.scene.pickMode) {
             this.sceneData.highlightShader.setUniformsValues({'scale': highlight.scale_h, 'timeFactor': timeFactor, 'targetColor': highlight.color.getArray(), 'hasTexture': hasTexture});
         }
-        if(hasHighlight == highlightMode && !this.sceneData.scene.pickMode) {
+        if(hasHighlight == highlightMode) {
             for(const child of node.getChildPrimitives()){
                 this.displayPrimitive(child, texture);
             }

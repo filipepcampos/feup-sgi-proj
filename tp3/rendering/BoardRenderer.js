@@ -1,6 +1,9 @@
 import { PickingTypes } from "../game/PickingTypes.js";
 import { MyRectangle } from "../primitives/MyRectangle.js";
 import {PickableComponentNode} from "../models/graph/PickableComponentNode.js";
+import {EditedComponentNode} from "../models/graph/EditedComponentNode.js";
+import {Highlight} from "../models/Highlight.js";
+import {Color} from "../models/Color.js";
 
 const DEGREE_TO_RAD = Math.PI / 180;
 
@@ -70,9 +73,20 @@ export class BoardRenderer {
     createPiece(piece, pickingId, selectedPiece) {
         const component = this.scene.sceneData.components["piece" + piece.playerId];
         const [colOffset, rowOffset] = this.getTileOffsets(piece.tile);
+
         const transformation = mat4.create();
-        mat4.translate(transformation, transformation, [colOffset, this.boardHeight / 2 + (piece == selectedPiece ? 0.1 : 0), rowOffset]);
-        return new PickableComponentNode("_piece"+pickingId, component, transformation, pickingId, piece.tile);
+        mat4.translate(transformation, transformation, [colOffset, this.boardHeight / 2, rowOffset]);
+
+        let highlight = null;
+        if (piece === selectedPiece) {
+            mat4.translate(transformation, transformation, [0, 0.1, 0]);
+
+            const color = new Color(1.0, 1.0, 0.0, 1.0);
+            highlight = new Highlight(color, 1.1);
+        }
+
+        const editedComponent = new EditedComponentNode(component, transformation, highlight);
+        return new PickableComponentNode("_piece"+pickingId, editedComponent, pickingId, piece.tile);
     }
 
     getBoardsetTransformationMatrix(node=this.scene.sceneData.components[this.scene.sceneData.root], matrix=mat4.create()) {
