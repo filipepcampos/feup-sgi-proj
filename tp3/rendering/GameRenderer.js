@@ -8,8 +8,8 @@ export class GameRenderer {
         this.boardRenderer = new BoardRenderer(scene);
     }
 
-    display(gameCTO) { // TODO: Add timefactor
-        this.sceneRenderer.display(0);
+    display(gameCTO, timeFactor) {
         this.boardRenderer.display(gameCTO.board, gameCTO.selectedPiece);
+        this.sceneRenderer.display(timeFactor);
     }
 }
