@@ -1,7 +1,9 @@
  export class PickableComponentNode {
-    constructor(id, component) {
+    constructor(id, component, pickingId, pickingObject) {
         this.id = id;
         this.component = component;
+        this.pickingId = pickingId;
+        this.pickingObject = pickingObject;
     }
 
     /**
