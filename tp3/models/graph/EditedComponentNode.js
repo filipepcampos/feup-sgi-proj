@@ -1,5 +1,6 @@
 export class EditedComponentNode {
-    constructor(component, offsetTransformation, highlight=null) {
+    constructor(id, component, offsetTransformation, highlight=null) {
+        this.id = id;
         this.component = component;
         this.transformation = [];
         mat4.multiply(this.transformation, offsetTransformation, this.component.getTransformation());
@@ -11,7 +12,7 @@ export class EditedComponentNode {
      * @returns {string} - Id of the component
      */
     getId() {
-        return this.component.id;
+        return this.id;
     }
 
     /**
