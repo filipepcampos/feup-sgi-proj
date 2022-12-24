@@ -6,6 +6,10 @@ export class MyTile {
         this.piece = null;
     }
 
+    isOccupied() {
+        return this.piece != null;
+    }
+
     setPiece(piece) {
         this.piece = piece;
     }

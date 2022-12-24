@@ -23,6 +23,7 @@ export class MyGameBoard {
     }
 
     setupPieces() {
+        this.pieces = [];
         for (let i = 0; i < NUM_COLS/2; i++){
             this.addPiece(new MyPiece(this.scene, 0), this.board[0][2*i+1]);
             this.addPiece(new MyPiece(this.scene, 0), this.board[1][2*i]);
@@ -31,6 +32,19 @@ export class MyGameBoard {
             this.addPiece(new MyPiece(this.scene, 1), this.board[6][2*i+1]);
             this.addPiece(new MyPiece(this.scene, 1), this.board[5][2*i]);
         }
+
+        for (let i = 0; i < NUM_ROWS; ++i) {
+            for (let j = 0; j < NUM_COLS; ++j) {
+                const tile = this.board[i][j];
+                if(tile.piece) {
+                    this.pieces.push(tile.piece);
+                }
+            }
+        }        
+    }
+
+    getPiecesByPlayer(playerId) {
+        return this.pieces.filter(piece => piece.playerId == playerId);
     }
 
     addPiece(piece, tile) {
@@ -44,6 +58,10 @@ export class MyGameBoard {
             piece.clearTile();   
         }
         tile.clearPiece();
+    }
+
+    removeFromPlay(piece) {
+        this.pieces = this.pieces.filter(p => p != piece);
     }
 
     movePiece(piece, destinationTile) {
