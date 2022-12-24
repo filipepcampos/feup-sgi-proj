@@ -8,12 +8,27 @@ export class MyKeyframeAnimation extends MyAnimation {
      * @param {string} id - Id of the animation
      * @param {*} keyframes - Keyframes of the animation
      */
-    constructor(id, keyframes) {
+    constructor(id, keyframes, useRelativeTime=false, immediateStart=false) {
         super();
         this.id = id;
         this.keyframes = keyframes;
-        this.transformation = {};
+        this.transformation = {
+            "translation": vec3.fromValues(0, 0, 0),
+            "rotationz": vec3.fromValues(0, 0, 0), 
+            "rotationy": vec3.fromValues(0, 0, 0), 
+            "rotationx": vec3.fromValues(0, 0, 0),
+            "scale": vec3.fromValues(1, 1, 1)
+        };
         this.started = false;
+        this.stopped = false;
+
+        this.startTime = useRelativeTime ? null : 0;
+        this.useRelativeTime = useRelativeTime;
+        this.immediateStart = immediateStart;
+    }
+
+    isOver() {
+        return this.stopped;
     }
 
     getId() {
@@ -25,6 +40,10 @@ export class MyKeyframeAnimation extends MyAnimation {
     }
 
     update(instant) {
+        if(this.useRelativeTime && this.startTime == null) {
+            this.startTime = instant;
+        }
+
         let lastKeyframeIndex = this.getLastKeyframeIndex(instant);
         
         if(lastKeyframeIndex == null) return;
@@ -34,8 +53,8 @@ export class MyKeyframeAnimation extends MyAnimation {
             // Interpolate between lastKeyframeIndex and nextKeyframeIndex
             const lastKeyframe = this.keyframes[lastKeyframeIndex];
             const nextKeyframe = this.keyframes[nextKeyframeIndex];
-            const lastInstant = lastKeyframe.instant;
-            const nextInstant = nextKeyframe.instant;
+            const lastInstant = lastKeyframe.instant + this.startTime;
+            const nextInstant = nextKeyframe.instant + this.startTime;
             const keyframeDuration = nextInstant - lastInstant;
             const deltaInstant = instant - lastInstant;
 
@@ -47,6 +66,7 @@ export class MyKeyframeAnimation extends MyAnimation {
             }
         } else { // Animation is finished
             this.transformation = this.keyframes[lastKeyframeIndex].transformation;
+            this.stopped = true;
         }
     }
 
@@ -57,7 +77,7 @@ export class MyKeyframeAnimation extends MyAnimation {
      */
     getLastKeyframeIndex(instant) {
         for(let i = this.keyframes.length - 1; i >= 0; --i) {
-            if(this.keyframes[i].instant <= instant){
+            if((this.keyframes[i].instant + this.startTime) <= instant){
                 this.started = true;
                 return i;
             }
@@ -66,7 +86,8 @@ export class MyKeyframeAnimation extends MyAnimation {
     }
 
     apply(scene) {
-        if(this.started){
+        if(this.started || this.immediateStart){
+            if(this.useRelativeTime) console.log("APPLY");
             scene.translate(...this.transformation["translation"]);
             scene.rotate(this.transformation["rotationx"][0], 1, 0, 0);
             scene.rotate(this.transformation["rotationy"][0], 0, 1, 0);

@@ -1,10 +1,11 @@
 export class EditedComponentNode {
-    constructor(id, component, offsetTransformation, highlight=null) {
+    constructor(id, component, offsetTransformation, animation=null, highlight=null) {
         this.id = id;
         this.component = component;
         this.transformation = [];
         mat4.multiply(this.transformation, offsetTransformation, this.component.getTransformation());
         this.highlight = highlight==null ? this.component.highlight : highlight;
+        this.animation = animation==null ? this.component.animation : animation;
     }
 
     /**
@@ -41,6 +42,10 @@ export class EditedComponentNode {
 
     getHighlight() {
         return this.highlight;
+    }
+
+    getAnimation() { 
+        return this.animation;
     }
 
     /**

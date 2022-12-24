@@ -42,6 +42,10 @@
         return this.component.getHighlight();
     }
 
+    getAnimation() {
+        return this.component.getAnimation();
+    }
+
     /**
      * Get the current material object
      * @returns {MyMaterial|string} - Current material object or "inherit"

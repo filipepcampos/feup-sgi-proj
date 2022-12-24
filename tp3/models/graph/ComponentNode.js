@@ -61,6 +61,10 @@
         return this.highlight;
     }
 
+    getAnimation() {
+        return this.animation;
+    }
+
     /**
      * Get the transformation object
      * @returns {MyTransformation} transformation - Transformation object

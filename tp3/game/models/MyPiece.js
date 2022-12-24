@@ -1,9 +1,10 @@
 export class MyPiece {
-    constructor(scene, playerId) {
+    constructor(scene, playerId, pieceId) {
         this.scene = scene;
         this.tile = null;
         this.playerId = playerId;
         this.isKing = false;
+        this.id = pieceId;
     }
 
     upgrade() {
