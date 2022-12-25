@@ -77,12 +77,3 @@ export class MyGameBoard {
         return null;
     }
 }
-
-// TODO: Possible methods:
-// • Get piece on a given tile
-// • Get tile given a piece
-
-// • Get tile by board coordinate system (A..H;1..8 on chess or 0..7;0..7)
-// • Move piece (piece, starting tile, destination tile)
-// • Display the gameboard (render). Calls display on each tile (which by its own turn calls
-// display of the piece in the tile, if any)

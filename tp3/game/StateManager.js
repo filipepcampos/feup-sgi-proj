@@ -1,9 +1,9 @@
-import { MenuState } from "./states/MenuState.js";
+import { MenuLoadingState } from "./states/MenuLoadingState.js";
 
 export class StateManager {
     constructor(scene) {
-        this.state = new MenuState(this);
         this.scene = scene;
+        this.state = new MenuLoadingState(this);
     }
 
     setState(state) {
