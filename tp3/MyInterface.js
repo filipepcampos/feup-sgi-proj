@@ -35,20 +35,23 @@ export class MyInterface extends CGFinterface {
         this.gui.add(this.scene, 'cameraId', this.scene.camerasIds)
             .name('Active Camera')
             .onChange((value) => {this.scene.setCamera(value) });
-        let folder = this.gui.addFolder('Lights');
+
+        if (this.lights) this.gui.removeFolder(this.lights);
+        this.lights = this.gui.addFolder('Lights');
         for(let i = 0; i < this.scene.lights.length; ++i) {
-            folder.add(this.scene.lights[i], 'enabled')
+            this.lights.add(this.scene.lights[i], 'enabled')
                 .name(this.scene.lightsIds[i])
                 .onChange((value) => {
                     this.scene.setLight(i, value);
             });
         }
         
-        folder = this.gui.addFolder('Components');
-        folder.add(this.scene, 'highlightSpeed', 1, 2000);
+        if (this.components) this.gui.removeFolder(this.components);
+        this.components = this.gui.addFolder('Components');
+        this.components.add(this.scene, 'highlightSpeed', 1, 2000);
         for(let [id, component] of Object.entries(this.scene.sceneData.components)) {
             if (component.highlight != null){
-                folder.add(component.highlight, 'active')
+                this.components.add(component.highlight, 'active')
                     .name(id)
                     .onChange((value) => {
                         component.highlight.setActive(value);

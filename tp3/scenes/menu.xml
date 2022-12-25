@@ -292,15 +292,77 @@
     <components>
         <component id="root">
             <transformation>
+            </transformation>
+            <materials>
+                <material id="white" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="menu_background" />
+                <componentref id="start_button" />
+                <componentref id="scene_button_street" />
+                <componentref id="scene_button_board" />
+            </children>
+        </component>
+
+        <component id="menu_background">
+            <transformation>
                 <scale x="3" y="1" z="0.1"/>
             </transformation>
             <materials>
                 <material id="white" />
             </materials>
-            <texture id="tex_metal"/>
+            <texture id="tex_metal" length_t="1.0" length_s="1.0"/>
             <children>
                 <componentref id="p_cube" />
             </children>
+        </component>
+
+        <component id="start_button">
+            <transformation>
+                <translate x="0" y="0" z="0.01"/>
+                <scale x="0.2" y="0.2" z="0.1"/>
+            </transformation>
+            <materials>
+                <material id="white" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="p_cube" />
+            </children>
+            <picking id="100"/>
+        </component>
+
+        <component id="scene_button_street">
+            <transformation>
+                <translate x="1" y="0" z="0.01"/>
+                <scale x="0.2" y="0.2" z="0.1"/>
+            </transformation>
+            <materials>
+                <material id="white" />
+                <material id="blue" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="p_cube" />
+            </children>
+            <picking id="101"/>
+        </component>
+
+        <component id="scene_button_board">
+            <transformation>
+                <translate x="1" y="0.3" z="0.01"/>
+                <scale x="0.2" y="0.2" z="0.1"/>
+            </transformation>
+            <materials>
+                <material id="white" />
+                <material id="blue" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="p_cube" />
+            </children>
+            <picking id="102"/>
         </component>
 
         <!-- Primitive Components -->

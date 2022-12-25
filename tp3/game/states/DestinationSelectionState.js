@@ -21,8 +21,6 @@ export class DestinationSelectionState extends InteractableGameState {
     }
 
     handleTilePick(obj) {
-        console.log("DestinationSelectionState: Yo I got " + type + " and obj " + obj.row + "/" + obj.col);
-        console.log("Debugging: " + this.gameCTO.getPossibleCapturesByPiece(this.startTile.piece));
         const piece = this.startTile.piece;
         const hasCaptureAvailable = this.gameCTO.pieceHasCaptureAvailable(piece);
 

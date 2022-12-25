@@ -18,7 +18,6 @@ export class NextTurnState extends InteractableGameState {
     }
 
     handleTilePick(obj) {
-        console.log("NextTurnState: Yo I got " + type + " and obj " + obj.row + "/" + obj.col);
         if(obj.piece != null && this.gameCTO.canPickPiece(obj.piece)){
             this.gameCTO.pickPiece(obj.piece);
             this.stateManager.setState(new DestinationSelectionState(this.stateManager, this.gameCTO, this.renderer, obj));

@@ -1,5 +1,6 @@
 import { ParserResult } from "../ParserResult.js";
 import { ComponentNode } from "../../models/graph/ComponentNode.js";
+import { PickableComponentNode } from "../../models/graph/PickableComponentNode.js";
 import {ComponentTransformationParser} from "./ComponentTransformationParser.js";
 import {ComponentChildrenParser} from "./ComponentChildrenParser.js";
 import {ColorParser} from "../ColorParser.js";
@@ -7,6 +8,7 @@ import {MyTexture} from "../../models/wrappers/MyTexture.js";
 import { MyTransformation } from "../../models/wrappers/MyTransformation.js";
 import { Highlight } from "../../models/Highlight.js";
 import {FloatParser} from "../FloatParser.js";
+import {IntegerParser} from "../IntegerParser.js";
 
 /**
  * Parser for the <component> node
@@ -40,6 +42,7 @@ export class ComponentParser {
         const childrenIndex = nodeNames.indexOf("children");
         const animationIndex = nodeNames.indexOf("animation");
         const highlightedIndex = nodeNames.indexOf("highlighted");
+        const pickingIndex = nodeNames.indexOf("picking");
 
         let errors = [];
         let results = [];
@@ -92,17 +95,30 @@ export class ComponentParser {
             var animation = animationResult.getValue();
         }
 
+        if (pickingIndex != -1) {
+            var pickingResult = this.parsePicking(children[pickingIndex], reader, sceneData);
+            results.push(pickingResult);
+            var pickingId = pickingResult.getValue();
+        }
+
+        let componentNode = new ComponentNode(
+            id,
+            transformation,
+            materials,
+            texture,
+            componentChildren["components"],
+            componentChildren["primitives"],
+            highlighted,
+            animation
+        );
+
+        if (pickingId) {
+            componentNode.pickingId = pickingId;
+            componentNode.pickingObject = componentNode.getId();
+        }
+
         return ParserResult.collect(
-            new ComponentNode(
-                id,
-                transformation,
-                materials,
-                texture,
-                componentChildren["components"],
-                componentChildren["primitives"],
-                highlighted,
-                animation
-            ),
+            componentNode,
             results,
             "parsing <component> with id=" + id,
             errors
@@ -215,5 +231,20 @@ export class ComponentParser {
         }
 
         return ParserResult.fromValue(sceneData.animations[id]);
+    }
+
+    static parsePicking(node, reader, sceneData) {
+        if (node.nodeName !== "picking") {
+            return ParserResult.fromError("unknown tag <" + node.nodeName + ">");
+        }
+
+        // Get id of the current texture.
+        const id = reader.getString(node, 'id');
+        if (id == null) {
+            return ParserResult.fromError("no ID defined for picking");
+        }
+
+        const idInteger = IntegerParser.parse(node, reader, "id");
+        return ParserResult.fromValue(idInteger.getValue());
     }
 }

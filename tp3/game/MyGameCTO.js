@@ -61,10 +61,6 @@ export class MyGameCTO {
         this.state.update(currTime);
     }
 
-    changeScene(filename) {
-        new MySceneGraph(filename, this.scene);
-    }
-
     getPossibleCapturesByPiece(piece) {
         let rowDirections = piece.isKing ? [-1, 1] : (piece.playerId == 0 ? [1] : [-1]);
         const pieceRow = piece.tile.row;

@@ -26,7 +26,10 @@ export class XMLscene extends CGFscene {
      */
     init(application) {
         super.init(application);
+        this.initScene();
+    }
 
+    initScene() {
         this.sceneInited = false;
 
         this.initDefaultCameras();
@@ -130,7 +133,7 @@ export class XMLscene extends CGFscene {
                 i++;
             }
         }
-        this.lights = this.lights.slice(0, i);
+        //this.lights = this.lights.slice(0, i);
     }
 
     /**
@@ -146,6 +149,7 @@ export class XMLscene extends CGFscene {
      * As loading is asynchronous, this may be called already after the application has started the run loop
      */
     onGraphLoaded(sceneData) {
+        console.log("Graph has been loaded");
         this.sceneData = sceneData;
         this.axis = new CGFaxis(this, sceneData.referenceLength);
 
@@ -200,8 +204,10 @@ export class XMLscene extends CGFscene {
 	}
 
     getPickingType(id) {
-        if (id < PickingTypes.None) {
+        if (id < PickingTypes.ButtonSelection) {
             return PickingTypes.TileSelection;
+        } else if (id < PickingTypes.None) {
+            return PickingTypes.ButtonSelection;
         }
         return PickingTypes.None;
     }
