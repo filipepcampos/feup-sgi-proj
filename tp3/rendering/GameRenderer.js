@@ -9,7 +9,7 @@ export class GameRenderer {
     }
 
     display(gameCTO, timeFactor) {
-        this.boardRenderer.display(gameCTO.board, gameCTO.selectedPiece);
+        this.boardRenderer.display(gameCTO.board, gameCTO.auxiliaryBoard, gameCTO.selectedPiece);
         this.sceneRenderer.display(timeFactor);
     }
 }

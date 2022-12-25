@@ -16,7 +16,7 @@ export class BoardRenderer {
         this.boardsetTransformationMatrix = this.getBoardsetTransformationMatrix();
     }
 
-    display(board, selectedPiece) {
+    display(board, auxiliaryBoard, selectedPiece) {
         const numRows = board.board.length;
         const numCols = board.board[0].length;
 
@@ -37,15 +37,26 @@ export class BoardRenderer {
 
                 this.scene.registerForPick(pickingId, tile);
                 if(tile.piece) {
-                    newChildComponents.push(this.createPiece(tile.piece, pickingId, selectedPiece));
+                    newChildComponents.push(this.createPickablePiece(tile.piece, pickingId, selectedPiece));
                 }
                 this.displayTile(tile, selectedPiece);
             }
         }
         this.scene.clearPickRegistration();
+        this.displayAuxiliarBoard(auxiliaryBoard, newChildComponents);
         this.scene.popMatrix();
 
         boardsetComponent.setChildren(newChildComponents, boardsetComponent.getChildPrimitives());
+    }
+
+    displayAuxiliarBoard(auxiliaryBoard, outputComponents) {
+        for (const playerId of [0, 1]) {
+            for (const tile of auxiliaryBoard.board[playerId]) {
+                if(tile.piece) {
+                    outputComponents.push(this.createPiece(tile.piece, null));
+                }
+            }
+        }
     }
 
     getTileOffsets(tile) {
@@ -70,7 +81,12 @@ export class BoardRenderer {
         this.scene.popMatrix();
     }
 
-    createPiece(piece, pickingId, selectedPiece) {
+    createPickablePiece(piece, pickingId, selectedPiece) {
+        const pieceComponent = this.createPiece(piece, selectedPiece);
+        return new PickableComponentNode("_piece"+pickingId, pieceComponent, pickingId, piece.tile);
+    }
+
+    createPiece(piece, selectedPiece) {
         const component = this.scene.sceneData.components["piece" + piece.playerId];
         const [colOffset, rowOffset] = this.getTileOffsets(piece.tile);
 
@@ -85,8 +101,7 @@ export class BoardRenderer {
             highlight = new Highlight(color, 1.1);
         }
 
-        const editedComponent = new EditedComponentNode(component, transformation, highlight);
-        return new PickableComponentNode("_piece"+pickingId, editedComponent, pickingId, piece.tile);
+        return new EditedComponentNode("_piece", component, transformation, highlight);
     }
 
     getBoardsetTransformationMatrix(node=this.scene.sceneData.components[this.scene.sceneData.root], matrix=mat4.create()) {

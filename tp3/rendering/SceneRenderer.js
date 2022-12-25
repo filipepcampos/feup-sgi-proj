@@ -124,6 +124,10 @@ export class SceneRenderer {
             }
         }
 
+        if(node.pickingId != null) {
+            this.sceneData.scene.clearPickRegistration();
+        }
+
         if(texture !== "none") {
             texture.getCGFTexture().unbind(0);
         }
