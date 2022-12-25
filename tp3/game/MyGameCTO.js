@@ -1,10 +1,12 @@
 import { MySceneGraph } from "../MySceneGraph.js";
 import { MyGameBoard } from "./models/MyGameBoard.js";
+import { MyAuxiliarBoard } from "./models/MyAuxiliarBoard.js";
 
 export class MyGameCTO {
     constructor(scene) {
         this.scene = scene;
         this.board = new MyGameBoard(scene);
+        this.auxiliaryBoard = new MyAuxiliarBoard(scene);
         this.currentPlayer = 0;
         this.selectedPiece = null;
     }
@@ -14,7 +16,13 @@ export class MyGameCTO {
     }
 
     canPickPiece(piece) {
-        return piece.playerId == this.currentPlayer;
+        if (piece.playerId != this.currentPlayer) return false;
+
+        const possibleCaptures = this.getPossibleCaptures();
+        if (Object.keys(possibleCaptures).length > 0) {
+            return possibleCaptures[this.getTileIdentifier(piece.tile)] != null;
+        }
+        return true;
     }
 
     pickPiece(piece) {
@@ -39,8 +47,10 @@ export class MyGameCTO {
         const deltaCol = Math.sign(endTile.col - startTile.col);
         const tile = this.board.getTile(startTile.row + deltaRow, startTile.col + deltaCol);
         console.log("Can capture tile " + tile.row + "/" + tile.col + "?");
-        if(tile != endTile) {
-            tile.piece = null;
+        if(tile != endTile && tile.piece != null) {
+            const auxiliaryTile = this.auxiliaryBoard.getAvailableTile(tile.piece);
+            this.board.removeFromPlay(tile.piece);
+            this.board.movePiece(tile.piece, auxiliaryTile);
         }
     }
 
@@ -52,7 +62,7 @@ export class MyGameCTO {
         new MySceneGraph(filename, this.scene);
     }
 
-    getPossibleCaptures(piece) {
+    getPossibleCapturesByPiece(piece) {
         let rowDirection = piece.playerId == 0 ? 1 : -1;
         const pieceRow = piece.tile.row;
         const pieceCol = piece.tile.col;
@@ -63,12 +73,29 @@ export class MyGameCTO {
             let capturedTile = this.board.getTile(pieceRow+rowDirection, pieceCol+offset);
             if (capturedTile && capturedTile.piece != null && capturedTile.piece.playerId != piece.playerId) { // There's an enemy piece in the diagonal
                 let destinationTile = this.board.getTile(pieceRow+rowDirection*2, pieceCol+offset*2);
-                if (destinationTile.piece == null) { // Tile is currently empty
+                if (destinationTile && destinationTile.piece == null) { // Tile is currently empty
                     possibleDestinationTiles.push(destinationTile);
                 }
             }
         }
         return possibleDestinationTiles;
+    }
+
+    getTileIdentifier(tile) {
+        return "tile" + tile.row + "-" + tile.col;
+    }
+
+    getPossibleCaptures() {
+        let possibleCaptures = {};
+        
+        const availablePieces = this.board.getPiecesByPlayer(this.currentPlayer);
+        for (const piece of availablePieces) {
+            const possiblePieceCaptures = this.getPossibleCapturesByPiece(piece);
+            if (possiblePieceCaptures.length > 0) {
+                possibleCaptures[this.getTileIdentifier(piece.tile)] = possiblePieceCaptures;
+            }
+        }
+        return possibleCaptures;
     }
 
     _canMovePiece(piece, targetTile) {
@@ -84,7 +111,7 @@ export class MyGameCTO {
         if (piece.playerId == 0 && deltaRow <= 0) return false;
         if (piece.playerId == 1 && deltaRow >= 0) return false;
 
-        const possibleCaptures = this.getPossibleCaptures(piece);
+        const possibleCaptures = this.getPossibleCapturesByPiece(piece);
         if(possibleCaptures.length > 0) {
             return possibleCaptures.includes(targetTile);
         } else {

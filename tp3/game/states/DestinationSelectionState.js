@@ -14,7 +14,7 @@ export class DestinationSelectionState extends GameState {
     handleInput(type, obj){
         // TODO: CHECK TYPE
         console.log("DestinationSelectionState: Yo I got " + type + " and obj " + obj.row + "/" + obj.col);
-        console.log("Debugging: " + this.gameCTO.getPossibleCaptures(this.startTile.piece));
+        console.log("Debugging: " + this.gameCTO.getPossibleCapturesByPiece(this.startTile.piece));
         if(this.gameCTO.movePiece(this.startTile.piece, obj)){ // Success
             this.gameCTO.switchPlayer();
             this.gameCTO.unpickPiece();
