@@ -614,6 +614,33 @@
                 <componentref id="car_burnt" />
                 <componentref id="stopped_car" />
                 <componentref id="boardset"/>
+                <componentref id="game_info_board"/>
+            </children>
+        </component>
+
+        <component id="game_info_board">
+            <transformation>
+                <translate x="0" y="3" z="0"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="game_info_board_body"/>
+            </children>
+        </component>
+
+        <component id="game_info_board_body">
+            <transformation>
+                <scale x="1" y="0.7" z="0.2"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="p_cube"/>
             </children>
         </component>
 

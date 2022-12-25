@@ -1,7 +1,8 @@
-import { GameState } from './GameState.js';
+import { InteractableGameState } from './InteractableGameState.js';
 import { NextTurnState } from './NextTurnState.js';
+import { PickingTypes } from '../PickingTypes.js';
 
-export class DestinationSelectionState extends GameState {
+export class DestinationSelectionState extends InteractableGameState {
     constructor(stateManager, gameCTO, renderer, startTile, canCancelMove=true) {
         super(stateManager, gameCTO, renderer);
         this.startTile = startTile;
@@ -13,7 +14,13 @@ export class DestinationSelectionState extends GameState {
     }
 
     handleInput(type, obj){
-        // TODO: CHECK TYPE
+        if (type == PickingTypes.TileSelection) {
+            this.handleTilePick(obj);
+        }
+        
+    }
+
+    handleTilePick(obj) {
         console.log("DestinationSelectionState: Yo I got " + type + " and obj " + obj.row + "/" + obj.col);
         console.log("Debugging: " + this.gameCTO.getPossibleCapturesByPiece(this.startTile.piece));
         const piece = this.startTile.piece;
