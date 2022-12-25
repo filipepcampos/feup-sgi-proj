@@ -87,6 +87,10 @@ export class MyGameCTO {
         return possibleDestinationTiles;
     }
 
+    pieceHasCaptureAvailable(piece) {
+        return this.getPossibleCapturesByPiece(piece).length > 0;
+    }
+
     getTileIdentifier(tile) {
         return "tile" + tile.row + "-" + tile.col;
     }
