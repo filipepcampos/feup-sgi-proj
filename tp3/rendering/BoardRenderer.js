@@ -87,7 +87,8 @@ export class BoardRenderer {
     }
 
     createPiece(piece, selectedPiece) {
-        const component = this.scene.sceneData.components["piece" + piece.playerId];
+        const componentName = piece.isKing ? "kingpiece" : "piece";
+        const component = this.scene.sceneData.components[componentName + piece.playerId];
         const [colOffset, rowOffset] = this.getTileOffsets(piece.tile);
 
         const transformation = mat4.create();

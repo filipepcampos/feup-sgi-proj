@@ -29,8 +29,8 @@ export class MyGameBoard {
             this.addPiece(new MyPiece(this.scene, 0), this.board[1][2*i]);
             this.addPiece(new MyPiece(this.scene, 0), this.board[2][2*i+1]);
             this.addPiece(new MyPiece(this.scene, 1), this.board[7][2*i]);
-            this.addPiece(new MyPiece(this.scene, 1), this.board[6][2*i+1]);
-            this.addPiece(new MyPiece(this.scene, 1), this.board[5][2*i]);
+            // this.addPiece(new MyPiece(this.scene, 1), this.board[6][2*i+1]);
+            // this.addPiece(new MyPiece(this.scene, 1), this.board[5][2*i]);
         }
 
         for (let i = 0; i < NUM_ROWS; ++i) {
@@ -71,7 +71,10 @@ export class MyGameBoard {
     }
 
     getTile(row, col){
-        return this.board[row][col];
+        if(this.board[row]) {
+            return this.board[row][col];
+        }
+        return null;
     }
 }
 

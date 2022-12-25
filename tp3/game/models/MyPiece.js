@@ -3,6 +3,11 @@ export class MyPiece {
         this.scene = scene;
         this.tile = null;
         this.playerId = playerId;
+        this.isKing = false;
+    }
+
+    upgrade() {
+        this.isKing = true;
     }
 
     setTile(tile) {

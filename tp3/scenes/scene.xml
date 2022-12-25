@@ -985,6 +985,20 @@
             </children>
         </component>
 
+        <component id="kingpiece0">
+            <transformation>
+                <translate x="0" y="0.025" z="0"/>
+                <scale x="0.028" y="0.028" z="0.028"/>
+            </transformation>
+            <materials>
+                <material id="green" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="p_cube"/>
+            </children>
+        </component>
+
         <component id="piece1">
             <transformation>
                 <translate x="0" y="0.025" z="0"/>
@@ -1000,6 +1014,20 @@
                 <componentref id="car_back" />
                 <componentref id="car_laterals"/>
                 <componentref id="car_bottom"/>
+            </children>
+        </component>
+
+        <component id="kingpiece1">
+            <transformation>
+                <translate x="0" y="0.025" z="0"/>
+                <scale x="0.028" y="0.028" z="0.028"/>
+            </transformation>
+            <materials>
+                <material id="red" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="p_cube"/>
             </children>
         </component>
 

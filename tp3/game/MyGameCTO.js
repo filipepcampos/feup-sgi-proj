@@ -37,6 +37,9 @@ export class MyGameCTO {
         if (this._canMovePiece(piece, targetTile)) {
             this.capturePieceBetweenTiles(piece.tile, targetTile);
             this.board.movePiece(piece, targetTile);
+            if(!piece.isKing) {
+                if(targetTile.row == 0 || targetTile.row == 7) piece.upgrade();
+            }
             return true;
         }
         return false;
@@ -63,21 +66,24 @@ export class MyGameCTO {
     }
 
     getPossibleCapturesByPiece(piece) {
-        let rowDirection = piece.playerId == 0 ? 1 : -1;
+        let rowDirections = piece.isKing ? [-1, 1] : (piece.playerId == 0 ? [1] : [-1]);
         const pieceRow = piece.tile.row;
         const pieceCol = piece.tile.col;
         
         // Check if diagonal is occupied, and the following space is empty
         let possibleDestinationTiles = [];
-        for (let offset of [-1 , 1]) {
-            let capturedTile = this.board.getTile(pieceRow+rowDirection, pieceCol+offset);
-            if (capturedTile && capturedTile.piece != null && capturedTile.piece.playerId != piece.playerId) { // There's an enemy piece in the diagonal
-                let destinationTile = this.board.getTile(pieceRow+rowDirection*2, pieceCol+offset*2);
-                if (destinationTile && destinationTile.piece == null) { // Tile is currently empty
-                    possibleDestinationTiles.push(destinationTile);
+        for (const direction of rowDirections) {
+            for (const offset of [-1 , 1]) {
+                let capturedTile = this.board.getTile(pieceRow+direction, pieceCol+offset);
+                if (capturedTile && capturedTile.piece != null && capturedTile.piece.playerId != piece.playerId) { // There's an enemy piece in the diagonal
+                    let destinationTile = this.board.getTile(pieceRow+direction*2, pieceCol+offset*2);
+                    if (destinationTile && destinationTile.piece == null) { // Tile is currently empty
+                        possibleDestinationTiles.push(destinationTile);
+                    }
                 }
             }
         }
+
         return possibleDestinationTiles;
     }
 
@@ -106,10 +112,12 @@ export class MyGameCTO {
         const deltaRow = targetTile.row - startTile.row;
         const deltaCol = targetTile.col - startTile.col;
         
-        // Verify movement direction
-        // TODO: KING CAN MOVE BACKWARD.
-        if (piece.playerId == 0 && deltaRow <= 0) return false;
-        if (piece.playerId == 1 && deltaRow >= 0) return false;
+        // Verify movement direction, if the piece is not king
+        if (!piece.isKing){
+            if (piece.playerId == 0 && deltaRow <= 0) return false;
+            if (piece.playerId == 1 && deltaRow >= 0) return false;
+        }
+        
 
         const possibleCaptures = this.getPossibleCapturesByPiece(piece);
         if(possibleCaptures.length > 0) {
