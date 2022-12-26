@@ -9,7 +9,6 @@ export class InteractableGameState extends GameState {
     }
 
     handleInput(type, obj) {
-        console.log("HANDLING INPUT (PARENT)");
         if (type == PickingTypes.ButtonSelection) {
             if (obj == "return_to_menu_button") {
                 this.returnToMenu();

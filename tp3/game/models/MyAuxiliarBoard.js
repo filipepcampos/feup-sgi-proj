@@ -28,4 +28,15 @@ export class MyAuxiliarBoard {
             }
         }
     }
+
+    popPiece(playerId) {
+        for (let i = this.board[0].length-1; i >= 0; --i) {
+            const piece = this.board[playerId][i].piece;
+            if(piece) {
+                this.board[playerId][i].piece = null;
+                return piece;
+            }
+        }
+        return null;
+    }
 }

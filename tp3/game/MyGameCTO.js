@@ -54,6 +54,39 @@ export class MyGameCTO {
         return false;
     }
 
+    undoMove() {
+        const move = this.gameSequence.popMove();
+        if (move) {
+            // Undo becomeKing
+            if(move.becameKing) {
+                move.endTile.piece.isKing = false;
+            }
+
+            // Move piece from endTile to startTile
+            this.board.movePiece(move.endTile.piece, move.startTile);
+
+            // Change current player
+            if (!move.inMovementChain) {
+                this.switchPlayer();
+            }
+
+            // Replace captured tiles
+            if(Math.abs(move.endTile.col - move.startTile.col) > 1) {
+                const capturedPiece = this.auxiliaryBoard.popPiece(1 - this.currentPlayer); // Recover piece from opponent
+                const deltaRow = Math.sign(move.endTile.row - move.startTile.row);
+                const deltaCol = Math.sign(move.endTile.col - move.startTile.col);
+                const tile = this.board.getTile(move.startTile.row + deltaRow, move.startTile.col + deltaCol);
+                capturedPiece.tile = tile;
+                tile.piece = capturedPiece;
+                
+                this.board.movePiece(capturedPiece, tile);
+                move.capturedPiece = capturedPiece; // TODO: Pls check this
+            }
+            return move;   
+        }
+        return null;
+    }
+
     capturePieceBetweenTiles(startTile, endTile) {
         const piece = this.getPieceBetweenTiles(startTile, endTile);
 

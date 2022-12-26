@@ -1,6 +1,9 @@
 import { InteractableGameState } from './InteractableGameState.js';
 import { PickingTypes } from '../PickingTypes.js';
 import { LiftPieceState } from './LiftPieceState.js';
+import { GameAnimations } from '../GameAnimations.js';
+import { AnimationTracker } from '../AnimationTracker.js';
+import { AnimationState } from './AnimationState.js';
 
 export class NextTurnState extends InteractableGameState {
     constructor(stateManager, gameCTO, renderer) {
@@ -15,6 +18,25 @@ export class NextTurnState extends InteractableGameState {
         super.handleInput(type, obj);
         if (type == PickingTypes.TileSelection) {
             this.handleTilePick(obj);
+        } else if (type == PickingTypes.ButtonSelection) {
+            if(obj == "undo_button") {
+                this.undoMove();
+            }
+        }
+    }
+
+    undoMove() {
+        const move = this.gameCTO.undoMove();
+        
+        if(move) {
+            let animations = new Map();
+            animations.set(move.startTile.piece.id, GameAnimations.createMovementAnimation(move.endTile, move.startTile, true));
+            if (move.capturedPiece) {
+                const capturedPiece = move.capturedPiece;
+                animations.set(capturedPiece.id, GameAnimations.createCaptureAnimation(this.gameCTO.auxiliaryBoard.getAvailableTile(capturedPiece), capturedPiece.tile))
+            }
+            let animationTracker = new AnimationTracker(animations);
+            this.stateManager.setState(new AnimationState(this.stateManager, this.gameCTO, this.renderer, animationTracker, new NextTurnState(this.stateManager, this.gameCTO, this.renderer)));
         }
     }
 

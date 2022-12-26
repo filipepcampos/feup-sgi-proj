@@ -6,4 +6,8 @@ export class MyGameSequence {
     addMove(move) {
         this.moves.push(move);
     }
+
+    popMove() {
+        return this.moves.pop();
+    }
 }

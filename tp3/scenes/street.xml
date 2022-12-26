@@ -630,6 +630,7 @@
                 <componentref id="boardset" />
                 <componentref id="game_info_board" />
                 <componentref id="return_to_menu_button" />
+                <componentref id="undo_button" />
             </children>
         </component>
 
@@ -672,6 +673,21 @@
                 <componentref id="p_cube" />
             </children>
             <picking id="100"/>
+        </component>
+
+        <component id="undo_button">
+            <transformation>
+                <scale x="0.2" y="0.2" z="0.2" />
+                <translate x="-2" y="3" z="0" />
+            </transformation>
+            <materials>
+                <material id="green" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="p_cube" />
+            </children>
+            <picking id="101"/>
         </component>
 
         <component id="boardset">

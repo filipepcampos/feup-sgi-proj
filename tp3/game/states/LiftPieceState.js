@@ -14,6 +14,7 @@ export class LiftPieceState extends InteractableGameState {
         this.animationTracker = new AnimationTracker(animations);
     }
 
+    // TODO: move
     createAnimation() {
         let keyframes = []
         const start = {
