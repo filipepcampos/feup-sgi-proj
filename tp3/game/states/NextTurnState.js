@@ -1,6 +1,6 @@
 import { InteractableGameState } from './InteractableGameState.js';
-import { DestinationSelectionState } from './DestinationSelectionState.js';
 import { PickingTypes } from '../PickingTypes.js';
+import { LiftPieceState } from './LiftPieceState.js';
 
 export class NextTurnState extends InteractableGameState {
     constructor(stateManager, gameCTO, renderer) {
@@ -20,7 +20,7 @@ export class NextTurnState extends InteractableGameState {
     handleTilePick(obj) {
         if(obj.piece != null && this.gameCTO.canPickPiece(obj.piece)){
             this.gameCTO.pickPiece(obj.piece);
-            this.stateManager.setState(new DestinationSelectionState(this.stateManager, this.gameCTO, this.renderer, obj));
+            this.stateManager.setState(new LiftPieceState(this.stateManager, this.gameCTO, this.renderer, obj));
         }
     }
 }

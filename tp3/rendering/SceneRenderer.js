@@ -63,7 +63,8 @@ export class SceneRenderer {
      * @param {MyTexture} parentTexture - Reference to the parent's texture
      */
     displayComponent(node, parentMaterial, parentTexture, timeFactor, highlightMode=false) {
-        if(node.animation != null && !node.animation.started){
+        // TODO: Reenable if needed
+        if(node.getAnimation() != null && !(node.getAnimation().started || node.getAnimation().immediateStart)){
             return false;
         }
 
@@ -97,8 +98,8 @@ export class SceneRenderer {
         scene.pushMatrix();
         scene.multMatrix(matrix);
 
-        if(node.animation != null) {
-            node.animation.apply(scene);
+        if(node.getAnimation() != null) {
+            node.getAnimation().apply(scene);
         }
 
         const highlight = node.getHighlight();

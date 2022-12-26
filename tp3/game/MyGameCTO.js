@@ -1,4 +1,3 @@
-import { MySceneGraph } from "../MySceneGraph.js";
 import { MyGameBoard } from "./models/MyGameBoard.js";
 import { MyAuxiliarBoard } from "./models/MyAuxiliarBoard.js";
 

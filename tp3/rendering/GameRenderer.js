@@ -8,8 +8,8 @@ export class GameRenderer {
         this.boardRenderer = new BoardRenderer(scene);
     }
 
-    display(gameCTO, timeFactor) {
-        this.boardRenderer.display(gameCTO.board, gameCTO.auxiliaryBoard, gameCTO.selectedPiece);
+    display(gameCTO, timeFactor, animations) {
+        this.boardRenderer.display(gameCTO.board, gameCTO.auxiliaryBoard, animations);
         this.sceneRenderer.display(timeFactor);
     }
 }

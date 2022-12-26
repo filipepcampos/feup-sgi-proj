@@ -181,7 +181,7 @@ export class XMLscene extends CGFscene {
             }
         }
 
-        this.stateManager.update(currTime);
+        this.stateManager.update(currTime-this.startTime);
     }
 
     logPicking()

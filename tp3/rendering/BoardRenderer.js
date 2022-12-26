@@ -2,8 +2,6 @@ import { PickingTypes } from "../game/PickingTypes.js";
 import { MyRectangle } from "../primitives/MyRectangle.js";
 import {PickableComponentNode} from "../models/graph/PickableComponentNode.js";
 import {EditedComponentNode} from "../models/graph/EditedComponentNode.js";
-import {Highlight} from "../models/Highlight.js";
-import {Color} from "../models/Color.js";
 
 const DEGREE_TO_RAD = Math.PI / 180;
 
@@ -16,7 +14,7 @@ export class BoardRenderer {
         this.boardsetTransformationMatrix = this.getBoardsetTransformationMatrix();
     }
 
-    display(board, auxiliaryBoard, selectedPiece) {
+    display(board, auxiliaryBoard, animations) {
         const numRows = board.board.length;
         const numCols = board.board[0].length;
 
@@ -37,9 +35,10 @@ export class BoardRenderer {
 
                 this.scene.registerForPick(pickingId, tile);
                 if(tile.piece) {
-                    newChildComponents.push(this.createPickablePiece(tile.piece, pickingId, selectedPiece));
+                    const animation = animations != null ? animations.getAnimation(tile.piece.id) : null;
+                    newChildComponents.push(this.createPickablePiece(tile.piece, pickingId, animation));
                 }
-                this.displayTile(tile, selectedPiece);
+                this.displayTile(tile);
             }
         }
         this.scene.clearPickRegistration();
@@ -81,28 +80,20 @@ export class BoardRenderer {
         this.scene.popMatrix();
     }
 
-    createPickablePiece(piece, pickingId, selectedPiece) {
-        const pieceComponent = this.createPiece(piece, selectedPiece);
+    createPickablePiece(piece, pickingId, animation) {
+        const pieceComponent = this.createPiece(piece, animation);
         return new PickableComponentNode("_piece"+pickingId, pieceComponent, pickingId, piece.tile);
     }
 
-    createPiece(piece, selectedPiece) {
+    createPiece(piece, animation=null) {
         const componentName = piece.isKing ? "kingpiece" : "piece";
         const component = this.scene.sceneData.components[componentName + piece.playerId];
         const [colOffset, rowOffset] = this.getTileOffsets(piece.tile);
 
         const transformation = mat4.create();
         mat4.translate(transformation, transformation, [colOffset, this.boardHeight / 2, rowOffset]);
-
-        let highlight = null;
-        if (piece === selectedPiece) {
-            mat4.translate(transformation, transformation, [0, 0.1, 0]);
-
-            const color = new Color(1.0, 1.0, 0.0, 1.0);
-            highlight = new Highlight(color, 1.1);
-        }
-
-        return new EditedComponentNode("_piece", component, transformation, highlight);
+        
+        return new EditedComponentNode("_piece", component, transformation, animation);
     }
 
     getBoardsetTransformationMatrix(node=this.scene.sceneData.components[this.scene.sceneData.root], matrix=mat4.create()) {
