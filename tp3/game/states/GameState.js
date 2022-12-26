@@ -1,5 +1,4 @@
 import { State } from "./State.js";
-import { GameRenderer } from "../../rendering/GameRenderer.js";
 
 export class GameState extends State {
     constructor(stateManager, gameCTO, renderer) {

@@ -103,6 +103,10 @@ export class MyGameCTO {
         return possibleCaptures;
     }
 
+    isGameover() {
+        return this.auxiliaryBoard.isFull(0) || this.auxiliaryBoard.isFull(1);
+    }
+
     _canMovePiece(piece, targetTile) {
         // Verify if the target tile is occupied
         if (targetTile.piece != null) return false;

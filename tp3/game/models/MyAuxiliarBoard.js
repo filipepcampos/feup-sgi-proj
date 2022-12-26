@@ -13,6 +13,10 @@ export class MyAuxiliarBoard {
         }
     }
 
+    isFull(playerId) {
+        return this.board[playerId].filter(tile => tile.piece == null).length == 0;
+    }
+
     getAvailableTile(piece) {
         for (const tile of this.board[piece.playerId]) {
             if (!tile.isOccupied()) {
