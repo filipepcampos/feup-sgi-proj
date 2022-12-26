@@ -2,8 +2,7 @@ export class EditedComponentNode {
     constructor(id, component, offsetTransformation, animation=null, highlight=null) {
         this.id = id;
         this.component = component;
-        this.transformation = [];
-        mat4.multiply(this.transformation, offsetTransformation, this.component.getTransformation());
+        this.transformation = offsetTransformation;
         this.highlight = highlight==null ? this.component.highlight : highlight;
         this.animation = animation==null ? this.component.animation : animation;
     }
@@ -21,7 +20,7 @@ export class EditedComponentNode {
      * @returns {Array<MyComponentNode>} - List of the children components
      */
     getChildComponents() {
-        return this.component.getChildComponents();
+        return [this.component];
     }
 
     /**
@@ -29,7 +28,7 @@ export class EditedComponentNode {
      * @returns {Array<MyPrimitiveNode>} - List of the children primitives
      */
      getChildPrimitives() {
-        return this.component.getChildPrimitives();
+        return [];
     }
 
     /**

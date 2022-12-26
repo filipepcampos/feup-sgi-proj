@@ -700,21 +700,6 @@
             </children>
         </component>
 
-        <component id="piece">
-            <transformation>
-                <scale x="1.0" y="0.2" z="1.0" />
-            </transformation>
-            <materials>
-                <material id="inherit" />
-            </materials>
-            <texture id="inherit" />
-            <children>
-                <componentref id="wheel_tire" />
-                <componentref id="wheel_rims" />
-                <componentref id="wheel_inner_base" />
-            </children>
-        </component>
-
         <component id="street_building0">
             <transformation>
             </transformation>
@@ -1027,7 +1012,7 @@
         <component id="piece0">
             <transformation>
                 <translate x="0" y="0.025" z="0" />
-                <scale x="0.028" y="0.028" z="0.028" />
+                <scale x="0.025" y="0.025" z="0.025" />
             </transformation>
             <materials>
                 <material id="green" />
@@ -1045,7 +1030,7 @@
         <component id="kingpiece0">
             <transformation>
                 <translate x="0" y="0.025" z="0" />
-                <scale x="0.028" y="0.028" z="0.028" />
+                <scale x="0.025" y="0.025" z="0.025"  />
             </transformation>
             <materials>
                 <material id="bright_green" />
@@ -1063,7 +1048,8 @@
         <component id="piece1">
             <transformation>
                 <translate x="0" y="0.025" z="0" />
-                <scale x="0.028" y="0.028" z="0.028" />
+                <scale x="0.025" y="0.025" z="0.025"  />
+                <rotate axis="y" angle="180" />
             </transformation>
             <materials>
                 <material id="red" />
@@ -1081,7 +1067,8 @@
         <component id="kingpiece1">
             <transformation>
                 <translate x="0" y="0.025" z="0" />
-                <scale x="0.028" y="0.028" z="0.028" />
+                <scale x="0.025" y="0.025" z="0.025" />
+                <rotate axis="y" angle="180" />
             </transformation>
             <materials>
                 <material id="bright_red" />
