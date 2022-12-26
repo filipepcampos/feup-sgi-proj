@@ -1,10 +1,8 @@
-export class EditedComponentNode {
-    constructor(id, component, offsetTransformation, primitives, animation=null, highlight=null) {
+export class BasicComponentNode {
+    constructor(id, offsetTransformation, primitives) {
         this.id = id;
-        this.component = component;
         this.transformation = offsetTransformation;
-        this.highlight = highlight==null ? this.component.highlight : highlight;
-        this.animation = animation==null ? this.component.animation : animation;
+        this.primitives = primitives;
     }
 
     /**
@@ -20,7 +18,7 @@ export class EditedComponentNode {
      * @returns {Array<MyComponentNode>} - List of the children components
      */
     getChildComponents() {
-        return [this.component];
+        return [];
     }
 
     /**
@@ -28,7 +26,7 @@ export class EditedComponentNode {
      * @returns {Array<MyPrimitiveNode>} - List of the children primitives
      */
      getChildPrimitives() {
-        return [];
+        return this.primitives;
     }
 
     /**
@@ -40,11 +38,11 @@ export class EditedComponentNode {
     }
 
     getHighlight() {
-        return this.highlight;
+        return null;
     }
 
     getAnimation() { 
-        return this.animation;
+        return null;
     }
 
     /**
@@ -52,7 +50,7 @@ export class EditedComponentNode {
      * @returns {MyMaterial|string} - Current material object or "inherit"
      */
     getMaterial() {
-        return this.component.getMaterial();
+        return "inherit";
     }
 
     /**
@@ -60,13 +58,12 @@ export class EditedComponentNode {
      * @returns {MyTexture|string} - Texture object or "inherit" or "none"
      */
     getTexture() {
-        return this.component.getTexture();
+        return "none";
     }
 
     /**
      * Update current material to the next one on the materials list
      */
     updateMaterial() {
-        this.component.updateMaterial();
     }
 }

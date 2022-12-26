@@ -1,17 +1,16 @@
 import { PickingTypes } from "../game/PickingTypes.js";
-import { MyRectangle } from "../primitives/MyRectangle.js";
 import {PickableComponentNode} from "../models/graph/PickableComponentNode.js";
 import {EditedComponentNode} from "../models/graph/EditedComponentNode.js";
-
-const DEGREE_TO_RAD = Math.PI / 180;
+import { MyTile } from "../primitives/MyTile.js";
+import { PrimitiveNode } from "../models/graph/PrimitiveNode.js";
+import { BasicComponentNode } from "../models/graph/BasicComponentNode.js";
 
 export class BoardRenderer {
     constructor(scene) {
         this.scene = scene;
         this.tileWidth = 1/8;
-        this.tileModel = new MyRectangle(scene, -0.5*this.tileWidth, 0.5*this.tileWidth, -0.5*this.tileWidth, 0.5*this.tileWidth);
+        this.tilePrimitive = new PrimitiveNode("_tile", new MyTile(scene));
         this.boardHeight = 0.2;
-        this.boardsetTransformationMatrix = this.getBoardsetTransformationMatrix();
     }
 
     display(board, auxiliaryBoard, animations) {
@@ -26,24 +25,19 @@ export class BoardRenderer {
             }
         }
 
-        this.scene.pushMatrix();
-        this.scene.multMatrix(this.boardsetTransformationMatrix);
         for (let i = 0; i < numRows; ++i) {
             for (let j = 0; j < numCols; ++j) {
                 const tile = board.board[i][j];
                 const pickingId = i*numCols+j+1+PickingTypes.TileSelection;
 
-                this.scene.registerForPick(pickingId, tile);
                 if(tile.piece) {
                     const animation = animations != null ? animations.getAnimation(tile.piece.id) : null;
                     newChildComponents.push(this.createPickablePiece(tile.piece, pickingId, animation));
                 }
-                this.displayTile(tile);
+                newChildComponents.push(this.createPickableTile(tile, pickingId));
             }
         }
-        this.scene.clearPickRegistration();
         this.displayAuxiliarBoard(auxiliaryBoard, newChildComponents, animations);
-        this.scene.popMatrix();
 
         boardsetComponent.setChildren(newChildComponents, boardsetComponent.getChildPrimitives());
     }
@@ -65,20 +59,14 @@ export class BoardRenderer {
         return [colOffset, rowOffset];
     }
 
-    displayTile(tile) {
-        this.scene.pushMatrix();
+    createPickableTile(tile, pickingId) {
         const [colOffset, rowOffset] = this.getTileOffsets(tile);
-        this.scene.translate(colOffset, this.boardHeight / 2, rowOffset);
 
-        if(this.scene.pickMode) {
-            this.scene.pushMatrix();
-            this.scene.translate(0, 0.002, 0);
-            this.scene.rotate(-90*DEGREE_TO_RAD, 1, 0, 0);
-            this.tileModel.display();
-            this.scene.popMatrix();
-        }
-        
-        this.scene.popMatrix();
+        const transformation = mat4.create();
+        mat4.translate(transformation, transformation, [colOffset, this.boardHeight / 2, rowOffset]);
+
+        const component = new BasicComponentNode("_tile"+pickingId, transformation, [this.tilePrimitive]);
+        return new PickableComponentNode("_tile"+pickingId, component, pickingId, tile);
     }
 
     createPickablePiece(piece, pickingId, animation) {
@@ -94,23 +82,6 @@ export class BoardRenderer {
         const transformation = mat4.create();
         mat4.translate(transformation, transformation, [colOffset, this.boardHeight / 2, rowOffset]);
         
-        return new EditedComponentNode("_piece", component, transformation, animation);
-    }
-
-    getBoardsetTransformationMatrix(node=this.scene.sceneData.components[this.scene.sceneData.root], matrix=mat4.create()) {
-        const nodeMatrix = node.getTransformation() != null ? node.getTransformation() : mat4.create();
-        const newMatrix = mat4.create();
-        mat4.multiply(newMatrix, matrix, nodeMatrix);
-        
-        if(node.id == "boardset") {
-            return newMatrix;
-        }
-        for(const child of node.getChildComponents()) {
-            let mx = this.getBoardsetTransformationMatrix(child, newMatrix);
-            if(mx){
-                return mx;
-            }
-        }
-        return null;
+        return new EditedComponentNode("_piece", component, transformation, [this.tilePrimitive], animation);
     }
 }
