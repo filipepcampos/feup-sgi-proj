@@ -48,7 +48,9 @@ export class MyGameCTO {
                 becameKing = true;
                 piece.upgrade();
             }
-            this.gameSequence.addMove(new MyGameMove(startTile, targetTile, inMovementChain, becameKing));
+        
+            const switchPlayer = !this.pieceHasCaptureAvailable(piece);
+            this.gameSequence.addMove(new MyGameMove(startTile, targetTile, inMovementChain, switchPlayer, becameKing));
             return true;
         }
         return false;
@@ -65,13 +67,18 @@ export class MyGameCTO {
             // Move piece from endTile to startTile
             this.board.movePiece(move.endTile.piece, move.startTile);
 
+
+            console.log("MOVE", move);
             // Change current player
-            if (!move.inMovementChain) {
+            if (move.switchedPlayer) {
+                console.log(move, "SWITCHING PLAYER");
                 this.switchPlayer();
             }
 
             // Replace captured tiles
             if(Math.abs(move.endTile.col - move.startTile.col) > 1) {
+                console.log("The current player is ", this.currentPlayer);
+                console.log("Getting a piece from ", 1 -this.currentPlayer, this.auxiliaryBoard);
                 const capturedPiece = this.auxiliaryBoard.popPiece(1 - this.currentPlayer); // Recover piece from opponent
                 const deltaRow = Math.sign(move.endTile.row - move.startTile.row);
                 const deltaCol = Math.sign(move.endTile.col - move.startTile.col);

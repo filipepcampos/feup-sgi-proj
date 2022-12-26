@@ -2,7 +2,7 @@ import { Keyframe } from "../models/Keyframe.js";
 import { MyKeyframeAnimation } from "../models/MyKeyframeAnimation.js";
 
 export class GameAnimations {
-    static createMovementAnimation(startTile, endTile, liftPiece=false) {
+    static createMovementAnimation(startTile, endTile, liftPiece=false, dropPiece=false) {
         let keyframes = []
 
         const deltaRow = endTile.row - startTile.row;
@@ -34,23 +34,25 @@ export class GameAnimations {
         const pieceArrivalInstant = (Math.abs(deltaRow) / velocity) + instantOffset;
         console.log(instantOffset, pieceArrivalInstant);
 
-        const middle = { // Arrived at the top of the endTile
+        const end = { // Arrived at the top of the endTile
             "translation": vec3.fromValues(0, 0.1, 0),
             "rotationx": vec3.fromValues(0,0,0),
             "rotationy": vec3.fromValues(0,0,0),
             "rotationz": vec3.fromValues(0,0,0),
             "scale": vec3.fromValues(1, 1, 1),
         }
-        keyframes.push(new Keyframe(pieceArrivalInstant, middle));
+        keyframes.push(new Keyframe(pieceArrivalInstant, end));
 
-        const end = { // Dropdown
-            "translation": vec3.fromValues(0,0.0,0),
-            "rotationx": vec3.fromValues(0,0,0),
-            "rotationy": vec3.fromValues(0,0,0),
-            "rotationz": vec3.fromValues(0,0,0),
-            "scale": vec3.fromValues(1, 1, 1),
+        if(dropPiece) {
+            const drop = { // Dropdown
+                "translation": vec3.fromValues(0,0.0,0),
+                "rotationx": vec3.fromValues(0,0,0),
+                "rotationy": vec3.fromValues(0,0,0),
+                "rotationz": vec3.fromValues(0,0,0),
+                "scale": vec3.fromValues(1, 1, 1),
+            }
+            keyframes.push(new Keyframe(pieceArrivalInstant + 0.2, drop));
         }
-        keyframes.push(new Keyframe(pieceArrivalInstant + 0.2, end));
 
         return new MyKeyframeAnimation("_movement", keyframes, true, true);
     }

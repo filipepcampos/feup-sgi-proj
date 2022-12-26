@@ -28,9 +28,9 @@ export class MyGameBoard {
             this.addPiece(new MyPiece(this.scene, 0, i*6), this.board[0][2*i+1]);
             this.addPiece(new MyPiece(this.scene, 0, i*6+1), this.board[1][2*i]);
             this.addPiece(new MyPiece(this.scene, 0, i*6+2), this.board[2][2*i+1]);
-            this.addPiece(new MyPiece(this.scene, 1, i*6+3), this.board[7][2*i]);
+            // this.addPiece(new MyPiece(this.scene, 1, i*6+3), this.board[7][2*i]);
             this.addPiece(new MyPiece(this.scene, 1, i*6+4), this.board[6][2*i+1]);
-            this.addPiece(new MyPiece(this.scene, 1, i*6+5), this.board[5][2*i]);
+            // this.addPiece(new MyPiece(this.scene, 1, i*6+5), this.board[5][2*i]);
         }
 
         for (let i = 0; i < NUM_ROWS; ++i) {

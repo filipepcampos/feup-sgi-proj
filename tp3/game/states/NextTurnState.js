@@ -4,6 +4,7 @@ import { LiftPieceState } from './LiftPieceState.js';
 import { GameAnimations } from '../GameAnimations.js';
 import { AnimationTracker } from '../AnimationTracker.js';
 import { AnimationState } from './AnimationState.js';
+import { DestinationSelectionState } from './DestinationSelectionState.js';
 
 export class NextTurnState extends InteractableGameState {
     constructor(stateManager, gameCTO, renderer) {
@@ -30,13 +31,18 @@ export class NextTurnState extends InteractableGameState {
         
         if(move) {
             let animations = new Map();
-            animations.set(move.startTile.piece.id, GameAnimations.createMovementAnimation(move.endTile, move.startTile, true));
+            animations.set(move.startTile.piece.id, GameAnimations.createMovementAnimation(move.endTile, move.startTile, true, !move.inMovementChain));
             if (move.capturedPiece) {
                 const capturedPiece = move.capturedPiece;
                 animations.set(capturedPiece.id, GameAnimations.createCaptureAnimation(this.gameCTO.auxiliaryBoard.getAvailableTile(capturedPiece), capturedPiece.tile))
             }
             let animationTracker = new AnimationTracker(animations);
-            this.stateManager.setState(new AnimationState(this.stateManager, this.gameCTO, this.renderer, animationTracker, new NextTurnState(this.stateManager, this.gameCTO, this.renderer)));
+            
+            if(move.inMovementChain) {
+                this.stateManager.setState(new AnimationState(this.stateManager, this.gameCTO, this.renderer, animationTracker, new DestinationSelectionState(this.stateManager, this.gameCTO, this.renderer, move.startTile, animationTracker, false)));
+            } else {
+                this.stateManager.setState(new AnimationState(this.stateManager, this.gameCTO, this.renderer, animationTracker, new NextTurnState(this.stateManager, this.gameCTO, this.renderer)));
+            }
         }
     }
 
