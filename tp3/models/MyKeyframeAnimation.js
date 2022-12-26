@@ -12,7 +12,7 @@ export class MyKeyframeAnimation extends MyAnimation {
         super();
         this.id = id;
         this.keyframes = keyframes;
-        this.transformation = this.keyframes[0].transformation;
+        this.transformation = immediateStart ? this.keyframes[0].transformation : {};
         this.started = false;
         this.stopped = false;
 
