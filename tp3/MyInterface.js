@@ -32,13 +32,16 @@ export class MyInterface extends CGFinterface {
 
     onGraphLoaded() {
         this.materialUpdater = new MaterialUpdater(this.scene.sceneData);
-        this.gui.add(this.scene, 'cameraId', this.scene.camerasIds)
+
+        if (this.cameras) this.gui.removeFolder(this.cameras);
+        this.cameras = this.gui.addFolder('Camera Settings');
+        this.cameras.add(this.scene, 'cameraId', this.scene.camerasIds)
             .name('Active Camera')
             .onChange((value) => {this.scene.setCamera(value) });
 
         if (this.lights) this.gui.removeFolder(this.lights);
         this.lights = this.gui.addFolder('Lights');
-        for(let i = 0; i < this.scene.lights.length; ++i) {
+        for(let i = 0; i < this.scene.lightsIds.length; ++i) {
             this.lights.add(this.scene.lights[i], 'enabled')
                 .name(this.scene.lightsIds[i])
                 .onChange((value) => {
