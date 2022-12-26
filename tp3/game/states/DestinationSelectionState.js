@@ -24,9 +24,11 @@ export class DestinationSelectionState extends InteractableGameState {
 
     handleTilePick(obj) {
         const piece = this.startTile.piece;
+        console.log(piece);
         const hasCaptureAvailable = this.gameCTO.pieceHasCaptureAvailable(piece);
 
-        if(this.gameCTO.movePiece(piece, obj)){ // Success
+        if(this.gameCTO.movePiece(piece, obj, !this.canCancelMove)){ // Success (If can't cancel move, the piece is in a movement chain)
+            
             if (this.gameCTO.pieceHasCaptureAvailable(piece) && hasCaptureAvailable) { // Continue capture chain
                 this.stateManager.setState(new DestinationSelectionState(this.stateManager, this.gameCTO, this.renderer, piece.tile, this.animationTracker, false));
             } else { // Switch to next player
@@ -40,5 +42,6 @@ export class DestinationSelectionState extends InteractableGameState {
                 this.stateManager.setState(new DropPieceState(this.stateManager, this.gameCTO, this.renderer, this.startTile));    
             }
         }
+        console.log("Handled pick (shoudl move to new state)");
     }
 }

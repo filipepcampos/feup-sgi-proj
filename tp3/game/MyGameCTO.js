@@ -1,5 +1,7 @@
 import { MyGameBoard } from "./models/MyGameBoard.js";
 import { MyAuxiliarBoard } from "./models/MyAuxiliarBoard.js";
+import { MyGameMove } from "./models/MyGameMove.js";
+import { MyGameSequence } from "./models/MyGameSequence.js";
 
 export class MyGameCTO {
     constructor(scene) {
@@ -8,6 +10,7 @@ export class MyGameCTO {
         this.auxiliaryBoard = new MyAuxiliarBoard(scene);
         this.currentPlayer = 0;
         this.selectedPiece = null;
+        this.gameSequence = new MyGameSequence();
     }
 
     switchPlayer() {
@@ -32,13 +35,18 @@ export class MyGameCTO {
         this.selectedPiece = null;
     }
 
-    movePiece(piece, targetTile) {
+    movePiece(piece, targetTile, inMovementChain) {
         if (this._canMovePiece(piece, targetTile)) {
-            this.capturePieceBetweenTiles(piece.tile, targetTile);
+            const startTile = piece.tile;
+            this.capturePieceBetweenTiles(startTile, targetTile);
             this.board.movePiece(piece, targetTile);
-            if(!piece.isKing) {
-                if(targetTile.row == 0 || targetTile.row == 7) piece.upgrade();
+
+            let becameKing = false;
+            if(!piece.isKing && (targetTile.row == 0 || targetTile.row == 7)) {
+                becameKing = true;
+                piece.upgrade();
             }
+            this.gameSequence.addMove(new MyGameMove(startTile, targetTile, inMovementChain, becameKing));
             return true;
         }
         return false;
@@ -48,7 +56,6 @@ export class MyGameCTO {
         const deltaRow = Math.sign(endTile.row - startTile.row);
         const deltaCol = Math.sign(endTile.col - startTile.col);
         const tile = this.board.getTile(startTile.row + deltaRow, startTile.col + deltaCol);
-        console.log("Can capture tile " + tile.row + "/" + tile.col + "?");
         if(tile != endTile && tile.piece != null) {
             const auxiliaryTile = this.auxiliaryBoard.getAvailableTile(tile.piece);
             this.board.removeFromPlay(tile.piece);

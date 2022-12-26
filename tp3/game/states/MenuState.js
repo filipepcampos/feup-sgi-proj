@@ -14,7 +14,6 @@ export class MenuState extends State {
     }
 
     update(current) {
-        //this.stateManager.setState(new LoadingSceneState(this.stateManager));
         if (!this.changed) {
             if (this.start == 0) this.start = current;
             else {

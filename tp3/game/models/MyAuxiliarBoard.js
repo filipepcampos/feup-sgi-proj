@@ -14,7 +14,11 @@ export class MyAuxiliarBoard {
     }
 
     isFull(playerId) {
-        return this.board[playerId].filter(tile => tile.piece == null).length == 0;
+        return this.getScore(playerId) == 12;
+    }
+    
+    getScore(playerId) {
+        return this.board[playerId].filter(tile => tile.piece != null).length;
     }
 
     getAvailableTile(piece) {

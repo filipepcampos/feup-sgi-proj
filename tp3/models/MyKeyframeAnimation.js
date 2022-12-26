@@ -81,7 +81,6 @@ export class MyKeyframeAnimation extends MyAnimation {
 
     apply(scene) {
         if(this.started || this.immediateStart){
-            if(this.useRelativeTime) console.log("APPLY");
             scene.translate(...this.transformation["translation"]);
             scene.rotate(this.transformation["rotationx"][0], 1, 0, 0);
             scene.rotate(this.transformation["rotationy"][0], 0, 1, 0);
