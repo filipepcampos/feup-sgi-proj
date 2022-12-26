@@ -12,13 +12,7 @@ export class MyKeyframeAnimation extends MyAnimation {
         super();
         this.id = id;
         this.keyframes = keyframes;
-        this.transformation = {
-            "translation": vec3.fromValues(0, 0, 0),
-            "rotationz": vec3.fromValues(0, 0, 0), 
-            "rotationy": vec3.fromValues(0, 0, 0), 
-            "rotationx": vec3.fromValues(0, 0, 0),
-            "scale": vec3.fromValues(1, 1, 1)
-        };
+        this.transformation = this.keyframes[0].transformation;
         this.started = false;
         this.stopped = false;
 
