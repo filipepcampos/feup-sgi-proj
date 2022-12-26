@@ -13,7 +13,11 @@ export class MyGameTimeTracker {
         this.roundtime[playerId] += timeIncrement; 
     }
 
-    getRoundtime(playerId) {
-        
+    getRoundTime(playerId) {
+        return [Math.floor(this.roundtime[playerId] / (1000 * 60)), Math.floor(this.roundtime[playerId] / 1000) % 60];
+    }
+
+    getGameTime(playerId) {
+        return [Math.floor(this.gametime[playerId] / (1000 * 60)), Math.floor(this.gametime[playerId] / 1000) % 60];
     }
 }

@@ -17,6 +17,16 @@ export class InteractableGameState extends GameState {
         }
     }
 
+    update(instant) {
+        if(this.lastInstant == null) {
+            this.lastInstant = instant;
+        } else {
+            const elapsedTime = instant - this.lastInstant;
+            this.gameCTO.updatePlaytime(elapsedTime);
+            this.lastInstant = instant;
+        }
+    }
+
     returnToMenu() {
         console.log("Returning to menu!");
         this.stateManager.scene.initScene();

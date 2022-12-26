@@ -1,6 +1,6 @@
-import { InteractableGameState } from './InteractableGameState.js';
+import { GameState } from './GameState.js';
 
-export class AnimationState extends InteractableGameState {
+export class AnimationState extends GameState {
     constructor(stateManager, gameCTO, renderer, animationTracker, nextState) {
         super(stateManager, gameCTO, renderer);
         this.animationTracker = animationTracker;

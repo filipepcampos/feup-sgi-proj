@@ -2,6 +2,7 @@ import { MyGameBoard } from "./models/MyGameBoard.js";
 import { MyAuxiliarBoard } from "./models/MyAuxiliarBoard.js";
 import { MyGameMove } from "./models/MyGameMove.js";
 import { MyGameSequence } from "./models/MyGameSequence.js";
+import { MyGameTimeTracker } from "./models/MyGameTimeTracker.js";
 
 export class MyGameCTO {
     constructor(scene) {
@@ -11,6 +12,7 @@ export class MyGameCTO {
         this.currentPlayer = 0;
         this.selectedPiece = null;
         this.gameSequence = new MyGameSequence();
+        this.timetracker = new MyGameTimeTracker();
     }
 
     switchPlayer() {
@@ -74,6 +76,10 @@ export class MyGameCTO {
 
     update(currTime) {
         this.state.update(currTime);
+    }
+
+    updatePlaytime(elapsedTime) {
+        this.timetracker.incrementTime(this.currentPlayer, elapsedTime);
     }
 
     getPossibleCapturesByPiece(piece) {

@@ -127,28 +127,9 @@ export class DestinationSelectionState extends InteractableGameState {
             "rotationz": vec3.fromValues(0,0,0),
             "scale": vec3.fromValues(1, 1, 1),
         }
-        keyframes.push(new Keyframe(10, end));
+        keyframes.push(new Keyframe(1.5, end));
 
         return new MyKeyframeAnimation("_movement", keyframes, true, true);
-    }
-
-    getQuadraticPoints_v1(startPosition, endPosition, maxHeight, nDivisions) {
-        let [x1, y1, z1] = startPosition;
-        let [x2, y2, z2] = endPosition;
-
-        const distance = Math.abs(x2-x1);
-        let f = (x) => -maxHeight * Math.pow(x / (distance / 2) , 2) + maxHeight;
-        
-        let x = x1, z = z1;
-        let deltaX = (x2-x1)/(nDivisions + 1);
-        let deltaZ = (z2-z1)/(nDivisions + 1);
-
-        let points = [];
-        for(let i = 0; i < nDivisions + 2; ++i, x += deltaX, z += deltaZ) {
-            let y = f(x);
-            points.push([x,y,z]);
-        }
-        return points;
     }
 
     getQuadraticPoints(startPosition, endPosition, maxHeight, nDivisions) {
