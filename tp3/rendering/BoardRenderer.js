@@ -42,17 +42,18 @@ export class BoardRenderer {
             }
         }
         this.scene.clearPickRegistration();
-        this.displayAuxiliarBoard(auxiliaryBoard, newChildComponents);
+        this.displayAuxiliarBoard(auxiliaryBoard, newChildComponents, animations);
         this.scene.popMatrix();
 
         boardsetComponent.setChildren(newChildComponents, boardsetComponent.getChildPrimitives());
     }
 
-    displayAuxiliarBoard(auxiliaryBoard, outputComponents) {
+    displayAuxiliarBoard(auxiliaryBoard, outputComponents, animations) {
         for (const playerId of [0, 1]) {
             for (const tile of auxiliaryBoard.board[playerId]) {
                 if(tile.piece) {
-                    outputComponents.push(this.createPiece(tile.piece, null));
+                    const animation = animations != null ? animations.getAnimation(tile.piece.id) : null;
+                    outputComponents.push(this.createPiece(tile.piece, animation));
                 }
             }
         }

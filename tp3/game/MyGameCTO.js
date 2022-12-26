@@ -53,14 +53,23 @@ export class MyGameCTO {
     }
 
     capturePieceBetweenTiles(startTile, endTile) {
+        const piece = this.getPieceBetweenTiles(startTile, endTile);
+
+        if(piece != null) {
+            const auxiliaryTile = this.auxiliaryBoard.getAvailableTile(piece);
+            this.board.removeFromPlay(piece);
+            this.board.movePiece(piece, auxiliaryTile);
+        }
+    }
+
+    getPieceBetweenTiles(startTile, endTile) {
         const deltaRow = Math.sign(endTile.row - startTile.row);
         const deltaCol = Math.sign(endTile.col - startTile.col);
         const tile = this.board.getTile(startTile.row + deltaRow, startTile.col + deltaCol);
         if(tile != endTile && tile.piece != null) {
-            const auxiliaryTile = this.auxiliaryBoard.getAvailableTile(tile.piece);
-            this.board.removeFromPlay(tile.piece);
-            this.board.movePiece(tile.piece, auxiliaryTile);
+            return tile.piece;
         }
+        return null;
     }
 
     update(currTime) {
