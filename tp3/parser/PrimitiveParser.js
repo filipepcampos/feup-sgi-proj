@@ -9,6 +9,7 @@ import { MySphere } from "../primitives/MySphere.js";
 import { MyTorus } from "../primitives/MyTorus.js";
 import {PrimitiveNode} from "../models/graph/PrimitiveNode.js";
 import { MyPatch } from "../primitives/MyPatch.js";
+import { CGFOBJModel } from "../primitives/CGFOBJModel.js";
 
 /**
  * Parser for the <primitive> node
@@ -47,6 +48,8 @@ export class PrimitiveParser {
                 return PrimitiveParser.parseTorus(childNode, reader, scene, id);
             } else if (primitiveType === 'patch') {
                 return PrimitiveParser.parsePatch(childNode, reader, scene, id);
+            } else if (primitiveType === 'obj') {
+                return PrimitiveParser.parseObj(childNode, reader, scene, id);
             }
         }
         return ParserResult.fromError("There must be exactly 1 primitive type (rectangle, triangle, cylinder, sphere or torus)");
@@ -270,5 +273,22 @@ export class PrimitiveParser {
             parts_v.getValueOrDefault(1)
         );
         return ParserResult.collect(new PrimitiveNode(id, patch), results, "parsing <patch> with id=" + id);
+    }
+
+    /**
+     * Parse the obj primitive
+     * @param {element} node - Node that should be parsed 
+     * @param {CGFXMLreader} reader - XMLreader
+     * @param {CGFscene} scene - CGFscene
+     * @param {string} id - Id of the primitive
+     * @returns ParserResult containing an object with the parsed primitive and errors that occurred while parsing
+     */
+    static parseObj(node, reader, scene, id) {
+        let fileUrl = reader.getString(node, 'file');
+        if (fileUrl == null) {
+            return ParserResult.fromError("no file defined for obj with ID = " + id);
+        }
+
+        return ParserResult.fromValue(new PrimitiveNode(id, new CGFOBJModel(scene, fileUrl)));
     }
 }
