@@ -86,7 +86,6 @@ export class XMLscene extends CGFscene {
     setTargetCamera(id) {
         this.cameraId = id;
         this.targetCamera = this.sceneData.views[id].getCGFCamera();
-        console.log("SETTING TARGETCAM", this.targetCamera, this.camera);
     }
 
     /**
@@ -182,26 +181,28 @@ export class XMLscene extends CGFscene {
 
     // TODO: Move to a class
     interpolateCamera(currTime) {
-        const ANIMATION_DURATION = 500000;
+        const ANIMATION_DURATION = 2000;
         if (this.camera != this.targetCamera) { // Interpolate between both cameras
             if (this.cameraInterpolationStartInstant == null) {
+                this.initialCamera = this.camera;
                 this.cameraInterpolationStartInstant = currTime;
             }
             const elapsedTime = currTime - this.cameraInterpolationStartInstant;
 
             if (elapsedTime >= ANIMATION_DURATION) { // Interpolation is over
                 this.camera = this.targetCamera;
+                this.interface.setActiveCamera(this.targetCamera);
                 this.cameraInterpolationStartInstant = null;
             } else {
-                let fov = this.camera.fov + ((this.targetCamera.fov - this.camera.fov)/ANIMATION_DURATION) * elapsedTime;
-                let near = this.camera.near + ((this.targetCamera.near - this.camera.near)/ANIMATION_DURATION) * elapsedTime;
-                let far = this.camera.far + ((this.targetCamera.far - this.camera.far)/ANIMATION_DURATION) * elapsedTime;
+                let fov = this.initialCamera.fov + ((this.targetCamera.fov - this.initialCamera.fov)/ANIMATION_DURATION) * elapsedTime;
+                let near = this.initialCamera.near + ((this.targetCamera.near - this.initialCamera.near)/ANIMATION_DURATION) * elapsedTime;
+                let far = this.initialCamera.far + ((this.targetCamera.far - this.initialCamera.far)/ANIMATION_DURATION) * elapsedTime;
 
                 let position = vec3.create();
-                vec3.lerp(position, this.camera.position, this.targetCamera.position, elapsedTime / ANIMATION_DURATION);
+                vec3.lerp(position, this.initialCamera.position, this.targetCamera.position, elapsedTime / ANIMATION_DURATION);
 
                 let target = vec3.create();
-                vec3.lerp(target, this.camera.target, this.targetCamera.target, elapsedTime / ANIMATION_DURATION);
+                vec3.lerp(target, this.initialCamera.target, this.targetCamera.target, elapsedTime / ANIMATION_DURATION);
 
                 this.camera = new CGFcamera(fov, near, far, position, target);
             }
