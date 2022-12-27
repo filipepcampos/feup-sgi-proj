@@ -13,10 +13,19 @@ export class MyGameCTO {
         this.selectedPiece = null;
         this.gameSequence = new MyGameSequence();
         this.timetracker = new MyGameTimeTracker();
+        this.warningActive = false;
     }
 
     switchPlayer() {
         this.currentPlayer = 1 - this.currentPlayer;
+    }
+
+    displayWarning() {
+        this.warningActive = true;
+    }
+
+    removeWarning() {
+        this.warningActive = false;
     }
 
     canPickPiece(piece) {

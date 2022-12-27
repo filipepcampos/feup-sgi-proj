@@ -1,4 +1,5 @@
 import {PrimitiveNode} from "../models/graph/PrimitiveNode.js";
+import { MyRectangle } from "../primitives/MyRectangle.js";
 
 /**
  * Class responsible for rendering a SceneData
@@ -17,29 +18,44 @@ export class SceneRenderer {
      * Displays the given node.
      * Should be called every frame.
      * @param {*} node - Reference to the PrimitiveNode or ComponentNode
-     * @param {MyMaterial} parentMaterial - Reference to the parent's material
-     * @param {MyTexture} parentTexture - Reference to the parent's texture
+     * TODO: Update docs
      */
-    display(timeFactor, node=this.sceneData.components[this.sceneData.root], parentMaterial=null, parentTexture=null) {
+    display(timeFactor, viewIndependentComponent=null, node=this.sceneData.components[this.sceneData.root]) {
         if(this.sceneData.scene.pickMode) {
-            this.displayComponent(node, parentMaterial, parentTexture, timeFactor, false);
-            this.displayComponent(node, parentMaterial, parentTexture, timeFactor, true);
+            this.displayComponent(node, null, null, timeFactor, false);
+            this.displayComponent(node, null, null, timeFactor, true);
+            this.displayViewIndependentComponent(viewIndependentComponent, timeFactor);
         } else {
             if(this.activeShader === "default"){
-                this.hasAnyHighlight = this.displayComponent(node, parentMaterial, parentTexture, timeFactor, false);
+                this.hasAnyHighlight = this.displayComponent(node, null, null, timeFactor, false);
+                this.displayViewIndependentComponent(viewIndependentComponent);
                 if(this.hasAnyHighlight){
                     this.sceneData.scene.setActiveShader(this.sceneData.highlightShader);
-                    this.displayComponent(node, parentMaterial, parentTexture, timeFactor, true);
+                    this.displayComponent(node, null, null, timeFactor, true);
                 }
                 this.activeShader = "highlight";
             } else {
                 if(this.hasAnyHighlight){
-                    this.displayComponent(node, parentMaterial, parentTexture, timeFactor, true);
+                    this.displayComponent(node, null, null, timeFactor, true);
                 }
                 this.sceneData.scene.setActiveShader(this.sceneData.scene.defaultShader);
-                this.displayComponent(node, parentMaterial, parentTexture, timeFactor, false);
+                this.displayComponent(node, null, null, timeFactor, false);
+                this.displayViewIndependentComponent(viewIndependentComponent);
                 this.activeShader = "default";
             }
+        }
+    }
+
+    displayViewIndependentComponent(node, timeFactor) {
+        if(node) {
+            const scene = this.sceneData.scene;
+            scene.gl.disable(scene.gl.DEPTH_TEST);
+            scene.pushMatrix();
+            scene.loadIdentity();
+            scene.translate(45,0,-50);
+            this.displayComponent(node, null, null, timeFactor, false);
+            scene.popMatrix();
+            scene.gl.enable(scene.gl.DEPTH_TEST);
         }
     }
 
@@ -108,6 +124,7 @@ export class SceneRenderer {
 
         if(node.pickingId != null) {
             this.sceneData.scene.registerForPick(node.pickingId, node.pickingObject);
+            if(node.pickingId > 100) console.log(node.pickingId);
         }
 
         for(const child of node.getChildComponents()){

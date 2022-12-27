@@ -65,7 +65,6 @@ export class DestinationSelectionState extends InteractableGameState {
         }
     }
     
-
     dropPiece() {
         if(this.canCancelMove) {
             this.gameCTO.unpickPiece();
@@ -79,7 +78,6 @@ export class DestinationSelectionState extends InteractableGameState {
         const capturedTile = capturedPiece != null ? capturedPiece.tile : null;
 
         if(this.gameCTO.movePiece(piece, obj, !this.canCancelMove)){ // Success (If can't cancel move, the piece is in a movement chain)
-            
             if (this.gameCTO.pieceHasCaptureAvailable(piece) && (capturedPiece != null)) { // Continue capture chain
                 this.setAnimationState(obj, capturedPiece, capturedTile, true, new DestinationSelectionState(this.stateManager, this.gameCTO, this.renderer, piece.tile, this.animationTracker, false));
             } else { // Switch to next player
@@ -87,9 +85,13 @@ export class DestinationSelectionState extends InteractableGameState {
                 this.gameCTO.unpickPiece();
                 this.setAnimationState(obj, capturedPiece, capturedTile, false, new NextTurnState(this.stateManager, this.gameCTO, this.renderer));
             }
+            this.gameCTO.removeWarning();
         } else {
             if(obj == this.startTile) { // Cancel move
-               this.dropPiece();   
+                this.dropPiece();
+                this.gameCTO.removeWarning();
+            } else {
+                this.gameCTO.displayWarning();
             }
         }
     }
