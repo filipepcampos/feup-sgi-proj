@@ -28,6 +28,7 @@
         <texture id="tex_board_scene" file="scenes/images/board_scene.png"/>
         <texture id="tex_wood_board" file="scenes/images/wood_board.jpg" />
         <texture id="tex_wood" file="scenes/images/wood.jpg"/>
+        <texture id="tex_start" file="scenes/images/start.png"/>
     </textures>
 
     <materials>
@@ -218,7 +219,7 @@
             <materials>
                 <material id="white" />
             </materials>
-            <texture id="none"/>
+            <texture id="tex_start" length_t="1.0" length_s="1.0"/>
             <children>
                 <componentref id="p_cube" />
             </children>
@@ -278,9 +279,9 @@
                 <translate x="0" y="0" z="0.04"/>
             </transformation>
             <materials>
-                <material id="light_gray"/>
+                <material id="inherit"/>
             </materials>
-            <texture id="tex_wood"/>
+            <texture id="tex_wood" length_t="1.0" length_s="1.0"/>
             <children>
                 <componentref id="menu_border_side_U" />
                 <componentref id="menu_border_side_D" />
