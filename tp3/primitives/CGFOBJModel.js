@@ -169,4 +169,8 @@ export class CGFOBJModel extends CGFobject {
 		
 		this.initGLBuffers();
 	};
+
+	updateTexLength() {
+		// Not supported
+	}
 }

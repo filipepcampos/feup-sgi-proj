@@ -5,9 +5,13 @@
             <from x="25" y="25" z="45" />
             <to x="5" y="0" z="15" />
         </perspective>
-        <perspective id="player0_camera" near="0.1" far="500" angle="90">
-            <from x="0" y="3" z="-1" />
-            <to x="0" y="2.5" z="0" />
+        <perspective id="player0_camera" near="0.1" far="500" angle="85">
+            <from x="-9.4" y="3.5" z="-9.4" />
+            <to x="-8" y="2" z="-8" />
+        </perspective>
+        <perspective id="player1_camera" near="0.1" far="500" angle="85">
+            <from x="-6.6" y="3.5" z="-6.6" />
+            <to x="-8" y="2" z="-8" />
         </perspective>
         <ortho id="ortho_camera" near="0.1" far="500" left="-30" right="30" top="30" bottom="-30">
             <from x="25" y="40" z="25" />
@@ -146,6 +150,12 @@
             <emission r="0.0" g="0.0" b="0.0" a="1.0" />
             <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
             <diffuse r="0.2" g="0.2" b="0.2" a="1.0" />
+            <specular r="0" g="0" b="0" a="1.0" />
+        </material>
+        <material id="brown" shininess="3">
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
+            <ambient r="0.2" g="0.10" b="0.025" a="1.0" />
+            <diffuse r="0.4" g="0.20" b="0.05" a="1.0" />
             <specular r="0" g="0" b="0" a="1.0" />
         </material>
         <material id="medium_gray" shininess="10">
@@ -454,6 +464,9 @@
                 <controlpoint x="-5.0" y="11.0" z="0.0" />
             </patch>
         </primitive>
+        <primitive id="table">
+            <obj file="objmodels/table.obj"/>
+        </primitive>
     </primitives>
     <animations>
         <keyframeanim id="car_animation">
@@ -627,10 +640,25 @@
                 <componentref id="car" />
                 <componentref id="car_burnt" />
                 <componentref id="stopped_car" />
-                <componentref id="boardset" />
+                <componentref id="board_table_set" />
                 <componentref id="game_info_board" />
                 <componentref id="return_to_menu_button" />
                 <componentref id="undo_button" />
+            </children>
+        </component>
+
+        <component id="board_table_set">
+            <transformation>
+                <translate x="-8" y="0" z="-8"/>
+                <rotate axis="y" angle="-45"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="table_component" />
+                <componentref id="boardset"/>
             </children>
         </component>
 
@@ -692,7 +720,8 @@
 
         <component id="boardset">
             <transformation>
-                <translate x="0" y="2" z="0.0" />
+                <translate x="0" y="1.9" z="0"/>
+                <rotate axis="y" angle="90"/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -713,6 +742,19 @@
             <texture id="tex_wood_board" length_s="1.0" length_t="1.0" />
             <children>
                 <componentref id="p_cube" />
+            </children>
+        </component>
+
+        <component id="table_component">
+            <transformation>
+                <scale x="0.2" y="0.2" z="0.2"/>
+            </transformation>
+            <materials>
+                <material id="brown" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="table" />
             </children>
         </component>
 
@@ -769,7 +811,7 @@
 
         <component id="street_building1">
             <transformation>
-                <translate x="-10" y="7.6" z="-7" />
+                <translate x="-10" y="7.6" z="-15" />
             </transformation>
             <materials>
                 <material id="inherit" />
