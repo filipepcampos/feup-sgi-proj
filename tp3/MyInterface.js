@@ -37,7 +37,7 @@ export class MyInterface extends CGFinterface {
         this.cameras = this.gui.addFolder('Camera Settings');
         this.cameras.add(this.scene, 'cameraId', this.scene.camerasIds)
             .name('Active Camera')
-            .onChange((value) => {this.scene.setCamera(value) });
+            .onChange((value) => {this.scene.setTargetCamera(value) });
 
         if (this.lights) this.gui.removeFolder(this.lights);
         this.lights = this.gui.addFolder('Lights');

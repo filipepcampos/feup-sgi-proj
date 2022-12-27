@@ -10,7 +10,7 @@
             <to x="-8" y="2" z="-8" />
         </perspective>
         <perspective id="player1_camera" near="0.1" far="500" angle="85">
-            <from x="-6.6" y="3.5" z="-6.6" />
+            <from x="-7" y="3.5" z="-6.6" />
             <to x="-8" y="2" z="-8" />
         </perspective>
         <ortho id="ortho_camera" near="0.1" far="500" left="-30" right="30" top="30" bottom="-30">

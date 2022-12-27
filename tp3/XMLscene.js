@@ -64,6 +64,7 @@ export class XMLscene extends CGFscene {
      */
     initCameras() {
         this.setCamera(this.sceneData.defaultView);
+        this.setTargetCamera(this.sceneData.defaultView);
         this.camerasIds = Object.keys(this.sceneData.views);
     }
     
@@ -75,6 +76,16 @@ export class XMLscene extends CGFscene {
         this.cameraId = id;
         this.camera = this.sceneData.views[id].getCGFCamera();
         this.interface.setActiveCamera(this.camera);
+    }
+
+    /**
+     * Set the target camera, based on id. Current camera will interpolate towards the target camera
+     * @param {string} cameraId - Camera Id
+     */
+    setTargetCamera(id) {
+        this.cameraId = id;
+        this.targetCamera = this.sceneData.views[id].getCGFCamera();
+        console.log("SETTING TARGETCAM", this.targetCamera, this.camera);
     }
 
     /**
@@ -168,6 +179,36 @@ export class XMLscene extends CGFscene {
         this.startTime = null;
     }
 
+    // TODO: Move to a class
+    interpolateCamera(currTime) {
+        const ANIMATION_DURATION = 500000;
+        if (this.camera != this.targetCamera) { // Interpolate between both cameras
+            if (this.cameraInterpolationStartInstant == null) {
+                this.cameraInterpolationStartInstant = currTime;
+            }
+            const elapsedTime = currTime - this.cameraInterpolationStartInstant;
+
+            if (elapsedTime >= ANIMATION_DURATION) { // Interpolation is over
+                this.camera = this.targetCamera;
+                this.cameraInterpolationStartInstant = null;
+            } else {
+                let fov = this.camera.fov + ((this.targetCamera.fov - this.camera.fov)/ANIMATION_DURATION) * elapsedTime;
+                let near = this.camera.near + ((this.targetCamera.near - this.camera.near)/ANIMATION_DURATION) * elapsedTime;
+                let far = this.camera.far + ((this.targetCamera.far - this.camera.far)/ANIMATION_DURATION) * elapsedTime;
+
+                let position = vec3.create();
+                vec3.lerp(position, this.camera.position, this.targetCamera.position, elapsedTime / ANIMATION_DURATION);
+
+                let target = vec3.create();
+                vec3.lerp(target, this.camera.target, this.targetCamera.target, elapsedTime / ANIMATION_DURATION);
+
+                this.camera = new CGFcamera(fov, near, far, position, target);
+            }
+
+
+        }
+    }
+
     update(currTime) {
         if(this.startTime == null) {
             this.startTime = currTime;
@@ -182,6 +223,7 @@ export class XMLscene extends CGFscene {
         }
 
         this.stateManager.update(currTime-this.startTime);
+        this.interpolateCamera(currTime);
     }
 
     logPicking()
