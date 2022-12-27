@@ -86,6 +86,7 @@ export class XMLscene extends CGFscene {
     setTargetCamera(id) {
         this.cameraId = id;
         this.targetCamera = this.sceneData.views[id].getCGFCamera();
+        this.changedTargetCamera = true;
     }
 
     /**
@@ -183,7 +184,8 @@ export class XMLscene extends CGFscene {
     interpolateCamera(currTime) {
         const ANIMATION_DURATION = 2000;
         if (this.camera != this.targetCamera) { // Interpolate between both cameras
-            if (this.cameraInterpolationStartInstant == null) {
+            if (this.changedTargetCamera) {
+                this.changedTargetCamera = false;
                 this.initialCamera = this.camera;
                 this.cameraInterpolationStartInstant = currTime;
             }
