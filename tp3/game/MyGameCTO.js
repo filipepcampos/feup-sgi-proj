@@ -40,7 +40,7 @@ export class MyGameCTO {
     movePiece(piece, targetTile, inMovementChain) {
         if (this._canMovePiece(piece, targetTile)) {
             const startTile = piece.tile;
-            this.capturePieceBetweenTiles(startTile, targetTile);
+            const capturedPiece = this.capturePieceBetweenTiles(startTile, targetTile);
             this.board.movePiece(piece, targetTile);
 
             let becameKing = false;
@@ -49,7 +49,7 @@ export class MyGameCTO {
                 piece.upgrade();
             }
         
-            const switchPlayer = !this.pieceHasCaptureAvailable(piece);
+            const switchPlayer = !(this.pieceHasCaptureAvailable(piece) && capturedPiece);
             this.gameSequence.addMove(new MyGameMove(startTile, targetTile, inMovementChain, switchPlayer, becameKing));
             return true;
         }
@@ -101,7 +101,9 @@ export class MyGameCTO {
             const auxiliaryTile = this.auxiliaryBoard.getAvailableTile(piece);
             this.board.removeFromPlay(piece);
             this.board.movePiece(piece, auxiliaryTile);
+            return true;
         }
+        return false;
     }
 
     getPieceBetweenTiles(startTile, endTile) {
