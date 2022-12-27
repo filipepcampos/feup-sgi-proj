@@ -19,6 +19,7 @@ export class DestinationSelectionState extends InteractableGameState {
     }
 
     handleInput(type, obj){
+        super.handleInput(type, obj);
         if (type == PickingTypes.TileSelection) {
             this.handleTilePick(obj);
         } else if (type == PickingTypes.ButtonSelection) {
