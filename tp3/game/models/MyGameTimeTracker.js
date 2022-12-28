@@ -1,7 +1,9 @@
 export class MyGameTimeTracker {
-    constructor() {
+    constructor(maxGametime, maxRoundtime) {
         this.gametime = [0, 0];
         this.roundtime = [0, 0];
+        this.maxGametime = maxGametime;
+        this.maxRoundtime = maxRoundtime;
     }
 
     resetRoundtime() {
@@ -10,7 +12,12 @@ export class MyGameTimeTracker {
 
     incrementTime(playerId, timeIncrement) {
         this.gametime[playerId] += timeIncrement;
-        this.roundtime[playerId] += timeIncrement; 
+        this.roundtime[playerId] += timeIncrement;
+    }
+
+    isGameover() {
+        return this.gametime[0] >= this.maxGametime || this.gametime[1] >= this.maxGametime ||
+            this.roundtime[0] >= this.maxRoundtime || this.roundtime[1] >= this.maxRoundtime;
     }
 
     getRoundTime(playerId) {

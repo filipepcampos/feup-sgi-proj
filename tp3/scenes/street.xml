@@ -474,6 +474,36 @@
         <primitive id="table">
             <obj file="objmodels/table.obj"/>
         </primitive>
+        <primitive id="time_round_digit0">
+            <character x1="-2.5" y1="-0.5" x2="-1.5" y2="0.5" char="0"/>
+        </primitive>
+        <primitive id="time_round_digit1">
+            <character x1="-1.5" y1="-0.5" x2="-0.5" y2="0.5" char="0"/>
+        </primitive>
+        <primitive id="time_round_separator">
+            <character x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" char=":"/>
+        </primitive>
+        <primitive id="time_round_digit2">
+            <character x1="0.5" y1="-0.5" x2="1.5" y2="0.5" char="0"/>
+        </primitive>
+        <primitive id="time_round_digit3">
+            <character x1="1.5" y1="-0.5" x2="2.5" y2="0.5" char="0"/>
+        </primitive>
+        <primitive id="time_game_digit0">
+            <character x1="-2.5" y1="-0.5" x2="-1.5" y2="0.5" char="0"/>
+        </primitive>
+        <primitive id="time_game_digit1">
+            <character x1="-1.5" y1="-0.5" x2="-0.5" y2="0.5" char="0"/>
+        </primitive>
+        <primitive id="time_game_separator">
+            <character x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" char=":"/>
+        </primitive>
+        <primitive id="time_game_digit2">
+            <character x1="0.5" y1="-0.5" x2="1.5" y2="0.5" char="0"/>
+        </primitive>
+        <primitive id="time_game_digit3">
+            <character x1="1.5" y1="-0.5" x2="2.5" y2="0.5" char="0"/>
+        </primitive>
     </primitives>
     <animations>
         <keyframeanim id="car_animation">
@@ -652,6 +682,8 @@
                 <componentref id="return_to_menu_button" />
                 <componentref id="undo_button" />
                 <componentref id="movie_button" />
+                <componentref id="round_timer" />
+                <componentref id="game_timer" />
             </children>
         </component>
 
@@ -780,6 +812,44 @@
             <texture id="tex_wood_board" length_s="1.0" length_t="1.0" />
             <children>
                 <componentref id="p_cube" />
+            </children>
+        </component>
+
+        <component id="round_timer">
+            <transformation>
+                <translate x="0" y="4" z="0"/>
+                <scale x="1" y="1.0" z="0.2" />
+                <rotate axis="y" angle="180"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="time_round_digit0" />
+                <primitiveref id="time_round_digit1" />
+                <primitiveref id="time_round_separator" />
+                <primitiveref id="time_round_digit2" />
+                <primitiveref id="time_round_digit3" />
+            </children>
+        </component>
+
+        <component id="game_timer">
+            <transformation>
+                <translate x="0" y="6" z="0"/>
+                <scale x="1" y="1.0" z="0.2" />
+                <rotate axis="y" angle="180"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="time_game_digit0" />
+                <primitiveref id="time_game_digit1" />
+                <primitiveref id="time_game_separator" />
+                <primitiveref id="time_game_digit2" />
+                <primitiveref id="time_game_digit3" />
             </children>
         </component>
 

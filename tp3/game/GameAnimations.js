@@ -32,7 +32,6 @@ export class GameAnimations {
 
         const velocity = 1;  // v=d/t <=> t=d/v
         const pieceArrivalInstant = (Math.abs(deltaRow) / velocity) + instantOffset;
-        console.log(instantOffset, pieceArrivalInstant);
 
         const end = { // Arrived at the top of the endTile
             "translation": vec3.fromValues(0, 0.1, 0),

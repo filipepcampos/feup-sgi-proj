@@ -19,7 +19,7 @@ export class MyRectangle extends CGFobject {
 
 		this.initBuffers();
 	}
-	
+
 	/**
 	 * Initializes the buffers of the primitive
 	 */
@@ -44,16 +44,16 @@ export class MyRectangle extends CGFobject {
 			0, 0, 1,
 			0, 0, 1
 		];
-		
+
 		/*
 		Texture coords (s,t)
 		+----------> s
-        |
-        |
+		|
+		|
 		|
 		v
-        t
-        */
+		t
+		*/
 
 		this.texCoords = [
 			0, 1,
@@ -80,9 +80,10 @@ export class MyRectangle extends CGFobject {
 	 * @param {float} length_u - Horizontal length of the texture
 	 * @param {float} length_v - Vertical length of the texture
 	 */
-	 updateTexLength(length_u, length_v) {
-		let u = 1 / length_u / (this.x2-this.x1);
-		let v = 1 / length_v / (this.y2-this.y1);
+	updateTexLength(length_u, length_v) {
+		let u = 1 / length_u / (this.x2 - this.x1);
+		let v = 1 / length_v / (this.y2 - this.y1);
+		
 		let coords = [
 			0, v,
 			u, v,

@@ -7,6 +7,7 @@ import { AnimationState } from './AnimationState.js';
 import { DestinationSelectionState } from './DestinationSelectionState.js';
 import { MovieState } from "./MovieState.js";
 import { MyGameCTO } from '../MyGameCTO.js';
+import { GameOverState } from "./GameOverState.js";
 
 export class NextTurnState extends InteractableGameState {
     constructor(stateManager, gameCTO, renderer) {
@@ -15,6 +16,13 @@ export class NextTurnState extends InteractableGameState {
 
     display() {
         this.renderer.display(this.gameCTO, this.timeFactor);
+    }
+
+    update(current) {
+        super.update(current);
+        if(this.gameCTO.isGameover()) {
+            this.stateManager.setState(new GameOverState(this.stateManager, this.gameCTO, this.renderer));
+        }
     }
 
     handleInput(type, obj) {

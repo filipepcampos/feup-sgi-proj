@@ -12,7 +12,7 @@ export class MyGameCTO {
         this.currentPlayer = 0;
         this.selectedPiece = null;
         this.gameSequence = new MyGameSequence();
-        this.timetracker = new MyGameTimeTracker();
+        this.timetracker = new MyGameTimeTracker(15*60*1000, 60*1000);
         this.warningActive = false;
     }
 
@@ -175,7 +175,7 @@ export class MyGameCTO {
     }
 
     isGameover() {
-        return this.auxiliaryBoard.isFull(0) || this.auxiliaryBoard.isFull(1);
+        return this.auxiliaryBoard.isFull(0) || this.auxiliaryBoard.isFull(1) || this.timetracker.isGameover();
     }
 
     migrateGameSequence(gameSequence) {

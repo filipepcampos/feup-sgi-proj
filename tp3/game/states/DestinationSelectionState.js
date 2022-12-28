@@ -7,6 +7,7 @@ import { AnimationTracker } from '../AnimationTracker.js';
 import { GameAnimations } from '../GameAnimations.js';
 import { MovieState } from "./MovieState.js";
 import { MyGameCTO } from '../MyGameCTO.js';
+import { GameOverState } from './GameOverState.js';
 
 export class DestinationSelectionState extends InteractableGameState {
     constructor(stateManager, gameCTO, renderer, startTile, animationTracker, canCancelMove=true) {
@@ -18,6 +19,13 @@ export class DestinationSelectionState extends InteractableGameState {
 
     display() {
         this.renderer.display(this.gameCTO, this.timeFactor, this.animationTracker);
+    }
+
+    update(current) {
+        super.update(current);
+        if(this.gameCTO.isGameover()) {
+            this.stateManager.setState(new GameOverState(this.stateManager, this.gameCTO, this.renderer));
+        }
     }
 
     handleInput(type, obj){

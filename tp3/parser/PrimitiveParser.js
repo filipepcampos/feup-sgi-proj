@@ -3,6 +3,7 @@ import { FloatParser } from "./FloatParser.js";
 import { IntegerParser } from "./IntegerParser.js";
 import { Coordinate3DParser } from "./Coordinate3DParser.js";
 import { MyRectangle } from "../primitives/MyRectangle.js";
+import { MyCharacter } from "../primitives/MyCharacter.js";
 import { MyTriangle } from "../primitives/MyTriangle.js";
 import { MyCylinder } from "../primitives/MyCylinder.js";
 import { MySphere } from "../primitives/MySphere.js";
@@ -50,6 +51,8 @@ export class PrimitiveParser {
                 return PrimitiveParser.parsePatch(childNode, reader, scene, id);
             } else if (primitiveType === 'obj') {
                 return PrimitiveParser.parseObj(childNode, reader, scene, id);
+            } else if (primitiveType === 'character') {
+                return PrimitiveParser.parseChar(childNode, reader, scene, id);
             }
         }
         return ParserResult.fromError("There must be exactly 1 primitive type (rectangle, triangle, cylinder, sphere or torus)");
@@ -80,6 +83,36 @@ export class PrimitiveParser {
             new PrimitiveNode(id, rectangle),
             [x1, y1, x2, y2],
             "parsing <rectangle> with id=" + id
+        );
+    }
+
+    /**
+     * Parse the char primitive
+     * @param {element} node - Node that should be parsed 
+     * @param {CGFXMLreader} reader - XMLreader
+     * @param {CGFscene} scene - CGFscene
+     * @param {string} id - Id of the primitive
+     * @returns ParserResult containing an object with the parsed primitive and errors that occurred while parsing
+     */
+     static parseChar(node, reader, scene, id) {
+        let x1 = FloatParser.parse(node, reader, 'x1');
+        let y1 = FloatParser.parse(node, reader, 'y1');
+        let x2 = FloatParser.parse(node, reader, 'x2', x1.getValueOrDefault(0));
+        let y2 = FloatParser.parse(node, reader, 'y2', y1.getValueOrDefault(0));
+        let char = reader.getString(node, "char");
+
+        let character = new MyCharacter(
+            scene, 
+            x1.getValueOrDefault(0), 
+            x2.getValueOrDefault(1), 
+            y1.getValueOrDefault(0), 
+            y2.getValueOrDefault(1),
+            char
+        );
+        return ParserResult.collect(
+            new PrimitiveNode(id, character),
+            [x1, y1, x2, y2],
+            "parsing <character> with id=" + id
         );
     }
 
