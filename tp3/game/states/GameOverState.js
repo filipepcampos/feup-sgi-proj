@@ -24,4 +24,5 @@ export class GameOverState extends InteractableGameState {
         }
     }
 
+    update(current) {}
 }
