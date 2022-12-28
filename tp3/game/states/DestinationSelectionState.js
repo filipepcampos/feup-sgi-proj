@@ -5,6 +5,8 @@ import { DropPieceState } from './DropPieceState.js';
 import { AnimationState } from './AnimationState.js';
 import { AnimationTracker } from '../AnimationTracker.js';
 import { GameAnimations } from '../GameAnimations.js';
+import { MovieState } from "./MovieState.js";
+import { MyGameCTO } from '../MyGameCTO.js';
 
 export class DestinationSelectionState extends InteractableGameState {
     constructor(stateManager, gameCTO, renderer, startTile, animationTracker, canCancelMove=true) {
@@ -25,6 +27,10 @@ export class DestinationSelectionState extends InteractableGameState {
         } else if (type == PickingTypes.ButtonSelection) {
             if(obj == "undo_button") {
                 this.undoMove();
+            } else if (obj == "movie_button") {
+                const movieGameCTO = new MyGameCTO(this.stateManager.scene);
+                const movieGameSequence = movieGameCTO.migrateGameSequence(this.gameCTO.gameSequence.clone());
+                this.stateManager.setState(new MovieState(this.stateManager, movieGameCTO, this.renderer, movieGameSequence, this));
             }
         }
     }

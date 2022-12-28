@@ -7,7 +7,19 @@ export class MyGameSequence {
         this.moves.push(move);
     }
 
-    popMove() {
+    popLastMove() {
         return this.moves.pop();
+    }
+
+    popFirstMove() {
+        return this.moves.shift();
+    }
+
+    clone() {
+        const newSequence = new MyGameSequence();
+        for (const move of this.moves) {
+            newSequence.addMove(move.clone());
+        }
+        return newSequence;
     }
 }

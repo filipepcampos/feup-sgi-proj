@@ -6,4 +6,8 @@ export class MyGameMove {
         this.switchedPlayer = switchedPlayer;
         this.becameKing = becameKing;
     }
+
+    clone() {
+        return new MyGameMove(this.startTile, this.endTile, this.inMovementChain, this.switchedPlayer, this.becameKing);
+    }
 }

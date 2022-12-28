@@ -66,7 +66,7 @@ export class MyGameCTO {
     }
 
     undoMove() {
-        const move = this.gameSequence.popMove();
+        const move = this.gameSequence.popLastMove();
         if (move) {
             // Undo becomeKing
             if(move.becameKing) {
@@ -76,11 +76,9 @@ export class MyGameCTO {
             // Move piece from endTile to startTile
             this.board.movePiece(move.endTile.piece, move.startTile);
 
-
-            console.log("MOVE", move);
             // Change current player
             if (move.switchedPlayer) {
-                console.log(move, "SWITCHING PLAYER");
+                this.timetracker.resetRoundtime();
                 this.switchPlayer();
             }
 
@@ -178,6 +176,14 @@ export class MyGameCTO {
 
     isGameover() {
         return this.auxiliaryBoard.isFull(0) || this.auxiliaryBoard.isFull(1);
+    }
+
+    migrateGameSequence(gameSequence) {
+        for(const move of gameSequence.moves) {
+            move.startTile = this.board.getTile(move.startTile.row, move.startTile.col);
+            move.endTile = this.board.getTile(move.endTile.row, move.endTile.col);
+        }
+        return gameSequence;
     }
 
     _canMovePiece(piece, targetTile) {

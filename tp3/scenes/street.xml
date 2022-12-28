@@ -651,6 +651,7 @@
                 <componentref id="game_info_board" />
                 <componentref id="return_to_menu_button" />
                 <componentref id="undo_button" />
+                <componentref id="movie_button" />
             </children>
         </component>
 
@@ -725,6 +726,21 @@
             <picking id="101"/>
         </component>
 
+        <component id="movie_button">
+            <transformation>
+                <scale x="0.2" y="0.2" z="0.2" />
+                <translate x="-3" y="3" z="0" />
+            </transformation>
+            <materials>
+                <material id="red" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="p_cube" />
+            </children>
+            <picking id="102"/>
+        </component>
+
         <component id="warning_message">
             <transformation>
                 <translate x="40" y="20" z="-50"/>
@@ -737,7 +753,7 @@
             <children>
                 <primitiveref id="rectangle"/>
             </children>
-            <picking id="102"/>
+            <picking id="103"/>
         </component>
 
         <component id="boardset">
@@ -786,7 +802,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="tex_brick" length_s="1.0" length_t="1.0" />
+            <texture id="tex_brick" length_s="0.2" length_t="0.2" />
             <children>
                 <componentref id="street_building0_body" />
                 <componentref id="street_building0_helipad" />
