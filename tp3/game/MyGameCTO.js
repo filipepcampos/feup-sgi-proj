@@ -3,6 +3,7 @@ import { MyAuxiliarBoard } from "./models/MyAuxiliarBoard.js";
 import { MyGameMove } from "./models/MyGameMove.js";
 import { MyGameSequence } from "./models/MyGameSequence.js";
 import { MyGameTimeTracker } from "./models/MyGameTimeTracker.js";
+import { SceneScoreUpdater } from "../rendering/SceneScoreUpdater.js";
 
 export class MyGameCTO {
     constructor(scene) {
@@ -61,6 +62,7 @@ export class MyGameCTO {
         
             const switchPlayer = !(this.pieceHasCaptureAvailable(piece) && capturedPiece);
             this.gameSequence.addMove(new MyGameMove(startTile, targetTile, inMovementChain, switchPlayer, becameKing));
+            SceneScoreUpdater.update(this.scene, this.auxiliaryBoard.getScore(0), this.auxiliaryBoard.getScore(1));
             return true;
         }
         return false;
@@ -97,6 +99,7 @@ export class MyGameCTO {
                 this.board.movePiece(capturedPiece, tile);
                 move.capturedPiece = capturedPiece; // TODO: Pls check this
             }
+            SceneScoreUpdater.update(this.scene, this.auxiliaryBoard.getScore(0), this.auxiliaryBoard.getScore(1));
             return move;   
         }
         return null;

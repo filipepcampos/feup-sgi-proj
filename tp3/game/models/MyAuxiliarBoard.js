@@ -18,7 +18,7 @@ export class MyAuxiliarBoard {
     }
     
     getScore(playerId) {
-        return this.board[playerId].filter(tile => tile.piece != null).length;
+        return this.board[1-playerId].filter(tile => tile.piece != null).length;
     }
 
     getAvailableTile(piece) {

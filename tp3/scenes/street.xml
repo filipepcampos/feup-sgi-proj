@@ -504,6 +504,21 @@
         <primitive id="time_game_digit3">
             <character x1="1.5" y1="-0.5" x2="2.5" y2="0.5" char="0"/>
         </primitive>
+        <primitive id="score_player0_digit0">
+            <character x1="-2.5" y1="-0.5" x2="-1.5" y2="0.5" char="0"/>
+        </primitive>
+        <primitive id="score_player0_digit1">
+            <character x1="-1.5" y1="-0.5" x2="-0.5" y2="0.5" char="0"/>
+        </primitive>
+        <primitive id="score_separator">
+            <character x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" char=":"/>
+        </primitive>
+        <primitive id="score_player1_digit0">
+            <character x1="0.5" y1="-0.5" x2="1.5" y2="0.5" char="0"/>
+        </primitive>
+        <primitive id="score_player1_digit1">
+            <character x1="1.5" y1="-0.5" x2="2.5" y2="0.5" char="0"/>
+        </primitive>
     </primitives>
     <animations>
         <keyframeanim id="car_animation">
@@ -684,6 +699,7 @@
                 <componentref id="movie_button" />
                 <componentref id="round_timer" />
                 <componentref id="game_timer" />
+                <componentref id="game_score" />
             </children>
         </component>
 
@@ -850,6 +866,25 @@
                 <primitiveref id="time_game_separator" />
                 <primitiveref id="time_game_digit2" />
                 <primitiveref id="time_game_digit3" />
+            </children>
+        </component>       
+
+        <component id="game_score">
+            <transformation>
+                <translate x="0" y="8" z="0"/>
+                <scale x="1" y="1.0" z="0.2" />
+                <rotate axis="y" angle="180"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="score_player0_digit0" />
+                <primitiveref id="score_player0_digit1" />
+                <primitiveref id="score_separator" />
+                <primitiveref id="score_player1_digit0" />
+                <primitiveref id="score_player1_digit1" />
             </children>
         </component>
 
