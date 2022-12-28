@@ -63,6 +63,7 @@ export class DestinationSelectionState extends InteractableGameState {
                 }
             }
         }
+        this.gameCTO.removeWarning();
     }
     
     dropPiece() {

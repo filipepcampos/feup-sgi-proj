@@ -86,7 +86,12 @@ export class XMLscene extends CGFscene {
     setTargetCamera(id) {
         this.cameraId = id;
         this.targetCamera = this.sceneData.views[id].getCGFCamera();
-        this.changedTargetCamera = true;
+
+        if(this.camera instanceof CGFcamera && this.targetCamera instanceof CGFcamera) { // Both cameras are perspective
+            this.changedTargetCamera = true;
+        } else {
+            this.camera = this.targetCamera;
+        }
     }
 
     /**
@@ -192,6 +197,7 @@ export class XMLscene extends CGFscene {
             const elapsedTime = currTime - this.cameraInterpolationStartInstant;
 
             if (elapsedTime >= ANIMATION_DURATION) { // Interpolation is over
+                console.log(this.camera, this.targetCamera);
                 this.camera = this.targetCamera;
                 this.interface.setActiveCamera(this.targetCamera);
                 this.cameraInterpolationStartInstant = null;
@@ -206,10 +212,12 @@ export class XMLscene extends CGFscene {
                 let target = vec3.create();
                 vec3.lerp(target, this.initialCamera.target, this.targetCamera.target, elapsedTime / ANIMATION_DURATION);
 
+                let up = vec3.create();
+                vec3.lerp(up, this.initialCamera._up, this.targetCamera._up, elapsedTime / ANIMATION_DURATION);
+
                 this.camera = new CGFcamera(fov, near, far, position, target);
+                this.camera._up = up;
             }
-
-
         }
     }
 

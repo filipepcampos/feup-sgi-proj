@@ -124,7 +124,6 @@ export class SceneRenderer {
 
         if(node.pickingId != null) {
             this.sceneData.scene.registerForPick(node.pickingId, node.pickingObject);
-            if(node.pickingId > 100) console.log(node.pickingId);
         }
 
         for(const child of node.getChildComponents()){
