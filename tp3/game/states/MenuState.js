@@ -4,7 +4,13 @@ import { SceneRenderer } from '../../rendering/SceneRenderer.js';
 import { PickingTypes } from '../PickingTypes.js';
 import { MySceneGraph } from '../../MySceneGraph.js';
 
+/**
+ * State that handles the menu.
+ */
 export class MenuState extends State {
+    /**
+     * @param {StateManager} stateManager - State manager
+     */
     constructor(stateManager) {
         super(stateManager);
         this.start = 0;
@@ -43,6 +49,10 @@ export class MenuState extends State {
         }
     }
 
+    /**
+     * Changes the color of the selected scene button.
+     * @param {String} selectedScene - The selected scene button
+     */
     changeSceneButtonColor(selectedScene) {
         const componentsObject = this.stateManager.scene.sceneData.components 
         for(const [id, component] of Object.entries(componentsObject)) {

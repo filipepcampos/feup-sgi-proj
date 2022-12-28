@@ -1,6 +1,14 @@
 import { State } from "./State.js";
 
+/**
+ * Abstract class for a game state.
+ */
 export class GameState extends State {
+    /**
+     * @param {StateManager} stateManager - Reference to StateManager object
+     * @param {GameCTO} gameCTO - Reference to GameCTO object
+     * @param {Renderer} renderer - Reference to Renderer object
+     */
     constructor(stateManager, gameCTO, renderer) {
         super(stateManager);
         this.gameCTO = gameCTO;

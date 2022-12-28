@@ -3,7 +3,13 @@ import { NextTurnState } from './NextTurnState.js';
 import { MyGameCTO } from '../MyGameCTO.js';
 import {GameRenderer} from "../../rendering/GameRenderer.js";
 
+/**
+ * State that handles the loading screen.
+ */
 export class LoadingSceneState extends State {
+    /**
+     * @param {StateManager} stateManager - State manager
+     */
     constructor(stateManager) {
         super(stateManager);
     }
