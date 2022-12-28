@@ -872,7 +872,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="tex_brick" length_s="0.2" length_t="0.2" />
+            <texture id="tex_brick" length_s="1.0" length_t="1.0" />
             <children>
                 <componentref id="street_building0_body" />
                 <componentref id="street_building0_helipad" />

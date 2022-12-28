@@ -17,6 +17,7 @@ export class MyGameCTO {
     }
 
     switchPlayer() {
+        this.timetracker.resetRoundtime();
         this.currentPlayer = 1 - this.currentPlayer;
     }
 

@@ -7,7 +7,7 @@ export class MyCharacter extends MyRectangle {
 
     constructor(scene, x1, x2, y1, y2, character) {
         super(scene, x1, x2, y1, y2);
-        this.character = character;
+        this.character = null;
 		if(!this.texture) {
 			this.texture = new MyTexture("_font", new CGFtexture(scene, "scenes/images/font.png"));
 		}
@@ -15,11 +15,13 @@ export class MyCharacter extends MyRectangle {
     }
 
     setCharacter(character) {
-        this.character = character;
-		const offset = character.charCodeAt(0);
-		const col = offset % 16;
-		const row = Math.floor(offset / 16);
-		this.updateTexLength(16, 16, col/16, row/16);
+		if(character != this.character) {
+			this.character = character;
+			const offset = character.charCodeAt(0);
+			const col = offset % 16;
+			const row = Math.floor(offset / 16);
+			this.updateTexLength(16, 16, col/16, row/16);
+		}
     }
 
 	display(){

@@ -2,6 +2,7 @@ import { GameState } from "./GameState.js";
 import { PickingTypes } from "../PickingTypes.js";
 import { MenuLoadingState } from "./MenuLoadingState.js";
 import { MySceneGraph } from "../../MySceneGraph.js";
+import { SceneTimerUpdater } from "../../rendering/SceneTimerUpdater.js";
 
 export class InteractableGameState extends GameState {
     constructor(stateManager, gameCTO, renderer) {
@@ -25,6 +26,7 @@ export class InteractableGameState extends GameState {
             const elapsedTime = instant - this.lastInstant;
             this.gameCTO.updatePlaytime(elapsedTime);
             this.lastInstant = instant;
+            SceneTimerUpdater.update(this.stateManager.scene, this.gameCTO.timetracker, this.gameCTO.currentPlayer);
         }
     }
 
