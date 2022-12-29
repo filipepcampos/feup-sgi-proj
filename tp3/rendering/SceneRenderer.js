@@ -17,8 +17,10 @@ export class SceneRenderer {
     /**
      * Displays the given node.
      * Should be called every frame.
-     * @param {*} node - Reference to the PrimitiveNode or ComponentNode
-     * TODO: Update docs
+     * @param {ComponentNode} node - Reference to ComponentNode
+     * @param {Number} timeFactor - Time factor
+     * @param {ComponentNode} viewIndependentComponent - Node that should be rendered independently from camera view
+
      */
     display(timeFactor, viewIndependentComponent=null, node=this.sceneData.components[this.sceneData.root]) {
         if(this.sceneData.scene.pickMode) {
@@ -46,6 +48,11 @@ export class SceneRenderer {
         }
     }
 
+    /**
+     * Display an component independently from the camera view
+     * @param {ComponentNode} node - Reference to the ComponentNode
+     * @param {Number} timeFactor - Time factor
+     */
     displayViewIndependentComponent(node, timeFactor) {
         if(node) {
             const scene = this.sceneData.scene;

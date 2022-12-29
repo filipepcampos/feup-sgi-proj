@@ -1,13 +1,24 @@
 import { BoardRenderer } from "./BoardRenderer.js";
 import { SceneRenderer } from "./SceneRenderer.js";
 
+/**
+ * Class responsible for rendering a Game
+ */
 export class GameRenderer {
+    /**
+     * @param {XMLScene} scene - Reference to the XMLScene
+     */
     constructor(scene) {
         this.scene = scene;
         this.sceneRenderer = new SceneRenderer(scene.sceneData);
         this.boardRenderer = new BoardRenderer(scene);
     }
 
+    /**
+     * Updates the spotlight position
+     * @param {ComponentNode} node - Reference to the ComponentNode
+     * @param {String} targetId - Id of the target node
+     */
     updateSpotlightPosition(node, targetId) {
         const matrix = node.getTransformation() != null ? node.getTransformation() : mat4.create();
 
@@ -31,6 +42,12 @@ export class GameRenderer {
         this.scene.popMatrix();
     }
 
+    /**
+     * Displays the Game
+     * @param {GameCTO} gameCTO - Reference to the GameCTO
+     * @param {Number} timeFactor - Time factor
+     * @param {Array} animations - Array of animations
+     */
     display(gameCTO, timeFactor, animations) {
         this.boardRenderer.display(gameCTO.board, gameCTO.auxiliaryBoard, animations, gameCTO.selectedPiece);
 

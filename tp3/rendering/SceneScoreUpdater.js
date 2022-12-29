@@ -1,9 +1,14 @@
+/**
+ * Class responsible for updating the score
+ */
 export class SceneScoreUpdater {
-    static update(scene, playerScore0, playerScore1) {
-        SceneScoreUpdater.updateScore(scene, playerScore0, playerScore1);
-    }
-
-    static updateScore(scene, player0Score, player1Score) {
+    /**
+     * Updates the score
+     * @param {XMLScene} scene - Reference to the XMLScene
+     * @param {Number} player0Score - Score of player 0
+     * @param {Number} player1Score - Score of player 1
+     */
+    static update(scene, player0Score, player1Score) {
         const counter = scene.sceneData.primitives["game_score"].object;
 
         let scoreString = String(player0Score).padStart(2, '0');
