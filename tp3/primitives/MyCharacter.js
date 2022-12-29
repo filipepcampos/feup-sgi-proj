@@ -2,9 +2,20 @@ import { MyRectangle } from "./MyRectangle.js";
 import { MyTexture } from "../models/wrappers/MyTexture.js";
 import { CGFtexture } from "../../lib/CGF.js";
 
+/**
+ * Rectangle with texture coordinates that can be updated to display a character from a font texture.
+ */
 export class MyCharacter extends MyRectangle {
 	texture = null;
 
+	/**
+	 * @param {CGFscene} scene - The scene to which the rectangle belongs
+	 * @param {float} x1 - The x coordinate of the first point
+	 * @param {float} x2 - The x coordinate of the second point
+	 * @param {float} y1 - The y coordinate of the first point
+	 * @param {float} y2 - The y coordinate of the second point
+	 * @param {string} character - The character to be displayed
+	 */
     constructor(scene, x1, x2, y1, y2, character) {
         super(scene, x1, x2, y1, y2);
         this.character = null;
@@ -14,6 +25,10 @@ export class MyCharacter extends MyRectangle {
 		this.setCharacter(character);
     }
 
+	/**
+	 * Sets the character to be displayed.
+	 * @param {string} character - The character to be displayed
+	 */
     setCharacter(character) {
 		if(character != this.character) {
 			this.character = character;
