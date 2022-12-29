@@ -9,7 +9,16 @@ import { MovieState } from "./MovieState.js";
 import { MyGameCTO } from '../MyGameCTO.js';
 import { GameOverState } from "./GameOverState.js";
 
+/**
+ * State that handles the selection of a tile.
+ * If the tile has a piece, it will be lifted.
+ */
 export class NextTurnState extends InteractableGameState {
+    /**
+     * @param {StateManager} stateManager - State manager
+     * @param {GameCTO} gameCTO - Game CTO
+     * @param {Renderer} renderer - Renderer
+     */
     constructor(stateManager, gameCTO, renderer) {
         super(stateManager, gameCTO, renderer);
     }
@@ -41,6 +50,11 @@ export class NextTurnState extends InteractableGameState {
         }
     }
 
+    /**
+     * Handles the undo of a move.
+     * If the move was part of a movement chain, the state will be changed to the destination selection state.
+     * Otherwise, the state will be changed to the next turn state.
+     */
     undoMove() {
         const move = this.gameCTO.undoMove();
         
@@ -61,6 +75,9 @@ export class NextTurnState extends InteractableGameState {
         }
     }
 
+    /**
+     * Handles the selection of a tile.
+     */
     handleTilePick(obj) {
         if(obj.piece != null && this.gameCTO.canPickPiece(obj.piece) && !this.gameCTO.isGameover()){
             this.gameCTO.pickPiece(obj.piece);

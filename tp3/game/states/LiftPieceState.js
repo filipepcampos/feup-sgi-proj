@@ -4,7 +4,16 @@ import { Keyframe } from '../../models/Keyframe.js';
 import { AnimationTracker } from "../AnimationTracker.js";
 import { DestinationSelectionState } from './DestinationSelectionState.js';
 
+/**
+ * State that manages the lifting of a piece.
+ */
 export class LiftPieceState extends InteractableGameState {
+    /**
+     * @param {StateManager} stateManager - Reference to StateManager object
+     * @param {GameCTO} gameCTO - Reference to GameCTO object
+     * @param {Renderer} renderer - Reference to Renderer object
+     * @param {Tile} startTile - Tile where the piece is located
+     */
     constructor(stateManager, gameCTO, renderer, startTile) {
         super(stateManager, gameCTO, renderer);
         this.startTile = startTile;
@@ -15,6 +24,10 @@ export class LiftPieceState extends InteractableGameState {
     }
 
     // TODO: move
+    /**
+     * Creates a keyframe animation for the piece.
+     * @returns {MyKeyframeAnimation} Keyframe animation
+     */
     createAnimation() {
         let keyframes = []
         const start = {
