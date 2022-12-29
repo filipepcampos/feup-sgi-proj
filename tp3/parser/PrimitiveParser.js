@@ -11,6 +11,7 @@ import { MyTorus } from "../primitives/MyTorus.js";
 import {PrimitiveNode} from "../models/graph/PrimitiveNode.js";
 import { MyPatch } from "../primitives/MyPatch.js";
 import { CGFOBJModel } from "../primitives/CGFOBJModel.js";
+import { MyCounter } from "../primitives/MyCounter.js";
 
 /**
  * Parser for the <primitive> node
@@ -53,6 +54,8 @@ export class PrimitiveParser {
                 return PrimitiveParser.parseObj(childNode, reader, scene, id);
             } else if (primitiveType === 'character') {
                 return PrimitiveParser.parseChar(childNode, reader, scene, id);
+            } else if (primitiveType === 'counter') {
+                return PrimitiveParser.parseCounter(childNode, reader, scene, id);
             }
         }
         return ParserResult.fromError("There must be exactly 1 primitive type (rectangle, triangle, cylinder, sphere or torus)");
@@ -114,6 +117,19 @@ export class PrimitiveParser {
             [x1, y1, x2, y2],
             "parsing <character> with id=" + id
         );
+    }
+
+    /**
+     * Parse the counter primitive
+     * @param {element} node - Node that should be parsed 
+     * @param {CGFXMLreader} reader - XMLreader
+     * @param {CGFscene} scene - CGFscene
+     * @param {string} id - Id of the primitive
+     * @returns ParserResult containing an object with the parsed primitive and errors that occurred while parsing
+     */
+     static parseCounter(node, reader, scene, id) {
+        const counter = new MyCounter(scene);
+        return ParserResult.fromValue(new PrimitiveNode(id, counter));
     }
 
     /**

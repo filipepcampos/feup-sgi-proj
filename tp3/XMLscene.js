@@ -299,7 +299,6 @@ export class XMLscene extends CGFscene {
 
         for (var i = 0; i < this.lights.length; i++) {
             this.lights[i].update();
-            this.lights[i].setVisible(true);
         }
 
         if (this.sceneInited) {

@@ -482,50 +482,14 @@
         <primitive id="table">
             <obj file="objmodels/table.obj"/>
         </primitive>
-        <primitive id="time_round_digit0">
-            <character x1="-2.5" y1="-0.5" x2="-1.5" y2="0.5" char="0"/>
+        <primitive id="round_timer">
+            <counter />
         </primitive>
-        <primitive id="time_round_digit1">
-            <character x1="-1.5" y1="-0.5" x2="-0.5" y2="0.5" char="0"/>
+        <primitive id="game_timer">
+            <counter />
         </primitive>
-        <primitive id="time_round_separator">
-            <character x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" char=":"/>
-        </primitive>
-        <primitive id="time_round_digit2">
-            <character x1="0.5" y1="-0.5" x2="1.5" y2="0.5" char="0"/>
-        </primitive>
-        <primitive id="time_round_digit3">
-            <character x1="1.5" y1="-0.5" x2="2.5" y2="0.5" char="0"/>
-        </primitive>
-        <primitive id="time_game_digit0">
-            <character x1="-2.5" y1="-0.5" x2="-1.5" y2="0.5" char="0"/>
-        </primitive>
-        <primitive id="time_game_digit1">
-            <character x1="-1.5" y1="-0.5" x2="-0.5" y2="0.5" char="0"/>
-        </primitive>
-        <primitive id="time_game_separator">
-            <character x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" char=":"/>
-        </primitive>
-        <primitive id="time_game_digit2">
-            <character x1="0.5" y1="-0.5" x2="1.5" y2="0.5" char="0"/>
-        </primitive>
-        <primitive id="time_game_digit3">
-            <character x1="1.5" y1="-0.5" x2="2.5" y2="0.5" char="0"/>
-        </primitive>
-        <primitive id="score_player0_digit0">
-            <character x1="-2.5" y1="-0.5" x2="-1.5" y2="0.5" char="0"/>
-        </primitive>
-        <primitive id="score_player0_digit1">
-            <character x1="-1.5" y1="-0.5" x2="-0.5" y2="0.5" char="0"/>
-        </primitive>
-        <primitive id="score_separator">
-            <character x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" char=":"/>
-        </primitive>
-        <primitive id="score_player1_digit0">
-            <character x1="0.5" y1="-0.5" x2="1.5" y2="0.5" char="0"/>
-        </primitive>
-        <primitive id="score_player1_digit1">
-            <character x1="1.5" y1="-0.5" x2="2.5" y2="0.5" char="0"/>
+        <primitive id="game_score">
+            <counter />
         </primitive>
     </primitives>
     <animations>
@@ -865,11 +829,7 @@
             </materials>
             <texture id="inherit" />
             <children>
-                <primitiveref id="time_round_digit0" />
-                <primitiveref id="time_round_digit1" />
-                <primitiveref id="time_round_separator" />
-                <primitiveref id="time_round_digit2" />
-                <primitiveref id="time_round_digit3" />
+                <primitiveref id="round_timer" />
             </children>
         </component>
 
@@ -884,11 +844,7 @@
             </materials>
             <texture id="inherit" />
             <children>
-                <primitiveref id="time_game_digit0" />
-                <primitiveref id="time_game_digit1" />
-                <primitiveref id="time_game_separator" />
-                <primitiveref id="time_game_digit2" />
-                <primitiveref id="time_game_digit3" />
+                <primitiveref id="game_timer"/>
             </children>
         </component>       
 
@@ -903,11 +859,7 @@
             </materials>
             <texture id="inherit" />
             <children>
-                <primitiveref id="score_player0_digit0" />
-                <primitiveref id="score_player0_digit1" />
-                <primitiveref id="score_separator" />
-                <primitiveref id="score_player1_digit0" />
-                <primitiveref id="score_player1_digit1" />
+                <primitiveref id="game_score"/>
             </children>
         </component>
 
