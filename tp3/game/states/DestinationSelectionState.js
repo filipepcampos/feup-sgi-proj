@@ -9,6 +9,9 @@ import { MovieState } from "./MovieState.js";
 import { MyGameCTO } from '../MyGameCTO.js';
 import { GameOverState } from './GameOverState.js';
 
+/**
+ * State that handles the selection of a destination tile.
+ */
 export class DestinationSelectionState extends InteractableGameState {
     constructor(stateManager, gameCTO, renderer, startTile, animationTracker, canCancelMove=true) {
         super(stateManager, gameCTO, renderer);
@@ -43,6 +46,14 @@ export class DestinationSelectionState extends InteractableGameState {
         }
     }
 
+    /**
+     * Sets the state to the animation state.
+     * @param {Tile} endTile - Destination tile
+     * @param {Piece} capturedPiece - Captured piece
+     * @param {Tile} capturedTile - Captured tile
+     * @param {boolean} continuePlaying - If the game should continue playing
+     * @param {State} nextState - Next state
+     */
     setAnimationState(endTile, capturedPiece, capturedTile, continuePlaying, nextState) {
         let animations = new Map();
         animations.set(endTile.piece.id, GameAnimations.createMovementAnimation(this.startTile, endTile, false, !continuePlaying));
@@ -55,7 +66,9 @@ export class DestinationSelectionState extends InteractableGameState {
         this.stateManager.setState(new AnimationState(this.stateManager, this.gameCTO, this.renderer, animationTracker, nextState));
     }
 
-
+    /**
+     * Undoes the last move.
+     */
     undoMove() {
         if(this.canCancelMove) {
             this.dropPiece();
@@ -80,6 +93,9 @@ export class DestinationSelectionState extends InteractableGameState {
         this.gameCTO.removeWarning();
     }
     
+    /**
+     * Drops the selected piece.
+     */
     dropPiece() {
         if(this.canCancelMove) {
             this.gameCTO.unpickPiece();
@@ -87,6 +103,10 @@ export class DestinationSelectionState extends InteractableGameState {
         }
     }
 
+    /**
+     * Handles the selection of a tile.
+     * @param {Tile} obj - Selected tile
+     */
     handleTilePick(obj) {
         const piece = this.startTile.piece;
         const capturedPiece = this.gameCTO.getPieceBetweenTiles(piece.tile, obj);

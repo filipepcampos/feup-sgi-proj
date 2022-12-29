@@ -4,7 +4,16 @@ import { Keyframe } from '../../models/Keyframe.js';
 import { AnimationTracker } from "../AnimationTracker.js";
 import { NextTurnState } from './NextTurnState.js';
 
+/**
+ * State that manages the dropping of a piece.
+ */
 export class DropPieceState extends InteractableGameState {
+    /**
+     * @param {StateManager} stateManager - Reference to StateManager object
+     * @param {GameCTO} gameCTO - Reference to GameCTO object
+     * @param {Renderer} renderer - Reference to Renderer object
+     * @param {Tile} startTile - Tile where the piece is dropped
+     */
     constructor(stateManager, gameCTO, renderer, startTile) {
         super(stateManager, gameCTO, renderer);
         this.startTile = startTile;
@@ -15,6 +24,10 @@ export class DropPieceState extends InteractableGameState {
     }
 
     // TODO: Move
+    /**
+     * Creates the animation for the piece.
+     * @returns {MyKeyframeAnimation} - Animation for the piece
+     */
     createAnimation() {
         let keyframes = []
         const start = {
