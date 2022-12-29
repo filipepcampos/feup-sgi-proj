@@ -5,7 +5,13 @@ import { MyGameSequence } from "./models/MyGameSequence.js";
 import { MyGameTimeTracker } from "./models/MyGameTimeTracker.js";
 import { SceneScoreUpdater } from "../rendering/SceneScoreUpdater.js";
 
+/**
+ * Class that contains all the game logic.
+ */
 export class MyGameCTO {
+    /**
+     * @param {MyScene} scene - Reference to MyScene object.
+     */
     constructor(scene) {
         this.scene = scene;
         this.board = new MyGameBoard(scene);
@@ -17,19 +23,33 @@ export class MyGameCTO {
         this.warningActive = false;
     }
 
+    /**
+     * Switches the current player.
+     */
     switchPlayer() {
         this.timetracker.resetRoundtime();
         this.currentPlayer = 1 - this.currentPlayer;
     }
 
+    /**
+     * Enables the warning display.
+     */
     displayWarning() {
         this.warningActive = true;
     }
 
+    /**
+     * Disables the warning display.
+     */
     removeWarning() {
         this.warningActive = false;
     }
 
+    /**
+     * Checks if the piece can be picked.
+     * @param {MyGamePiece} piece - Piece to be checked.
+     * @returns {boolean} - True if the piece can be picked, false otherwise.
+     */
     canPickPiece(piece) {
         if (piece.playerId != this.currentPlayer) return false;
 
@@ -40,14 +60,28 @@ export class MyGameCTO {
         return true;
     }
 
+    /**
+     * Picks a piece.
+     * @param {MyGamePiece} piece - Piece to be picked.
+     */
     pickPiece(piece) {
         this.selectedPiece = piece;
     }
     
+    /**
+     * Unpicks a piece.
+     */
     unpickPiece() {
         this.selectedPiece = null;
     }
 
+    /**
+     * Moves a piece to a target tile.
+     * @param {MyGamePiece} piece - Piece to be moved.
+     * @param {MyGameTile} targetTile - Target tile.
+     * @param {boolean} inMovementChain - True if the move is part of a movement chain, false otherwise.
+     * @returns {boolean} - True if the move was successful, false otherwise.
+     */
     movePiece(piece, targetTile, inMovementChain) {
         if (this._canMovePiece(piece, targetTile)) {
             const startTile = piece.tile;
@@ -68,6 +102,10 @@ export class MyGameCTO {
         return false;
     }
 
+    /**
+     * Undoes the last move.
+     * @returns {MyGameMove} - The move that was undone.
+     */
     undoMove() {
         const move = this.gameSequence.popLastMove();
         if (move) {
@@ -105,6 +143,12 @@ export class MyGameCTO {
         return null;
     }
 
+    /**
+     * Captures a piece between two tiles.
+     * @param {MyGameTile} startTile - Start tile.
+     * @param {MyGameTile} endTile - End tile.
+     * @returns {boolean} - True if a piece was captured, false otherwise.
+     */
     capturePieceBetweenTiles(startTile, endTile) {
         const piece = this.getPieceBetweenTiles(startTile, endTile);
 
@@ -117,6 +161,12 @@ export class MyGameCTO {
         return false;
     }
 
+    /**
+     * Gets the piece between two tiles.
+     * @param {MyGameTile} startTile - Start tile.
+     * @param {MyGameTile} endTile - End tile.
+     * @returns {MyGamePiece} - The piece between the two tiles, null if there is no piece.
+     */
     getPieceBetweenTiles(startTile, endTile) {
         const deltaRow = Math.sign(endTile.row - startTile.row);
         const deltaCol = Math.sign(endTile.col - startTile.col);
@@ -127,14 +177,27 @@ export class MyGameCTO {
         return null;
     }
 
+    /**
+     * Updates the game state.
+     * @param {number} currTime - Current time.
+     */
     update(currTime) {
         this.state.update(currTime);
     }
 
+    /**
+     * Updates the time tracker.
+     * @param {number} elapsedTime - Elapsed time.
+     */
     updatePlaytime(elapsedTime) {
         this.timetracker.incrementTime(this.currentPlayer, elapsedTime);
     }
 
+    /**
+     * Gets the possible capture moves for a piece.
+     * @param {MyGamePiece} piece - Piece to be moved.
+     * @returns {MyGameMove[]} - Array of possible capture moves.
+     */
     getPossibleCapturesByPiece(piece) {
         let rowDirections = piece.isKing ? [-1, 1] : (piece.playerId == 0 ? [1] : [-1]);
         const pieceRow = piece.tile.row;
@@ -157,14 +220,28 @@ export class MyGameCTO {
         return possibleDestinationTiles;
     }
 
+    /**
+     * Checks if a piece has any possible capture moves.
+     * @param {MyGamePiece} piece - Piece to be moved.
+     * @returns {boolean} - True if the piece has any possible capture moves, false otherwise.
+     */
     pieceHasCaptureAvailable(piece) {
         return this.getPossibleCapturesByPiece(piece).length > 0;
     }
 
+    /**
+     * Gets the identifier of a tile.
+     * @param {MyGameTile} tile - Tile to be identified.
+     * @returns {string} - Identifier of the tile.
+     */
     getTileIdentifier(tile) {
         return "tile" + tile.row + "-" + tile.col;
     }
 
+    /**
+     * Gets the possible captures for the current player.
+     * @returns {Object} - Object containing the possible captures for the current player.
+     */
     getPossibleCaptures() {
         let possibleCaptures = {};
         
@@ -178,10 +255,20 @@ export class MyGameCTO {
         return possibleCaptures;
     }
 
+    /**
+     * Checks if the game is over.
+     * The game is over if any auxiliar board is full the current player can not move or the time is up.
+     * @returns {boolean} - True if the game is over, false otherwise.
+     */
     isGameover() {
         return this.auxiliaryBoard.isFull(0) || this.auxiliaryBoard.isFull(1) || this.timetracker.isGameover();
     }
 
+    /**
+     * Migrates a game sequence.
+     * @param {MyGameSequence} gameSequence - Game sequence to be migrated.
+     * @returns {MyGameSequence} - Migrated game sequence.
+     */
     migrateGameSequence(gameSequence) {
         for(const move of gameSequence.moves) {
             move.startTile = this.board.getTile(move.startTile.row, move.startTile.col);
@@ -190,6 +277,12 @@ export class MyGameCTO {
         return gameSequence;
     }
 
+    /**
+     * Checks if a piece can be moved to a target tile.
+     * @param {MyGamePiece} piece - Piece to be moved.
+     * @param {MyGameTile} targetTile - Target tile.
+     * @returns {boolean} - True if the piece can be moved to the target tile, false otherwise.
+     */
     _canMovePiece(piece, targetTile) {
         // Verify if the target tile is occupied
         if (targetTile.piece != null) return false;

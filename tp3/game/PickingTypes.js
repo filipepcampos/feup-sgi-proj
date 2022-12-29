@@ -1,3 +1,6 @@
+/**
+ * Types of picking events
+ */
 export const PickingTypes = {
     TileSelection: 0,
     ButtonSelection: 100,

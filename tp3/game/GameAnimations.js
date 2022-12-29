@@ -1,7 +1,18 @@
 import { Keyframe } from "../models/Keyframe.js";
 import { MyKeyframeAnimation } from "../models/MyKeyframeAnimation.js";
 
+/**
+ * Class that contains all the animations used in the game
+ */
 export class GameAnimations {
+    /**
+     * Creates a new GameAnimations object.
+     * @param {Tile} startTile - Start tile of the movement.
+     * @param {Tile} endTile - End tile of the movement.
+     * @param {boolean} liftPiece - True if the piece should be lifted, false otherwise.
+     * @param {boolean} dropPiece - True if the piece should be dropped, false otherwise.
+     * @returns {MyKeyframeAnimation} - Movement animation.
+     */
     static createMovementAnimation(startTile, endTile, liftPiece=false, dropPiece=false) {
         let keyframes = []
 
