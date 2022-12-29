@@ -71,7 +71,7 @@ export class BoardRenderer {
 
     createPickablePiece(piece, pickingId, animation, selectedPiece) {
         const pieceComponent = this.createPiece(piece, animation, selectedPiece);
-        return new PickableComponentNode("_piece"+pickingId, pieceComponent, pickingId, piece.tile);
+        return new PickableComponentNode("_piece" + piece.id, pieceComponent, pickingId, piece.tile);
     }
 
     createPiece(piece, animation=null, selectedPiece=null) {
@@ -85,6 +85,6 @@ export class BoardRenderer {
         const transformation = mat4.create();
         mat4.translate(transformation, transformation, [colOffset, this.boardHeight / 2, rowOffset]);
         
-        return new EditedComponentNode("_piece", component, transformation, [this.tilePrimitive], animation);
+        return new EditedComponentNode("_piece" + piece.id, component, transformation, [this.tilePrimitive], animation);
     }
 }
