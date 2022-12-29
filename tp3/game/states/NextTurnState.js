@@ -68,7 +68,7 @@ export class NextTurnState extends InteractableGameState {
             let animationTracker = new AnimationTracker(animations);
             
             if(move.inMovementChain) {
-                this.pickPiece(move.endTile.piece);
+                this.gameCTO.pickPiece(move.endTile.piece);
                 this.stateManager.setState(new AnimationState(this.stateManager, this.gameCTO, this.renderer, animationTracker, new DestinationSelectionState(this.stateManager, this.gameCTO, this.renderer, move.startTile, animationTracker, false)));
             } else {
                 this.stateManager.setState(new AnimationState(this.stateManager, this.gameCTO, this.renderer, animationTracker, new NextTurnState(this.stateManager, this.gameCTO, this.renderer)));
