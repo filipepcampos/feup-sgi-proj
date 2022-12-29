@@ -257,7 +257,7 @@ export class MyGameCTO {
 
     /**
      * Checks if the game is over.
-     * The game is over if any auxiliar board is full the current player can not move or the time is up.
+     * The game is over if any auxiliar board is full, the current player can not move or the time is up.
      * @returns {boolean} - True if the game is over, false otherwise.
      */
     isGameover() {
@@ -277,6 +277,11 @@ export class MyGameCTO {
         return gameSequence;
     }
 
+    /**
+     * Checks if a player can move any piece.
+     * @param {number} playerId - Player identifier.
+     * @returns {boolean} - True if the player can move any piece, false otherwise.
+     */
     _canMoveAnyPiece(playerId) {
         const availablePieces = this.board.getPiecesByPlayer(playerId);
         for (const piece of availablePieces) {
@@ -286,6 +291,11 @@ export class MyGameCTO {
         return false;
     }
 
+    /**
+     * Checks if a piece can be moved.
+     * @param {MyGamePiece} piece - Piece to be moved.
+     * @returns {boolean} - True if the piece can be moved, false otherwise.
+     */
     _canMovePiece(piece) {
         const startTile = piece.tile;
         const rowDirections = piece.isKing ? [-1, 1] : (piece.playerId == 0 ? [1] : [-1]);
