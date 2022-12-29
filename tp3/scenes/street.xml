@@ -1228,6 +1228,24 @@
             </children>
         </component>
 
+        <component id="selected_piece0">
+            <transformation>
+                <translate x="0" y="0.025" z="0" />
+                <scale x="0.025" y="0.025" z="0.025" />
+            </transformation>
+            <materials>
+                <material id="white" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="car_front" />
+                <componentref id="car_top_without_flag" />
+                <componentref id="car_back" />
+                <componentref id="car_laterals" />
+                <componentref id="car_bottom" />
+            </children>
+        </component>
+
         <component id="kingpiece0">
             <transformation>
                 <translate x="0" y="0.025" z="0" />
@@ -1240,6 +1258,24 @@
             <children>
                 <componentref id="car_front" />
                 <componentref id="car_top" />
+                <componentref id="car_back" />
+                <componentref id="car_laterals" />
+                <componentref id="car_bottom" />
+            </children>
+        </component>
+
+        <component id="selected_kingpiece0">
+            <transformation>
+                <translate x="0" y="0.025" z="0" />
+                <scale x="0.025" y="0.025" z="0.025" />
+            </transformation>
+            <materials>
+                <material id="green" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="car_front" />
+                <componentref id="car_top_without_flag" />
                 <componentref id="car_back" />
                 <componentref id="car_laterals" />
                 <componentref id="car_bottom" />
@@ -1265,7 +1301,45 @@
             </children>
         </component>
 
+        <component id="selected_piece1">
+            <transformation>
+                <translate x="0" y="0.025" z="0" />
+                <scale x="0.025" y="0.025" z="0.025"  />
+                <rotate axis="y" angle="180" />
+            </transformation>
+            <materials>
+                <material id="red" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="car_front" />
+                <componentref id="car_top_without_flag" />
+                <componentref id="car_back" />
+                <componentref id="car_laterals" />
+                <componentref id="car_bottom" />
+            </children>
+        </component>
+
         <component id="kingpiece1">
+            <transformation>
+                <translate x="0" y="0.025" z="0" />
+                <scale x="0.025" y="0.025" z="0.025" />
+                <rotate axis="y" angle="180" />
+            </transformation>
+            <materials>
+                <material id="bright_red" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="car_front" />
+                <componentref id="car_top" />
+                <componentref id="car_back" />
+                <componentref id="car_laterals" />
+                <componentref id="car_bottom" />
+            </children>
+        </component>
+
+        <component id="selected_kingpiece1">
             <transformation>
                 <translate x="0" y="0.025" z="0" />
                 <scale x="0.025" y="0.025" z="0.025" />

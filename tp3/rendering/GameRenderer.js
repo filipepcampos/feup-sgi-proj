@@ -9,7 +9,7 @@ export class GameRenderer {
     }
 
     display(gameCTO, timeFactor, animations) {
-        this.boardRenderer.display(gameCTO.board, gameCTO.auxiliaryBoard, animations);
+        this.boardRenderer.display(gameCTO.board, gameCTO.auxiliaryBoard, animations, gameCTO.selectedPiece);
 
         const warning_node = gameCTO.warningActive ? this.scene.sceneData.components["warning_message"] : null;
         this.sceneRenderer.display(timeFactor, warning_node);

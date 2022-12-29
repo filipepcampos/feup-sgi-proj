@@ -13,7 +13,7 @@ export class BoardRenderer {
         this.boardHeight = 0.2;
     }
 
-    display(board, auxiliaryBoard, animations) {
+    display(board, auxiliaryBoard, animations, selectedPiece) {
         const numRows = board.board.length;
         const numCols = board.board[0].length;
 
@@ -32,7 +32,7 @@ export class BoardRenderer {
 
                 if(tile.piece) {
                     const animation = animations != null ? animations.getAnimation(tile.piece.id) : null;
-                    newChildComponents.push(this.createPickablePiece(tile.piece, pickingId, animation));
+                    newChildComponents.push(this.createPickablePiece(tile.piece, pickingId, animation, selectedPiece));
                 }
                 newChildComponents.push(this.createPickableTile(tile, pickingId));
             }
@@ -69,13 +69,16 @@ export class BoardRenderer {
         return new PickableComponentNode("_tile"+pickingId, component, pickingId, tile);
     }
 
-    createPickablePiece(piece, pickingId, animation) {
-        const pieceComponent = this.createPiece(piece, animation);
+    createPickablePiece(piece, pickingId, animation, selectedPiece) {
+        const pieceComponent = this.createPiece(piece, animation, selectedPiece);
         return new PickableComponentNode("_piece"+pickingId, pieceComponent, pickingId, piece.tile);
     }
 
-    createPiece(piece, animation=null) {
-        const componentName = piece.isKing ? "kingpiece" : "piece";
+    createPiece(piece, animation=null, selectedPiece=null) {
+        let componentName = piece.isKing ? "kingpiece" : "piece";
+        if (piece == selectedPiece) {
+            componentName = "selected_" + componentName;
+        }
         const component = this.scene.sceneData.components[componentName + piece.playerId];
         const [colOffset, rowOffset] = this.getTileOffsets(piece.tile);
 

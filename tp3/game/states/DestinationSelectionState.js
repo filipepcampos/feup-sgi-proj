@@ -54,7 +54,7 @@ export class DestinationSelectionState extends InteractableGameState {
      * @param {boolean} continuePlaying - If the game should continue playing
      * @param {State} nextState - Next state
      */
-    setAnimationState(endTile, capturedPiece, capturedTile, continuePlaying, nextState) {
+    setAnimationState(endTile, capturedPiece, capturedTile, continuePlaying, nextState, callback) {
         let animations = new Map();
         animations.set(endTile.piece.id, GameAnimations.createMovementAnimation(this.startTile, endTile, false, !continuePlaying));
         if (capturedPiece != null) {
@@ -63,7 +63,7 @@ export class DestinationSelectionState extends InteractableGameState {
 
         let animationTracker = new AnimationTracker(animations);
 
-        this.stateManager.setState(new AnimationState(this.stateManager, this.gameCTO, this.renderer, animationTracker, nextState));
+        this.stateManager.setState(new AnimationState(this.stateManager, this.gameCTO, this.renderer, animationTracker, nextState, callback));
     }
 
     /**
@@ -86,6 +86,7 @@ export class DestinationSelectionState extends InteractableGameState {
                 if(move.inMovementChain) {
                     this.stateManager.setState(new AnimationState(this.stateManager, this.gameCTO, this.renderer, animationTracker, new DestinationSelectionState(this.stateManager, this.gameCTO, this.renderer, move.startTile, animationTracker, false)));
                 } else {
+                    this.gameCTO.unpickPiece();
                     this.stateManager.setState(new AnimationState(this.stateManager, this.gameCTO, this.renderer, animationTracker, new NextTurnState(this.stateManager, this.gameCTO, this.renderer)));
                 }
             }
@@ -98,8 +99,7 @@ export class DestinationSelectionState extends InteractableGameState {
      */
     dropPiece() {
         if(this.canCancelMove) {
-            this.gameCTO.unpickPiece();
-            this.stateManager.setState(new DropPieceState(this.stateManager, this.gameCTO, this.renderer, this.startTile));
+            this.stateManager.setState(new DropPieceState(this.stateManager, this.gameCTO, this.renderer, this.startTile, () => {this.gameCTO.unpickPiece()}));
         }
     }
 
@@ -117,8 +117,7 @@ export class DestinationSelectionState extends InteractableGameState {
                 this.setAnimationState(obj, capturedPiece, capturedTile, true, new DestinationSelectionState(this.stateManager, this.gameCTO, this.renderer, piece.tile, this.animationTracker, false));
             } else { // Switch to next player
                 this.gameCTO.switchPlayer();
-                this.gameCTO.unpickPiece();
-                this.setAnimationState(obj, capturedPiece, capturedTile, false, new NextTurnState(this.stateManager, this.gameCTO, this.renderer));
+                this.setAnimationState(obj, capturedPiece, capturedTile, false, new NextTurnState(this.stateManager, this.gameCTO, this.renderer), () => {this.gameCTO.unpickPiece()});
             }
             this.gameCTO.removeWarning();
         } else {
