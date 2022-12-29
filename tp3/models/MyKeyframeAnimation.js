@@ -37,6 +37,7 @@ export class MyKeyframeAnimation extends MyAnimation {
         if(this.useRelativeTime && this.startTime == null) {
             this.startTime = instant;
         }
+        instant = instant - this.startTime;
 
         let lastKeyframeIndex = this.getLastKeyframeIndex(instant);
         
@@ -47,8 +48,9 @@ export class MyKeyframeAnimation extends MyAnimation {
             // Interpolate between lastKeyframeIndex and nextKeyframeIndex
             const lastKeyframe = this.keyframes[lastKeyframeIndex];
             const nextKeyframe = this.keyframes[nextKeyframeIndex];
-            const lastInstant = lastKeyframe.instant + this.startTime;
-            const nextInstant = nextKeyframe.instant + this.startTime;
+
+            const lastInstant = lastKeyframe.instant;
+            const nextInstant = nextKeyframe.instant;
             const keyframeDuration = nextInstant - lastInstant;
             const deltaInstant = instant - lastInstant;
 
@@ -71,7 +73,7 @@ export class MyKeyframeAnimation extends MyAnimation {
      */
     getLastKeyframeIndex(instant) {
         for(let i = this.keyframes.length - 1; i >= 0; --i) {
-            if((this.keyframes[i].instant + this.startTime) <= instant){
+            if((this.keyframes[i].instant) <= instant){
                 this.started = true;
                 return i;
             }

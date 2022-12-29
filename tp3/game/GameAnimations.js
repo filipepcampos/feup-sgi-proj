@@ -19,7 +19,7 @@ export class GameAnimations {
         const deltaRow = endTile.row - startTile.row;
         const deltaCol = endTile.col - startTile.col;
         const tileWidth = 1/8;
-        const instantOffset = liftPiece ? 0.2 : 0;
+        const instantOffset = liftPiece ? 0.2 : 0.01;
 
         if(liftPiece) {
             const groundKeyframe = {
@@ -30,18 +30,27 @@ export class GameAnimations {
                 "scale": vec3.fromValues(1, 1, 1),
             }
             keyframes.push(new Keyframe(0, groundKeyframe));
+        } else {
+            const startKeyframe = {
+                "translation": vec3.fromValues(-deltaCol*tileWidth, 0.1, -deltaRow*tileWidth),
+                "rotationx": vec3.fromValues(0,0,0),
+                "rotationy": vec3.fromValues(0,0,0),
+                "rotationz": vec3.fromValues(0,0,0),
+                "scale": vec3.fromValues(1, 1, 1),
+            }
+            keyframes.push(new Keyframe(0, startKeyframe));
         }
 
-        const start = {
+        const lifted = {
             "translation": vec3.fromValues(-deltaCol*tileWidth, 0.1, -deltaRow*tileWidth),
             "rotationx": vec3.fromValues(0,0,0),
             "rotationy": vec3.fromValues(0,0,0),
             "rotationz": vec3.fromValues(0,0,0),
             "scale": vec3.fromValues(1, 1, 1),
         }
-        keyframes.push(new Keyframe(instantOffset, start));
+        keyframes.push(new Keyframe(instantOffset, lifted));
 
-        const velocity = 1;  // v=d/t <=> t=d/v
+        const velocity = 2;  // v=d/t <=> t=d/v
         const pieceArrivalInstant = (Math.abs(deltaRow) / velocity) + instantOffset;
 
         const end = { // Arrived at the top of the endTile
@@ -117,7 +126,7 @@ export class GameAnimations {
         }
         keyframes.push(new Keyframe(1.5, end));
 
-        return new MyKeyframeAnimation("_movement", keyframes, true, true);
+        return new MyKeyframeAnimation("_capture", keyframes, true, true);
     }
 
     static getQuadraticPoints(startPosition, endPosition, maxHeight, nDivisions) {
