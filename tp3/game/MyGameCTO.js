@@ -83,7 +83,7 @@ export class MyGameCTO {
      * @returns {boolean} - True if the move was successful, false otherwise.
      */
     movePiece(piece, targetTile, inMovementChain) {
-        if (this._canMovePiece(piece, targetTile)) {
+        if (this._canMovePieceToTile(piece, targetTile)) {
             const startTile = piece.tile;
             const capturedPiece = this.capturePieceBetweenTiles(startTile, targetTile);
             this.board.movePiece(piece, targetTile);
@@ -261,7 +261,7 @@ export class MyGameCTO {
      * @returns {boolean} - True if the game is over, false otherwise.
      */
     isGameover() {
-        return this.auxiliaryBoard.isFull(0) || this.auxiliaryBoard.isFull(1) || this.timetracker.isGameover();
+        return this.auxiliaryBoard.isFull(0) || this.auxiliaryBoard.isFull(1) || !this._canMoveAnyPiece(this.currentPlayer) || this.timetracker.isGameover();
     }
 
     /**
@@ -277,13 +277,34 @@ export class MyGameCTO {
         return gameSequence;
     }
 
+    _canMoveAnyPiece(playerId) {
+        const availablePieces = this.board.getPiecesByPlayer(playerId);
+        for (const piece of availablePieces) {
+            if (this._canMovePiece(piece)) return true;
+        }
+        console.log("Player " + playerId + " can't move any piece");
+        return false;
+    }
+
+    _canMovePiece(piece) {
+        const startTile = piece.tile;
+        const rowDirections = piece.isKing ? [-1, 1] : (piece.playerId == 0 ? [1] : [-1]);
+        for (const direction of rowDirections) {
+            for (const offset of [-1 , 1]) {
+                const targetTile = this.board.getTile(startTile.row + direction, startTile.col + offset);
+                if (targetTile && targetTile.piece == null) return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Checks if a piece can be moved to a target tile.
      * @param {MyGamePiece} piece - Piece to be moved.
      * @param {MyGameTile} targetTile - Target tile.
      * @returns {boolean} - True if the piece can be moved to the target tile, false otherwise.
      */
-    _canMovePiece(piece, targetTile) {
+    _canMovePieceToTile(piece, targetTile) {
         // Verify if the target tile is occupied
         if (targetTile.piece != null) return false;
         
