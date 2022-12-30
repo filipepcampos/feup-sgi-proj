@@ -87,6 +87,7 @@
         <texture id="tex_player0" file="scenes/images/player1.png"/>
         <texture id="tex_player1" file="scenes/images/player2.png"/>
         <texture id="tex_gameover" file="scenes/images/gameover.png"/>
+        <texture id="tex_wood" file="scenes/images/wood.jpg"/>
     </textures>
 
     <materials>
@@ -696,6 +697,81 @@
                 <componentref id="table_component" />
                 <componentref id="boardset"/>
                 <componentref id="game_info_board" />
+                <componentref id="auxiliary_board0"/>
+                <componentref id="auxiliary_board1"/>
+                <componentref id="board_edge_down"/>
+                <componentref id="board_edge_up"/>
+                <componentref id="board_fill"/>
+            </children>
+        </component>
+
+        <component id="board_fill">
+            <transformation>
+                <translate x="0" y="1.9" z="0"/>
+                <scale x="1.5" y="0.05" z="1.49"/>
+            </transformation>
+            <materials>
+                <material id="dark_gray"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="p_cube"/>
+            </children>
+        </component>
+
+        <component id="board_edge_down">
+            <transformation>
+                <translate x="-0.74" y="1.89" z="0" />
+                <scale x="0.1" y="0.2" z="1.4"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="tex_wood"/>
+            <children>
+                <componentref id="p_cube"/>
+            </children>
+        </component>
+
+        <component id="board_edge_up">
+            <transformation>
+                <translate x="0.74" y="1.89" z="0" />
+                <scale x="0.1" y="0.2" z="1.4"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="tex_wood"/>
+            <children>
+                <componentref id="p_cube"/>
+            </children>
+        </component>
+
+        <component id="auxiliary_board0">
+            <transformation>
+                <translate x="0" y="1.9" z="0.68" />
+                <scale x="1.6" y="0.2" z="0.14"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="tex_wood"/>
+            <children>
+                <componentref id="p_cube"/>
+            </children>
+        </component>
+
+        <component id="auxiliary_board1">
+            <transformation>
+                <translate x="0" y="1.9" z="-0.68" />
+                <scale x="1.6" y="0.2" z="0.14"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="tex_wood"/>
+            <children>
+                <componentref id="p_cube"/>
             </children>
         </component>
 
@@ -731,7 +807,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="inherit" />
+            <texture id="tex_wood" />
             <children>
                 <componentref id="p_cube" />
             </children>
@@ -932,7 +1008,7 @@
             <materials>
                 <material id="default_material" />
             </materials>
-            <texture id="none" />
+            <texture id="tex_wood" />
             <children>
                 <componentref id="p_cube" />
                 <componentref id="board_top" />

@@ -21,7 +21,7 @@ export class MyAuxiliarBoard {
     initializeBoard(playerId) {
         let playerBoard = [];
         for (let i = 0; i < 12; ++i) {
-            playerBoard.push(new MyTile(this.scene, -2 + playerId * 11, i - 2));
+            playerBoard.push(new MyTile(this.scene, -2 + playerId * 11, playerId == 0 ? i - 2 : 9 - i));
         }
         this.board.push(playerBoard);
     }
