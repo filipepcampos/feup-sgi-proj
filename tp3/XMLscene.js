@@ -150,7 +150,10 @@ export class XMLscene extends CGFscene {
                 i++;
             }
         }
-        //this.lights = this.lights.slice(0, i);
+
+        for(;i < 8; ++i) { // Ensure extra lights are disabled
+            this.lights[i].disable();
+        }
     }
 
     /**
