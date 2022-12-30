@@ -32,7 +32,7 @@ export class GameRenderer {
             this.scene.translate(0, 1, 0);
             let vertex = vec4.fromValues(0,0,0,1);
             vec4.transformMat4(vertex, vertex, this.scene.getMatrix());
-            this.scene.lights[3].setPosition(vertex[0], vertex[1], vertex[2], vertex[3]);
+            this.scene.lights[0].setPosition(vertex[0], vertex[1], vertex[2], vertex[3]);
             this.scene.popMatrix();
             return;
         }
@@ -59,11 +59,11 @@ export class GameRenderer {
         if(gameCTO.selectedPiece){
             this.scene.pushMatrix();
             this.scene.loadIdentity();
-            this.scene.lights[3].enable();
+            this.scene.lights[0].enable();
             this.updateSpotlightPosition(this.scene.sceneData.components["root"], "_piece" + gameCTO.selectedPiece.id);
             this.scene.popMatrix();
         } else {
-            this.scene.lights[3].disable();
+            this.scene.lights[0].disable();
         }
     }
 }
