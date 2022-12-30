@@ -32,7 +32,7 @@ export class GameAnimations {
             keyframes.push(new Keyframe(0, groundKeyframe));
         } else {
             const startKeyframe = {
-                "translation": vec3.fromValues(-deltaCol*tileWidth, 0.1, -deltaRow*tileWidth),
+                "translation": vec3.fromValues(-deltaCol*tileWidth, 0.04, -deltaRow*tileWidth),
                 "rotationx": vec3.fromValues(0,0,0),
                 "rotationy": vec3.fromValues(0,0,0),
                 "rotationz": vec3.fromValues(0,0,0),
@@ -42,7 +42,7 @@ export class GameAnimations {
         }
 
         const lifted = {
-            "translation": vec3.fromValues(-deltaCol*tileWidth, 0.1, -deltaRow*tileWidth),
+            "translation": vec3.fromValues(-deltaCol*tileWidth, 0.04, -deltaRow*tileWidth),
             "rotationx": vec3.fromValues(0,0,0),
             "rotationy": vec3.fromValues(0,0,0),
             "rotationz": vec3.fromValues(0,0,0),
@@ -54,7 +54,7 @@ export class GameAnimations {
         const pieceArrivalInstant = (Math.abs(deltaRow) / velocity) + instantOffset;
 
         const end = { // Arrived at the top of the endTile
-            "translation": vec3.fromValues(0, 0.1, 0),
+            "translation": vec3.fromValues(0, 0.04, 0),
             "rotationx": vec3.fromValues(0,0,0),
             "rotationy": vec3.fromValues(0,0,0),
             "rotationz": vec3.fromValues(0,0,0),

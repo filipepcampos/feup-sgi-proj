@@ -51,6 +51,8 @@ export class GameRenderer {
     display(gameCTO, timeFactor, animations) {
         this.boardRenderer.display(gameCTO.board, gameCTO.auxiliaryBoard, animations, gameCTO.selectedPiece);
 
+        this.scene.sceneData.components["gameover_message"].texture = gameCTO.isGameover() ? this.scene.sceneData.textures["tex_gameover"] : "none";
+
         const warning_node = gameCTO.warningActive ? this.scene.sceneData.components["warning_message"] : null;
         this.sceneRenderer.display(timeFactor, warning_node);
 

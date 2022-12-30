@@ -29,6 +29,7 @@ export class MyGameCTO {
     switchPlayer() {
         this.timetracker.resetRoundtime();
         this.currentPlayer = 1 - this.currentPlayer;
+        this.scene.sceneData.components["current_player"].texture = this.scene.sceneData.textures["tex_player" + this.currentPlayer];
     }
 
     /**

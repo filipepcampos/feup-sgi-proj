@@ -40,7 +40,7 @@ export class LiftPieceState extends InteractableGameState {
         keyframes.push(new Keyframe(0, start));
 
         const end = {
-            "translation": vec3.fromValues(0, 0.1, 0),
+            "translation": vec3.fromValues(0, 0.04, 0),
             "rotationx": vec3.fromValues(0,0,0),
             "rotationy": vec3.fromValues(0,0,0),
             "rotationz": vec3.fromValues(0,0,0),

@@ -78,6 +78,15 @@
         <texture id="tex_railway" file="scenes/images/railway.jpg" />
         <texture id="tex_wood_board" file="scenes/images/wood_board.jpg" />
         <texture id="tex_warning" file="scenes/images/warning_message.png" />
+        <texture id="tex_menu_button" file="scenes/images/menu_button.png"/>
+        <texture id="tex_undo_button" file="scenes/images/undo_button.png"/>
+        <texture id="tex_movie_button" file="scenes/images/movie_button.png"/>
+        <texture id="tex_round_timer_label" file="scenes/images/round_timer.png"/>
+        <texture id="tex_game_timer_label" file="scenes/images/game_timer.png"/> 
+        <texture id="tex_score_label" file="scenes/images/score.png"/>
+        <texture id="tex_player0" file="scenes/images/player1.png"/>
+        <texture id="tex_player1" file="scenes/images/player2.png"/>
+        <texture id="tex_gameover" file="scenes/images/gameover.png"/>
     </textures>
 
     <materials>
@@ -146,6 +155,12 @@
             <ambient r="1.0" g="1.0" b="1.0" a="0.3" />
             <diffuse r="1.0" g="1.0" b="1.0" a="0.3" />
             <specular r="0.0" g="0.0" b="0.0" a="0.3" />
+        </material>
+        <material id="pure_white" shininess="10">
+            <emission r="1.0" g="1.0" b="1.0" a="1.0" />
+            <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
+            <diffuse r="0.0" g="0.0" b="0.0" a="1.0" />
+            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
         <material id="emissive_white" shininess="10">
             <emission r="1.0" g="1.0" b="1.0" a="1.0" />
@@ -664,14 +679,7 @@
                 <componentref id="car" />
                 <componentref id="car_burnt" />
                 <componentref id="stopped_car" />
-                <componentref id="board_table_set" />
-                <componentref id="game_info_board" />
-                <componentref id="return_to_menu_button" />
-                <componentref id="undo_button" />
-                <componentref id="movie_button" />
-                <componentref id="round_timer" />
-                <componentref id="game_timer" />
-                <componentref id="game_score" />
+                <componentref id="board_table_set" />                
             </children>
         </component>
 
@@ -687,12 +695,14 @@
             <children>
                 <componentref id="table_component" />
                 <componentref id="boardset"/>
+                <componentref id="game_info_board" />
             </children>
         </component>
 
         <component id="game_info_board">
             <transformation>
-                <translate x="0" y="3" z="0" />
+                <translate x="0" y="2.2" z="-2"/>
+                <scale x="2" y="2" z="1"/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -700,12 +710,23 @@
             <texture id="inherit" />
             <children>
                 <componentref id="game_info_board_body" />
+                <componentref id="return_to_menu_button" />
+                <componentref id="undo_button" />
+                <componentref id="movie_button" />
+                <componentref id="round_timer" />
+                <componentref id="game_timer" />
+                <componentref id="game_score" />
+                <componentref id="current_player" />
+                <componentref id="round_timer_label" />
+                <componentref id="game_timer_label" />
+                <componentref id="score_label"/>
+                <componentref id="gameover_message" />
             </children>
         </component>
 
         <component id="game_info_board_body">
             <transformation>
-                <scale x="1" y="0.7" z="0.2" />
+                <scale x="0.55" y="0.4" z="0.1" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -716,15 +737,129 @@
             </children>
         </component>
 
-        <component id="return_to_menu_button">
+        <component id="current_player">
             <transformation>
-                <scale x="0.2" y="0.2" z="0.2" />
-                <translate x="-0.5" y="2" z="0" />
+                <translate x="-0.265" y="0.15" z="0.051"/>
+                <scale x="0.25" y="0.05" z="1"/> 
+            </transformation>
+            <materials>
+                <material id="pure_white"/>
+            </materials>
+            <texture id="tex_player0" length_s="1.0" length_t="1.0"/>
+            <children>
+                <primitiveref id="rectangle"/>
+            </children>
+        </component>
+
+        <component id="gameover_message">
+            <transformation>
+                <translate x="-0.265" y="0.1" z="0.051"/>
+                <scale x="0.25" y="0.05" z="1"/> 
+            </transformation>
+            <materials>
+                <material id="pure_white"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="rectangle"/>
+            </children>
+        </component>
+
+        <component id="round_timer_label">
+            <transformation>
+                <translate x="0.015" y="0.03" z="0.051"/>
+                <scale x="0.25" y="0.05" z="1"/> 
+            </transformation>
+            <materials>
+                <material id="white"/>
+            </materials>
+            <texture id="tex_round_timer_label" length_s="1.0" length_t="1.0"/>
+            <children>
+                <primitiveref id="rectangle"/>
+            </children>
+        </component>
+
+        <component id="score_label">
+            <transformation>
+                <translate x="-0.265" y="0.03" z="0.051"/>
+                <scale x="0.25" y="0.05" z="1"/> 
+            </transformation>
+            <materials>
+                <material id="white"/>
+            </materials>
+            <texture id="tex_score_label" length_s="1.0" length_t="1.0"/>
+            <children>
+                <primitiveref id="rectangle"/>
+            </children>
+        </component>
+
+        
+
+        <component id="round_timer">
+            <transformation>
+                <translate x="0.14" y="0" z="0.051"/>
+                <scale x="0.05" y="0.05" z="1"/>
             </transformation>
             <materials>
                 <material id="inherit" />
             </materials>
             <texture id="inherit" />
+            <children>
+                <primitiveref id="round_timer" />
+            </children>
+        </component>
+
+        <component id="game_timer_label">
+            <transformation>
+                <translate x="0.015" y="0.15" z="0.051"/>
+                <scale x="0.25" y="0.05" z="1"/> 
+            </transformation>
+            <materials>
+                <material id="white"/>
+            </materials>
+            <texture id="tex_game_timer_label" length_s="1.0" length_t="1.0"/>
+            <children>
+                <primitiveref id="rectangle"/>
+            </children>
+        </component>
+
+        <component id="game_timer">
+            <transformation>
+                <translate x="0.14" y="0.12" z="0.051"/>
+                <scale x="0.05" y="0.05" z="1"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="game_timer"/>
+            </children>
+        </component>       
+
+        <component id="game_score">
+            <transformation>
+                <translate x="-0.14" y="0" z="0.051"/>
+                <scale x="0.05" y="0.05" z="1"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="game_score"/>
+            </children>
+        </component>
+
+        <component id="return_to_menu_button">
+            <transformation>
+                <scale x="0.1328" y="0.08" z="0.1" />
+                <translate x="1.4" y="-1.4" z="0.03" />
+            </transformation>
+            <materials>
+                <material id="white" />
+            </materials>
+            <texture id="tex_menu_button" length_t="1.0" length_s="1.0" />
             <children>
                 <componentref id="p_cube" />
             </children>
@@ -733,13 +868,13 @@
 
         <component id="undo_button">
             <transformation>
-                <scale x="0.2" y="0.2" z="0.2" />
-                <translate x="-2" y="3" z="0" />
+                <scale x="0.1328" y="0.08" z="0.1" />
+                <translate x="0.0" y="-1.4" z="0.03" />
             </transformation>
             <materials>
-                <material id="green" />
+                <material id="white" />
             </materials>
-            <texture id="inherit" />
+            <texture id="tex_undo_button" length_t="1.0" length_s="1.0" />
             <children>
                 <componentref id="p_cube" />
             </children>
@@ -748,13 +883,13 @@
 
         <component id="movie_button">
             <transformation>
-                <scale x="0.2" y="0.2" z="0.2" />
-                <translate x="-3" y="3" z="0" />
+                <scale x="0.1328" y="0.08" z="0.1" />
+                <translate x="-1.4" y="-1.4" z="0.03" />
             </transformation>
             <materials>
-                <material id="red" />
+                <material id="white" />
             </materials>
-            <texture id="inherit" />
+            <texture id="tex_movie_button" length_t="1.0" length_s="1.0" />
             <children>
                 <componentref id="p_cube" />
             </children>
@@ -815,51 +950,6 @@
             <texture id="tex_wood_board" length_s="1.0" length_t="1.0" />
             <children>
                 <primitiveref id="board_patch"/>
-            </children>
-        </component>
-
-        <component id="round_timer">
-            <transformation>
-                <translate x="0" y="4" z="0"/>
-                <scale x="1" y="1.0" z="0.2" />
-                <rotate axis="y" angle="180"/>
-            </transformation>
-            <materials>
-                <material id="inherit" />
-            </materials>
-            <texture id="inherit" />
-            <children>
-                <primitiveref id="round_timer" />
-            </children>
-        </component>
-
-        <component id="game_timer">
-            <transformation>
-                <translate x="0" y="6" z="0"/>
-                <scale x="1" y="1.0" z="0.2" />
-                <rotate axis="y" angle="180"/>
-            </transformation>
-            <materials>
-                <material id="inherit" />
-            </materials>
-            <texture id="inherit" />
-            <children>
-                <primitiveref id="game_timer"/>
-            </children>
-        </component>       
-
-        <component id="game_score">
-            <transformation>
-                <translate x="0" y="8" z="0"/>
-                <scale x="1" y="1.0" z="0.2" />
-                <rotate axis="y" angle="180"/>
-            </transformation>
-            <materials>
-                <material id="inherit" />
-            </materials>
-            <texture id="inherit" />
-            <children>
-                <primitiveref id="game_score"/>
             </children>
         </component>
 
