@@ -194,7 +194,7 @@
                 <componentref id="start_button" />
                 <componentref id="scene_button_street" />
                 <componentref id="scene_button_board" />
-                <componentref id="scene_button_football" />
+                <componentref id="scene_button_classroom" />
             </children>
         </component>
 
@@ -258,7 +258,7 @@
             <picking id="102"/>
         </component>
 
-        <component id="scene_button_football">
+        <component id="scene_button_classroom">
             <transformation>
                 <translate x="1.2" y="0.5" z="0.01"/>
                 <scale x="1" y="0.6" z="0.1"/>
