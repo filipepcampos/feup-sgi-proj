@@ -56,7 +56,7 @@ export class GameRenderer {
         const warning_node = gameCTO.warningActive ? this.scene.sceneData.components["warning_message"] : null;
         this.sceneRenderer.display(timeFactor, warning_node);
 
-        if(gameCTO.selectedPiece){
+        if(gameCTO.selectedPiece && this.scene.lightsIds[0] == "overhead_light"){
             this.scene.pushMatrix();
             this.scene.loadIdentity();
             this.scene.lights[0].enable();
