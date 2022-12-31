@@ -18,8 +18,4 @@ export class MenuLoadingState extends State {
             this.stateManager.setState(new MenuState(this.stateManager));
         }
     }
-
-    display() {
-        // TODO: DISPLAY LOADING SCREEN
-    }
 }

@@ -76,6 +76,12 @@ export class GameAnimations {
         return new MyKeyframeAnimation("_movement", keyframes, true, true);
     }
 
+    /**
+     * Creates a capture animation.
+     * @param {Tile} startTile - Start tile of the movement.
+     * @param {Tile} endTile - End tile of the movement.
+     * @returns {MyKeyframeAnimation} - Capture animation.
+     */
     static createCaptureAnimation(startTile, endTile) {
         let keyframes = []
 
@@ -129,6 +135,43 @@ export class GameAnimations {
         return new MyKeyframeAnimation("_capture", keyframes, true, true);
     }
 
+    /**
+     * Creates a keyframe animation for the piece to be lifted and dropped
+     * @param {boolean} reverse - if true, the animation will be played in reverse
+     * @returns {MyKeyframeAnimation} - the animation
+     */
+    static createLiftAnimation(reverse) {
+        let keyframes = []
+        const start = {
+            "translation": vec3.fromValues(0, 0, 0),
+            "rotationx": vec3.fromValues(0,0,0),
+            "rotationy": vec3.fromValues(0,0,0),
+            "rotationz": vec3.fromValues(0,0,0),
+            "scale": vec3.fromValues(1, 1, 1),
+        }
+
+        const end = {
+            "translation": vec3.fromValues(0, 0.04, 0),
+            "rotationx": vec3.fromValues(0,0,0),
+            "rotationy": vec3.fromValues(0,0,0),
+            "rotationz": vec3.fromValues(0,0,0),
+            "scale": vec3.fromValues(1, 1, 1),
+        }
+
+        keyframes.push(new Keyframe(0, reverse ? end : start));
+        keyframes.push(new Keyframe(0.5, reverse ? start : end));
+
+        return new MyKeyframeAnimation("_lift", keyframes, true, true);
+    }
+
+    /**
+     * Gets the points of a quadratic curve
+     * @param {Array} startPosition - the start position of the curve
+     * @param {Array} endPosition - the end position of the curve
+     * @param {number} maxHeight - the maximum height of the curve
+     * @param {number} nDivisions - the number of divisions of the curve
+     * @returns {Array} - the points of the curve
+     */
     static getQuadraticPoints(startPosition, endPosition, maxHeight, nDivisions) {
         let [col1, y1, row1] = startPosition;
         let [col2, y2, row2] = endPosition;

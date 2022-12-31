@@ -3,6 +3,7 @@ import { MyKeyframeAnimation } from "../../models/MyKeyframeAnimation.js";
 import { Keyframe } from '../../models/Keyframe.js';
 import { AnimationTracker } from "../AnimationTracker.js";
 import { DestinationSelectionState } from './DestinationSelectionState.js';
+import { GameAnimations } from '../GameAnimations.js';
 
 /**
  * State that manages the lifting of a piece.
@@ -19,36 +20,8 @@ export class LiftPieceState extends InteractableGameState {
         this.startTile = startTile;
 
         let animations = new Map();
-        animations.set(startTile.piece.id, this.createAnimation());
+        animations.set(startTile.piece.id, GameAnimations.createLiftAnimation(false));
         this.animationTracker = new AnimationTracker(animations);
-    }
-
-    // TODO: move
-    /**
-     * Creates a keyframe animation for the piece.
-     * @returns {MyKeyframeAnimation} Keyframe animation
-     */
-    createAnimation() {
-        let keyframes = []
-        const start = {
-            "translation": vec3.fromValues(0, 0, 0),
-            "rotationx": vec3.fromValues(0,0,0),
-            "rotationy": vec3.fromValues(0,0,0),
-            "rotationz": vec3.fromValues(0,0,0),
-            "scale": vec3.fromValues(1, 1, 1),
-        }
-        keyframes.push(new Keyframe(0, start));
-
-        const end = {
-            "translation": vec3.fromValues(0, 0.04, 0),
-            "rotationx": vec3.fromValues(0,0,0),
-            "rotationy": vec3.fromValues(0,0,0),
-            "rotationz": vec3.fromValues(0,0,0),
-            "scale": vec3.fromValues(1, 1, 1),
-        }
-        keyframes.push(new Keyframe(0.5, end));
-
-        return new MyKeyframeAnimation("_lift", keyframes, true, true);
     }
 
     update(curr) {

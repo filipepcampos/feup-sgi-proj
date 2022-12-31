@@ -9,7 +9,7 @@ export class MyGameMove {
      * @param {Boolean} switchedPlayer - True if the player switched
      * @param {Boolean} becameKing - True if the piece became a king
      */
-    constructor(startTile, endTile, inMovementChain=false, switchedPlayer=false, becameKing=false) { // TODO: Maybe add playerId
+    constructor(startTile, endTile, inMovementChain=false, switchedPlayer=false, becameKing=false) {
         this.startTile = startTile;
         this.endTile = endTile;
         this.inMovementChain = inMovementChain;

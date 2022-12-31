@@ -21,8 +21,4 @@ export class LoadingSceneState extends State {
             this.stateManager.setState(new NextTurnState(this.stateManager, gameCTO, renderer));
         }
     }
-
-    display() {
-        // TODO: DISPLAY LOADING SCREEN
-    }
 }
