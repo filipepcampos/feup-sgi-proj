@@ -288,7 +288,6 @@ export class MyGameCTO {
         for (const piece of availablePieces) {
             if (this._canMovePiece(piece)) return true;
         }
-        console.log("Player " + playerId + " can't move any piece");
         return false;
     }
 
