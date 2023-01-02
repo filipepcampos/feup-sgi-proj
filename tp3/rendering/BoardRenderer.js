@@ -34,7 +34,7 @@ export class BoardRenderer {
         const boardsetComponent = this.scene.sceneData.components["boardset"];
         const newChildComponents = [];
         for (const child of boardsetComponent.getChildComponents()) {
-            if(!child.getId().startsWith("_")) { // TODO: Make sure names starting with _ are reserved
+            if(!child.getId().startsWith("_")) {
                 newChildComponents.push(child);
             }
         }

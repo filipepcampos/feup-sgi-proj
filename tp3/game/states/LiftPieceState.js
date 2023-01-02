@@ -25,6 +25,7 @@ export class LiftPieceState extends InteractableGameState {
     }
 
     update(curr) {
+        super.update(curr);
         if(this.animationTracker.isOver()) {
             this.stateManager.setState(new DestinationSelectionState(this.stateManager, this.gameOrchestrator, this.renderer, this.startTile, this.animationTracker));
         } else {

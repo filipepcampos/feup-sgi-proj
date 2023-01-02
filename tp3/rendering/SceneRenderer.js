@@ -90,11 +90,6 @@ export class SceneRenderer {
             return false;
         }
 
-        // TODO: Check if this impacts performance in a significant way
-        // if(highlightMode == true && !node.hasHighlight){
-        //     return false;
-        // }
-
         const matrix = node.getTransformation() != null ? node.getTransformation() : mat4.create();
         const scene = this.sceneData.scene;
 

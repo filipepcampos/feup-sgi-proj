@@ -25,7 +25,6 @@ export class GameOverState extends InteractableGameState {
         if (type == PickingTypes.ButtonSelection) {
             if (obj == "movie_button") {
                 const movieGameOrchestrator = new MyGameOrchestrator(this.stateManager.scene);
-                console.log(this.gameOrchestrator.gameSequence);
                 const movieGameSequence = movieGameOrchestrator.migrateGameSequence(this.gameOrchestrator.gameSequence.clone());
                 this.stateManager.setState(new MovieState(this.stateManager, movieGameOrchestrator, this.renderer, movieGameSequence, this));
             }

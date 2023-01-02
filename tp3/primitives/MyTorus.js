@@ -93,9 +93,6 @@ export class MyTorus extends CGFobject {
             sliceOffset = nextSliceOffset;
         }
 
-        console.log("N_VERTICES:", this.vertices.length / 3);
-        console.log(this.indices);
-
 		this.primitiveType = this.scene.gl.TRIANGLES;
 		this.initGLBuffers();
 	}

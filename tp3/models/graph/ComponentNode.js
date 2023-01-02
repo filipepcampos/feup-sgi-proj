@@ -32,9 +32,10 @@
         return this.id;
     }
 
-    /** TODO: Update docs
+    /**
      * Set the component's children, components or primitives
-     * @param {MyComponentNode|MyPrimitiveNode} children - Array of child nodes
+     * @param {MyComponentNode} children - Array of child components
+     * @param {MyPrimitiveNode} primitives - Array of child primitives
      */
     setChildren(components, primitives) {
         this.components = components;

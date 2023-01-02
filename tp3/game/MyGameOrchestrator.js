@@ -126,8 +126,6 @@ export class MyGameOrchestrator {
 
             // Replace captured tiles
             if(Math.abs(move.endTile.col - move.startTile.col) > 1) {
-                console.log("The current player is ", this.currentPlayer);
-                console.log("Getting a piece from ", 1 -this.currentPlayer, this.auxiliaryBoard);
                 const capturedPiece = this.auxiliaryBoard.popPiece(1 - this.currentPlayer); // Recover piece from opponent
                 const deltaRow = Math.sign(move.endTile.row - move.startTile.row);
                 const deltaCol = Math.sign(move.endTile.col - move.startTile.col);
@@ -136,7 +134,7 @@ export class MyGameOrchestrator {
                 tile.piece = capturedPiece;
                 
                 this.board.movePiece(capturedPiece, tile);
-                move.capturedPiece = capturedPiece; // TODO: Pls check this
+                move.capturedPiece = capturedPiece;
             }
             SceneScoreUpdater.update(this.scene, this.auxiliaryBoard.getScore(0), this.auxiliaryBoard.getScore(1));
             return move;   

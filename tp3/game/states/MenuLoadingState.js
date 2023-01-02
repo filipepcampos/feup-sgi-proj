@@ -13,7 +13,6 @@ export class MenuLoadingState extends State {
     }
 
     update(current) {
-        console.log("loading?");
         if(this.stateManager.scene.sceneInited) {
             this.stateManager.setState(new MenuState(this.stateManager));
         }

@@ -188,7 +188,6 @@ export class XMLscene extends CGFscene {
         this.startTime = null;
     }
 
-    // TODO: Move to a class
     interpolateCamera(currTime) {
         const ANIMATION_DURATION = 2000;
         if (this.camera != this.targetCamera) { // Interpolate between both cameras

@@ -43,7 +43,6 @@ export class InteractableGameState extends GameState {
      * Returns to the menu.
      */
     returnToMenu() {
-        console.log("Returning to menu!");
         this.stateManager.scene.initScene();
         new MySceneGraph("menu.xml", this.stateManager.scene);
         this.stateManager.setState(new MenuLoadingState(this.stateManager));

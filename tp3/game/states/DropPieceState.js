@@ -28,6 +28,7 @@ export class DropPieceState extends InteractableGameState {
     }
 
     update(curr) {
+        super.update(curr);
         if(this.animationTracker.isOver()) {
             if(this.callback) {
                 this.callback();

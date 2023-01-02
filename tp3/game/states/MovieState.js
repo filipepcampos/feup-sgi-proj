@@ -51,17 +51,14 @@ export class MovieState extends GameState {
             let animations = new Map();
             animations.set(move.endTile.piece.id, GameAnimations.createMovementAnimation(move.startTile, move.endTile, !move.inMovementChain, move.switchedPlayer));
             if (capturedPiece) {
-                console.log("Captured tile: ", capturedPieceTile);
                 animations.set(capturedPiece.id, GameAnimations.createCaptureAnimation(capturedPieceTile, capturedPiece.tile));
             }
             this.animationTracker = new AnimationTracker(animations);
 
 
             const nextState = new MovieState(this.stateManager, this.gameOrchestrator, this.renderer, this.gameSequence, this.initialState, this.animationTracker);
-            console.log("Swapping state");
             this.stateManager.setState(new AnimationState(this.stateManager, this.gameOrchestrator, this.renderer, this.animationTracker, nextState));
         } else { // Return to previous state
-            console.log("Returning to ", this.initialState);
             this.initialState.lastInstant = null;
             this.stateManager.setState(this.initialState);
         }
