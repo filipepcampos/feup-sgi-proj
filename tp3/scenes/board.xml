@@ -43,22 +43,6 @@
     </lights>
 
     <textures>
-        <texture id="tex_asphalt" file="scenes/images/asphalt.jpg" />
-        <texture id="tex_brick" file="scenes/images/brick.jpg" />
-        <texture id="tex_concrete" file="scenes/images/concrete.jpg" />
-        <texture id="tex_flag" file="scenes/images/portugal.png" />
-        <texture id="tex_metal" file="scenes/images/metal.jpg" />
-        <texture id="tex_donut" file="scenes/images/donut.jpg" />
-        <texture id="tex_football" file="scenes/images/football.jpg" />
-        <texture id="tex_metro1" file="scenes/images/metro1.jpg" />
-        <texture id="tex_metro2" file="scenes/images/metro2.png" />
-        <texture id="tex_metro3" file="scenes/images/metro3.png" />
-        <texture id="tex_metro4" file="scenes/images/metro4.png" />
-        <texture id="tex_barrel" file="scenes/images/barrel.jpg" />
-        <texture id="tex_explosion" file="scenes/images/explosion.jpg" />
-        <texture id="tex_damaged_metal" file="scenes/images/damaged_metal.jpg" />
-        <texture id="tex_bump" file="scenes/images/bump.jpg" />
-        <texture id="tex_railway" file="scenes/images/railway.jpg" />
         <texture id="tex_wood_board" file="scenes/images/wood_board.jpg" />
         <texture id="tex_warning" file="scenes/images/warning_message.png" />
         <texture id="tex_menu_button" file="scenes/images/menu_button.png"/>
@@ -683,7 +667,7 @@
 
         <component id="warning_message">
             <transformation>
-                <translate x="40" y="20" z="-50"/>
+                <translate x="20" y="20" z="-50"/>
                 <scale x="80" y="40" z="1"/>
             </transformation>
             <materials>
@@ -703,7 +687,7 @@
             <materials>
                 <material id="default_material" />
             </materials>
-            <texture id="tex_wood" />
+            <texture id="tex_wood" length_t="1.0" length_s="1.0"/>
             <children>
                 <componentref id="p_cube" />
                 <componentref id="board_top" />

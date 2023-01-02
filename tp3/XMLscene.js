@@ -200,7 +200,6 @@ export class XMLscene extends CGFscene {
             const elapsedTime = currTime - this.cameraInterpolationStartInstant;
 
             if (elapsedTime >= ANIMATION_DURATION) { // Interpolation is over
-                console.log(this.camera, this.targetCamera);
                 this.camera = this.targetCamera;
                 this.interface.setActiveCamera(this.targetCamera);
                 this.cameraInterpolationStartInstant = null;

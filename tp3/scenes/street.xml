@@ -1,8 +1,8 @@
 <sxs>
     <scene root="root" axis_length="0.001" />
     <views default="player0_camera">
-        <perspective id="perspective_camera" near="0.1" far="500" angle="45">
-            <from x="25" y="25" z="45" />
+        <perspective id="perspective_camera" near="0.1" far="500" angle="85">
+            <from x="20" y="20" z="35" />
             <to x="5" y="0" z="15" />
         </perspective>
         <perspective id="player0_camera" near="0.1" far="500" angle="85">
@@ -726,7 +726,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="tex_wood"/>
+            <texture id="tex_wood"  length_t="1.0" length_s="1.0"/>
             <children>
                 <componentref id="p_cube"/>
             </children>
@@ -740,7 +740,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="tex_wood"/>
+            <texture id="tex_wood"  length_t="1.0" length_s="1.0"/>
             <children>
                 <componentref id="p_cube"/>
             </children>
@@ -754,7 +754,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="tex_wood"/>
+            <texture id="tex_wood" length_t="1.0" length_s="1.0"/>
             <children>
                 <componentref id="p_cube"/>
             </children>
@@ -768,7 +768,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="tex_wood"/>
+            <texture id="tex_wood" length_t="1.0" length_s="1.0"/>
             <children>
                 <componentref id="p_cube"/>
             </children>
@@ -806,7 +806,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="tex_wood" />
+            <texture id="tex_wood" length_t="1.0" length_s="1.0"/>
             <children>
                 <componentref id="p_cube" />
             </children>
@@ -1007,7 +1007,7 @@
             <materials>
                 <material id="default_material" />
             </materials>
-            <texture id="tex_wood" />
+            <texture id="tex_wood" length_t="1.0" length_s="1.0" />
             <children>
                 <componentref id="p_cube" />
                 <componentref id="board_top" />

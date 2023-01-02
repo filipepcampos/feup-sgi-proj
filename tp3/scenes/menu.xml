@@ -24,8 +24,9 @@
 
     <textures>
         <texture id="tex_metal" file="scenes/images/metal.jpg" />
-        <texture id="tex_street_scene" file="scenes/images/street.png"/>
+        <texture id="tex_street_scene" file="scenes/images/street_scene.png"/>
         <texture id="tex_board_scene" file="scenes/images/board_scene.png"/>
+        <texture id="tex_classroom_scene" file="scenes/images/classroom_scene.png"/>
         <texture id="tex_wood_board" file="scenes/images/wood_board.jpg" />
         <texture id="tex_wood" file="scenes/images/wood.jpg"/>
         <texture id="tex_start" file="scenes/images/start.png"/>
@@ -267,7 +268,7 @@
                 <material id="white" />
                 <material id="light_yellow" />
             </materials>
-            <texture id="none"/>
+            <texture id="tex_classroom_scene" length_t="1.0" length_s="1.0"/>
             <children>
                 <componentref id="p_cube" />
             </children>
