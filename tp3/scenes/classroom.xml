@@ -71,7 +71,7 @@
         <texture id="tex_damaged_metal" file="scenes/images/damaged_metal.jpg" />
         <texture id="tex_bump" file="scenes/images/bump.jpg" />
         <texture id="tex_railway" file="scenes/images/railway.jpg" />
-        <texture id="tex_wood_board" file="scenes/images/wood_board.jpg" />
+        <texture id="tex_blackwhite_board" file="scenes/images/blackwhite_board.png" />
         <texture id="tex_warning" file="scenes/images/warning_message.png" />
         <texture id="tex_menu_button" file="scenes/images/menu_button.png"/>
         <texture id="tex_undo_button" file="scenes/images/undo_button.png"/>
@@ -613,7 +613,7 @@
                 <scale x="1.63" y="0.05" z="3.2"/>
             </transformation>
             <materials>
-                <material id="pure_black"/>
+                <material id="emissive_white"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -826,9 +826,9 @@
                 <rotate axis="x" angle="-90"/>
             </transformation>
             <materials>
-                <material id="default_material" />
+                <material id="emissive_white" />
             </materials>
-            <texture id="tex_wood_board" length_s="1.0" length_t="1.0" />
+            <texture id="tex_blackwhite_board" length_s="1.0" length_t="1.0" />
             <children>
                 <primitiveref id="board_patch"/>
             </children>
