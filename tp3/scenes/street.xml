@@ -789,6 +789,8 @@
                 <componentref id="return_to_menu_button" />
                 <componentref id="undo_button" />
                 <componentref id="movie_button" />
+                <componentref id="prev_camera_button" />
+                <componentref id="next_camera_button" />
                 <componentref id="round_timer" />
                 <componentref id="game_timer" />
                 <componentref id="game_score" />
@@ -972,6 +974,36 @@
             <picking id="102"/>
         </component>
 
+        <component id="prev_camera_button">
+            <transformation>
+                <scale x="0.04" y="0.04" z="0.04" />
+                <translate x="-5" y="5" z="0" />
+            </transformation>
+            <materials>
+                <material id="white" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="p_cube" />
+            </children>
+            <picking id="105"/>
+        </component>
+
+        <component id="next_camera_button">
+            <transformation>
+                <scale x="0.04" y="0.04" z="0.04" />
+                <translate x="5" y="5" z="0" />
+            </transformation>
+            <materials>
+                <material id="white" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="p_cube" />
+            </children>
+            <picking id="106"/>
+        </component>
+
         <component id="destination_warning_message">
             <transformation>
                 <translate x="40" y="20" z="-50"/>
@@ -999,7 +1031,7 @@
             <children>
                 <primitiveref id="rectangle"/>
             </children>
-            <picking id="103"/>
+            <picking id="104"/>
         </component>
 
         <component id="boardset">

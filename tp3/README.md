@@ -1,92 +1,29 @@
 # SGI 2022/2023 - TP3
 
-## Group: T0xG0y
-
-| Name             | Number    | E-Mail             |
-| ---------------- | --------- | ------------------ |
-| John Doe         | 201801010 | ...                |
-| Jane Doe         | 201801011 | ...                |
+## Group T04G05
+| Name                          | Number    | E-Mail                   |
+| ----------------------------- | --------- | ------------------------ |
+| Filipe Pinto Campos           | 201905609 | up201905609@edu.fe.up.pt |
+| Francisco Gonçalves Cerqueira | 201905337 | up201905337@edu.fe.up.pt |
 
 ----
+
 ## Project information
 
+- 
 - (items describing main strong points)
-- Scene
-  - (Brief description of the created scene)
-  - (relative link to the scene)
+- All features were implemented (i.e Movie, Undo, Score, Time tracking, Camera animation, Spotlight that follows piece animation, warning messages)
+- Scenes
+  - Street
+    - (Brief description of the created scene)
+    - (relative link to the scene)
+  - Board
+    - (Brief description of the created scene)
+    - (relative link to the scene)
+  - Classroom
+    - (Brief description of the created scene)
+    - (relative link to the scene)
 ----
 ## Issues/Problems
 
-- (items describing unimplemented features, bugs, problems, etc.)
-
-## Draft
-
-### SXS relevant ids
-- Board
-- Piece 1 & 2
-- King 1 & 2
-- Auxiliar board
-
-### Game Classes
-- MyPiece
-- MyTile
-- MyGameBoard
-- MyGameMove
-- MyGameSequence
-- MyWindowsMovieMaker
-- MyGameCTO (also has state referenec and method to change it)
-
-### Game States
-Note: States receive needed information on constructor
-
-- MenuState
-  - Start Button
-  - Game Time (consider using total time instead of turn time) (optionally)
-  - Background
-  - Scene Selection (button for each scene like mario kart)
-- LoadingSceneState
-  - backend de carregar tudo
-  - loading screen (low priority, check if makes sense)
-- Next Turn
-  - Parameter with player number
-  - Allow to select piece
-  - If no play available OR time ends, end game
-  - Highlight possible pieces (low priority, check if makes sense)
-- RenderPossibleMoves
-  - Parameter with player number and piece (and gameboard)
-  - Render possible destinations animation
-- Destination Selection
-  - Parameter with player number and possible moves (and gameboard)
-  - If time ends, end game
-  - Select valid destination
-- Movement Animation
-  - Paramenter with game move
-  - Animate selected play
-- HasGameEnded
-  - Check if game ended and change state
-- EndGame
-  - Display game stats
-  - Button to menu
-
-## Missing Features
-
-- Gameplay
-- Check game over
-- Kings
-- Eat pieces
-- Menu
-- Loading
-- Animation after choosing the destination piece
-- Auxiliary Board
-- Game Sequence (Undo / Movie)
-- Undo/Movie Buttons 
-- Animation between cameras
-- Score
-- Timer
-- Seconds scene (soccer field with ronaldo and messi as kings)
-- Documentation
-
-Possible improvements:
-- Add sxs elements (instead of reserver ids?)
-- Highlight possible destination tiles
-- Change CTO name
+- All the features are fully functioning and there are no known problems.

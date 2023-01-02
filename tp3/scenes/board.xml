@@ -490,6 +490,8 @@
                 <componentref id="game_timer_label" />
                 <componentref id="score_label"/>
                 <componentref id="gameover_message" />
+                <componentref id="prev_camera_button"/>
+                <componentref id="next_camera_button"/>
             </children>
         </component>
 
@@ -663,6 +665,36 @@
                 <componentref id="p_cube" />
             </children>
             <picking id="102"/>
+        </component>
+
+        <component id="prev_camera_button">
+            <transformation>
+                <scale x="0.04" y="0.04" z="0.04" />
+                <translate x="-5" y="5" z="0" />
+            </transformation>
+            <materials>
+                <material id="white" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="p_cube" />
+            </children>
+            <picking id="105"/>
+        </component>
+
+        <component id="next_camera_button">
+            <transformation>
+                <scale x="0.04" y="0.04" z="0.04" />
+                <translate x="5" y="5" z="0" />
+            </transformation>
+            <materials>
+                <material id="white" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="p_cube" />
+            </children>
+            <picking id="106"/>
         </component>
 
         <component id="warning_message">

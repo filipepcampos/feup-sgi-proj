@@ -18,6 +18,7 @@ export class InteractableGameState extends GameState {
     }
 
     handleInput(type, obj) {
+        super.handleInput(type, obj);
         if (type == PickingTypes.ButtonSelection) {
             if (obj == "return_to_menu_button") {
                 this.returnToMenu();
