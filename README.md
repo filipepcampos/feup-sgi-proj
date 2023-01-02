@@ -10,19 +10,11 @@
 
 ## Projects
 
-### [TP1 - Scene Graph](tp1)
-
-- (items briefly describing main strong points)
-- Scene
-  - (Brief description of the created scene)
-  - (relative link to the scene)
-
------
-
-### [TP2 - ...](tp2)
-- (items briefly describing main strong points)
+### [TP1](tp1/README.md)
 
 ----
 
-### [TP3 - ...](tp3)
-- (items briefly describing main strong points)
+### [TP2](tp2/README.md)
+----
+
+### [TP3](tp3/README.md)
