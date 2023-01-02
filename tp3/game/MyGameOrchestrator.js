@@ -20,7 +20,7 @@ export class MyGameOrchestrator {
         this.selectedPiece = null;
         this.gameSequence = new MyGameSequence();
         this.timetracker = new MyGameTimeTracker(15*60*1000, 60*1000);
-        this.warningActive = false;
+        this.warningMessage = false;
     }
 
     /**
@@ -35,15 +35,15 @@ export class MyGameOrchestrator {
     /**
      * Enables the warning display.
      */
-    displayWarning() {
-        this.warningActive = true;
+    displayWarning(message) {
+        this.warningMessage = message;
     }
 
     /**
      * Disables the warning display.
      */
     removeWarning() {
-        this.warningActive = false;
+        this.warningMessage = null;
     }
 
     /**

@@ -73,6 +73,7 @@ export class NextTurnState extends InteractableGameState {
                 this.stateManager.setState(new AnimationState(this.stateManager, this.gameOrchestrator, this.renderer, animationTracker, new NextTurnState(this.stateManager, this.gameOrchestrator, this.renderer)));
             }
         }
+        this.gameOrchestrator.removeWarning();
     }
 
     /**
@@ -81,7 +82,10 @@ export class NextTurnState extends InteractableGameState {
     handleTilePick(obj) {
         if(obj.piece != null && this.gameOrchestrator.canPickPiece(obj.piece) && !this.gameOrchestrator.isGameover()){
             this.gameOrchestrator.pickPiece(obj.piece);
+            this.gameOrchestrator.removeWarning();
             this.stateManager.setState(new LiftPieceState(this.stateManager, this.gameOrchestrator, this.renderer, obj));
+        } else {
+            this.gameOrchestrator.displayWarning("selection_warning_message");
         }
     }
 }

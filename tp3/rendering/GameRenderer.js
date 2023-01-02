@@ -53,7 +53,7 @@ export class GameRenderer {
 
         this.scene.sceneData.components["gameover_message"].texture = gameOrchestrator.isGameover() ? this.scene.sceneData.textures["tex_gameover"] : "none";
 
-        const warning_node = gameOrchestrator.warningActive ? this.scene.sceneData.components["warning_message"] : null;
+        const warning_node = gameOrchestrator.warningMessage ? this.scene.sceneData.components[gameOrchestrator.warningMessage] : null;
         this.sceneRenderer.display(timeFactor, warning_node);
 
         if(gameOrchestrator.selectedPiece && this.scene.lightsIds[0] == "overhead_light"){

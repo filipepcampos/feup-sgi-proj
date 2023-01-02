@@ -125,7 +125,7 @@ export class DestinationSelectionState extends InteractableGameState {
                 this.dropPiece();
                 this.gameOrchestrator.removeWarning();
             } else {
-                this.gameOrchestrator.displayWarning();
+                this.gameOrchestrator.displayWarning("destination_warning_message");
             }
         }
     }

@@ -21,7 +21,7 @@ export class InteractableGameState extends GameState {
         if (type == PickingTypes.ButtonSelection) {
             if (obj == "return_to_menu_button") {
                 this.returnToMenu();
-            } else if (obj == "warning_message") {
+            } else if (obj == "destination_warning_message" || obj == "selection_warning_message") {
                 this.gameOrchestrator.removeWarning();
             }
         }

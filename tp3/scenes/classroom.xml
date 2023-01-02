@@ -57,6 +57,7 @@
     <textures>
         <texture id="tex_blackwhite_board" file="scenes/images/blackwhite_board.png" />
         <texture id="tex_warning" file="scenes/images/warning_message.png" />
+        <texture id="tex_warning_selection" file="scenes/images/selection_warning_message.png" />
         <texture id="tex_menu_button" file="scenes/images/menu_button.png"/>
         <texture id="tex_undo_button" file="scenes/images/undo_button.png"/>
         <texture id="tex_movie_button" file="scenes/images/movie_button.png"/>
@@ -789,7 +790,7 @@
             <picking id="102"/>
         </component>
 
-        <component id="warning_message">
+        <component id="destination_warning_message">
             <transformation>
                 <translate x="18" y="20" z="-50"/>
                 <scale x="80" y="40" z="1"/>
@@ -798,6 +799,21 @@
                 <material id="warning_material"/>
             </materials>
             <texture id="tex_warning" length_s="1.0" length_t="1.0"/>
+            <children>
+                <primitiveref id="rectangle"/>
+            </children>
+            <picking id="103"/>
+        </component>
+
+        <component id="selection_warning_message">
+            <transformation>
+                <translate x="18" y="20" z="-50"/>
+                <scale x="80" y="40" z="1"/>
+            </transformation>
+            <materials>
+                <material id="warning_material"/>
+            </materials>
+            <texture id="tex_warning_selection" length_s="1.0" length_t="1.0"/>
             <children>
                 <primitiveref id="rectangle"/>
             </children>
