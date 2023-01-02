@@ -737,7 +737,7 @@
             <transformation>
             </transformation>
             <materials>
-                <material id="black" />
+                <material id="medium_gray" />
             </materials>
             <texture id="none" />
             <children>
@@ -761,7 +761,7 @@
             <transformation>
             </transformation>
             <materials>
-                <material id="pure_black" />
+                <material id="medium_gray" />
             </materials>
             <texture id="none" />
             <children>
@@ -785,7 +785,7 @@
             <transformation>
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="medium_gray" />
             </materials>
             <texture id="none" />
             <children>
@@ -809,7 +809,7 @@
             <transformation>
             </transformation>
             <materials>
-                <material id="emissive_white" />
+                <material id="medium_gray" />
             </materials>
             <texture id="none" />
             <children>

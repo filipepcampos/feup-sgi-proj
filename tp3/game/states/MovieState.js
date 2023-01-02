@@ -62,6 +62,7 @@ export class MovieState extends GameState {
             this.stateManager.setState(new AnimationState(this.stateManager, this.gameOrchestrator, this.renderer, this.animationTracker, nextState));
         } else { // Return to previous state
             console.log("Returning to ", this.initialState);
+            this.initialState.lastInstant = null;
             this.stateManager.setState(this.initialState);
         }
     }

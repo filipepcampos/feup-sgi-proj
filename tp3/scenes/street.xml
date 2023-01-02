@@ -136,11 +136,11 @@
             <emission r="0.0" g="0.0" b="0.0" a="1.0" />
             <ambient r="0.4" g="0.0" b="0.0" a="1.0" />
             <diffuse r="0.6" g="0.0" b="0.0" a="1.0" />
-            <specular r="0.6" g="0.0" b="0.0" a="1.0" />
+            <specular r="0.3" g="0.0" b="0.0" a="1.0" />
         </material>
         <material id="bright_red" shininess="10">
             <emission r="0.0" g="0.0" b="0.0" a="1.0" />
-            <ambient r="0.6" g="0.0" b="0.0" a="1.0" />
+            <ambient r="0.8" g="0.0" b="0.0" a="1.0" />
             <diffuse r="0.8" g="0.0" b="0.0" a="1.0" />
             <specular r="0.8" g="0.0" b="0.0" a="1.0" />
         </material>
@@ -1374,7 +1374,7 @@
                 <scale x="0.025" y="0.025" z="0.025" />
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="bright_green" />
             </materials>
             <texture id="none" />
             <children>
@@ -1410,12 +1410,12 @@
                 <scale x="0.025" y="0.025" z="0.025" />
             </transformation>
             <materials>
-                <material id="green" />
+                <material id="bright_green" />
             </materials>
             <texture id="none" />
             <children>
                 <componentref id="car_front" />
-                <componentref id="car_top_without_flag" />
+                <componentref id="car_top" />
                 <componentref id="car_back" />
                 <componentref id="car_laterals" />
                 <componentref id="car_bottom" />
@@ -1448,7 +1448,7 @@
                 <rotate axis="y" angle="180" />
             </transformation>
             <materials>
-                <material id="red" />
+                <material id="bright_red" />
             </materials>
             <texture id="none" />
             <children>
