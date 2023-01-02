@@ -20,6 +20,13 @@
   - [Board](scenes/board.xml) - The second scene is a surrealist scene where the user is surrounded by six game boards that mimic the original board, which is placed at the center.
   - [Classroom](scenes/classroom.xml) - The third scene is a realistic representation of a FEUP classroom, which contains two computers where the game can be played.
 
+![Screenshot 1](screenshots/screenshot1.png)
+![Screenshot 2](screenshots/screenshot2.png)
+![Screenshot 3](screenshots/screenshot3.png)
+![Screenshot 4](screenshots/screenshot4.png)
+![Screenshot 5](screenshots/screenshot5.png)
+![Screenshot 6](screenshots/screenshot6.png)
+
 ----
 ## Issues/Problems
 
