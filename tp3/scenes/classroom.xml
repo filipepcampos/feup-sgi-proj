@@ -1,6 +1,6 @@
 <sxs>
     <scene root="root" axis_length="0.001" />
-    <views default="room_camera">
+    <views default="player0_zoom_camera">
         <perspective id="player0_wide_camera" near="0.1" far="500" angle="75">
             <from x="1.6" y="-0.8" z="-0.8" />
             <to x="1.6" y="-0.8" z="-1.5" />
@@ -831,27 +831,34 @@
             </children>
         </component>
 
-        <component id="piece0">
+        <component id="selected_piece0">
             <transformation>
+                <translate x="0.0" y="1" z="0" />
+                <scale x="0.05" y="0.05" z="0.05" />
+                <rotate axis="x" angle="-90"/>
             </transformation>
             <materials>
                 <material id="black" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
+            <highlighted r="1.0" g="0.0" b="0.0" scale_h="1.0" />
             <children>
-                <componentref id="cylinder_component"/>
+                <primitiveref id="cone" />
             </children>
         </component>
 
-        <component id="selected_piece0">
+        <component id="piece0">
             <transformation>
+                <translate x="0.0" y="1" z="0" />
+                <scale x="0.045" y="0.045" z="0.045" />
+                <rotate axis="x" angle="-90"/>
             </transformation>
             <materials>
-                <material id="bright_red" />
+                <material id="black" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
-                <componentref id="cylinder_component"/>
+                <primitiveref id="cone" />
             </children>
         </component>
 
@@ -872,9 +879,10 @@
             <transformation>
             </transformation>
             <materials>
-                <material id="bright_red" />
+                <material id="pure_black" />
             </materials>
             <texture id="none" />
+            <highlighted r="1.0" g="0.0" b="0.0" scale_h="1.0" />
             <children>
                 <componentref id="cylinder_component"/>
                 <componentref id="piece_crown0"/>
@@ -897,9 +905,10 @@
             <transformation>
             </transformation>
             <materials>
-                <material id="bright_red" />
+                <material id="white" />
             </materials>
             <texture id="none" />
+            <highlighted r="1.0" g="0.0" b="0.0" scale_h="1.0" />
             <children>
                 <componentref id="cylinder_component"/>
             </children>
@@ -922,9 +931,10 @@
             <transformation>
             </transformation>
             <materials>
-                <material id="bright_red" />
+                <material id="emissive_white" />
             </materials>
             <texture id="none" />
+            <highlighted r="1.0" g="0.0" b="0.0" scale_h="1.0" />
             <children>
                 <componentref id="cylinder_component"/>
                 <componentref id="piece_crown1"/>

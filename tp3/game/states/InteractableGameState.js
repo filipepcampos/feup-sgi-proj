@@ -28,6 +28,7 @@ export class InteractableGameState extends GameState {
     }
 
     update(instant) {
+        super.update(instant);
         if(this.lastInstant == null) {
             this.lastInstant = instant;
         } else {

@@ -86,14 +86,14 @@ export class SceneRenderer {
      * @param {MyTexture} parentTexture - Reference to the parent's texture
      */
     displayComponent(node, parentMaterial, parentTexture, timeFactor, highlightMode=false) {
-        // TODO: Reenable if needed
         if(node.getAnimation() != null && !(node.getAnimation().started || node.getAnimation().immediateStart)){
             return false;
         }
 
-        if(highlightMode == true && !node.hasHighlight){
-            return false;
-        }
+        // TODO: Check if this impacts performance in a significant way
+        // if(highlightMode == true && !node.hasHighlight){
+        //     return false;
+        // }
 
         const matrix = node.getTransformation() != null ? node.getTransformation() : mat4.create();
         const scene = this.sceneData.scene;
