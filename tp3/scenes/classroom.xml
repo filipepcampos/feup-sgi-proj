@@ -833,7 +833,7 @@
 
         <component id="selected_piece0">
             <transformation>
-                <translate x="0.0" y="1" z="0" />
+                <translate x="0.0" y="0.1" z="0" />
                 <scale x="0.05" y="0.05" z="0.05" />
                 <rotate axis="x" angle="-90"/>
             </transformation>
@@ -849,7 +849,7 @@
 
         <component id="piece0">
             <transformation>
-                <translate x="0.0" y="1" z="0" />
+                <translate x="0.0" y="0.1" z="0" />
                 <scale x="0.045" y="0.045" z="0.045" />
                 <rotate axis="x" angle="-90"/>
             </transformation>
@@ -864,147 +864,106 @@
 
         <component id="kingpiece0">
             <transformation>
+                <translate x="0.0" y="0.1" z="0" />
+                <scale x="0.045" y="0.045" z="0.045" />
+                <rotate axis="x" angle="-90"/>
             </transformation>
             <materials>
                 <material id="pure_black" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
-                <componentref id="cylinder_component"/>
+                <primitiveref id="cone" />
                 <componentref id="piece_crown0"/>
             </children>
         </component>
 
         <component id="selected_kingpiece0">
             <transformation>
+                <translate x="0.0" y="0.1" z="0" />
+                <scale x="0.05" y="0.05" z="0.05" />
+                <rotate axis="x" angle="-90"/>
             </transformation>
             <materials>
                 <material id="pure_black" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <highlighted r="1.0" g="0.0" b="0.0" scale_h="1.0" />
             <children>
-                <componentref id="cylinder_component"/>
+                <primitiveref id="cone" />
                 <componentref id="piece_crown0"/>
             </children>
         </component>
 
         <component id="piece1">
             <transformation>
+                <translate x="0.0" y="0.1" z="0" />
+                <scale x="0.045" y="0.045" z="0.045" />
+                <rotate axis="x" angle="-90"/>
             </transformation>
             <materials>
                 <material id="white" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
-                <componentref id="cylinder_component"/>
+                <primitiveref id="cone" />
             </children>
         </component>
 
         <component id="selected_piece1">
             <transformation>
+                <translate x="0.0" y="0.1" z="0" />
+                <scale x="0.05" y="0.05" z="0.05" />
+                <rotate axis="x" angle="-90"/>
             </transformation>
             <materials>
                 <material id="white" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <highlighted r="1.0" g="0.0" b="0.0" scale_h="1.0" />
             <children>
-                <componentref id="cylinder_component"/>
+                <primitiveref id="cone" />
             </children>
         </component>
 
         <component id="kingpiece1">
             <transformation>
+                <translate x="0.0" y="0.1" z="0" />
+                <scale x="0.045" y="0.045" z="0.045" />
+                <rotate axis="x" angle="-90"/>
             </transformation>
             <materials>
                 <material id="emissive_white" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
-                <componentref id="cylinder_component"/>
+                <primitiveref id="cone" />
                 <componentref id="piece_crown1"/>
             </children>
         </component>
 
         <component id="selected_kingpiece1">
             <transformation>
+                <translate x="0.0" y="0.1" z="0" />
+                <scale x="0.05" y="0.05" z="0.05" />
+                <rotate axis="x" angle="-90"/>
             </transformation>
             <materials>
                 <material id="emissive_white" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <highlighted r="1.0" g="0.0" b="0.0" scale_h="1.0" />
             <children>
-                <componentref id="cylinder_component"/>
+                <primitiveref id="cone" />
                 <componentref id="piece_crown1"/>
-            </children>
-        </component>
-
-        <component id="cylinder_component">
-            <transformation>
-                <translate x="0" y="0.02" z="0"/>
-                <scale x="0.08" y="0.08" z="0.08"/>
-                <rotate axis="z" angle="-90"/>
-            </transformation>
-            <materials>
-                <material id="inherit" />
-            </materials>
-            <texture id="inherit" />
-            <children>
-                <componentref id="cylinder_side" />
-                <componentref id="cylinder_base0" />
-                <componentref id="cylinder_base1" />
-            </children>
-        </component>
-
-        <component id="cylinder_side">
-            <transformation>
-                <transformationref id="tr_wheel_tire" />
-            </transformation>
-            <materials>
-                <material id="inherit" />
-            </materials>
-            <texture id="inherit" />
-            <children>
-                <primitiveref id="cylinder" />
-            </children>
-        </component>
-
-        <component id="cylinder_base0">
-            <transformation>
-                <translate x="0.35" y="0" z="0" />
-                <scale x="0.05" y="0.45" z="0.45" />
-                <rotate axis="y" angle="90" />
-            </transformation>
-            <materials>
-                <material id="inherit" />
-            </materials>
-            <texture id="inherit" />
-            <children>
-                <primitiveref id="cone" />
-            </children>
-        </component>
-
-        <component id="cylinder_base1">
-            <transformation>
-                <transformationref id="tr_wheel_inner_base" />
-            </transformation>
-            <materials>
-                <material id="inherit" />
-            </materials>
-            <texture id="inherit" />
-            <children>
-                <primitiveref id="cone" />
             </children>
         </component>
 
         <component id="piece_crown0">
             <transformation>
-                <translate x="0.002" y="0.1" z="0.02"/>
-                <scale x="0.04" y="0.04" z="0.04"/>
-                <rotate axis="y" angle="60"/>
-                <rotate axis="x" angle="-90"/>
+                <translate x="0.5" y="0.35" z="1.0"/>
+                <scale x="1" y="1" z="1"/>
+                <rotate axis="z" angle="180"/>
             </transformation>
             <materials>
                 <material id="white" />
@@ -1017,10 +976,9 @@
 
         <component id="piece_crown1">
             <transformation>
-                <translate x="0.002" y="0.1" z="0.02"/>
-                <scale x="0.04" y="0.04" z="0.04"/>
-                <rotate axis="y" angle="60"/>
-                <rotate axis="x" angle="-90"/>
+                <translate x="0.5" y="0.35" z="1.0"/>
+                <scale x="1" y="1" z="1"/>
+                <rotate axis="z" angle="180"/>
             </transformation>
             <materials>
                 <material id="black" />
