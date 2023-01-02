@@ -10,11 +10,11 @@ import { SceneTimerUpdater } from "../../rendering/SceneTimerUpdater.js";
 export class InteractableGameState extends GameState {
     /**
      * @param {StateManager} stateManager - Reference to StateManager object
-     * @param {GameCTO} gameCTO - Reference to GameCTO object
+     * @param {GameOrchestrator} gameOrchestrator - Reference to GameOrchestrator object
      * @param {Renderer} renderer - Reference to Renderer object
      */
-    constructor(stateManager, gameCTO, renderer) {
-        super(stateManager, gameCTO, renderer);
+    constructor(stateManager, gameOrchestrator, renderer) {
+        super(stateManager, gameOrchestrator, renderer);
     }
 
     handleInput(type, obj) {
@@ -22,7 +22,7 @@ export class InteractableGameState extends GameState {
             if (obj == "return_to_menu_button") {
                 this.returnToMenu();
             } else if (obj == "warning_message") {
-                this.gameCTO.removeWarning();
+                this.gameOrchestrator.removeWarning();
             }
         }
     }
@@ -32,9 +32,9 @@ export class InteractableGameState extends GameState {
             this.lastInstant = instant;
         } else {
             const elapsedTime = instant - this.lastInstant;
-            this.gameCTO.updatePlaytime(elapsedTime);
+            this.gameOrchestrator.updatePlaytime(elapsedTime);
             this.lastInstant = instant;
-            SceneTimerUpdater.update(this.stateManager.scene, this.gameCTO.timetracker, this.gameCTO.currentPlayer);
+            SceneTimerUpdater.update(this.stateManager.scene, this.gameOrchestrator.timetracker, this.gameOrchestrator.currentPlayer);
         }
     }
 

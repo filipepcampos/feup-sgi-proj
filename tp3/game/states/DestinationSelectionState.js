@@ -6,28 +6,28 @@ import { AnimationState } from './AnimationState.js';
 import { AnimationTracker } from '../AnimationTracker.js';
 import { GameAnimations } from '../GameAnimations.js';
 import { MovieState } from "./MovieState.js";
-import { MyGameCTO } from '../MyGameCTO.js';
+import { MyGameOrchestrator } from '../MyGameOrchestrator.js';
 import { GameOverState } from './GameOverState.js';
 
 /**
  * State that handles the selection of a destination tile.
  */
 export class DestinationSelectionState extends InteractableGameState {
-    constructor(stateManager, gameCTO, renderer, startTile, animationTracker, canCancelMove=true) {
-        super(stateManager, gameCTO, renderer);
+    constructor(stateManager, gameOrchestrator, renderer, startTile, animationTracker, canCancelMove=true) {
+        super(stateManager, gameOrchestrator, renderer);
         this.startTile = startTile;
         this.canCancelMove = canCancelMove;
         this.animationTracker = animationTracker;
     }
 
     display() {
-        this.renderer.display(this.gameCTO, this.timeFactor, this.animationTracker);
+        this.renderer.display(this.gameOrchestrator, this.timeFactor, this.animationTracker);
     }
 
     update(current) {
         super.update(current);
-        if(this.gameCTO.isGameover()) {
-            this.stateManager.setState(new GameOverState(this.stateManager, this.gameCTO, this.renderer));
+        if(this.gameOrchestrator.isGameover()) {
+            this.stateManager.setState(new GameOverState(this.stateManager, this.gameOrchestrator, this.renderer));
         }
     }
 
@@ -39,9 +39,9 @@ export class DestinationSelectionState extends InteractableGameState {
             if(obj == "undo_button") {
                 this.undoMove();
             } else if (obj == "movie_button") {
-                const movieGameCTO = new MyGameCTO(this.stateManager.scene);
-                const movieGameSequence = movieGameCTO.migrateGameSequence(this.gameCTO.gameSequence.clone());
-                this.stateManager.setState(new MovieState(this.stateManager, movieGameCTO, this.renderer, movieGameSequence, this));
+                const movieGameOrchestrator = new MyGameOrchestrator(this.stateManager.scene);
+                const movieGameSequence = movieGameOrchestrator.migrateGameSequence(this.gameOrchestrator.gameSequence.clone());
+                this.stateManager.setState(new MovieState(this.stateManager, movieGameOrchestrator, this.renderer, movieGameSequence, this));
             }
         }
     }
@@ -63,7 +63,7 @@ export class DestinationSelectionState extends InteractableGameState {
 
         let animationTracker = new AnimationTracker(animations);
 
-        this.stateManager.setState(new AnimationState(this.stateManager, this.gameCTO, this.renderer, animationTracker, nextState, callback));
+        this.stateManager.setState(new AnimationState(this.stateManager, this.gameOrchestrator, this.renderer, animationTracker, nextState, callback));
     }
 
     /**
@@ -73,25 +73,25 @@ export class DestinationSelectionState extends InteractableGameState {
         if(this.canCancelMove) {
             this.dropPiece();
         } else {
-            const move = this.gameCTO.undoMove();
+            const move = this.gameOrchestrator.undoMove();
             if (move) {
                 let animations = new Map();
                 let dropPiece = !move.inMovementChain;
                 animations.set(move.startTile.piece.id, GameAnimations.createMovementAnimation(move.endTile, move.startTile, false, dropPiece));
                 if (move.capturedPiece) {
                     const capturedPiece = move.capturedPiece;
-                    animations.set(capturedPiece.id, GameAnimations.createCaptureAnimation(this.gameCTO.auxiliaryBoard.getAvailableTile(capturedPiece), capturedPiece.tile))
+                    animations.set(capturedPiece.id, GameAnimations.createCaptureAnimation(this.gameOrchestrator.auxiliaryBoard.getAvailableTile(capturedPiece), capturedPiece.tile))
                 }
                 let animationTracker = new AnimationTracker(animations);
                 if(move.inMovementChain) {
-                    this.stateManager.setState(new AnimationState(this.stateManager, this.gameCTO, this.renderer, animationTracker, new DestinationSelectionState(this.stateManager, this.gameCTO, this.renderer, move.startTile, animationTracker, false)));
+                    this.stateManager.setState(new AnimationState(this.stateManager, this.gameOrchestrator, this.renderer, animationTracker, new DestinationSelectionState(this.stateManager, this.gameOrchestrator, this.renderer, move.startTile, animationTracker, false)));
                 } else {
-                    this.gameCTO.unpickPiece();
-                    this.stateManager.setState(new AnimationState(this.stateManager, this.gameCTO, this.renderer, animationTracker, new NextTurnState(this.stateManager, this.gameCTO, this.renderer)));
+                    this.gameOrchestrator.unpickPiece();
+                    this.stateManager.setState(new AnimationState(this.stateManager, this.gameOrchestrator, this.renderer, animationTracker, new NextTurnState(this.stateManager, this.gameOrchestrator, this.renderer)));
                 }
             }
         }
-        this.gameCTO.removeWarning();
+        this.gameOrchestrator.removeWarning();
     }
     
     /**
@@ -99,7 +99,7 @@ export class DestinationSelectionState extends InteractableGameState {
      */
     dropPiece() {
         if(this.canCancelMove) {
-            this.stateManager.setState(new DropPieceState(this.stateManager, this.gameCTO, this.renderer, this.startTile, () => {this.gameCTO.unpickPiece()}));
+            this.stateManager.setState(new DropPieceState(this.stateManager, this.gameOrchestrator, this.renderer, this.startTile, () => {this.gameOrchestrator.unpickPiece()}));
         }
     }
 
@@ -109,23 +109,23 @@ export class DestinationSelectionState extends InteractableGameState {
      */
     handleTilePick(obj) {
         const piece = this.startTile.piece;
-        const capturedPiece = this.gameCTO.getPieceBetweenTiles(piece.tile, obj);
+        const capturedPiece = this.gameOrchestrator.getPieceBetweenTiles(piece.tile, obj);
         const capturedTile = capturedPiece != null ? capturedPiece.tile : null;
 
-        if(this.gameCTO.movePiece(piece, obj, !this.canCancelMove)){ // Success (If can't cancel move, the piece is in a movement chain)
-            if (this.gameCTO.pieceHasCaptureAvailable(piece) && (capturedPiece != null)) { // Continue capture chain
-                this.setAnimationState(obj, capturedPiece, capturedTile, true, new DestinationSelectionState(this.stateManager, this.gameCTO, this.renderer, piece.tile, this.animationTracker, false));
+        if(this.gameOrchestrator.movePiece(piece, obj, !this.canCancelMove)){ // Success (If can't cancel move, the piece is in a movement chain)
+            if (this.gameOrchestrator.pieceHasCaptureAvailable(piece) && (capturedPiece != null)) { // Continue capture chain
+                this.setAnimationState(obj, capturedPiece, capturedTile, true, new DestinationSelectionState(this.stateManager, this.gameOrchestrator, this.renderer, piece.tile, this.animationTracker, false));
             } else { // Switch to next player
-                this.gameCTO.switchPlayer();
-                this.setAnimationState(obj, capturedPiece, capturedTile, false, new NextTurnState(this.stateManager, this.gameCTO, this.renderer), () => {this.gameCTO.unpickPiece()});
+                this.gameOrchestrator.switchPlayer();
+                this.setAnimationState(obj, capturedPiece, capturedTile, false, new NextTurnState(this.stateManager, this.gameOrchestrator, this.renderer), () => {this.gameOrchestrator.unpickPiece()});
             }
-            this.gameCTO.removeWarning();
+            this.gameOrchestrator.removeWarning();
         } else {
             if(obj == this.startTile) { // Cancel move
                 this.dropPiece();
-                this.gameCTO.removeWarning();
+                this.gameOrchestrator.removeWarning();
             } else {
-                this.gameCTO.displayWarning();
+                this.gameOrchestrator.displayWarning();
             }
         }
     }

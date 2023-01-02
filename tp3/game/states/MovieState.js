@@ -9,14 +9,14 @@ import { AnimationState } from "./AnimationState.js";
 export class MovieState extends GameState {
     /**
      * @param {StateManager} stateManager - Reference to StateManager object
-     * @param {GameCTO} gameCTO - Reference to GameCTO object
+     * @param {GameOrchestrator} gameOrchestrator - Reference to GameOrchestrator object
      * @param {Renderer} renderer - Reference to Renderer object
      * @param {GameSequence} gameSequence - Game sequence
      * @param {State} initialState - Initial state
      * @param {AnimationTracker} animationTracker - Reference to AnimationTracker object
      */
-    constructor(stateManager, gameCTO, renderer, gameSequence, initialState, animationTracker=null) {
-        super(stateManager, gameCTO, renderer);
+    constructor(stateManager, gameOrchestrator, renderer, gameSequence, initialState, animationTracker=null) {
+        super(stateManager, gameOrchestrator, renderer);
 
         this.gameSequence = gameSequence;
         this.initialState = initialState;
@@ -29,7 +29,7 @@ export class MovieState extends GameState {
     }
 
     display() {
-        this.renderer.display(this.gameCTO, this.timeFactor, this.animationTracker);
+        this.renderer.display(this.gameOrchestrator, this.timeFactor, this.animationTracker);
     }
 
     /**
@@ -40,12 +40,12 @@ export class MovieState extends GameState {
     playMove() {
         const move = this.gameSequence.popFirstMove();
         if (move) {
-            const capturedPiece = this.gameCTO.getPieceBetweenTiles(move.startTile, move.endTile);
+            const capturedPiece = this.gameOrchestrator.getPieceBetweenTiles(move.startTile, move.endTile);
             const capturedPieceTile = capturedPiece ? capturedPiece.tile : null;
 
-            this.gameCTO.movePiece(move.startTile.piece, move.endTile, move.inMovementChain);
+            this.gameOrchestrator.movePiece(move.startTile.piece, move.endTile, move.inMovementChain);
             if (move.switchedPlayer) {
-                this.gameCTO.switchPlayer();
+                this.gameOrchestrator.switchPlayer();
             }
 
             let animations = new Map();
@@ -57,9 +57,9 @@ export class MovieState extends GameState {
             this.animationTracker = new AnimationTracker(animations);
 
 
-            const nextState = new MovieState(this.stateManager, this.gameCTO, this.renderer, this.gameSequence, this.initialState, this.animationTracker);
+            const nextState = new MovieState(this.stateManager, this.gameOrchestrator, this.renderer, this.gameSequence, this.initialState, this.animationTracker);
             console.log("Swapping state");
-            this.stateManager.setState(new AnimationState(this.stateManager, this.gameCTO, this.renderer, this.animationTracker, nextState));
+            this.stateManager.setState(new AnimationState(this.stateManager, this.gameOrchestrator, this.renderer, this.animationTracker, nextState));
         } else { // Return to previous state
             console.log("Returning to ", this.initialState);
             this.stateManager.setState(this.initialState);

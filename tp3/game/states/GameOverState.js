@@ -1,4 +1,4 @@
-import { MyGameCTO } from "../MyGameCTO.js";
+import { MyGameOrchestrator } from "../MyGameOrchestrator.js";
 import { MovieState } from "./MovieState.js";
 import { InteractableGameState } from "./InteractableGameState.js";
 import { PickingTypes } from "../PickingTypes.js";
@@ -9,25 +9,25 @@ import { PickingTypes } from "../PickingTypes.js";
 export class GameOverState extends InteractableGameState {
     /**
      * @param {StateManager} stateManager - State manager
-     * @param {GameCTO} gameCTO - Game CTO
+     * @param {GameOrchestrator} gameOrchestrator - Game CTO
      * @param {Renderer} renderer - Renderer
      */
-    constructor(stateManager, gameCTO, renderer) {
-        super(stateManager, gameCTO, renderer);
+    constructor(stateManager, gameOrchestrator, renderer) {
+        super(stateManager, gameOrchestrator, renderer);
     }
 
     display() {
-        this.renderer.display(this.gameCTO, this.timeFactor);
+        this.renderer.display(this.gameOrchestrator, this.timeFactor);
     }
 
     handleInput(type, obj) {
         super.handleInput(type, obj);
         if (type == PickingTypes.ButtonSelection) {
             if (obj == "movie_button") {
-                const movieGameCTO = new MyGameCTO(this.stateManager.scene);
-                console.log(this.gameCTO.gameSequence);
-                const movieGameSequence = movieGameCTO.migrateGameSequence(this.gameCTO.gameSequence.clone());
-                this.stateManager.setState(new MovieState(this.stateManager, movieGameCTO, this.renderer, movieGameSequence, this));
+                const movieGameOrchestrator = new MyGameOrchestrator(this.stateManager.scene);
+                console.log(this.gameOrchestrator.gameSequence);
+                const movieGameSequence = movieGameOrchestrator.migrateGameSequence(this.gameOrchestrator.gameSequence.clone());
+                this.stateManager.setState(new MovieState(this.stateManager, movieGameOrchestrator, this.renderer, movieGameSequence, this));
             }
         }
     }

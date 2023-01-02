@@ -8,7 +8,7 @@ import { SceneScoreUpdater } from "../rendering/SceneScoreUpdater.js";
 /**
  * Class that contains all the game logic.
  */
-export class MyGameCTO {
+export class MyGameOrchestrator {
     /**
      * @param {MyScene} scene - Reference to MyScene object.
      */

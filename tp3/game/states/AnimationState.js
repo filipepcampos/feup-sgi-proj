@@ -6,14 +6,14 @@ import { GameState } from './GameState.js';
 export class AnimationState extends GameState {
     /**
      * @param {StateManager} stateManager - Reference to StateManager object
-     * @param {GameCTO} gameCTO - Reference to GameCTO object
+     * @param {GameOrchestrator} gameOrchestrator - Reference to GameOrchestrator object
      * @param {Renderer} renderer - Reference to Renderer object
      * @param {AnimationTracker} animationTracker - Reference to AnimationTracker object
      * @param {State} nextState - Next state
      * @param {function} callback - Callback method called on animation end
      */
-    constructor(stateManager, gameCTO, renderer, animationTracker, nextState, callback=null) {
-        super(stateManager, gameCTO, renderer);
+    constructor(stateManager, gameOrchestrator, renderer, animationTracker, nextState, callback=null) {
+        super(stateManager, gameOrchestrator, renderer);
         this.animationTracker = animationTracker;
         this.nextState = nextState;
         this.callback = callback;
@@ -31,6 +31,6 @@ export class AnimationState extends GameState {
     }
 
     display() {
-        this.renderer.display(this.gameCTO, this.timeFactor, this.animationTracker);
+        this.renderer.display(this.gameOrchestrator, this.timeFactor, this.animationTracker);
     }
 }

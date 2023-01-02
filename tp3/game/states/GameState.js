@@ -6,12 +6,12 @@ import { State } from "./State.js";
 export class GameState extends State {
     /**
      * @param {StateManager} stateManager - Reference to StateManager object
-     * @param {GameCTO} gameCTO - Reference to GameCTO object
+     * @param {GameOrchestrator} gameOrchestrator - Reference to GameOrchestrator object
      * @param {Renderer} renderer - Reference to Renderer object
      */
-    constructor(stateManager, gameCTO, renderer) {
+    constructor(stateManager, gameOrchestrator, renderer) {
         super(stateManager);
-        this.gameCTO = gameCTO;
+        this.gameOrchestrator = gameOrchestrator;
         this.renderer = renderer;
         this.timeFactor = 0;
     }

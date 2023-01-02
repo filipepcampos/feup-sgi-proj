@@ -11,12 +11,12 @@ import { GameAnimations } from '../GameAnimations.js';
 export class LiftPieceState extends InteractableGameState {
     /**
      * @param {StateManager} stateManager - Reference to StateManager object
-     * @param {GameCTO} gameCTO - Reference to GameCTO object
+     * @param {GameOrchestrator} gameOrchestrator - Reference to GameOrchestrator object
      * @param {Renderer} renderer - Reference to Renderer object
      * @param {Tile} startTile - Tile where the piece is located
      */
-    constructor(stateManager, gameCTO, renderer, startTile) {
-        super(stateManager, gameCTO, renderer);
+    constructor(stateManager, gameOrchestrator, renderer, startTile) {
+        super(stateManager, gameOrchestrator, renderer);
         this.startTile = startTile;
 
         let animations = new Map();
@@ -26,13 +26,13 @@ export class LiftPieceState extends InteractableGameState {
 
     update(curr) {
         if(this.animationTracker.isOver()) {
-            this.stateManager.setState(new DestinationSelectionState(this.stateManager, this.gameCTO, this.renderer, this.startTile, this.animationTracker));
+            this.stateManager.setState(new DestinationSelectionState(this.stateManager, this.gameOrchestrator, this.renderer, this.startTile, this.animationTracker));
         } else {
             this.animationTracker.update(curr / 1000);
         }
     }
 
     display() {
-        this.renderer.display(this.gameCTO, this.timeFactor, this.animationTracker);
+        this.renderer.display(this.gameOrchestrator, this.timeFactor, this.animationTracker);
     }
 }

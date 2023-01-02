@@ -6,7 +6,7 @@ import { AnimationTracker } from '../AnimationTracker.js';
 import { AnimationState } from './AnimationState.js';
 import { DestinationSelectionState } from './DestinationSelectionState.js';
 import { MovieState } from "./MovieState.js";
-import { MyGameCTO } from '../MyGameCTO.js';
+import { MyGameOrchestrator } from '../MyGameOrchestrator.js';
 import { GameOverState } from "./GameOverState.js";
 
 /**
@@ -16,21 +16,21 @@ import { GameOverState } from "./GameOverState.js";
 export class NextTurnState extends InteractableGameState {
     /**
      * @param {StateManager} stateManager - State manager
-     * @param {GameCTO} gameCTO - Game CTO
+     * @param {GameOrchestrator} gameOrchestrator - Game CTO
      * @param {Renderer} renderer - Renderer
      */
-    constructor(stateManager, gameCTO, renderer) {
-        super(stateManager, gameCTO, renderer);
+    constructor(stateManager, gameOrchestrator, renderer) {
+        super(stateManager, gameOrchestrator, renderer);
     }
 
     display() {
-        this.renderer.display(this.gameCTO, this.timeFactor);
+        this.renderer.display(this.gameOrchestrator, this.timeFactor);
     }
 
     update(current) {
         super.update(current);
-        if(this.gameCTO.isGameover()) {
-            this.stateManager.setState(new GameOverState(this.stateManager, this.gameCTO, this.renderer));
+        if(this.gameOrchestrator.isGameover()) {
+            this.stateManager.setState(new GameOverState(this.stateManager, this.gameOrchestrator, this.renderer));
         }
     }
 
@@ -42,10 +42,10 @@ export class NextTurnState extends InteractableGameState {
             if(obj == "undo_button") {
                 this.undoMove();
             }  else if (obj == "movie_button") {
-                const movieGameCTO = new MyGameCTO(this.stateManager.scene);
-                console.log(this.gameCTO.gameSequence);
-                const movieGameSequence = movieGameCTO.migrateGameSequence(this.gameCTO.gameSequence.clone());
-                this.stateManager.setState(new MovieState(this.stateManager, movieGameCTO, this.renderer, movieGameSequence, this));
+                const movieGameOrchestrator = new MyGameOrchestrator(this.stateManager.scene);
+                console.log(this.gameOrchestrator.gameSequence);
+                const movieGameSequence = movieGameOrchestrator.migrateGameSequence(this.gameOrchestrator.gameSequence.clone());
+                this.stateManager.setState(new MovieState(this.stateManager, movieGameOrchestrator, this.renderer, movieGameSequence, this));
             }
         }
     }
@@ -56,22 +56,22 @@ export class NextTurnState extends InteractableGameState {
      * Otherwise, the state will be changed to the next turn state.
      */
     undoMove() {
-        const move = this.gameCTO.undoMove();
+        const move = this.gameOrchestrator.undoMove();
         
         if(move) {
             let animations = new Map();
             animations.set(move.startTile.piece.id, GameAnimations.createMovementAnimation(move.endTile, move.startTile, true, !move.inMovementChain));
             if (move.capturedPiece) {
                 const capturedPiece = move.capturedPiece;
-                animations.set(capturedPiece.id, GameAnimations.createCaptureAnimation(this.gameCTO.auxiliaryBoard.getAvailableTile(capturedPiece), capturedPiece.tile))
+                animations.set(capturedPiece.id, GameAnimations.createCaptureAnimation(this.gameOrchestrator.auxiliaryBoard.getAvailableTile(capturedPiece), capturedPiece.tile))
             }
             let animationTracker = new AnimationTracker(animations);
             
             if(move.inMovementChain) {
-                this.gameCTO.pickPiece(move.endTile.piece);
-                this.stateManager.setState(new AnimationState(this.stateManager, this.gameCTO, this.renderer, animationTracker, new DestinationSelectionState(this.stateManager, this.gameCTO, this.renderer, move.startTile, animationTracker, false)));
+                this.gameOrchestrator.pickPiece(move.endTile.piece);
+                this.stateManager.setState(new AnimationState(this.stateManager, this.gameOrchestrator, this.renderer, animationTracker, new DestinationSelectionState(this.stateManager, this.gameOrchestrator, this.renderer, move.startTile, animationTracker, false)));
             } else {
-                this.stateManager.setState(new AnimationState(this.stateManager, this.gameCTO, this.renderer, animationTracker, new NextTurnState(this.stateManager, this.gameCTO, this.renderer)));
+                this.stateManager.setState(new AnimationState(this.stateManager, this.gameOrchestrator, this.renderer, animationTracker, new NextTurnState(this.stateManager, this.gameOrchestrator, this.renderer)));
             }
         }
     }
@@ -80,9 +80,9 @@ export class NextTurnState extends InteractableGameState {
      * Handles the selection of a tile.
      */
     handleTilePick(obj) {
-        if(obj.piece != null && this.gameCTO.canPickPiece(obj.piece) && !this.gameCTO.isGameover()){
-            this.gameCTO.pickPiece(obj.piece);
-            this.stateManager.setState(new LiftPieceState(this.stateManager, this.gameCTO, this.renderer, obj));
+        if(obj.piece != null && this.gameOrchestrator.canPickPiece(obj.piece) && !this.gameOrchestrator.isGameover()){
+            this.gameOrchestrator.pickPiece(obj.piece);
+            this.stateManager.setState(new LiftPieceState(this.stateManager, this.gameOrchestrator, this.renderer, obj));
         }
     }
 }

@@ -11,13 +11,13 @@ import { GameAnimations } from '../GameAnimations.js';
 export class DropPieceState extends InteractableGameState {
     /**
      * @param {StateManager} stateManager - Reference to StateManager object
-     * @param {GameCTO} gameCTO - Reference to GameCTO object
+     * @param {GameOrchestrator} gameOrchestrator - Reference to GameOrchestrator object
      * @param {Renderer} renderer - Reference to Renderer object
      * @param {Tile} startTile - Tile where the piece is dropped
      * @param {function} callback - Callback method called on animation end
      */
-    constructor(stateManager, gameCTO, renderer, startTile, callback) {
-        super(stateManager, gameCTO, renderer);
+    constructor(stateManager, gameOrchestrator, renderer, startTile, callback) {
+        super(stateManager, gameOrchestrator, renderer);
         this.startTile = startTile;
 
         let animations = new Map();
@@ -32,13 +32,13 @@ export class DropPieceState extends InteractableGameState {
             if(this.callback) {
                 this.callback();
             }
-            this.stateManager.setState(new NextTurnState(this.stateManager, this.gameCTO, this.renderer));
+            this.stateManager.setState(new NextTurnState(this.stateManager, this.gameOrchestrator, this.renderer));
         } else {
             this.animationTracker.update(curr / 1000);
         }
     }
 
     display() {
-        this.renderer.display(this.gameCTO, this.timeFactor, this.animationTracker);
+        this.renderer.display(this.gameOrchestrator, this.timeFactor, this.animationTracker);
     }
 }

@@ -44,23 +44,23 @@ export class GameRenderer {
 
     /**
      * Displays the Game
-     * @param {GameCTO} gameCTO - Reference to the GameCTO
+     * @param {GameOrchestrator} gameOrchestrator - Reference to the GameOrchestrator
      * @param {Number} timeFactor - Time factor
      * @param {Array} animations - Array of animations
      */
-    display(gameCTO, timeFactor, animations) {
-        this.boardRenderer.display(gameCTO.board, gameCTO.auxiliaryBoard, animations, gameCTO.selectedPiece);
+    display(gameOrchestrator, timeFactor, animations) {
+        this.boardRenderer.display(gameOrchestrator.board, gameOrchestrator.auxiliaryBoard, animations, gameOrchestrator.selectedPiece);
 
-        this.scene.sceneData.components["gameover_message"].texture = gameCTO.isGameover() ? this.scene.sceneData.textures["tex_gameover"] : "none";
+        this.scene.sceneData.components["gameover_message"].texture = gameOrchestrator.isGameover() ? this.scene.sceneData.textures["tex_gameover"] : "none";
 
-        const warning_node = gameCTO.warningActive ? this.scene.sceneData.components["warning_message"] : null;
+        const warning_node = gameOrchestrator.warningActive ? this.scene.sceneData.components["warning_message"] : null;
         this.sceneRenderer.display(timeFactor, warning_node);
 
-        if(gameCTO.selectedPiece && this.scene.lightsIds[0] == "overhead_light"){
+        if(gameOrchestrator.selectedPiece && this.scene.lightsIds[0] == "overhead_light"){
             this.scene.pushMatrix();
             this.scene.loadIdentity();
             this.scene.lights[0].enable();
-            this.updateSpotlightPosition(this.scene.sceneData.components["root"], "_piece" + gameCTO.selectedPiece.id);
+            this.updateSpotlightPosition(this.scene.sceneData.components["root"], "_piece" + gameOrchestrator.selectedPiece.id);
             this.scene.popMatrix();
         } else {
             this.scene.lights[0].disable();
