@@ -12,9 +12,22 @@
 
 ### [TP1](tp1/README.md)
 
+![img1](tp1/images/screenshots/screenshot0.png)
+
 ----
 
 ### [TP2](tp2/README.md)
+
+![img1](tp2/images/screenshots/screenshot0.png)
+
 ----
 
 ### [TP3](tp3/README.md)
+
+![img1](tp3/screenshots/screenshot1.png)
+
+![img1](tp3/screenshots/screenshot2.png)
+
+![img1](tp3/screenshots/screenshot4.png)
+
+![img1](tp3/screenshots/screenshot6.png)
